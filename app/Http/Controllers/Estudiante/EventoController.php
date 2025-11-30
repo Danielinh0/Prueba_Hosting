@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Estudiante;
 use App\Http\Controllers\Controller;
 use App\Models\Evento;
 use App\Models\InscripcionEvento;
+use App\Models\MiembroEquipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,15 @@ class EventoController extends Controller
     public function show(Evento $evento)
     {
         $evento->load('inscripciones.equipo');
-        return view('estudiante.eventos.show', compact('evento'));
+        
+        // Verificar si el usuario ya tiene un equipo en este evento
+        $user = Auth::user();
+        $yaTieneEquipo = MiembroEquipo::where('id_estudiante', $user->id_usuario)
+            ->whereHas('inscripcion', function ($query) use ($evento) {
+                $query->where('id_evento', $evento->id_evento);
+            })
+            ->exists();
+        
+        return view('estudiante.eventos.show', compact('evento', 'yaTieneEquipo'));
     }
 }

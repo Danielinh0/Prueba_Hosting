@@ -12,13 +12,26 @@
                 <div class="p-6 sm:p-8">
                     <!-- Información del Equipo y Evento -->
                     <div class="border-b pb-6">
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center justify-between">
                             <h1 class="font-bold text-3xl text-gray-800">{{ $inscripcion->equipo->nombre }}</h1>
-                            @if($esLider)
-                                <a href="{{ route('estudiante.equipo.edit') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                                    Editar Equipo
-                                </a>
-                            @endif
+                            <div class="flex items-center space-x-3">
+                                @if($esLider)
+                                    <a href="{{ route('estudiante.equipo.edit') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                        Editar Equipo
+                                    </a>
+                                @else
+                                    {{-- Botón para que miembros NO líderes salgan del equipo --}}
+                                    <form action="{{ route('estudiante.miembros.leave') }}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres abandonar este equipo?');">
+                                        @csrf
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-900 focus:outline-none focus:ring focus:ring-red-300 disabled:opacity-25 transition">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                            </svg>
+                                            Salir del Equipo
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
                         <p class="text-gray-600 text-sm mt-2">
                             Participando en el evento: 

@@ -138,11 +138,32 @@
                     <!-- Acciones de Estudiante -->
                     <div class="mt-8 border-t border-gray-200 pt-6">
                         <h3 class="text-lg font-medium text-gray-900">Inscripción</h3>
-                        <div class="mt-4">
+                        <div class="mt-4 flex flex-col sm:flex-row gap-3">
                             @if($evento->estado === 'Activo')
-                                <a href="{{ route('estudiante.eventos.equipos.index', $evento) }}" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 font-semibold">
-                                    Ver Equipos / Inscribirse
+                                <a href="{{ route('estudiante.eventos.equipos.index', $evento) }}" 
+                                   class="inline-flex items-center justify-center px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 font-semibold transition">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                    Ver Equipos / Crear Equipo
                                 </a>
+                                
+                                @if(!$yaTieneEquipo)
+                                    <a href="{{ route('estudiante.eventos.select-equipo-existente', $evento) }}" 
+                                       class="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-semibold transition">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                        </svg>
+                                        Registrar Equipo Existente
+                                    </a>
+                                @else
+                                    <div class="inline-flex items-center px-6 py-3 bg-green-50 border-2 border-green-500 text-green-700 rounded-md font-semibold">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Ya estás inscrito en este evento
+                                    </div>
+                                @endif
                             @else
                                 <p class="text-gray-600">Las inscripciones no están abiertas para este evento. Vuelve a consultar cuando el evento esté 'Activo'.</p>
                             @endif

@@ -18,32 +18,90 @@ class MiEquipoController extends Controller
     {
         $user = Auth::user();
 
-        // Buscar la inscripción activa del estudiante
-        $miInscripcion = InscripcionEvento::whereHas('miembros', function ($query) use ($user) {
+        // Buscar TODAS las inscripciones del estudiante (con o sin evento, no finalizadas)
+        $misInscripciones = InscripcionEvento::whereHas('miembros', function ($query) use ($user) {
             $query->where('id_estudiante', $user->id_usuario);
-        })->whereHas('evento', function ($query) {
-            // Permitir Próximo, Activo y Cerrado (solo bloquear Finalizado)
-            $query->whereIn('estado', ['Próximo', 'Activo', 'Cerrado']);
+        })->where(function ($query) {
+            // Equipos sin evento O eventos no finalizados
+            $query->whereNull('id_evento')
+                  ->orWhereHas('evento', function ($q) {
+                      $q->whereIn('estado', ['Próximo', 'Activo', 'Cerrado']);
+                  });
         })->with([
-            'equipo.miembros.user.estudiante.carrera', 
-            'equipo.miembros.rol', 
+            'equipo', 
+            'miembros.user.estudiante.carrera',
+            'miembros.rol',
             'evento'
-        ])->first();
+        ])->get();
         
-        if (!$miInscripcion) {
-            // Si no, lo mandamos a la página de eventos para que busque uno.
+        if ($misInscripciones->isEmpty()) {
+            // Si no tiene equipos, redirigir a eventos
             return redirect()->route('estudiante.eventos.index')->with('info', 'No perteneces a ningún equipo activo. ¡Busca un evento y únete o crea un equipo!');
         }
+
+        // Preparar datos de cada equipo
+        $equiposData = $misInscripciones->map(function ($inscripcion) use ($user) {
+            $miembro = $inscripcion->miembros->firstWhere('id_estudiante', $user->id_usuario);
+            $esLider = $miembro ? $miembro->es_lider : false;
+            
+            $solicitudes = collect();
+            $roles = collect();
+            
+            if ($esLider) {
+                // Cargar solicitudes pendientes para el equipo
+                $solicitudes = SolicitudUnion::where('equipo_id', $inscripcion->id_equipo)
+                    ->where('status', 'pendiente')
+                    ->with('estudiante.user')
+                    ->get();
+                
+                // Cargar los roles de equipo disponibles
+                $roles = CatRolEquipo::all();
+            }
+            
+            return [
+                'inscripcion' => $inscripcion,
+                'esLider' => $esLider,
+                'solicitudes' => $solicitudes,
+                'roles' => $roles,
+            ];
+        });
+
+        return view('estudiante.equipo.index', [
+            'equipos' => $equiposData,
+        ]);
+    }
+
+    /**
+     * Mostrar detalle de un equipo específico
+     */
+    public function showDetalle(InscripcionEvento $inscripcion)
+    {
+        $user = Auth::user();
+
+        // Verificar que el usuario es miembro de este equipo
+        $miembro = $inscripcion->miembros()->where('id_estudiante', $user->id_usuario)->first();
         
-        $esLider = $miInscripcion->equipo->miembros->firstWhere('id_estudiante', $user->id_usuario)->es_lider ?? false;
-        $solicitudes = collect(); // Colección vacía por defecto
-        $roles = collect();       // Colección vacía por defecto
+        if (!$miembro) {
+            return redirect()->route('estudiante.equipo.index')->with('error', 'No tienes acceso a este equipo.');
+        }
+
+        // Cargar relaciones necesarias
+        $inscripcion->load([
+            'equipo',
+            'miembros.user.estudiante.carrera',
+            'miembros.rol',
+            'evento'
+        ]);
+
+        $esLider = $miembro->es_lider;
+        $solicitudes = collect();
+        $roles = collect();
 
         if ($esLider) {
             // Cargar solicitudes pendientes para el equipo
-            $solicitudes = SolicitudUnion::where('equipo_id', $miInscripcion->id_equipo)
+            $solicitudes = SolicitudUnion::where('equipo_id', $inscripcion->id_equipo)
                 ->where('status', 'pendiente')
-                ->with('estudiante.user') // Cargar datos del solicitante
+                ->with('estudiante.user')
                 ->get();
             
             // Cargar los roles de equipo disponibles
@@ -51,7 +109,7 @@ class MiEquipoController extends Controller
         }
 
         return view('estudiante.equipo.show', [
-            'inscripcion' => $miInscripcion,
+            'inscripcion' => $inscripcion,
             'esLider' => $esLider,
             'solicitudes' => $solicitudes,
             'roles' => $roles,

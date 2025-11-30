@@ -48,6 +48,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     //? Rutas para cambiar el estado del evento
     Route::patch('eventos/{evento}/activar', [EventoController::class, 'activar'])->name('eventos.activar');
     Route::patch('eventos/{evento}/desactivar', [EventoController::class, 'desactivar'])->name('eventos.desactivar');
+   
     Route::patch('eventos/{evento}/cerrar', [EventoController::class, 'cerrar'])->name('eventos.cerrar');
     Route::patch('eventos/{evento}/finalizar', [EventoController::class, 'finalizar'])->name('eventos.finalizar');
     Route::patch('eventos/{evento}/reactivar', [EventoController::class, 'reactivar'])->name('eventos.reactivar');
@@ -56,18 +57,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('eventos/{evento}/resultados', [ResultadosController::class, 'show'])->name('eventos.resultados');
     Route::post('eventos/{evento}/resultados/asignar', [ResultadosController::class, 'asignarPuesto'])->name('eventos.resultados.asignar-puesto');
     Route::delete('eventos/{evento}/resultados/quitar', [ResultadosController::class, 'quitarPuesto'])->name('eventos.resultados.quitar-puesto');
-
-    //? Rutas para proyectos del evento
-    Route::post('eventos/{evento}/configurar-tipo-proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'configurarTipo'])->name('eventos.configurar-proyectos');
-    Route::get('eventos/{evento}/proyecto/create', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'create'])->name('proyectos-evento.create');
-    Route::post('eventos/{evento}/proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'store'])->name('proyectos-evento.store');
-    Route::get('proyectos-evento/{proyectoEvento}/edit', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'edit'])->name('proyectos-evento.edit');
-    Route::patch('proyectos-evento/{proyectoEvento}', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'update'])->name('proyectos-evento.update');
-    Route::post('proyectos-evento/{proyectoEvento}/publicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'publicar'])->name('proyectos-evento.publicar');
-    Route::post('proyectos-evento/{proyectoEvento}/despublicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'despublicar'])->name('proyectos-evento.despublicar');
-    Route::get('eventos/{evento}/proyecto/asignar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'asignar'])->name('proyectos-evento.asignar');
-    Route::get('eventos/{evento}/proyecto/{inscripcion}/create-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'createIndividual'])->name('proyectos-evento.create-individual');
-    Route::post('eventos/{evento}/proyecto/{inscripcion}/store-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'storeIndividual'])->name('proyectos-evento.store-individual');
 
     Route::resource('eventos', EventoController::class);
     Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
@@ -95,14 +84,20 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
 
     // Rutas para Equipos
     Route::get('mi-equipo', MiEquipoController::class)->name('equipo.index');
+    Route::get('mi-equipo/{inscripcion}', [MiEquipoController::class, 'showDetalle'])->name('equipo.show-detalle');
     Route::get('mi-equipo/edit', [EstudianteEquipoController::class, 'edit'])->name('equipo.edit');
     Route::put('mi-equipo', [EstudianteEquipoController::class, 'update'])->name('equipo.update');
     Route::resource('eventos.equipos', EstudianteEquipoController::class)->only(['index', 'create', 'store', 'show']);
 
+    // Rutas para registrar equipo existente a evento
+    Route::get('eventos/{evento}/registrar-equipo-existente', [EstudianteEquipoController::class, 'selectEquipoExistente'])->name('eventos.select-equipo-existente');
+    Route::post('eventos/{evento}/registrar-equipo-existente', [EstudianteEquipoController::class, 'registrarEquipoExistente'])->name('eventos.registrar-equipo-existente');
+
     // Rutas para Gestionar Miembros
     Route::patch('miembros/{miembro}/update-role', [MiembroController::class, 'updateRole'])->name('miembros.updateRole');
     Route::delete('miembros/{miembro}', [MiembroController::class, 'destroy'])->name('miembros.destroy');
-
+    Route::post('miembros/leave', [MiembroController::class, 'leave'])->name('miembros.leave');
+    
     // Rutas para Solicitudes de Unión
     Route::post('equipos/{equipo}/solicitar', [SolicitudController::class, 'store'])->name('solicitudes.store');
     Route::post('solicitudes/{solicitud}/aceptar', [SolicitudController::class, 'accept'])->name('solicitudes.accept');
@@ -151,6 +146,22 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::get('equipo/proyecto/avances/create', [App\Http\Controllers\Estudiante\AvanceController::class, 'create'])->name('avances.create');
     Route::post('equipo/proyecto/avances', [App\Http\Controllers\Estudiante\AvanceController::class, 'store'])->name('avances.store');
     Route::get('equipo/proyecto/avances/{avance}', [App\Http\Controllers\Estudiante\AvanceController::class, 'show'])->name('avances.show');
+
+    //? Rutas para proyectos del evento
+Route::post('eventos/{evento}/configurar-tipo-proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'configurarTipo'])->name('eventos.configurar-proyectos');
+Route::get('eventos/{evento}/proyecto/create', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'create'])->name('proyectos-evento.create');
+Route::post('eventos/{evento}/proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'store'])->name('proyectos-evento.store');
+Route::get('proyectos-evento/{proyectoEvento}/edit', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'edit'])->name('proyectos-evento.edit');
+Route::patch('proyectos-evento/{proyectoEvento}', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'update'])->name('proyectos-evento.update');
+Route::post('proyectos-evento/{proyectoEvento}/publicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'publicar'])->name('proyectos-evento.publicar');
+Route::post('proyectos-evento/{proyectoEvento}/despublicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'despublicar'])->name('proyectos-evento.despublicar');
+Route::get('eventos/{evento}/proyecto/asignar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'asignar'])->name('proyectos-evento.asignar');
+Route::get('eventos/{evento}/proyecto/{inscripcion}/create-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'createIndividual'])->name('proyectos-evento.create-individual');
+Route::post('eventos/{evento}/proyecto/{inscripcion}/store-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'storeIndividual'])->name('proyectos-evento.store-individual');
+
+// Rutas para crear equipos sin evento
+Route::get('equipos/crear', [EstudianteEquipoController::class, 'createSinEvento'])->name('equipos.create-sin-evento');
+Route::post('equipos/guardar', [EstudianteEquipoController::class, 'storeSinEvento'])->name('equipos.store-sin-evento');
 });
 
 

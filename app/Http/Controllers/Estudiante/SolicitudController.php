@@ -28,6 +28,13 @@ class SolicitudController extends Controller
         $estudiante = $user->estudiante;
         $evento = $equipo->inscripciones->first()->evento; // Obtener el evento a través del equipo
 
+        // Validar conflicto de fechas
+        $conflicto = \App\Helpers\EventoHelper::verificarConflictoFechas($user->id_usuario, $evento->id_evento);
+        
+        if ($conflicto['conflicto']) {
+            return back()->with('error', $conflicto['mensaje']);
+        }
+
         // 2. Validar que el estudiante no esté ya en un equipo para CUALQUIER evento activo.
         $inscripcionActiva = InscripcionEvento::whereHas('miembros', function ($query) use ($user) {
             $query->where('id_estudiante', $user->id_usuario);
@@ -77,6 +84,27 @@ class SolicitudController extends Controller
         $esLider = $equipo->miembros()->where('id_estudiante', $user->id_usuario)->where('es_lider', true)->exists();
         if (!$esLider) {
             return back()->with('error', 'No tienes permiso para realizar esta acción.');
+        }
+
+        // VALIDACIÓN CRÍTICA: Verificar que el estudiante no esté ya en otro equipo del MISMO evento
+        $eventoId = $inscripcion->id_evento;
+        $yaEstaEnEquipo = MiembroEquipo::where('id_estudiante', $solicitud->estudiante_id)
+            ->whereHas('inscripcion', function ($query) use ($eventoId) {
+                $query->where('id_evento', $eventoId);
+            })
+            ->exists();
+
+        if ($yaEstaEnEquipo) {
+            $solicitud->update(['status' => 'rechazada']);
+            return back()->with('error', 'El estudiante ya pertenece a otro equipo en este evento. La solicitud ha sido rechazada automáticamente.');
+        }
+
+        // VALIDACIÓN ADICIONAL: Verificar conflicto de fechas
+        $conflictoFechas = \App\Helpers\EventoHelper::verificarConflictoFechas($solicitud->estudiante_id, $inscripcion->id_evento);
+        
+        if ($conflictoFechas['conflicto']) {
+            $solicitud->update(['status' => 'rechazada']);
+            return back()->with('error', 'El estudiante tiene un conflicto de fechas: ' . $conflictoFechas['mensaje']);
         }
 
         try {

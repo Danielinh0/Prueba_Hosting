@@ -80,4 +80,52 @@ class MiembroController extends Controller
 
         return back()->with('success', 'Miembro eliminado del equipo.');
     }
+
+    /**
+     * Permitir que un miembro se salga del equipo por su propia voluntad
+     */
+    public function leave()
+    {
+        $user = Auth::user();
+
+        // Buscar el equipo del estudiante
+        $miembro = MiembroEquipo::where('id_estudiante', $user->id_usuario)
+            ->whereHas('inscripcion.evento', function ($query) {
+                $query->whereIn('estado', ['Próximo', 'Activo', 'Cerrado']);
+            })
+            ->with('inscripcion')
+            ->first();
+
+        if (!$miembro) {
+            return back()->with('error', 'No perteneces a ningún equipo activo.');
+        }
+
+        // Verificar que NO sea líder
+        if ($miembro->es_lider) {
+            return back()->with('error', 'Como líder, no puedes abandonar el equipo. Debes transferir el liderazgo o eliminar el equipo.');
+        }
+
+        try {
+            DB::transaction(function () use ($miembro) {
+                $estudianteId = $miembro->id_estudiante;
+                $eventoId = $miembro->inscripcion->id_evento;
+
+                // 1. Eliminar al miembro del equipo
+                $miembro->delete();
+
+                // 2. Eliminar sus solicitudes para este evento
+                SolicitudUnion::where('estudiante_id', $estudianteId)
+                    ->whereHas('equipo.inscripciones', function($q) use ($eventoId) {
+                        $q->where('id_evento', $eventoId);
+                    })
+                    ->delete();
+            });
+
+            return redirect()->route('estudiante.eventos.index')
+                ->with('success', 'Has abandonado el equipo exitosamente.');
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Ocurrió un error al salir del equipo: ' . $e->getMessage());
+        }
+    }
 }

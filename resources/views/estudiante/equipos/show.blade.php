@@ -1,17 +1,17 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center">
-            <a href="{{ route('estudiante.eventos.equipos.index', $evento) }}" class="text-gray-800 hover:text-gray-900">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-            </a>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-2">
-                {{ $inscripcion->equipo->nombre }}
-            </h2>
-        </div>
-    </x-slot>
+@extends('layouts.app')
 
+@section('content')
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex items-center mb-6">
+                <a href="{{ route('estudiante.eventos.equipos.index', $evento) }}" class="text-gray-800 hover:text-gray-900">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </a>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-2">
+                    {{ $inscripcion->equipo->nombre }}
+                </h2>
+            </div>
+
             <div class="bg-white overflow-hidden shadow-xl rounded-lg">
                 @if ($inscripcion->equipo->ruta_imagen)
                     <img class="h-64 w-full object-cover" src="{{ asset('storage/' . $inscripcion->equipo->ruta_imagen) }}" alt="Imagen del equipo">
@@ -46,7 +46,7 @@
                                 @endif
                             </span>
                             <span class="text-sm text-gray-600">
-                                <strong>Miembros:</strong> {{ $inscripcion->equipo->miembros->count() }}
+                                <strong>Miembros:</strong> {{ $inscripcion->miembros->count() }}
                             </span>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             Miembros del Equipo
                         </h3>
                         <ul class="divide-y divide-gray-200">
-                            @foreach($inscripcion->equipo->miembros as $miembro)
+                            @foreach($inscripcion->miembros as $miembro)
                                 <li class="py-4 flex items-center space-x-4">
                                     <!-- Foto de Perfil -->
                                     <img src="{{ $miembro->user->foto_perfil_url }}" 
@@ -161,4 +161,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
