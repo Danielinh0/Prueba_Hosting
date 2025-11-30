@@ -1,5 +1,3 @@
--- Este es un esquema de base de datos PostgreSQL generado a partir del análisis de las migraciones de Laravel.
--- Nota: Las tablas internas de Laravel (cache, jobs, sessions, etc.) han sido omitidas.
 
 -- FASE 1: Tablas de Catálogos (sin dependencias)
 

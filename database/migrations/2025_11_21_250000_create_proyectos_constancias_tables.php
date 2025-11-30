@@ -23,10 +23,11 @@ return new class extends Migration
         Schema::create('avances', function (Blueprint $table) {
             $table->id('id_avance');
             $table->foreignId('id_proyecto')->constrained('proyectos', 'id_proyecto')->onDelete('cascade');
+            $table->foreignId('id_usuario_registro')->constrained('users', 'id_usuario');
             $table->string('titulo', 100)->nullable();
-            $table->text('descripcion')->nullable();
-            $table->string('url_archivo', 255)->nullable();
-            $table->timestamp('fecha_entrega')->useCurrent();
+            $table->text('descripcion');
+            $table->string('archivo_evidencia', 255)->nullable();
+            $table->timestamps();
         });
 
         // EVALUACIONES

@@ -22,7 +22,8 @@ class MiEquipoController extends Controller
         $miInscripcion = InscripcionEvento::whereHas('miembros', function ($query) use ($user) {
             $query->where('id_estudiante', $user->id_usuario);
         })->whereHas('evento', function ($query) {
-            $query->where('estado', 'Activo');
+            // Permitir Próximo, Activo y Cerrado (solo bloquear Finalizado)
+            $query->whereIn('estado', ['Próximo', 'Activo', 'Cerrado']);
         })->with([
             'equipo.miembros.user.estudiante.carrera', 
             'equipo.miembros.rol', 
@@ -31,7 +32,7 @@ class MiEquipoController extends Controller
         
         if (!$miInscripcion) {
             // Si no, lo mandamos a la página de eventos para que busque uno.
-            return redirect()->route('estudiante.eventos.index')->with('info', 'No perteneces a ningún equipo en un evento activo. ¡Busca un evento y únete o crea un equipo!');
+            return redirect()->route('estudiante.eventos.index')->with('info', 'No perteneces a ningún equipo activo. ¡Busca un evento y únete o crea un equipo!');
         }
         
         $esLider = $miInscripcion->equipo->miembros->firstWhere('id_estudiante', $user->id_usuario)->es_lider ?? false;

@@ -21,6 +21,7 @@ class Evento extends Model
         'cupo_max_equipos',
         'ruta_imagen',
         'estado',
+        'tipo_proyecto',
     ];
 
     protected $casts = [
@@ -42,5 +43,22 @@ class Evento extends Model
     public function inscripciones()
     {
         return $this->hasMany(InscripcionEvento::class, 'id_evento', 'id_evento');
+    }
+
+    /**
+     * Relación uno a muchos con ProyectoEvento.
+     */
+    public function proyectosEvento()
+    {
+        return $this->hasMany(ProyectoEvento::class, 'id_evento', 'id_evento');
+    }
+
+    /**
+     * Proyecto general del evento (sin inscripción específica).
+     */
+    public function proyectoGeneral()
+    {
+        return $this->hasOne(ProyectoEvento::class, 'id_evento', 'id_evento')
+                    ->whereNull('id_inscripcion');
     }
 }

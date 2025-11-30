@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\JuradoAssignmentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EquipoController as AdminEquipoController;
 use App\Http\Controllers\Admin\MiembroController as AdminMiembroController;
+use App\Http\Controllers\Admin\ResultadosController;
 use App\Http\Controllers\Jurado\DashboardController as JuradoDashboardController;
 use App\Http\Controllers\Estudiante\DashboardController as EstudianteDashboardController;
 use App\Http\Controllers\Estudiante\EventoController as EstudianteEventoController;
@@ -47,8 +48,26 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     //? Rutas para cambiar el estado del evento
     Route::patch('eventos/{evento}/activar', [EventoController::class, 'activar'])->name('eventos.activar');
     Route::patch('eventos/{evento}/desactivar', [EventoController::class, 'desactivar'])->name('eventos.desactivar');
+    Route::patch('eventos/{evento}/cerrar', [EventoController::class, 'cerrar'])->name('eventos.cerrar');
     Route::patch('eventos/{evento}/finalizar', [EventoController::class, 'finalizar'])->name('eventos.finalizar');
     Route::patch('eventos/{evento}/reactivar', [EventoController::class, 'reactivar'])->name('eventos.reactivar');
+
+    //? Rutas para resultados y ganadores
+    Route::get('eventos/{evento}/resultados', [ResultadosController::class, 'show'])->name('eventos.resultados');
+    Route::post('eventos/{evento}/resultados/asignar', [ResultadosController::class, 'asignarPuesto'])->name('eventos.resultados.asignar-puesto');
+    Route::delete('eventos/{evento}/resultados/quitar', [ResultadosController::class, 'quitarPuesto'])->name('eventos.resultados.quitar-puesto');
+
+    //? Rutas para proyectos del evento
+    Route::post('eventos/{evento}/configurar-tipo-proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'configurarTipo'])->name('eventos.configurar-proyectos');
+    Route::get('eventos/{evento}/proyecto/create', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'create'])->name('proyectos-evento.create');
+    Route::post('eventos/{evento}/proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'store'])->name('proyectos-evento.store');
+    Route::get('proyectos-evento/{proyectoEvento}/edit', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'edit'])->name('proyectos-evento.edit');
+    Route::patch('proyectos-evento/{proyectoEvento}', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'update'])->name('proyectos-evento.update');
+    Route::post('proyectos-evento/{proyectoEvento}/publicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'publicar'])->name('proyectos-evento.publicar');
+    Route::post('proyectos-evento/{proyectoEvento}/despublicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'despublicar'])->name('proyectos-evento.despublicar');
+    Route::get('eventos/{evento}/proyecto/asignar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'asignar'])->name('proyectos-evento.asignar');
+    Route::get('eventos/{evento}/proyecto/{inscripcion}/create-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'createIndividual'])->name('proyectos-evento.create-individual');
+    Route::post('eventos/{evento}/proyecto/{inscripcion}/store-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'storeIndividual'])->name('proyectos-evento.store-individual');
 
     Route::resource('eventos', EventoController::class);
     Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
@@ -59,6 +78,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 //? Rutas para Jurados
 Route::middleware(['auth', 'role:jurado'])->prefix('jurado')->name('jurado.')->group(function () {
     Route::get('/dashboard', JuradoDashboardController::class)->name('dashboard');
+    Route::get('/equipos/{equipo}', [App\Http\Controllers\Jurado\EquipoController::class, 'show'])->name('equipos.show');
+    
+    // Evaluaciones
+    Route::get('/evaluaciones/{inscripcion}/create', [App\Http\Controllers\Jurado\EvaluacionController::class, 'create'])->name('evaluaciones.create');
+    Route::post('/evaluaciones/{inscripcion}', [App\Http\Controllers\Jurado\EvaluacionController::class, 'store'])->name('evaluaciones.store');
+    Route::get('/evaluaciones/{evaluacion}', [App\Http\Controllers\Jurado\EvaluacionController::class, 'show'])->name('evaluaciones.show');
 });
 
 //? Rutas para Estudiantes
@@ -104,7 +129,6 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::post('proyectos/{proyecto}/tecnologias', [TecnologiaController::class, 'store'])->name('tecnologias.store');
     Route::delete('proyectos/{proyecto}/tecnologias/{tecnologia}', [TecnologiaController::class, 'destroy'])->name('tecnologias.destroy');
     
-    
     // Rutas para Feed de Actividades
     Route::get('eventos/{evento}/actividades', [ActividadController::class, 'feedEvento'])->name('actividades.evento');
     Route::get('equipos/{equipo}/actividades', [ActividadController::class, 'feedEquipo'])->name('actividades.equipo');
@@ -116,13 +140,13 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::get('equipo/proyecto/edit', [App\Http\Controllers\Estudiante\ProyectoController::class, 'edit'])->name('proyecto.edit');
     Route::patch('equipo/proyecto', [App\Http\Controllers\Estudiante\ProyectoController::class, 'update'])->name('proyecto.update');
     
-    //TODO Rutas para Tareas del Proyecto
+    // Rutas para Tareas del Proyecto
     Route::get('equipo/proyecto/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'index'])->name('tareas.index');
     Route::post('equipo/proyecto/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'store'])->name('tareas.store');
     Route::patch('tareas/{tarea}/toggle', [App\Http\Controllers\Estudiante\TareaController::class, 'toggle'])->name('tareas.toggle');
     Route::delete('tareas/{tarea}', [App\Http\Controllers\Estudiante\TareaController::class, 'destroy'])->name('tareas.destroy');
     
-    //? Rutas para Avances del Proyecto
+    // Rutas para Avances del Proyecto
     Route::get('equipo/proyecto/avances', [App\Http\Controllers\Estudiante\AvanceController::class, 'index'])->name('avances.index');
     Route::get('equipo/proyecto/avances/create', [App\Http\Controllers\Estudiante\AvanceController::class, 'create'])->name('avances.create');
     Route::post('equipo/proyecto/avances', [App\Http\Controllers\Estudiante\AvanceController::class, 'store'])->name('avances.store');

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecursoEquipo extends Model
 {
-    protected $table = 'recursos_equipo';
+    protected $table = 'recurso_equipos';
     protected $primaryKey = 'id_recurso';
 
     protected $fillable = [

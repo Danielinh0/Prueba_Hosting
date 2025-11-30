@@ -155,6 +155,13 @@ class EventoController extends Controller
         return redirect()->route('admin.eventos.show', $evento)->with('success', 'El evento ha sido finalizado.');
     }
 
+    public function cerrar(Evento $evento)
+    {
+        $evento->estado = 'Cerrado';
+        $evento->save();
+        return redirect()->route('admin.eventos.show', $evento)->with('success', 'El evento ha sido cerrado. Las inscripciones están bloqueadas.');
+    }
+
     public function reactivar(Evento $evento)
     {
         $evento->estado = 'Activo';

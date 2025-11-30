@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Jurado;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Jurado;
-use App\Models\Evento;
 
 class DashboardController extends Controller
 {
@@ -15,25 +13,40 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $user = Auth::user();
-        $jurado = Jurado::find($user->id_usuario); // Asume que id_usuario es la PK y coincide con Auth::id()
+        $jurado = Auth::user()->jurado;
+        
+        // Obtener eventos asignados al jurado
+        $eventosAsignados = $jurado->eventos()
+            ->with(['inscripciones' => function($q) {
+                $q->where('status_registro', 'Completo')
+                  ->with(['equipo', 'proyecto.avances']);
+            }])
+            ->whereIn('estado', ['Próximo', 'Activo'])
+            ->orderBy('fecha_inicio')
+            ->get();
 
-        if (!$jurado) {
-            // Manejar caso donde el user logueado no es un jurado (aunque debería serlo por el middleware)
-            return redirect('/dashboard')->with('error', 'No tienes perfil de jurado.');
+        // Contar equipos totales a evaluar
+        $totalEquipos = $eventosAsignados->sum(function($evento) {
+            return $evento->inscripciones->count();
+        });
+
+        // Contar avances pendientes de revisar (últimos 7 días)
+        $avancesRecientes = 0;
+        foreach($eventosAsignados as $evento) {
+            foreach($evento->inscripciones as $inscripcion) {
+                if($inscripcion->proyecto) {
+                    $avancesRecientes += $inscripcion->proyecto->avances()
+                        ->where('created_at', '>=', now()->subDays(7))
+                        ->count();
+                }
+            }
         }
 
-        // Obtener los eventos a los que este jurado está asignado
-        $misEventosAsignados = $jurado->eventos()
-                                      ->whereIn('estado', ['Activo', 'Próximo'])
-                                      ->orderBy('fecha_inicio', 'asc')
-                                      ->get();
-
-        // Obtener todos los eventos públicos (Activos o Próximos)
-        $eventosPublicos = Evento::whereIn('estado', ['Activo', 'Próximo'])
-                                 ->orderBy('fecha_inicio', 'asc')
-                                 ->get();
-
-        return view('jurado.dashboard', compact('misEventosAsignados', 'eventosPublicos'));
+        return view('jurado.dashboard', compact(
+            'jurado',
+            'eventosAsignados',
+            'totalEquipos',
+            'avancesRecientes'
+        ));
     }
 }

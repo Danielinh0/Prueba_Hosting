@@ -89,6 +89,72 @@
                         </div>
                     </div>
 
+                    {{-- Proyecto del Evento (si está publicado) --}}
+                    @if($evento->tipo_proyecto && ($evento->tipo_proyecto === 'general' && $evento->proyectoGeneral && $evento->proyectoGeneral->publicado))
+                        <div class="mt-8 border-t border-gray-200 pt-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">📋 Proyecto del Evento</h3>
+                                <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full">
+                                    ✓ Publicado
+                                </span>
+                            </div>
+                            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200">
+                                <h4 class="text-xl font-bold text-gray-900 mb-3">{{ $evento->proyectoGeneral->titulo }}</h4>
+                                
+                                @if($evento->proyectoGeneral->descripcion_completa)
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">Descripción:</h5>
+                                        <p class="text-gray-600 whitespace-pre-line">{{ Str::limit($evento->proyectoGeneral->descripcion_completa, 300) }}</p>
+                                    </div>
+                                @endif
+
+                                @if($evento->proyectoGeneral->objetivo)
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">🎯 Objetivo:</h5>
+                                        <p class="text-gray-600">{{ $evento->proyectoGeneral->objetivo }}</p>
+                                    </div>
+                                @endif
+
+                                <div class="mt-4 flex flex-wrap gap-3">
+                                    @if($evento->proyectoGeneral->archivo_bases)
+                                        <a href="{{ Storage::url($evento->proyectoGeneral->archivo_bases) }}" 
+                                           target="_blank"
+                                           class="inline-flex items-center px-4 py-2 bg-white border border-indigo-300 rounded-lg text-indigo-700 hover:bg-indigo-50 transition">
+                                            📄 Descargar Bases
+                                        </a>
+                                    @endif
+                                    @if($evento->proyectoGeneral->archivo_recursos)
+                                        <a href="{{ Storage::url($evento->proyectoGeneral->archivo_recursos) }}" 
+                                           target="_blank"
+                                           class="inline-flex items-center px-4 py-2 bg-white border border-purple-300 rounded-lg text-purple-700 hover:bg-purple-50 transition">
+                                            📦 Descargar Recursos
+                                        </a>
+                                    @endif
+                                    @if($evento->proyectoGeneral->url_externa)
+                                        <a href="{{ $evento->proyectoGeneral->url_externa }}" 
+                                           target="_blank"
+                                           class="inline-flex items-center px-4 py-2 bg-white border border-blue-300 rounded-lg text-blue-700 hover:bg-blue-50 transition">
+                                            🔗 Recursos Externos
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @elseif($evento->tipo_proyecto === 'individual')
+                        <div class="mt-8 border-t border-gray-200 pt-6">
+                            <h3 class="text-lg font-medium text-gray-900">📝 Proyectos Individuales</h3>
+                            <div class="mt-4 bg-purple-50 rounded-lg p-4 border border-purple-200">
+                                <p class="text-sm text-purple-700">
+                                    Este evento usa <strong>proyectos individuales</strong>. Cada equipo puede tener un proyecto diferente.
+                                </p>
+                                <a href="{{ route('admin.proyectos-evento.asignar', $evento) }}" 
+                                   class="inline-block mt-3 text-purple-600 hover:text-purple-800 font-semibold">
+                                    Ver estado de asignaciones →
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
                     <!-- Acciones de Administrador -->
                     <div class="mt-8 border-t border-gray-200 pt-6">
                         <h3 class="text-lg font-medium text-gray-900">Acciones de Administrador</h3>
@@ -106,6 +172,13 @@
                                     </button>
                                 </form>
                             @elseif($evento->estado === 'Activo')
+                                <form action="{{ route('admin.eventos.cerrar', $evento) }}" method="POST" onsubmit="return confirm('¿Cerrar inscripciones? Los equipos no podrán unirse.');">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 font-semibold">
+                                        🔒 Cerrar Inscripciones
+                                    </button>
+                                </form>
                                 <form action="{{ route('admin.eventos.finalizar', $evento) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres finalizar este evento?');">
                                     @csrf
                                     @method('PATCH')
@@ -120,7 +193,77 @@
                                         Mover a Próximos
                                     </button>
                                 </form>
+                            @elseif($evento->estado === 'Cerrado')
+                                <!-- Configuración de Proyectos del Evento -->
+                                @if(!$evento->tipo_proyecto)
+                                    <button onclick="document.getElementById('modalTipoProyecto').classList.remove('hidden')" 
+                                            class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 font-semibold">
+                                        📋 Configurar Tipo de Proyecto
+                                    </button>
+                                @else
+                                    @if($evento->tipo_proyecto === 'general')
+                                        @if($evento->proyectoGeneral)
+                                            <a href="{{ route('admin.proyectos-evento.edit', $evento->proyectoGeneral) }}" 
+                                               class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-semibold">
+                                                ✏️ Editar Proyecto General
+                                            </a>
+                                            @if($evento->proyectoGeneral->publicado)
+                                                <form action="{{ route('admin.proyectos-evento.despublicar', $evento->proyectoGeneral) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 font-semibold">
+                                                        👁️‍🗨️ Despublicar
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <form action="{{ route('admin.proyectos-evento.publicar', $evento->proyectoGeneral) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold">
+                                                        🚀 Publicar Proyecto
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        @else
+                                            <a href="{{ route('admin.proyectos-evento.create', $evento) }}" 
+                                               class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold">
+                                                ➕ Crear Proyecto General
+                                            </a>
+                                        @endif
+                                    @else
+                                        <a href="{{ route('admin.proyectos-evento.asignar', $evento) }}" 
+                                           class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold">
+                                            📝 Asignar Proyectos Individuales
+                                        </a>
+                                    @endif
+
+                                    {{-- Botón para cambiar tipo de proyecto --}}
+                                    @if($evento->tipo_proyecto === 'general')
+                                        <button onclick="document.getElementById('modalTipoProyecto').classList.remove('hidden')" 
+                                                class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 font-semibold">
+                                            🔄 Cambiar a Individual
+                                        </button>
+                                    @endif
+                                @endif
+
+                                <form action="{{ route('admin.eventos.reactivar', $evento) }}" method="POST" onsubmit="return confirm('¿Reabrir inscripciones?');">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 font-semibold">
+                                        🔓 Reabrir Inscripciones
+                                    </button>
+                                </form>
+
+                                <form action="{{ route('admin.eventos.finalizar', $evento) }}" method="POST" onsubmit="return confirm('¿Finalizar evento?');">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-semibold">
+                                        Finalizar Evento
+                                    </button>
+                                </form>
                             @elseif($evento->estado === 'Finalizado')
+                                <a href="{{ route('admin.eventos.resultados', $evento) }}" 
+                                   class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-semibold">
+                                    🏆 Ver Resultados
+                                </a>
                                 <form action="{{ route('admin.eventos.reactivar', $evento) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres reactivar este evento?');">
                                     @csrf
                                     @method('PATCH')
@@ -129,6 +272,80 @@
                                     </button>
                                 </form>
                             @endif
+
+                            <a href="{{ route('admin.eventos.edit', $evento) }}" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 font-semibold">
+                                Editar Evento
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Modal Tipo de Proyecto -->
+                    <div id="modalTipoProyecto" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                            <h3 class="text-lg font-bold text-gray-900 mb-4">
+                                {{ $evento->tipo_proyecto ? 'Cambiar Tipo de Proyecto' : 'Configurar Tipo de Proyecto' }}
+                            </h3>
+                            
+                            @if($evento->tipo_proyecto === 'general')
+                                <div class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                    <p class="text-sm text-yellow-700">
+                                        ⚠️ <strong>Nota:</strong> Cambiar a proyectos individuales mantendrá el proyecto general creado, pero ya no será visible para los equipos.
+                                    </p>
+                                </div>
+                            @elseif($evento->tipo_proyecto === 'individual')
+                                <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                    <p class="text-sm text-red-700">
+                                        🚫 <strong>No se puede cambiar:</strong> Ya tienes proyectos individuales asignados. Cambiar a proyecto general eliminaría los archivos de cada equipo.
+                                    </p>
+                                </div>
+                            @else
+                                <p class="text-sm text-gray-600 mb-4">Elige cómo se asignarán los proyectos a los equipos:</p>
+                            @endif
+                            
+                            <form action="{{ route('admin.eventos.configurar-proyectos', $evento) }}" method="POST">
+                                @csrf
+                                <div class="space-y-3">
+                                    <label class="flex items-start p-4 border-2 {{ $evento->tipo_proyecto === 'general' ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200' }} rounded-lg cursor-pointer hover:border-indigo-500">
+                                        <input type="radio" name="tipo_proyecto" value="general" 
+                                               class="mt-1" 
+                                               {{ $evento->tipo_proyecto === 'general' ? 'checked' : '' }}
+                                               {{ $evento->tipo_proyecto === 'individual' ? 'disabled' : 'required' }}>
+                                        <div class="ml-3">
+                                            <div class="font-semibold text-gray-900">📋 Proyecto General</div>
+                                            <div class="text-sm text-gray-600">Un solo proyecto para todos los equipos</div>
+                                            @if($evento->tipo_proyecto === 'general')
+                                                <div class="text-xs text-indigo-600 mt-1">✓ Tipo actual</div>
+                                            @elseif($evento->tipo_proyecto === 'individual')
+                                                <div class="text-xs text-red-600 mt-1">⚠️ No disponible</div>
+                                            @endif
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start p-4 border-2 {{ $evento->tipo_proyecto === 'individual' ? 'border-purple-500 bg-purple-50' : 'border-gray-200' }} rounded-lg cursor-pointer hover:border-purple-500">
+                                        <input type="radio" name="tipo_proyecto" value="individual" 
+                                               class="mt-1" 
+                                               {{ $evento->tipo_proyecto === 'individual' ? 'checked' : '' }}
+                                               {{ !$evento->tipo_proyecto || $evento->tipo_proyecto === 'general' ? 'required' : '' }}>
+                                        <div class="ml-3">
+                                            <div class="font-semibold text-gray-900">📝 Proyectos Individuales</div>
+                                            <div class="text-sm text-gray-600">Proyectos diferentes por equipo</div>
+                                            @if($evento->tipo_proyecto === 'individual')
+                                                <div class="text-xs text-purple-600 mt-1">✓ Tipo actual</div>
+                                            @endif
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="mt-6 flex justify-end space-x-3">
+                                    <button type="button" onclick="document.getElementById('modalTipoProyecto').classList.add('hidden')" 
+                                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                                        Cancelar
+                                    </button>
+                                    @if($evento->tipo_proyecto !== 'individual')
+                                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                                            {{ $evento->tipo_proyecto ? 'Cambiar Tipo' : 'Confirmar' }}
+                                        </button>
+                                    @endif
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -137,3 +354,4 @@
         </div>
     </div>
 @endsection
+

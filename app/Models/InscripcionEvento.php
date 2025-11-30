@@ -43,6 +43,30 @@ class InscripcionEvento extends Model
     }
 
     /**
+     * Relación: Una inscripción tiene un proyecto (del equipo).
+     */
+    public function proyecto()
+    {
+        return $this->hasOne(Proyecto::class, 'id_inscripcion', 'id_inscripcion');
+    }
+
+    /**
+     * Relación: Una inscripción puede tener un proyecto del evento específico.
+     */
+    public function proyectoEvento()
+    {
+        return $this->hasOne(ProyectoEvento::class, 'id_inscripcion', 'id_inscripcion');
+    }
+
+    /**
+     * Relación: Una inscripción tiene evaluaciones de jurados.
+     */
+    public function evaluaciones()
+    {
+        return $this->hasMany(Evaluacion::class, 'id_inscripcion', 'id_inscripcion');
+    }
+
+    /**
      * Revisa la composición del equipo y actualiza el estado de la inscripción.
      * Regla #2: El equipo debe tener al menos 6 miembros.
      * Regla #3: Debe haber al menos un miembro de una carrera diferente.

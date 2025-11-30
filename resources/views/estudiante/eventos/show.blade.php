@@ -39,6 +39,82 @@
                         </p>
                     </div>
 
+                    {{-- Proyecto del Evento (si está publicado y es general) --}}
+                    @if($evento->tipo_proyecto === 'general' && $evento->proyectoGeneral && $evento->proyectoGeneral->publicado)
+                        <div class="mt-8 border-t border-gray-200 pt-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">📋 Proyecto del Evento</h3>
+                                <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full">
+                                    ✓ Publicado
+                                </span>
+                            </div>
+                            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200">
+                                <h4 class="text-xl font-bold text-gray-900 mb-3">{{ $evento->proyectoGeneral->titulo }}</h4>
+                                
+                                @if($evento->proyectoGeneral->descripcion_completa)
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">Descripción:</h5>
+                                        <div class="text-gray-600 whitespace-pre-line">{{ $evento->proyectoGeneral->descripcion_completa }}</div>
+                                    </div>
+                                @endif
+
+                                @if($evento->proyectoGeneral->objetivo)
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">🎯 Objetivo:</h5>
+                                        <p class="text-gray-600">{{ $evento->proyectoGeneral->objetivo }}</p>
+                                    </div>
+                                @endif
+
+                                @if($evento->proyectoGeneral->requisitos)
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">📝 Requisitos Técnicos:</h5>
+                                        <div class="text-gray-600 whitespace-pre-line">{{ $evento->proyectoGeneral->requisitos }}</div>
+                                    </div>
+                                @endif
+
+                                @if($evento->proyectoGeneral->premios)
+                                    <div class="mb-4">
+                                        <h5 class="font-semibold text-gray-700 mb-2">🏆 Premios:</h5>
+                                        <p class="text-gray-600">{{ $evento->proyectoGeneral->premios }}</p>
+                                    </div>
+                                @endif
+
+                                <div class="mt-6 flex flex-wrap gap-3">
+                                    @if($evento->proyectoGeneral->archivo_bases)
+                                        <a href="{{ Storage::url($evento->proyectoGeneral->archivo_bases) }}" 
+                                           target="_blank" download
+                                           class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                            Descargar Bases
+                                        </a>
+                                    @endif
+                                    @if($evento->proyectoGeneral->archivo_recursos)
+                                        <a href="{{ Storage::url($evento->proyectoGeneral->archivo_recursos) }}" 
+                                           target="_blank" download
+                                           class="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+                                            </svg>
+                                            Descargar Recursos
+                                        </a>
+                                    @endif
+                                    @if($evento->proyectoGeneral->url_externa)
+                                        <a href="{{ $evento->proyectoGeneral->url_externa }}" 
+                                           target="_blank"
+                                           class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                            </svg>
+                                            Ver Recursos Externos
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="mt-8">
                         <h3 class="text-lg font-medium text-gray-900">
                             Equipos Inscritos ({{ $evento->inscripciones->count() }} / {{ $evento->cupo_max_equipos }})
