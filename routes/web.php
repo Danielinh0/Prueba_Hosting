@@ -59,10 +59,24 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('eventos/{evento}/resultados/asignar', [ResultadosController::class, 'asignarPuesto'])->name('eventos.resultados.asignar-puesto');
     Route::delete('eventos/{evento}/resultados/quitar', [ResultadosController::class, 'quitarPuesto'])->name('eventos.resultados.quitar-puesto');
 
+    //? Rutas para proyectos del evento
+    Route::post('eventos/{evento}/configurar-tipo-proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'configurarTipo'])->name('eventos.configurar-proyectos');
+    Route::get('eventos/{evento}/proyecto/create', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'create'])->name('proyectos-evento.create');
+    Route::post('eventos/{evento}/proyecto', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'store'])->name('proyectos-evento.store');
+    Route::get('proyectos-evento/{proyectoEvento}/edit', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'edit'])->name('proyectos-evento.edit');
+    Route::patch('proyectos-evento/{proyectoEvento}', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'update'])->name('proyectos-evento.update');
+    Route::post('proyectos-evento/{proyectoEvento}/publicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'publicar'])->name('proyectos-evento.publicar');
+    Route::post('proyectos-evento/{proyectoEvento}/despublicar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'despublicar'])->name('proyectos-evento.despublicar');
+    Route::get('eventos/{evento}/proyecto/asignar', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'asignar'])->name('proyectos-evento.asignar');
+    Route::get('eventos/{evento}/proyecto/{inscripcion}/create-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'createIndividual'])->name('proyectos-evento.create-individual');
+    Route::post('eventos/{evento}/proyecto/{inscripcion}/store-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'storeIndividual'])->name('proyectos-evento.store-individual');
+
     Route::resource('eventos', EventoController::class);
     Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
     Route::resource('equipos', AdminEquipoController::class)->except(['create', 'store']);
     Route::delete('miembros/{miembro}', [AdminMiembroController::class, 'destroy'])->name('miembros.destroy');
+    // Route::post('miembros/leave', [MiembroController::class, 'leave'])->name('miembros.leave');
+    
 });
 
 //? Rutas para Jurados

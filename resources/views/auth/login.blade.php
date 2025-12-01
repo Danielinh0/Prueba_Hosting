@@ -36,6 +36,16 @@
             background-image: url('{{ asset('images/imgFondo.jpg') }}');
             background-size: cover;
             background-position: center;
+            animation: backgroundZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundZoom {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
         }
 
         /* CAPA OSCURA DIAGONAL */
@@ -61,6 +71,18 @@
             backdrop-filter: blur(5px);
             box-shadow: 0 15px 25px rgba(0,0,0,0.5);
             color: white;
+            animation: cardSlideIn 1s ease-out;
+        }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         /* LOGO */
@@ -68,6 +90,21 @@
             width: 150px;
             margin-bottom: 10px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            animation: logoBounce 1.2s ease-out 0.3s backwards;
+        }
+
+        @keyframes logoBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.5);
+            }
+            60% {
+                transform: translateY(10px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         h2 {
@@ -76,12 +113,36 @@
             font-weight: 800;
             letter-spacing: 1px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            animation: titleFadeIn 1s ease-out 0.5s backwards;
+        }
+
+        @keyframes titleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* INPUTS */
         .input-group {
             margin-bottom: 20px;
             text-align: left;
+            animation: inputSlideUp 0.8s ease-out 0.7s backwards;
+        }
+
+        @keyframes inputSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .input-group label {
@@ -127,14 +188,35 @@
             margin-top: 10px;
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
+            animation: buttonPulse 1s ease-out 1s backwards;
+        }
+
+        @keyframes buttonPulse {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            70% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .btn-ingresar:hover {
             background-color: #e67e22;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
 
         /* ENLACES FOOTER */
+        .footer-links {
+            animation: footerFade 1s ease-out 1.2s backwards;
+        }
+
         .footer-links a {
             display: block;
             color: #ddd;
@@ -142,10 +224,21 @@
             font-size: 0.85rem;
             margin-bottom: 8px;
             text-decoration: underline;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        @keyframes footerFade {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .footer-links a:hover {
             color: white;
+            transform: translateX(5px);
         }
 
         /* BOTONES SOCIALES */
@@ -156,6 +249,28 @@
             display: flex;
             gap: 15px;
             z-index: 10;
+        }
+
+        .social-buttons .social-btn:nth-child(1) {
+            animation: socialPop 0.6s ease-out 1.4s backwards;
+        }
+
+        .social-buttons .social-btn:nth-child(2) {
+            animation: socialPop 0.6s ease-out 1.6s backwards;
+        }
+
+        @keyframes socialPop {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            70% {
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
         }
 
         .social-btn {
@@ -214,7 +329,7 @@
     <div class="bg-container"></div>
     <div class="overlay-diagonal"></div>
 
-    <!-- Session Status -->
+    <!-- botones de redes sociales -->
     @if (session('status'))
         <div style="display: none;">
             <x-auth-session-status :status="session('status')" />
