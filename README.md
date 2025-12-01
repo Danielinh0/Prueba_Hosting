@@ -49,7 +49,7 @@ php artisan key:generate
 ### 4. Configurar la Base de Datos
 
 1.  Abre el archivo `.env` que acabas de crear.
-2.  Modifica las siguientes variables para que coincidan con la configuración de tu base de datos local. Por ejemplo, para MySQL:
+2.  Modifica las siguientes variables para que coincidan con la configuración de tu base de datos local. Por ejemplo, para PostgreSQL:
 
     ```env
     DB_CONNECTION=pgsql

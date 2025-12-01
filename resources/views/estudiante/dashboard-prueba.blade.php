@@ -3,6 +3,148 @@
 @section('title', 'Inicio')
 
 @section('content')
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        /* Fondo degradado */
+        body {
+            background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+            min-height: 100vh;
+        }
+        
+        /* Configuración global */
+        .left-col,
+        .right-col {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Títulos de sección */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            color: #2c2c2c;
+        }
+        
+        /* Cards neuromórficas */
+        .neu-card {
+            background: #FFEEE2;
+            box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .neu-card:hover {
+            box-shadow: 10px 10px 20px #e6d5c9, -10px -10px 20px #ffffff;
+            transform: translateY(-3px);
+        }
+        
+        /* Event cards */
+        .event-card-header {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e89a3c, #f5a847);
+            color: #ffffff;
+        }
+        
+        .event-card-body {
+            background: #FFEEE2;
+        }
+        
+        .event-desc {
+            font-family: 'Poppins', sans-serif;
+            color: #2c2c2c;
+        }
+        
+        .event-date,
+        .event-participants {
+            font-family: 'Poppins', sans-serif;
+            color: #6b6b6b;
+        }
+        
+        .event-card-body a {
+            font-family: 'Poppins', sans-serif;
+            color: #e89a3c;
+            transition: all 0.2s ease;
+        }
+        
+        .event-card-body a:hover {
+            color: #d98a2c;
+            opacity: 0.8;
+        }
+        
+        /* Progress card */
+        .info-item {
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.44);
+            color: #2c2c2c;
+            box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-ring {
+            background: linear-gradient(135deg, #e89a3c 0%, #f5a847 100%);
+            box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        }
+        
+        .progress-ring::before {
+            background: #FFEEE2;
+            box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+        }
+        
+        .progress-text span {
+            font-family: 'Poppins', sans-serif;
+            color: #6b6b6b;
+        }
+        
+        .progress-text strong {
+            font-family: 'Poppins', sans-serif;
+            color: #e89a3c;
+        }
+        
+        .progress-main-card a {
+            font-family: 'Poppins', sans-serif;
+            color: #e89a3c;
+        }
+        
+        .progress-main-card a:hover {
+            color: #d98a2c;
+            opacity: 0.8;
+        }
+        
+        /* Small cards */
+        .small-card {
+            background: #FFEEE2;
+            box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .small-card:hover {
+            box-shadow: 10px 10px 20px #e6d5c9, -10px -10px 20px #ffffff;
+            transform: translateY(-5px);
+        }
+        
+        .card-icon-box {
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon-athena,
+        .icon-projects {
+            background: linear-gradient(135deg, #e89a3c, #f5a847);
+        }
+        
+        .icon-const,
+        .icon-teams {
+            background: linear-gradient(135deg, #f5a847, #e89a3c);
+        }
+        
+        .card-content-box h4 {
+            font-family: 'Poppins', sans-serif;
+            color: #2c2c2c;
+        }
+        
+        .card-content-box p {
+            font-family: 'Poppins', sans-serif;
+            color: #6b6b6b;
+        }
+    </style>
+
     <section class="left-col">
         <h3 class="section-title">Eventos actuales</h3>
         
@@ -17,7 +159,7 @@
                         Participantes: {{ $miInscripcion->evento->inscripciones->count() }}
                     </p>
                     <div class="mt-4">
-                        <a href="{{ route('estudiante.eventos.show', $miInscripcion->evento) }}" class="text-indigo-600 hover:text-indigo-800 font-semibold text-sm">
+                        <a href="{{ route('estudiante.eventos.show', $miInscripcion->evento) }}">
                             Ver detalles del evento →
                         </a>
                     </div>
@@ -44,7 +186,7 @@
                         Participantes: {{ $evento->inscripciones->count() }}
                     </p>
                     <div class="mt-4">
-                        <a href="{{ route('estudiante.eventos.show', $evento) }}" class="text-indigo-600 hover:text-indigo-800 font-semibold text-sm">
+                        <a href="{{ route('estudiante.eventos.show', $evento) }}">
                             Ver detalles →
                         </a>
                     </div>
@@ -80,7 +222,7 @@
                     </div>
                 </div>
                 <div class="mt-4 text-center">
-                    <a href="{{ route('estudiante.equipo.index') }}" class="text-indigo-600 hover:text-indigo-800 font-semibold text-sm">
+                    <a href="{{ route('estudiante.equipo.index') }}">
                         Ver detalles del equipo →
                     </a>
                 </div>

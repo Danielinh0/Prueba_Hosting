@@ -1,7 +1,152 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-12">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    /* Fondo degradado */
+    .recursos-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Textos */
+    .recursos-page h2,
+    .recursos-page h3,
+    .recursos-page h4 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+    }
+    
+    .recursos-page p {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+    }
+    
+    .recursos-page a {
+        font-family: 'Poppins', sans-serif;
+        color: #e89a3c;
+        transition: all 0.2s ease;
+    }
+    
+    .recursos-page a:hover {
+        color: #d98a2c;
+        opacity: 0.8;
+    }
+    
+    /* Cards neuromórficas */
+    .neuro-card {
+        background: #FFEEE2;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        transition: all 0.3s ease;
+    }
+    
+    .neuro-card:hover {
+        box-shadow: 10px 10px 20px #e6d5c9, -10px -10px 20px #ffffff;
+    }
+    
+    /* Inputs y selects neuromórficos */
+    .neuro-input,
+    .neuro-select,
+    .neuro-textarea {
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .neuro-input:focus,
+    .neuro-select:focus,
+    .neuro-textarea:focus {
+        outline: none;
+        box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
+    }
+    
+    /* Labels */
+    .neuro-label {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    /* Botón principal */
+    .neuro-button {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .neuro-button:hover {
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    /* Recursos items */
+    .recurso-item {
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .recurso-item:hover {
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-3px);
+    }
+    
+    .recurso-item h4 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-weight: 600;
+    }
+    
+    .recurso-item p {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+    }
+    
+    .recurso-item a {
+        font-family: 'Poppins', sans-serif;
+        color: #e89a3c;
+        font-weight: 600;
+    }
+    
+    /* Botón delete */
+    .delete-button {
+        color: #ef4444;
+        transition: all 0.2s ease;
+    }
+    
+    .delete-button:hover {
+        color: #dc2626;
+    }
+    
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 3rem 0;
+    }
+    
+    .empty-state svg {
+        margin: 0 auto;
+        color: #6b6b6b;
+    }
+    
+    .empty-state p {
+        margin-top: 1rem;
+        color: #6b6b6b;
+    }
+</style>
+
+<div class="recursos-page py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
@@ -9,26 +154,26 @@
                 <h2 class="text-3xl font-bold text-gray-900">Recursos de {{ $equipo->nombre }}</h2>
                 <p class="mt-2 text-gray-600">Biblioteca de recursos compartidos del equipo</p>
             </div>
-            <a href="{{ route('estudiante.equipo.index') }}" class="text-indigo-600 hover:text-indigo-800 font-semibold">
+            <a href="{{ route('estudiante.equipo.index') }}" class="font-semibold">
                 ← Volver a Mi Equipo
             </a>
         </div>
 
         <!-- Formulario para Agregar Recurso -->
-        <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Compartir Nuevo Recurso</h3>
+        <div class="neuro-card rounded-lg p-6 mb-8">
+            <h3 class="text-lg font-semibold mb-4">Compartir Nuevo Recurso</h3>
             
             <form action="{{ route('estudiante.recursos.store', $equipo) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @csrf
                 
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Nombre del Recurso</label>
-                    <input type="text" name="nombre" required class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ej: Documentación de la API">
+                    <label class="neuro-label block mb-2">Nombre del Recurso</label>
+                    <input type="text" name="nombre" required class="neuro-input w-full rounded-md" placeholder="Ej: Documentación de la API">
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
-                    <select name="tipo" required class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <label class="neuro-label block mb-2">Tipo</label>
+                    <select name="tipo" required class="neuro-select w-full rounded-md">
                         <option value="link">🔗 Link</option>
                         <option value="documento">📄 Documento</option>
                         <option value="video">🎥 Video</option>
@@ -38,17 +183,17 @@
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">URL</label>
-                    <input type="url" name="url" required class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="https://...">
+                    <label class="neuro-label block mb-2">URL</label>
+                    <input type="url" name="url" required class="neuro-input w-full rounded-md" placeholder="https://...">
                 </div>
                 
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Descripción (Opcional)</label>
-                    <textarea name="descripcion" rows="2" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Breve descripción del recurso"></textarea>
+                    <label class="neuro-label block mb-2">Descripción (Opcional)</label>
+                    <textarea name="descripcion" rows="2" class="neuro-textarea w-full rounded-md" placeholder="Breve descripción del recurso"></textarea>
                 </div>
                 
                 <div class="md:col-span-2">
-                    <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-semibold transition">
+                    <button type="submit" class="neuro-button px-6 py-2 rounded-md">
                         Compartir Recurso
                     </button>
                 </div>
@@ -56,34 +201,34 @@
         </div>
 
         <!-- Lista de Recursos -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-6">Recursos Compartidos ({{ $recursos->count() }})</h3>
+        <div class="neuro-card rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-6">Recursos Compartidos ({{ $recursos->count() }})</h3>
             
             @if($recursos->isEmpty())
-                <div class="text-center py-12">
-                    <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="empty-state">
+                    <svg class="h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                     </svg>
-                    <p class="mt-4 text-gray-500">Aún no hay recursos compartidos</p>
-                    <p class="text-sm text-gray-400">Comparte links, documentos y más con tu equipo</p>
+                    <p class="mt-4">Aún no hay recursos compartidos</p>
+                    <p class="text-sm">Comparte links, documentos y más con tu equipo</p>
                 </div>
             @else
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach($recursos as $recurso)
-                        <div class="border border-gray-200 rounded-lg p-4 hover:border-indigo-300 transition">
+                        <div class="recurso-item rounded-lg p-4">
                             <div class="flex items-start justify-between mb-3">
                                 <div class="flex items-center space-x-3">
                                     <span class="text-2xl">{{ $recurso->icono }}</span>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900 line-clamp-1">{{ $recurso->nombre }}</h4>
-                                        <p class="text-xs text-gray-500">{{ $recurso->tipo }}</p>
+                                        <h4 class="line-clamp-1">{{ $recurso->nombre }}</h4>
+                                        <p class="text-xs">{{ $recurso->tipo }}</p>
                                     </div>
                                 </div>
                                 
                                 <form action="{{ route('estudiante.recursos.destroy', $recurso) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800" onclick="return confirm('¿Eliminar este recurso?')">
+                                    <button type="submit" class="delete-button" onclick="return confirm('¿Eliminar este recurso?')">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
@@ -92,21 +237,21 @@
                             </div>
                             
                             @if($recurso->descripcion)
-                                <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ $recurso->descripcion }}</p>
+                                <p class="text-sm mb-3 line-clamp-2">{{ $recurso->descripcion }}</p>
                             @endif
                             
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-2">
                                     <img src="{{ $recurso->subidoPor->foto_perfil_url }}" alt="{{ $recurso->subidoPor->nombre }}" class="w-6 h-6 rounded-full">
-                                    <p class="text-xs text-gray-500">{{ $recurso->subidoPor->nombre }}</p>
+                                    <p class="text-xs">{{ $recurso->subidoPor->nombre }}</p>
                                 </div>
                                 
-                                <a href="{{ $recurso->url }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm font-semibold">
+                                <a href="{{ $recurso->url }}" target="_blank" class="text-sm font-semibold">
                                     Abrir →
                                 </a>
                             </div>
                             
-                            <p class="text-xs text-gray-400 mt-2">{{ $recurso->created_at->diffForHumans() }}</p>
+                            <p class="text-xs mt-2" style="color: #9ca3af;">{{ $recurso->created_at->diffForHumans() }}</p>
                         </div>
                     @endforeach
                 </div>
