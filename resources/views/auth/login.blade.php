@@ -170,6 +170,7 @@
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.4);
             transition: transform 0.2s;
+            text-decoration: none;
         }
 
         .social-btn.fb { background-color: #e67e22; }
@@ -221,8 +222,12 @@
     @endif
 
     <div class="social-buttons">
-        <div class="social-btn fb"><i class="fab fa-facebook-f"></i></div>
-        <div class="social-btn go"><i class="fab fa-google"></i></div>
+        <a href="https://www.facebook.com/p/TECNM-Oaxaca-100064684089409/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="social-btn fb" title="Síguenos en Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.oaxaca.tecnm.mx/" target="_blank" rel="noopener noreferrer" class="social-btn go" title="Visita nuestro sitio web">
+            <i class="fab fa-google"></i>
+        </a>
     </div>
 
     <div class="login-card">
