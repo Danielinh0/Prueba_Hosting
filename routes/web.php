@@ -23,6 +23,7 @@ use App\Http\Controllers\Estudiante\TecnologiaController;
 use App\Http\Controllers\Estudiante\ActividadController;
 use App\Http\Controllers\Estudiante\StatsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Jurado\AcusesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,6 +74,9 @@ Route::middleware(['auth', 'role:jurado'])->prefix('jurado')->name('jurado.')->g
     Route::get('/evaluaciones/{inscripcion}/create', [App\Http\Controllers\Jurado\EvaluacionController::class, 'create'])->name('evaluaciones.create');
     Route::post('/evaluaciones/{inscripcion}', [App\Http\Controllers\Jurado\EvaluacionController::class, 'store'])->name('evaluaciones.store');
     Route::get('/evaluaciones/{evaluacion}', [App\Http\Controllers\Jurado\EvaluacionController::class, 'show'])->name('evaluaciones.show');
+
+    // Acuses
+    Route::get('/acuses', [AcusesController::class, 'index'])->name('acuses.index');
 });
 
 //? Rutas para Estudiantes
