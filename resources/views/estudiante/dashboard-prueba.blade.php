@@ -156,7 +156,7 @@
                     <p class="event-desc">{{ Str::limit($miInscripcion->evento->descripcion ?? 'Sin descripción disponible', 100) }}</p>
                     <p class="event-date">{{ $miInscripcion->evento->fecha_inicio->format('d \d\e F, Y') }}</p>
                     <p class="event-participants">
-                        Participantes: {{ $miInscripcion->evento->inscripciones->count() }}
+                        Equipos que Participan: {{ $miInscripcion->evento->inscripciones->count() }}
                     </p>
                     <div class="mt-4">
                         <a href="{{ route('estudiante.eventos.show', $miInscripcion->evento) }}">
@@ -251,15 +251,41 @@
                 </div>
             </a>
 
-            <div class="small-card neu-card">
-                <a href="{{ route('estudiante.constancias.index') }}">  
+            {{-- Card Proyecto del Evento --}}
+            @if($miInscripcion && $miInscripcion->evento->estado === 'En Progreso')
+                @php
+                    $evento = $miInscripcion->evento;
+                    $proyectoEvento = $evento->tipo_proyecto === 'general' 
+                        ? $evento->proyectoGeneral 
+                        : $miInscripcion->proyectoEvento;
+                @endphp
+                
+                @if($proyectoEvento && $proyectoEvento->publicado)
+                    <a href="{{ route('estudiante.proyecto-evento.show') }}" class="small-card neu-card">
+                        <div class="card-icon-box icon-const"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="card-content-box">
+                            <h4>PROYECTO DEL EVENTO</h4>
+                            <p>{{ Str::limit($proyectoEvento->titulo, 30) }}</p>
+                        </div>
+                    </a>
+                @else
+                    <div class="small-card neu-card">
+                        <div class="card-icon-box icon-const"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="card-content-box">
+                            <h4>PROYECTO DEL EVENTO</h4>
+                            <p>Esperando publicación...</p>
+                        </div>
+                    </div>
+                @endif
+            @else
+                <div class="small-card neu-card">
                     <div class="card-icon-box icon-const"><i class="fas fa-certificate"></i></div>
                     <div class="card-content-box">
                         <h4>CONSTANCIAS</h4>
                         <p>Genera tus constancias</p>
                     </div>
-                </a>
-            </div>
+                </div>
+            @endif
 
             @if($miInscripcion && $miInscripcion->proyecto)
                 <a href="#" class="small-card neu-card">

@@ -29,8 +29,8 @@ class EventoController extends Controller
         if ($request->filled('status')) {
             $query->where('estado', $request->input('status'));
         } else {
-            // Por defecto, mostrar solo Activos y Próximos si no hay filtro de estado específico
-            $query->whereIn('estado', ['Activo', 'Próximo', 'Cerrado', 'Finalizado']);
+            // Por defecto, mostrar todos los estados relevantes
+            $query->whereIn('estado', ['En Progreso', 'Activo', 'Próximo', 'Cerrado', 'Finalizado']);
         }
 
 

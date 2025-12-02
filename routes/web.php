@@ -159,6 +159,9 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::get('equipo/proyecto/edit', [App\Http\Controllers\Estudiante\ProyectoController::class, 'edit'])->name('proyecto.edit');
     Route::patch('equipo/proyecto', [App\Http\Controllers\Estudiante\ProyectoController::class, 'update'])->name('proyecto.update');
     
+    //! Ruta para ver Proyecto del Evento (asignado por admin)
+    Route::get('proyecto-evento', [App\Http\Controllers\Estudiante\ProyectoController::class, 'showProyectoEvento'])->name('proyecto-evento.show');
+    
     // Rutas para Tareas del Proyecto
     Route::get('equipo/proyecto/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'index'])->name('tareas.index');
     Route::post('equipo/proyecto/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'store'])->name('tareas.store');
@@ -192,6 +195,16 @@ Route::post('eventos/{evento}/proyecto/{inscripcion}/store-individual', [App\Htt
 // Rutas para crear equipos sin evento
 Route::get('equipos/crear', [EstudianteEquipoController::class, 'createSinEvento'])->name('equipos.create-sin-evento');
 Route::post('equipos/guardar', [EstudianteEquipoController::class, 'storeSinEvento'])->name('equipos.store-sin-evento');
+});
+
+//? Rutas para Jurados
+Route::middleware(['auth', 'role:jurado'])->prefix('jurado')->name('jurado.')->group(function () {
+    Route::get('/dashboard', App\Http\Controllers\Jurado\DashboardController::class)->name('dashboard');
+    
+    // Rutas para Proyectos
+    Route::get('/proyectos', [App\Http\Controllers\Jurado\ProyectoController::class, 'index'])->name('proyectos.index');
+    Route::get('/proyectos/{proyectoEvento}', [App\Http\Controllers\Jurado\ProyectoController::class, 'show'])->name('proyectos.show');
+    Route::get('/eventos/{evento}/proyectos', [App\Http\Controllers\Jurado\ProyectoController::class, 'evento'])->name('proyectos.evento');
 });
 
 

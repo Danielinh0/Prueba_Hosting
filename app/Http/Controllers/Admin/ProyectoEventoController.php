@@ -39,9 +39,9 @@ class ProyectoEventoController extends Controller
         }
 
         // Verificar si ya existe un proyecto
-        $proyectoExistente = $evento->proyectoGeneral;
+        $proyectoEvento = $evento->proyectoGeneral;
 
-        return view('admin.proyectos-evento.create', compact('evento', 'proyectoExistente'));
+        return view('admin.proyectos-evento.create', compact('evento', 'proyectoEvento'));
     }
 
     /**
@@ -139,9 +139,30 @@ class ProyectoEventoController extends Controller
     public function publicar(ProyectoEvento $proyectoEvento)
     {
         $proyectoEvento->publicar();
+        $evento = $proyectoEvento->evento;
+        $mensaje = 'Proyecto publicado exitosamente.';
 
-        return redirect()->back()
-            ->with('success', 'Proyecto publicado exitosamente.');
+        // Si es proyecto GENERAL, cambiar evento a "En Progreso" automáticamente
+        if ($proyectoEvento->esGeneral()) {
+            if ($evento->cambiarAEnProgreso()) {
+                $mensaje .= ' El evento ahora está en progreso y visible para los estudiantes.';
+            }
+        }
+        
+        // Si es proyecto INDIVIDUAL, verificar si todos están publicados
+        if ($proyectoEvento->esIndividual()) {
+            if ($evento->todosProyectosIndividualesPublicados()) {
+                if ($evento->cambiarAEnProgreso()) {
+                    $mensaje .= ' ¡Todos los proyectos han sido publicados! El evento ahora está en progreso.';
+                }
+            } else {
+                $totalEquipos = $evento->inscripciones()->where('status_registro', 'Completo')->count();
+                $publicados = $evento->proyectosEventoIndividuales()->where('publicado', true)->count();
+                $mensaje .= " Proyectos publicados: {$publicados}/{$totalEquipos}";
+            }
+        }
+
+        return redirect()->back()->with('success', $mensaje);
     }
 
     /**
@@ -182,6 +203,9 @@ class ProyectoEventoController extends Controller
             return redirect()->route('admin.eventos.show', $evento)
                 ->with('error', 'Este evento no está configurado para proyectos individuales.');
         }
+
+        // Cargar relaciones necesarias
+        $inscripcion->load('equipo.miembros.user.estudiante', 'equipo.miembros.rol');
 
         return view('admin.proyectos-evento.create-individual', compact('evento', 'inscripcion'));
     }

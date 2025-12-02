@@ -18,20 +18,23 @@ class MiEquipoController extends Controller
     {
         $user = Auth::user();
 
-        // Buscar TODAS las inscripciones del estudiante (con o sin evento, no finalizadas)
+        // Buscar TODAS las inscripciones del estudiante
         $misInscripciones = InscripcionEvento::whereHas('miembros', function ($query) use ($user) {
             $query->where('id_estudiante', $user->id_usuario);
         })->where(function ($query) {
-            // Equipos sin evento O eventos no finalizados
+            // Equipos sin evento O eventos NO finalizados (incluyendo eliminados)
             $query->whereNull('id_evento')
                   ->orWhereHas('evento', function ($q) {
-                      $q->whereIn('estado', ['Próximo', 'Activo', 'Cerrado']);
+                      $q->withTrashed() // Incluir eventos eliminados (soft deleted)
+                        ->where('estado', '!=', 'Finalizado');
                   });
         })->with([
             'equipo', 
             'miembros.user.estudiante.carrera',
             'miembros.rol',
-            'evento'
+            'evento' => function ($query) {
+                $query->withTrashed(); // Incluir eventos eliminados en la relación
+            }
         ])->get();
         
         // Preparar datos de cada equipo
@@ -85,7 +88,9 @@ class MiEquipoController extends Controller
             'equipo',
             'miembros.user.estudiante.carrera',
             'miembros.rol',
-            'evento'
+            'evento' => function ($query) {
+                $query->withTrashed(); // Incluir eventos eliminados
+            }
         ]);
 
         $esLider = $miembro->es_lider;

@@ -207,6 +207,11 @@
         background: rgba(254, 240, 138, 0.8);
         color: #854d0e;
     }
+
+    .status-en-progreso {
+        background: linear-gradient(135deg, #6366f1, #4f46e5); /* Indigo gradient */
+        color: #ffffff;
+    }
     
     .status-proximo {
         background: rgba(191, 219, 254, 0.8);
@@ -298,6 +303,7 @@
                         <label for="status" class="sr-only">Estado</label>
                         <select name="status" id="status" class="neuro-select">
                             <option value="">Todos los estados</option>
+                            <option value="En Progreso" {{ request('status') == 'En Progreso' ? 'selected' : '' }}>En Progreso</option>
                             <option value="Próximo" {{ request('status') == 'Próximo' ? 'selected' : '' }}>Próximo</option>
                             <option value="Activo" {{ request('status') == 'Activo' ? 'selected' : '' }}>Activo</option>
                             <option value="Cerrado" {{ request('status') == 'Cerrado' ? 'selected' : '' }}>Cerrado</option>
@@ -313,7 +319,7 @@
         </div>
 
         @php
-            $statusOrder = ['Activo', 'Próximo', 'Cerrado', 'Finalizado'];
+            $statusOrder = ['En Progreso', 'Activo', 'Próximo', 'Cerrado', 'Finalizado'];
         @endphp
 
         @foreach ($statusOrder as $status)
@@ -336,6 +342,7 @@
                                     <h3>{{ $evento->nombre }}</h3>
                                     <span class="status-badge 
                                         @if ($evento->estado == 'Activo') status-activo
+                                        @elseif ($evento->estado == 'En Progreso') status-en-progreso
                                         @elseif ($evento->estado == 'Cerrado') status-cerrado
                                         @elseif ($evento->estado == 'Próximo') status-proximo
                                         @else status-finalizado @endif">

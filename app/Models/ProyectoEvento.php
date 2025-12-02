@@ -98,4 +98,20 @@ class ProyectoEvento extends Model
         $this->fecha_publicacion = null;
         $this->save();
     }
+
+    /**
+     * Verificar si es un proyecto general (para todos los equipos)
+     */
+    public function esGeneral()
+    {
+        return $this->id_inscripcion === null;
+    }
+
+    /**
+     * Verificar si es un proyecto individual (para un equipo específico)
+     */
+    public function esIndividual()
+    {
+        return $this->id_inscripcion !== null;
+    }
 }

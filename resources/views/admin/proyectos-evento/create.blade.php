@@ -178,15 +178,19 @@
                 ← Volver al Evento
             </a>
             <h2 class="font-semibold text-2xl">
-                Editar Proyecto del Evento
+                {{ $proyectoEvento ? 'Editar' : 'Crear' }} Proyecto del Evento
             </h2>
             <p class="mt-1">{{ $evento->nombre }}</p>
         </div>
 
         <div class="main-card">
-            <form action="{{ route('admin.proyectos-evento.update', $proyectoEvento) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ $proyectoEvento ? route('admin.proyectos-evento.update', $proyectoEvento) : route('admin.proyectos-evento.store', $evento) }}" 
+                  method="POST" 
+                  enctype="multipart/form-data">
                 @csrf
-                @method('PATCH')
+                @if($proyectoEvento)
+                    @method('PATCH')
+                @endif
 
                 {{-- Título --}}
                 <div class="mb-6">
@@ -194,7 +198,7 @@
                         Título del Proyecto <span class="required-asterisk">*</span>
                     </label>
                     <input type="text" name="titulo" id="titulo" 
-                           value="{{ old('titulo', $proyectoEvento->titulo) }}"
+                           value="{{ old('titulo', $proyectoEvento->titulo ?? '') }}"
                            class="neuro-input"
                            required maxlength="200"
                            placeholder="Ej: Desarrollar solución educativa innovadora">
@@ -210,7 +214,7 @@
                     </label>
                     <textarea name="descripcion_completa" id="descripcion_completa" rows="6"
                               class="neuro-textarea"
-                              placeholder="Describe detalladamente el proyecto, contexto, tecnologías recomendadas...">{{ old('descripcion_completa', $proyectoEvento->descripcion_completa) }}</textarea>
+                              placeholder="Describe detalladamente el proyecto, contexto, tecnologías recomendadas...">{{ old('descripcion_completa', $proyectoEvento->descripcion_completa ?? '') }}</textarea>
                     <p class="helper-text">Puedes usar Markdown para formatear el texto</p>
                     @error('descripcion_completa')
                         <p class="error-message">{{ $message }}</p>
@@ -224,7 +228,7 @@
                     </label>
                     <textarea name="objetivo" id="objetivo" rows="3"
                               class="neuro-textarea"
-                              placeholder="¿Qué se espera lograr con este proyecto?">{{ old('objetivo', $proyectoEvento->objetivo) }}</textarea>
+                              placeholder="¿Qué se espera lograr con este proyecto?">{{ old('objetivo', $proyectoEvento->objetivo ?? '') }}</textarea>
                     @error('objetivo')
                         <p class="error-message">{{ $message }}</p>
                     @enderror
@@ -237,7 +241,7 @@
                     </label>
                     <textarea name="requisitos" id="requisitos" rows="4"
                               class="neuro-textarea"
-                              placeholder="Tecnologías, herramientas, conocimientos previos necesarios...">{{ old('requisitos', $proyectoEvento->requisitos) }}</textarea>
+                              placeholder="Tecnologías, herramientas, conocimientos previos necesarios...">{{ old('requisitos', $proyectoEvento->requisitos ?? '') }}</textarea>
                     @error('requisitos')
                         <p class="error-message">{{ $message }}</p>
                     @enderror
@@ -250,7 +254,7 @@
                     </label>
                     <textarea name="premios" id="premios" rows="3"
                               class="neuro-textarea"
-                              placeholder="Premios para los ganadores...">{{ old('premios', $proyectoEvento->premios) }}</textarea>
+                              placeholder="Premios para los ganadores...">{{ old('premios', $proyectoEvento->premios ?? '') }}</textarea>
                     @error('premios')
                         <p class="error-message">{{ $message }}</p>
                     @enderror
@@ -263,7 +267,7 @@
                     <label for="archivo_bases" class="form-label">
                         📄 Archivo de Bases (PDF)
                     </label>
-                    @if($proyectoEvento->archivo_bases)
+                    @if($proyectoEvento && $proyectoEvento->archivo_bases)
                         <div class="file-info-box">
                             <p>
                                 ✓ Archivo actual: <span class="file-name">{{ basename($proyectoEvento->archivo_bases) }}</span>
@@ -285,7 +289,7 @@
                     <label for="archivo_recursos" class="form-label">
                         📦 Recursos Adicionales (ZIP)
                     </label>
-                    @if($proyectoEvento->archivo_recursos)
+                    @if($proyectoEvento && $proyectoEvento->archivo_recursos)
                         <div class="file-info-box">
                             <p>
                                 ✓ Archivo actual: <span class="file-name">{{ basename($proyectoEvento->archivo_recursos) }}</span>
@@ -308,7 +312,7 @@
                         🔗 URL a Recursos Externos
                     </label>
                     <input type="url" name="url_externa" id="url_externa" 
-                           value="{{ old('url_externa', $proyectoEvento->url_externa) }}"
+                           value="{{ old('url_externa', $proyectoEvento->url_externa ?? '') }}"
                            class="neuro-input"
                            placeholder="https://drive.google.com/...">
                     <p class="helper-text">Google Drive, Dropbox, etc.</p>
@@ -323,7 +327,7 @@
                         Cancelar
                     </a>
                     <button type="submit" class="button-primary">
-                        Actualizar Proyecto
+                        {{ $proyectoEvento ? 'Actualizar' : 'Crear' }} Proyecto
                     </button>
                 </div>
             </form>

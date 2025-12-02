@@ -246,7 +246,7 @@
             <p class="mt-1">{{ $evento->nombre }}</p>
             <div class="info-box">
                 <p>
-                    💡 <strong>Modo Individual:</strong> Cada equipo tendrá un proyecto diferente asignado por ti.
+                     <strong>Modo Individual:</strong> Cada equipo tendrá un proyecto diferente asignado por ti.
                 </p>
             </div>
         </div>
@@ -332,7 +332,7 @@
                                             @else
                                                 <a href="{{ route('admin.proyectos-evento.create-individual', [$evento, $inscripcion]) }}" 
                                                    class="action-button inline-flex items-center">
-                                                    ➕ Asignar Proyecto
+                                                     Asignar Proyecto
                                                 </a>
                                             @endif
                                         </td>

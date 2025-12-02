@@ -81,7 +81,7 @@
             {{-- Avances del Proyecto --}}
             <div class="bg-white shadow-sm rounded-lg p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-bold text-gray-900">📊 Avances Registrados</h3>
+                    <h3 class="text-lg font-bold text-gray-900">Avances Registrados</h3>
                     <span class="text-2xl font-bold text-indigo-600">
                         {{ $proyecto->avances->count() }}
                     </span>

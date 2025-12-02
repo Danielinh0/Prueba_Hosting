@@ -35,6 +35,7 @@ class DashboardController extends Controller
 
         // 1. Eventos y sus relaciones
         $eventosAsignados = $jurado->eventos()
+            ->withCount('inscripciones') 
             ->with(['inscripciones' => function($q) {
                 $q->where('status_registro', 'Completo')
                   ->with(['equipo', 'proyecto.avances', 'proyecto.tareas']);

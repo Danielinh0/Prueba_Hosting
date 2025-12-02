@@ -61,4 +61,58 @@ class Evento extends Model
         return $this->hasOne(ProyectoEvento::class, 'id_evento', 'id_evento')
                     ->whereNull('id_inscripcion');
     }
+
+    /**
+     * Proyectos individuales del evento (con inscripción específica).
+     */
+    public function proyectosEventoIndividuales()
+    {
+        return $this->hasMany(ProyectoEvento::class, 'id_evento', 'id_evento')
+                    ->whereNotNull('id_inscripcion');
+    }
+
+    /**
+     * Scope para eventos en progreso.
+     */
+    public function scopeEnProgreso($query)
+    {
+        return $query->where('estado', 'En Progreso');
+    }
+
+    /**
+     * Cambiar el estado del evento a "En Progreso".
+     */
+    public function cambiarAEnProgreso()
+    {
+        if (in_array($this->estado, ['Activo', 'Cerrado'])) {
+            $this->estado = 'En Progreso';
+            $this->save();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Verificar si todos los proyectos individuales están publicados.
+     */
+    public function todosProyectosIndividualesPublicados()
+    {
+        if ($this->tipo_proyecto !== 'individual') {
+            return false;
+        }
+
+        $totalEquiposCompletos = $this->inscripciones()
+            ->where('status_registro', 'Completo')
+            ->count();
+
+        if ($totalEquiposCompletos === 0) {
+            return false;
+        }
+
+        $proyectosPublicados = $this->proyectosEventoIndividuales()
+            ->where('publicado', true)
+            ->count();
+
+        return $totalEquiposCompletos === $proyectosPublicados;
+    }
 }

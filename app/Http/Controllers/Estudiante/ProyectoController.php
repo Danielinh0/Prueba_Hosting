@@ -17,7 +17,12 @@ class ProyectoController extends Controller
     {
         return InscripcionEvento::whereHas('miembros', function($q) {
             $q->where('id_estudiante', Auth::id());
-        })->with(['equipo', 'evento', 'proyecto'])->first();
+        })
+        ->whereHas('evento', function($q) {
+            $q->where('estado', 'En Progreso');
+        })
+        ->with(['equipo', 'evento', 'proyecto'])
+        ->first();
     }
 
     /**
@@ -47,6 +52,45 @@ class ProyectoController extends Controller
         $proyecto = $inscripcion->proyecto;
 
         return view('estudiante.proyecto.show', compact('inscripcion', 'proyecto', 'esLider'));
+    }
+
+    /**
+     * Mostrar el Proyecto del Evento (asignado por el admin)
+     */
+    public function showProyectoEvento()
+    {
+        $inscripcion = $this->getInscripcion();
+        
+        if (!$inscripcion) {
+            return redirect()->route('estudiante.eventos.index')
+                ->with('info', 'No estás participando en ningún evento que se encuentre "En Progreso".');
+        }
+
+        $evento = $inscripcion->evento;
+
+        // Defensive check for orphaned inscription records
+        if (!$evento) {
+            return redirect()->route('estudiante.dashboard')
+                ->with('error', 'El evento asociado a tu inscripción ya no existe o ha sido eliminado.');
+        }
+
+        // Verificar que el evento esté en progreso
+        if ($evento->estado !== 'En Progreso') {
+            return redirect()->route('estudiante.dashboard')
+                ->with('info', 'El proyecto aún no está disponible. Espera a que inicie el evento.');
+        }
+
+        // Obtener el proyecto del evento (general o individual)
+        if ($evento->tipo_proyecto === 'general') {
+            $proyectoEvento = $evento->proyectoGeneral;
+        } else {
+            $proyectoEvento = $inscripcion->proyectoEvento;
+        }
+
+        $esLider = $this->esLider($inscripcion);
+        $proyecto = $inscripcion->proyecto; // Solución del equipo
+
+        return view('estudiante.proyecto-evento.show', compact('inscripcion', 'proyectoEvento', 'proyecto', 'esLider'));
     }
 
     /**

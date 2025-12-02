@@ -61,6 +61,11 @@
         color: #ffffff;
     }
     
+    .status-en-progreso {
+        background: linear-gradient(135deg, #6366f1, #4f46e5); /* Indigo gradient */
+        color: #ffffff;
+    }
+
     .status-proximo {
         background: rgba(191, 219, 254, 0.8);
         color: #1e40af;
@@ -230,6 +235,7 @@
                     </div>
                     <span class="status-badge 
                         @if ($evento->estado == 'Activo') status-activo
+                        @elseif ($evento->estado == 'En Progreso') status-en-progreso
                         @elseif ($evento->estado == 'Próximo') status-proximo
                         @else status-finalizado @endif">
                         {{ $evento->estado }}
@@ -341,36 +347,44 @@
 
                 <!-- Acciones de Estudiante -->
                 <div class="section-divider">
-                    <h3 class="text-lg font-medium">Inscripción</h3>
-                    <div class="mt-4 flex flex-col sm:flex-row gap-3">
-                        @if($evento->estado === 'Activo')
-                            <a href="{{ route('estudiante.eventos.equipos.index', $evento) }}" 
+                    <h3 class="text-lg font-medium">Acciones</h3>
+                    <div class="mt-4 flex flex-wrap items-center gap-4">
+
+        @if ($yaTieneEquipo)
+            <div class="flex flex-wrap items-center gap-4">
+                {{-- If student is in a team, show the "Ver Mi Proyecto" button only if the event is "En Progreso" --}}
+                @if($evento->estado === 'En Progreso')
+                    <a href="{{ route('estudiante.proyecto-evento.show') }}"
+                       class="action-button-primary inline-flex items-center justify-center px-6 py-3 rounded-md">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Ver Mi Proyecto
+                    </a>
+                @endif
+
+                {{-- Also show a badge confirming their enrollment --}}
+                <div class="inscrito-badge inline-flex items-center px-6 py-3 rounded-md">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Ya estás inscrito en este evento
+                </div>
+            </div>
+
+                        @elseif ($evento->estado === 'Activo')
+                            {{-- If student is NOT in a team AND event is active, show inscription buttons --}}
+                            <a href="{{ route('estudiante.eventos.equipos.index', $evento) }}"
                                class="action-button-primary inline-flex items-center justify-center px-6 py-3 rounded-md">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                </svg>
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                                 Ver Equipos / Crear Equipo
                             </a>
-                            
-                            @if(!$yaTieneEquipo)
-                                <a href="{{ route('estudiante.eventos.select-equipo-existente', $evento) }}" 
-                                   class="action-button-secondary inline-flex items-center justify-center px-6 py-3 rounded-md">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                    </svg>
-                                    Registrar Equipo Existente
-                                </a>
-                            @else
-                                <div class="inscrito-badge inline-flex items-center px-6 py-3 rounded-md">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    Ya estás inscrito en este evento
-                                </div>
-                            @endif
+                            <a href="{{ route('estudiante.eventos.select-equipo-existente', $evento) }}"
+                               class="action-button-secondary inline-flex items-center justify-center px-6 py-3 rounded-md">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                Registrar Equipo Existente
+                            </a>
                         @else
-                            <p>Las inscripciones no están abiertas para este evento. Vuelve a consultar cuando el evento esté 'Activo'.</p>
+                            {{-- For all other cases (not in team, event not active), show a message --}}
+                            <p>Las inscripciones no están abiertas para este evento.</p>
                         @endif
+
                     </div>
                 </div>
 

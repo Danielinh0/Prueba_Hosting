@@ -17,25 +17,42 @@ class EventoController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $idUsuario = $user->id_usuario;
 
-        // 1. Obtener los eventos en los que el usuario está inscrito
-        $misEventosInscritos = Evento::whereHas('inscripciones.miembros', function ($query) use ($user) {
-            $query->where('id_estudiante', $user->id_usuario);
-        })->orderBy('fecha_inicio', 'desc')->get();
+        // Obtener IDs de todos los eventos donde el usuario está inscrito
+        $eventosInscritosIds = Evento::whereHas('inscripciones.miembros', function ($query) use ($idUsuario) {
+            $query->where('id_estudiante', $idUsuario);
+        })->pluck('id_evento');
 
-        $misEventosIds = $misEventosInscritos->pluck('id_evento');
+        // 1. Mis Eventos "En Progreso"
+        $misEventosEnProgreso = Evento::whereIn('id_evento', $eventosInscritosIds)
+            ->where('estado', 'En Progreso')
+            ->orderBy('fecha_inicio', 'desc')
+            ->get();
 
+        // 2. Mis otros eventos inscritos (Activos, Finalizados, etc.)
+        $misOtrosEventosInscritos = Evento::whereIn('id_evento', $eventosInscritosIds)
+            ->where('estado', '!=', 'En Progreso')
+            ->orderBy('fecha_inicio', 'desc')
+            ->get();
+
+        // 3. Eventos disponibles para unirse (no inscritos)
         $eventosActivos = Evento::where('estado', 'Activo')
-                                 ->whereNotIn('id_evento', $misEventosIds)
+                                 ->whereNotIn('id_evento', $eventosInscritosIds)
                                  ->orderBy('fecha_inicio', 'asc')
                                  ->get();
         
         $eventosProximos = Evento::where('estado', 'Próximo')
-                                 ->whereNotIn('id_evento', $misEventosIds)
+                                 ->whereNotIn('id_evento', $eventosInscritosIds)
                                  ->orderBy('fecha_inicio', 'asc')
                                  ->get();
                                  
-        return view('estudiante.eventos.index', compact('misEventosInscritos', 'eventosActivos', 'eventosProximos'));
+        return view('estudiante.eventos.index', compact(
+            'misEventosEnProgreso',
+            'misOtrosEventosInscritos',
+            'eventosActivos',
+            'eventosProximos'
+        ));
     }
 
     /**
