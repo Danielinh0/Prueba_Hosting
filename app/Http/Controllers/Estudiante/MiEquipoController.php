@@ -34,11 +34,6 @@ class MiEquipoController extends Controller
             'evento'
         ])->get();
         
-        if ($misInscripciones->isEmpty()) {
-            // Si no tiene equipos, redirigir a eventos
-            return redirect()->route('estudiante.eventos.index')->with('info', 'No perteneces a ningún equipo activo. ¡Busca un evento y únete o crea un equipo!');
-        }
-
         // Preparar datos de cada equipo
         $equiposData = $misInscripciones->map(function ($inscripcion) use ($user) {
             $miembro = $inscripcion->miembros->firstWhere('id_estudiante', $user->id_usuario);

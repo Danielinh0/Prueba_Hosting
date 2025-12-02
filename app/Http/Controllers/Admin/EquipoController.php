@@ -83,4 +83,30 @@ class EquipoController extends Controller
 
         return redirect()->route('admin.dashboard')->with('success', 'Equipo eliminado correctamente.');
     }
+
+    /**
+     * Remove team from specific event (without deleting the team)
+     */
+    public function removeFromEvent(Request $request, Equipo $equipo)
+    {
+        $eventoId = $request->input('evento_id');
+        $equipoNombre = $equipo->nombre;
+        
+        // Buscar la inscripción del equipo en este evento
+        $inscripcion = $equipo->inscripciones()->where('id_evento', $eventoId)->first();
+        
+        if (!$inscripcion) {
+            return redirect()->back()->with('error', 'Este equipo no está inscrito en el evento especificado.');
+        }
+
+        // NO eliminar la inscripción, solo quitar el evento
+        // Esto mantiene el equipo y sus miembros intactos
+        $inscripcion->id_evento = null;
+        $inscripcion->status_registro = 'Incompleto';
+        $inscripcion->puesto_ganador = null;
+        $inscripcion->save();
+
+        return redirect()->route('admin.eventos.show', $eventoId)
+            ->with('success', "Equipo '{$equipoNombre}' excluido del evento. El equipo y sus miembros se mantienen sin evento.");
+    }
 }

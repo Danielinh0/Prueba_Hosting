@@ -74,6 +74,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('eventos', EventoController::class);
     Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
     Route::resource('equipos', AdminEquipoController::class)->except(['create', 'store']);
+    
+    // Excluir equipo de un evento específico (sin eliminarlo)
+    Route::post('equipos/{equipo}/remove-from-event', [AdminEquipoController::class, 'removeFromEvent'])->name('equipos.remove-from-event');
+    
     Route::delete('miembros/{miembro}', [AdminMiembroController::class, 'destroy'])->name('miembros.destroy');
     // Route::post('miembros/leave', [MiembroController::class, 'leave'])->name('miembros.leave');
     

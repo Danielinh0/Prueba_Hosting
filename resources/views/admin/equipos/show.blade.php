@@ -225,6 +225,23 @@
         box-shadow: 6px 6px 12px rgba(185, 28, 28, 0.4);
         transform: translateY(-2px);
     }
+
+    .btn-exclude {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        box-shadow: 4px 4px 8px rgba(249, 115, 22, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .btn-exclude:hover {
+        box-shadow: 6px 6px 12px rgba(249, 115, 22, 0.4);
+        transform: translateY(-2px);
+    }
 </style>
 
 <div class="equipo-show-page py-12">
@@ -305,11 +322,24 @@
                     <a href="{{ route('admin.equipos.edit', $equipo) }}" class="btn-edit">
                         Editar Equipo
                     </a>
+                    
+                    @if($inscripcion = $equipo->inscripciones->first())
+                        <!-- Botón para Excluir del Evento (sin eliminar equipo) -->
+                        <form action="{{ route('admin.equipos.remove-from-event', $equipo) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres excluir este equipo del evento? El equipo NO se eliminará, solo se quitará su inscripción a este evento.');">
+                            @csrf
+                            <input type="hidden" name="evento_id" value="{{ $inscripcion->id_evento }}">
+                            <button type="submit" class="btn-exclude">
+                                Excluir del Evento
+                            </button>
+                        </form>
+                    @endif
+                    
+                    <!-- Botón para Eliminar Equipo Completamente (cascada) -->
                     <form action="{{ route('admin.equipos.destroy', $equipo) }}" method="POST" onsubmit="return confirm('¡Acción irreversible! ¿Estás seguro de que quieres eliminar este equipo por completo? Se eliminará la inscripción y todos sus miembros quedarán libres.');">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-delete-team">
-                            Eliminar Equipo
+                            Eliminar Equipo Completamente
                         </button>
                     </form>
                 </div>
