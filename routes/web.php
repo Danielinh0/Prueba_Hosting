@@ -98,6 +98,7 @@ Route::middleware(['auth', 'role:jurado'])->prefix('jurado')->name('jurado.')->g
     // Eventos
     Route::get('/eventos', [EventosController::class, 'index'])->name('eventos.index');
     Route::get('/eventos/{evento}', [EventosController::class, 'show'])->name('eventos.show');
+    Route::get('/eventos/{evento}/equipos/{equipo}', [EventosController::class, 'equipo_evento'])->name('eventos.equipo_evento');
 
     // Acuses
     Route::get('/acuses', [AcusesController::class, 'index'])->name('acuses.index');

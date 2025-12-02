@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Jurado;
 
 use App\Http\Controllers\Controller;
+use App\Models\Equipo;
 use App\Models\Evento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,9 @@ class EventosController extends Controller
         // Verificar si el jurado está asignado a este evento (especificando la tabla para evitar ambigüedad)
         $esJuradoDelEvento = $jurado && $jurado->eventos()->where('eventos.id_evento', $evento->id_evento)->exists();
 
+        // Determinar si el evento está activo
+        $eventoActivo = ($evento->estado === 'En Progreso' || $evento->estado === 'Activo');
+
         // Cargar las relaciones necesarias del evento
         $evento->load([
             'inscripciones' => function($query) {
@@ -67,6 +71,28 @@ class EventosController extends Controller
 
         // Contar equipos inscritos
         $totalEquipos = $evento->inscripciones->count();
-        return view('jurado.eventos.show', compact('evento', 'esJuradoDelEvento', 'totalEquipos'));
+        return view('jurado.eventos.show', compact('evento', 'esJuradoDelEvento', 'totalEquipos', 'eventoActivo'));
+    }
+
+    public function equipo_evento(Evento $evento, Equipo $equipo)
+    {
+        // Obtener la inscripción del equipo en este evento específico
+        $inscripcion = $equipo->inscripciones()
+            ->where('id_evento', $evento->id_evento)
+            ->first();
+
+        // Cargar los miembros del equipo con sus relaciones
+        $miembros = collect();
+        if ($inscripcion) {
+            $miembros = $inscripcion->miembros()
+                ->with([
+                    'user.estudiante.carrera',
+                    'rol'
+                ])
+                ->orderBy('es_lider', 'desc')
+                ->get();
+        }
+
+        return view('jurado.eventos.equipo', compact('evento', 'equipo', 'miembros'));
     }
 }
