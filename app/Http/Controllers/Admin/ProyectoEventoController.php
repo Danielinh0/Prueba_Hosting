@@ -205,7 +205,7 @@ class ProyectoEventoController extends Controller
         }
 
         // Cargar relaciones necesarias
-        $inscripcion->load('equipo.miembros.estudiante.user', 'equipo.miembros.rol');
+        $inscripcion->load('equipo.miembros.user.estudiante', 'equipo.miembros.rol');
 
         return view('admin.proyectos-evento.create-individual', compact('evento', 'inscripcion'));
     }
