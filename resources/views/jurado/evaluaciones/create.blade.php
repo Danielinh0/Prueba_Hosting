@@ -34,7 +34,7 @@
 
             {{-- Criterios de Evaluación --}}
             <div class="bg-white shadow-sm rounded-lg p-6 mb-6">
-                <h3 class="text-lg font-bold text-gray-900 mb-6">📊 Criterios de Evaluación (0-100pts)</h3>
+                <h3 class="text-lg font-bold text-gray-900 mb-6">Criterios de Evaluación (0-100pts)</h3>
 
                 {{-- Innovación --}}
                 <div class="mb-6">

@@ -95,6 +95,11 @@
         background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         color: #ffffff;
     }
+
+    .status-en-progreso {
+        background: linear-gradient(135deg, #6366f1, #4f46e5); /* Indigo gradient */
+        color: #ffffff;
+    }
     
     .status-default {
         background: rgba(229, 231, 235, 0.8);
@@ -119,7 +124,7 @@
 
 <div class="eventos-page py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
-        <h2 class="font-semibold text-xl mb-6">Eventos Disponibles</h2>
+        <h2 class="font-semibold text-xl mb-6">Panel de Eventos</h2>
 
         @if (session('info'))
             <div class="info-alert mb-6" role="alert">
@@ -127,12 +132,49 @@
             </div>
         @endif
 
-        <!-- Sección Mis Eventos Inscritos -->
+        <!-- Sección Mis Eventos en Curso -->
         <div>
-            <h3 class="text-2xl font-bold mb-6">Mis Eventos Inscritos</h3>
-            @if($misEventosInscritos->isNotEmpty())
+            <h3 class="text-2xl font-bold mb-6">Mis Eventos en Curso</h3>
+            @if($misEventosEnProgreso->isNotEmpty())
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach ($misEventosInscritos as $evento)
+                    @foreach ($misEventosEnProgreso as $evento)
+                        @if($evento)
+                        <div class="evento-card">
+                            <div class="inscrito-badge">
+                                Inscrito
+                            </div>
+                            <a href="{{ route('estudiante.eventos.show', $evento) }}">
+                                <img class="h-48 w-full object-cover" src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
+                            </a>
+                            <div class="p-6">
+                                <div class="flex items-center justify-between">
+                                    <h4>{{ $evento->nombre }}</h4>
+                                    <span class="status-badge status-en-progreso">
+                                        {{ $evento->estado }}
+                                    </span>
+                                </div>
+                                <p class="mt-1">
+                                    Finaliza: {{ $evento->fecha_fin->format('d M, Y') }}
+                                </p>
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
+                </div>
+            @else
+                <div class="empty-state">
+                    <p>No estás participando en ningún evento que esté en curso.</p>
+                </div>
+            @endif
+        </div>
+
+        <!-- Sección Otros Eventos Inscritos -->
+        <div>
+            <h3 class="text-2xl font-bold mb-6">Otros Eventos Inscritos</h3>
+            @if($misOtrosEventosInscritos->isNotEmpty())
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach ($misOtrosEventosInscritos as $evento)
+                        @if($evento)
                         <div class="evento-card">
                             <div class="inscrito-badge">
                                 Inscrito
@@ -153,21 +195,23 @@
                                 </p>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
             @else
                 <div class="empty-state">
-                    <p>Aún no estás inscrito en ningún evento.</p>
+                    <p>No estás inscrito en otros eventos.</p>
                 </div>
             @endif
         </div>
 
         <!-- Sección Eventos Activos Disponibles -->
         <div>
-            <h3 class="text-2xl font-bold mb-6">Eventos Activos Disponibles</h3>
+            <h3 class="text-2xl font-bold mb-6">Eventos Activos para Inscribirse</h3>
             @if($eventosActivos->isNotEmpty())
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach ($eventosActivos as $evento)
+                        @if($evento)
                         <div class="evento-card">
                             <a href="{{ route('estudiante.eventos.show', $evento) }}">
                                 <img class="h-48 w-full object-cover" src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
@@ -179,6 +223,7 @@
                                 </p>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
             @else
@@ -194,6 +239,7 @@
             @if($eventosProximos->isNotEmpty())
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach ($eventosProximos as $evento)
+                        @if($evento)
                         <div class="evento-card">
                             <a href="{{ route('estudiante.eventos.show', $evento) }}">
                                 <img class="h-48 w-full object-cover" src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
@@ -205,6 +251,7 @@
                                 </p>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
             @else

@@ -21,8 +21,14 @@ class DashboardController extends Controller
         $miInscripcion = InscripcionEvento::whereHas('miembros', function ($query) use ($user) {
             $query->where('id_estudiante', $user->id_usuario);
         })->whereHas('evento', function ($query) {
-            $query->where('estado', 'Activo');
-        })->with(['equipo', 'evento.inscripciones'])->first();
+            $query->whereIn('estado', ['Activo', 'En Progreso']);
+        })->with([
+            'equipo', 
+            'evento.inscripciones',
+            'evento.proyectoGeneral',
+            'proyectoEvento',
+            'proyecto'
+        ])->first();
 
         // Obtener los eventos disponibles según el estado del estudiante
         if ($miInscripcion) {

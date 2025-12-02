@@ -117,9 +117,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <h2 class="font-bold text-2xl text-primary-neuro mb-6">Mi Panel</h2>
 
-            {{-- * Resumen de Mi Progreso --}}
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {{-- ! Nivel del Estudiante --}}
                 <div class="neomorphic-stat p-5 text-center">
                     <div class="text-primary-neuro">
                         <p class="text-4xl font-bold">Nivel {{ Auth::user()->stats->nivel ?? 1 }}</p>
@@ -130,7 +128,6 @@
                     </div>
                 </div>
                 
-                {{-- ? Eventos Participados --}}
                 <div class="neomorphic-stat p-5 text-center">
                     <div class="text-primary-neuro">
                         <svg class="w-8 h-8 mx-auto mb-1 text-accent-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,7 +138,6 @@
                     </div>
                 </div>
                 
-                {{-- ? Habilidades Registradas --}}
                 <div class="neomorphic-stat p-5 text-center">
                     <div class="text-primary-neuro">
                         <svg class="w-8 h-8 mx-auto mb-1 text-accent-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,7 +148,6 @@
                     </div>
                 </div>
                 
-                {{-- ! Logros Desbloqueados --}}
                 <div class="neomorphic-stat p-5 text-center">
                     <div class="text-primary-neuro">
                         <svg class="w-8 h-8 mx-auto mb-1 text-accent-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,8 +159,7 @@
                 </div>
             </div>
 
-            {{-- ! Widget de Próximas Fechas Importantes --}}
-            @if($miInscripcion)
+            @if($miInscripcion && $miInscripcion->evento)
                 <div class="neomorphic-card p-6 mb-8">
                     <div class="flex items-center mb-4">
                         <svg class="w-6 h-6 mr-3 text-primary-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,7 +169,6 @@
                     </div>
                     
                     <div class="space-y-3">
-                        {{-- ? Fecha de Fin del Evento --}}
                         <div class="neomorphic-card-inset rounded-lg p-4">
                             <div class="flex justify-between items-center">
                                 <div>
@@ -184,22 +177,22 @@
                                 </div>
                                 @php
                                     $diasRestantes = now()->diffInDays($miInscripcion->evento->fecha_fin, false);
-                                    $badgeColor = 'bg-neutral-neuro'; // Default neutral color
+                                    $badgeColor = 'bg-neutral-neuro'; 
                                     if ($diasRestantes <= 7 && $diasRestantes > 0) {
-                                        $badgeColor = 'bg-danger-neuro'; // Upcoming soon
+                                        $badgeColor = 'bg-danger-neuro'; 
                                     } elseif ($diasRestantes <= 14 && $diasRestantes > 7) {
-                                        $badgeColor = 'bg-warning-neuro'; // Medium urgency
+                                        $badgeColor = 'bg-warning-neuro'; 
                                     } elseif ($diasRestantes == 0) {
-                                        $badgeColor = 'bg-success-neuro'; // Today
+                                        $badgeColor = 'bg-success-neuro'; 
                                     } elseif ($diasRestantes < 0) {
-                                        $badgeColor = 'bg-danger-neuro'; // Past due
+                                        $badgeColor = 'bg-danger-neuro'; 
                                     }
                                 @endphp
                                 <span class="neomorphic-badge {{ $badgeColor }}">
                                     @if($diasRestantes > 0)
                                         En {{ $diasRestantes }} {{ $diasRestantes == 1 ? 'día' : 'días' }}
                                     @elseif($diasRestantes == 0)
-                                        ¡HOY!
+                                        HOY
                                     @else
                                         Finalizado
                                     @endif
@@ -207,7 +200,6 @@
                             </div>
                         </div>
 
-                        {{-- TODO Agregar fechas de hitos cuando estén implementados --}}
                         @if($miInscripcion->proyecto && $miInscripcion->proyecto->hitos->where('completado', false)->count() > 0)
                             @php
                                 $proximoHito = $miInscripcion->proyecto->hitos->where('completado', false)->sortBy('fecha_limite')->first();
@@ -221,22 +213,22 @@
                                         </div>
                                         @php
                                             $diasHito = now()->diffInDays($proximoHito->fecha_limite, false);
-                                            $badgeHito = 'bg-neutral-neuro'; // Default neutral color
+                                            $badgeHito = 'bg-neutral-neuro'; 
                                             if ($diasHito <= 3 && $diasHito > 0) {
-                                                $badgeHito = 'bg-danger-neuro'; // Very urgent
+                                                $badgeHito = 'bg-danger-neuro'; 
                                             } elseif ($diasHito <= 7 && $diasHito > 3) {
-                                                $badgeHito = 'bg-warning-neuro'; // Urgent
+                                                $badgeHito = 'bg-warning-neuro'; 
                                             } elseif ($diasHito == 0) {
-                                                $badgeHito = 'bg-success-neuro'; // Today
+                                                $badgeHito = 'bg-success-neuro'; 
                                             } elseif ($diasHito < 0) {
-                                                $badgeHito = 'bg-danger-neuro'; // Past due
+                                                $badgeHito = 'bg-danger-neuro'; 
                                             }
                                         @endphp
                                         <span class="neomorphic-badge {{ $badgeHito }}">
                                             @if($diasHito > 0)
                                                 En {{ $diasHito }} {{ $diasHito == 1 ? 'día' : 'días' }}
                                             @elseif($diasHito == 0)
-                                                ¡HOY!
+                                                HOY
                                             @else
                                                 Vencido
                                             @endif
@@ -249,11 +241,9 @@
                 </div>
             @endif
 
-            {{-- * Sección Principal: Evento Activo y Equipo --}}
-            @if ($miInscripcion)
+            @if ($miInscripcion && $miInscripcion->evento)
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
                     
-                    <!-- Card de Evento Activo -->
                     <div class="lg:col-span-2">
                         <h3 class="text-lg font-semibold text-primary-neuro mb-4">Mi Evento Activo</h3>
                         <div class="neomorphic-image-card">
@@ -262,12 +252,10 @@
                             </a>
                             <div class="p-6 bg-[#e8d5c4]">
                                 <h4 class="font-bold text-xl text-primary-neuro">{{ $miInscripcion->evento->nombre }}</h4>
-                                <!-- Aquí podrías añadir la gráfica de avance en el futuro -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card de Mi Equipo -->
                     <div>
                         <h3 class="text-lg font-semibold text-primary-neuro mb-4">Mi Equipo</h3>
                         <div class="neomorphic-image-card">
@@ -285,7 +273,6 @@
                                     <p class="text-sm text-secondary-neuro mt-2 line-clamp-2">{{ $miInscripcion->equipo->descripcion }}</p>
                                 @endif
 
-                                <!-- Barra de Progreso del Proyecto -->
                                 <div class="mt-4">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="text-xs font-semibold text-secondary-neuro">Progreso del Proyecto</span>
@@ -298,7 +285,7 @@
                                 </div>
 
                                 <a href="{{ route('estudiante.equipo.index') }}" class="mt-4 inline-flex items-center text-sm text-accent-neuro font-semibold hover:opacity-80 transition">
-                                    Ver Detalles del Equipo →
+                                    Ver Detalles del Equipo
                                 </a>
                             </div>
                         </div>
@@ -306,13 +293,12 @@
                 </div>
             @else
                 <div class="neomorphic-card p-6 mb-12 border-l-4 border-accent-neuro">
-                    <h3 class="font-bold text-lg text-primary-neuro">¡Bienvenido!</h3>
-                    <p class="mt-2 text-secondary-neuro">Parece que no estás participando en ningún evento activo en este momento. ¡Explora los próximos eventos para unirte a la acción!</p>
+                    <h3 class="font-bold text-lg text-primary-neuro">Bienvenido</h3>
+                    <p class="mt-2 text-secondary-neuro">Parece que no estás participando en ningún evento activo en este momento. Explora los próximos eventos para unirte a la acción.</p>
                 </div>
             @endif
 
 
-            <!-- Sección de Eventos Disponibles -->
             <div>
                 <h3 class="text-2xl font-bold text-primary-neuro mb-6">Eventos Disponibles</h3>
                 <div class="neomorphic-scroll-container flex overflow-x-auto space-x-6 pb-4">
@@ -336,8 +322,7 @@
                 </div>
             </div>
 
-            <!-- Sección de Constancias (Estructura para implementación futura) -->
-            @if ($miInscripcion)
+            @if ($miInscripcion && $miInscripcion->evento)
                 <div class="mt-12">
                     <h3 class="text-2xl font-bold text-primary-neuro mb-6">Mis Constancias</h3>
                     <div class="neomorphic-card p-8">

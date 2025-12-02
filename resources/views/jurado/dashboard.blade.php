@@ -348,7 +348,7 @@
                 </div>
 
                 <!-- Card 3 -->
-                <div class="info-card">
+                <a href="{{ route('jurado.proyectos.index') }}" class="info-card" style="text-decoration: none;">
                     <div class="card-img photo">
                         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Proyectos">
                     </div>
@@ -356,7 +356,7 @@
                         <h5>PROYECTOS</h5>
                         <p>{{ $proyectosCount }} proyectos asignados</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Card 4 -->
                 <div class="info-card">

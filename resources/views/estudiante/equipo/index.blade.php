@@ -293,18 +293,30 @@
                         {{-- Evento --}}
                         <div class="event-box {{ $inscripcion->evento ? 'event-box-active' : 'event-box-inactive' }}">
                             @if($inscripcion->evento)
-                                <p>
-                                    <strong>Evento:</strong> {{ $inscripcion->evento->nombre }}
-                                </p>
-                                <p style="font-size: 0.75rem; margin-top: 0.25rem;">
-                                    {{ $inscripcion->evento->fecha_inicio->format('d/m/Y') }} - {{ $inscripcion->evento->fecha_fin->format('d/m/Y') }}
-                                </p>
-                                <span class="event-status-badge
-                                    @if($inscripcion->evento->estado === 'Activo') event-status-activo
-                                    @elseif($inscripcion->evento->estado === 'Cerrado') event-status-cerrado
-                                    @else event-status-proximo @endif">
-                                    {{ $inscripcion->evento->estado }}
-                                </span>
+                                @if($inscripcion->evento->trashed())
+                                    {{-- Evento Eliminado --}}
+                                    <p>
+                                        <strong>Evento:</strong> {{ $inscripcion->evento->nombre }} <span style="color: #dc2626; font-weight: 600;">(Eliminado)</span>
+                                    </p>
+                                    <p style="font-size: 0.75rem; margin-top: 0.25rem; color: #6b6b6b;">
+                                        Este evento fue eliminado. Tu equipo y sus datos se conservan.
+                                    </p>
+                                @else
+                                    {{-- Evento Normal --}}
+                                    <p>
+                                        <strong>Evento:</strong> {{ $inscripcion->evento->nombre }}
+                                    </p>
+                                    <p style="font-size: 0.75rem; margin-top: 0.25rem;">
+                                        {{ $inscripcion->evento->fecha_inicio->format('d/m/Y') }} - {{ $inscripcion->evento->fecha_fin->format('d/m/Y') }}
+                                    </p>
+                                    <span class="event-status-badge
+                                        @if($inscripcion->evento->estado === 'Activo') event-status-activo
+                                        @elseif($inscripcion->evento->estado === 'En Progreso') event-status-activo
+                                        @elseif($inscripcion->evento->estado === 'Cerrado') event-status-cerrado
+                                        @else event-status-proximo @endif">
+                                        {{ $inscripcion->evento->estado }}
+                                    </span>
+                                @endif
                             @else
                                 <p>
                                     <strong>Estado:</strong> Equipo sin evento

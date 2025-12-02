@@ -346,7 +346,7 @@
 
                                 @if($tarea->fecha_limite)
                                     <span style="color: #6b6b6b;">
-                                        📅 {{ $tarea->fecha_limite->format('d/m/Y') }}
+                                         {{ $tarea->fecha_limite->format('d/m/Y') }}
                                         @if($tarea->estaVencida())
                                             <span class="text-red-600 font-semibold">(Vencida)</span>
                                         @endif
