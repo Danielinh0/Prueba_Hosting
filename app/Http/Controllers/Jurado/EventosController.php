@@ -79,6 +79,7 @@ class EventosController extends Controller
         // Obtener la inscripción del equipo en este evento específico
         $inscripcion = $equipo->inscripciones()
             ->where('id_evento', $evento->id_evento)
+            ->with(['proyecto.avances.usuarioRegistro', 'proyecto.tareas'])
             ->first();
 
         // Cargar los miembros del equipo con sus relaciones
@@ -93,6 +94,28 @@ class EventosController extends Controller
                 ->get();
         }
 
-        return view('jurado.eventos.equipo', compact('evento', 'equipo', 'miembros'));
+        // Obtener el proyecto del equipo
+        $proyecto = $inscripcion ? $inscripcion->proyecto : null;
+
+        // Calcular estadísticas del proyecto
+        $totalAvances = $proyecto ? $proyecto->avances->count() : 0;
+        $totalTareas = $proyecto ? $proyecto->tareas->count() : 0;
+        $tareasCompletadas = $proyecto ? $proyecto->tareas->where('completada', true)->count() : 0;
+        $progreso = $totalTareas > 0 ? round(($tareasCompletadas / $totalTareas) * 100) : 0;
+
+        // Obtener los avances para el selector
+        $avances = $proyecto ? $proyecto->avances()->orderBy('created_at', 'desc')->get() : collect();
+
+        return view('jurado.eventos.equipo', compact(
+            'evento', 
+            'equipo', 
+            'miembros', 
+            'proyecto',
+            'inscripcion',
+            'totalAvances',
+            'totalTareas',
+            'progreso',
+            'avances'
+        ));
     }
 }

@@ -574,7 +574,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                     </svg>
                     <p style="color: #6b21a8;">Tecnologías</p>
-                    <p style="color: #a855f7;">{{ $inscripcion->proyecto ? $inscripcion->proyecto->tecnologias->count() : 0 }} tags</p>
+                    <p style="color: #a855f7;">0 tags</p>
                 </a>
                 
                 <!-- Actividad -->

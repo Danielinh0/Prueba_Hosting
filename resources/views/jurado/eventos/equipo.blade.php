@@ -6,9 +6,9 @@
         {{-- Sección Superior: Detalles del Equipo e Integrantes --}}
         <div class="flex flex-col lg:flex-row gap-8 mb-8">
             
-            {{-- Detalles del Equipo --}}
+            {{-- Detalles del Equipo/Proyecto --}}
             <div class="lg:w-1/3">
-                <h2 class="text-xl font-semibold mb-4" style="color: #4B4B4B;">Detalles del Equipo :</h2>
+                <h2 class="text-xl font-semibold mb-4" style="color: #4B4B4B;">Nombre del equipo</h2>
                 <div class="rounded-2xl overflow-hidden shadow-md" style="background-color: #FFEFDC;">
                     {{-- Imagen del equipo --}}
                     <div class="h-48 overflow-hidden">
@@ -18,17 +18,18 @@
                             <img src="{{ asset('images/team-default.jpg') }}" alt="Imagen del equipo" class="w-full h-full object-cover">
                         @endif
                     </div>
-                    {{-- Nombre del equipo --}}
+                    {{-- Nombre del proyecto --}}
                     <div class="px-4 py-3" style="background-color: #CE894D;">
-                        <h3 class="text-white font-semibold text-lg">{{ $equipo->nombre }}</h3>
+                        <h3 class="text-white font-semibold text-lg">{{ $proyecto->nombre ?? 'Sin proyecto' }}</h3>
                     </div>
-                    {{-- Información del equipo --}}
+                    {{-- Información del proyecto --}}
                     <div class="p-4">
-                        <p class="text-sm mb-3" style="color: #A4AEB7;">
-                            <span class="font-medium">Creación:</span> {{ $equipo->created_at->translatedFormat('d \\d\\e F \\d\\e\\l Y') }}
+                        <p class="text-sm mb-3" style="color: #4B4B4B;">
+                            <span class="font-medium">Creación:</span> 
+                            <span style="color: #A4AEB7;">{{ $equipo->created_at->translatedFormat('d \\d\\e F \\d\\e\\l Y') }}</span>
                         </p>
                         <div class="rounded-xl p-3" style="background-color: rgba(255, 255, 255, 0.5); border: 1px solid #E5E7EB;">
-                            <p class="text-sm" style="color: #A4AEB7;">{{ $equipo->descripcion ?? 'Sin descripción' }}</p>
+                            <p class="text-sm" style="color: #4B4B4B;">{{ $proyecto->descripcion_tecnica ?? 'Objetivo del proyecto' }}</p>
                         </div>
                     </div>
                 </div>
@@ -51,11 +52,11 @@
                                 <h4 class="font-semibold text-base mb-2" style="color: #4B4B4B;">{{ $miembro->user->app_materno }}</h4>
                                 <p class="text-sm" style="color: #4B4B4B;">
                                     <span class="font-medium">Rol :</span> 
-                                    <span style="color: #F0BC7B;">{{ $miembro->rol->nombre ?? 'Sin rol asignado' }}</span>
+                                    <span style="color: #A4AEB7;">{{ $miembro->rol->nombre ?? 'Sin rol asignado' }}</span>
                                 </p>
                                 <p class="text-sm" style="color: #4B4B4B;">
                                     <span class="font-medium">Carrera :</span> 
-                                    <span style="color: #F0BC7B;">{{ $miembro->user->estudiante->carrera->nombre ?? 'Sin carrera' }}</span>
+                                    <span style="color: #A4AEB7;">{{ $miembro->user->estudiante->carrera->nombre ?? 'Sin carrera' }}</span>
                                 </p>
                             </div>
                         </div>
@@ -68,18 +69,44 @@
             </div>
         </div>
 
-        {{-- Sección Avance --}}
+        {{-- Sección Avances --}}
         <div>
-            <h2 class="text-xl font-semibold mb-4" style="color: #4B4B4B;">Ultimo avance registrado</h2>
+            <h2 class="text-xl font-semibold mb-4" style="color: #4B4B4B;">Avances</h2>
             <div class="flex flex-col lg:flex-row gap-6">
-                {{-- Formulario de Avance --}}
+                {{-- Estadísticas de Avances --}}
                 <div class="lg:w-2/3">
                     <div class="rounded-2xl p-6 shadow-sm" style="background-color: #FFEFDC;">
-                        <div class="mb-4">
-                            <label class="block text-base font-medium mb-2" style="color: #4B4B4B;">Titulo del Avance</label>
-                        </div>
-                        <div class="rounded-xl p-4" style="background-color: rgba(255, 255, 255, 0.5); border: 1px solid #E5E7EB;">
-                            <p style="color: #A4AEB7;">Descripcion del avance</p>
+                        <div class="grid grid-cols-3 gap-4">
+                            {{-- Avances --}}
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-2" style="color: #4B4B4B;">{{ $totalAvances }}</div>
+                                <div class="flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" style="color: #A4AEB7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                                    </svg>
+                                    <span style="color: #4B4B4B;" class="font-medium">Avances</span>
+                                </div>
+                            </div>
+                            {{-- Progreso --}}
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-2" style="color: #4B4B4B;">{{ $progreso }}%</div>
+                                <div class="flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" style="color: #A4AEB7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span style="color: #4B4B4B;" class="font-medium">Progreso</span>
+                                </div>
+                            </div>
+                            {{-- Tareas --}}
+                            <div class="text-center">
+                                <div class="text-3xl font-bold mb-2" style="color: #4B4B4B;">{{ $totalTareas }}</div>
+                                <div class="flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" style="color: #A4AEB7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                    </svg>
+                                    <span style="color: #4B4B4B;" class="font-medium">Tareas</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,11 +117,11 @@
                         <h3 class="text-base font-semibold text-center mb-4" style="color: #4B4B4B;">Ver Avances Disponibles</h3>
                         <div class="mb-4">
                             <div class="relative">
-                                <select class="w-full rounded-xl px-4 py-3 appearance-none focus:outline-none focus:ring-2" style="background-color: rgba(255, 255, 255, 0.5); border: 1px solid #E5E7EB; color: #A4AEB7;">
-                                    <option>Avances</option>
-                                    <option>Avance 1</option>
-                                    <option>Avance 2</option>
-                                    <option>Avance 3</option>
+                                <select id="avance-selector" class="w-full rounded-xl px-4 py-3 appearance-none focus:outline-none focus:ring-2" style="background-color: rgba(255, 255, 255, 0.5); border: 1px solid #E5E7EB; color: #4B4B4B;">
+                                    <option value="">Avances</option>
+                                    @foreach($avances as $avance)
+                                        <option value="{{ $avance->id_avance }}">{{ $avance->titulo ?? 'Avance #' . $loop->iteration }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5" style="color: #F0BC7B;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +130,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="w-full rounded-full py-3 text-white font-semibold transition-colors hover:opacity-90" style="background-color: #F0BC7B;">
+                        <button onclick="calificarAvance()" class="w-full rounded-full py-3 text-white font-semibold transition-colors hover:opacity-90" style="background-color: #F0BC7B;">
                             Calificar
                         </button>
                     </div>
@@ -112,4 +139,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function calificarAvance() {
+        const selector = document.getElementById('avance-selector');
+        const avanceId = selector.value;
+        
+        if (!avanceId) {
+            alert('Por favor selecciona un avance para calificar');
+            return;
+        }
+        
+        // Redirigir a la página de calificación (puedes ajustar esta ruta)
+        window.location.href = `/jurado/avances/${avanceId}/calificar`;
+    }
+</script>
 @endsection

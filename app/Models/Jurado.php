@@ -25,4 +25,20 @@ class Jurado extends Model
     {
         return $this->belongsToMany(Evento::class, 'evento_jurados', 'id_jurado', 'id_evento');
     }
+
+    /**
+     * Evaluaciones de inscripciones/proyectos realizadas por el jurado
+     */
+    public function evaluaciones()
+    {
+        return $this->hasMany(Evaluacion::class, 'id_jurado', 'id_usuario');
+    }
+
+    /**
+     * Evaluaciones de avances realizadas por el jurado
+     */
+    public function evaluacionesAvances()
+    {
+        return $this->hasMany(EvaluacionAvance::class, 'id_jurado', 'id_usuario');
+    }
 }

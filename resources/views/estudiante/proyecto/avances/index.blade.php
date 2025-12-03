@@ -223,7 +223,7 @@
                                     <h4>{{ $avance->titulo }}</h4>
                                 @endif
                                 <p class="meta-info mt-1">
-                                    Registrado por <span class="author">{{ $avance->registradoPor->nombre }}</span>
+                                    Registrado por <span class="author">{{ $avance->usuarioRegistro->nombre }}</span>
                                     · {{ $avance->created_at->format('d/m/Y H:i') }}
                                    <span style="color: #9ca3af; font-size: 0.75rem;">({{ $avance->created_at->diffForHumans() }})</span>
                                 </p>

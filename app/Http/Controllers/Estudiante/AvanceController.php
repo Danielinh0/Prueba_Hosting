@@ -18,7 +18,7 @@ class AvanceController extends Controller
     {
         return InscripcionEvento::whereHas('miembros', function($q) {
             $q->where('id_estudiante', Auth::id());
-        })->with(['equipo', 'proyecto.avances.registradoPor'])->first();
+        })->with(['equipo', 'proyecto.avances.usuarioRegistro'])->first();
     }
 
     /**
@@ -34,7 +34,7 @@ class AvanceController extends Controller
         }
 
         $proyecto = $inscripcion->proyecto;
-        $avances = $proyecto->avances()->with('registradoPor')->orderBy('created_at', 'desc')->get();
+        $avances = $proyecto->avances()->with('usuarioRegistro')->orderBy('created_at', 'desc')->get();
 
         return view('estudiante.proyecto.avances.index', compact('inscripcion', 'proyecto', 'avances'));
     }
@@ -81,7 +81,7 @@ class AvanceController extends Controller
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
             'archivo_evidencia' => $archivoPath,
-            'registrado_por' => Auth::id(),
+            'id_usuario_registro' => Auth::id(),
         ]);
 
         return redirect()->route('estudiante.avances.index')
@@ -100,7 +100,7 @@ class AvanceController extends Controller
                 ->with('error', 'No tienes permiso para ver este avance.');
         }
 
-        $avance->load('registradoPor');
+        $avance->load('usuarioRegistro');
 
         return view('estudiante.proyecto.avances.show', compact('avance', 'inscripcion'));
     }
