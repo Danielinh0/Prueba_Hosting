@@ -369,6 +369,7 @@
                     </div>
                     <span class="status-badge 
                         @if ($evento->estado == 'Activo') status-activo
+                        @elseif ($evento->estado == 'En Progreso') status-activo
                         @elseif ($evento->estado == 'Próximo') status-proximo
                         @elseif ($evento->estado == 'Cerrado') status-cerrado
                         @else status-finalizado @endif">
@@ -536,6 +537,33 @@
                                     Mover a Próximos
                                 </button>
                             </form>
+                        @elseif($evento->estado === 'En Progreso')
+                            {{-- Estado En Progreso: Evento activo con proyectos publicados --}}
+                            <form action="{{ route('admin.eventos.finalizar', $evento) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres finalizar este evento? Asegúrate de que los jurados hayan completado las evaluaciones.');">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="action-button btn-blue">
+                                    🏁 Finalizar Evento
+                                </button>
+                            </form>
+                            <form action="{{ route('admin.eventos.cerrar', $evento) }}" method="POST" onsubmit="return confirm('¿Cerrar el evento? Los equipos ya no podrán subir avances.');">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="action-button btn-yellow">
+                                    🔒 Cerrar Evento
+                                </button>
+                            </form>
+                            @if($evento->tipo_proyecto === 'general' && $evento->proyectoGeneral)
+                                <a href="{{ route('admin.proyectos-evento.edit', $evento->proyectoGeneral) }}" 
+                                   class="action-button btn-purple">
+                                    ✏️ Editar Proyecto
+                                </a>
+                            @elseif($evento->tipo_proyecto === 'individual')
+                                <a href="{{ route('admin.proyectos-evento.asignar', $evento) }}" 
+                                   class="action-button btn-purple">
+                                    📝 Ver Proyectos
+                                </a>
+                            @endif
                         @elseif($evento->estado === 'Cerrado')
                             <!-- Configuración de Proyectos del Evento -->
                             @if(!$evento->tipo_proyecto)
