@@ -8,7 +8,7 @@
         --color-primary: #DB8C57;
         --color-secondary: #E77F30;
         --color-bg: #FFEFDC;
-        --color-card-bg: #FFF8F0; /* Un crema un poco más claro para las tarjetas */
+        --color-card-bg: #FFF8F0;
         --text-dark: #000000;
         --text-gray: #A4AEB7;
         --text-white: #FFFFFF;
@@ -20,359 +20,654 @@
     }
 
     .dashboard-container {
-        padding: 40px;
+        padding: 30px;
         max-width: 1400px;
         margin: 0 auto;
     }
 
+    .welcome-section {
+        margin-bottom: 30px;
+    }
+
+    .welcome-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+
+    .welcome-subtitle {
+        color: var(--text-gray);
+        font-size: 1rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, #DB8C57, #E77F30);
+        border-radius: 20px;
+        padding: 25px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(219, 140, 87, 0.3);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .stat-card.alt {
+        background: linear-gradient(135deg, #2D2A4A, #1a1a2e);
+    }
+
+    .stat-card.alt::before {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+
+    .stat-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        opacity: 0.3;
+    }
+
+    /* Section Titles */
     .section-title {
         font-size: 1.2rem;
         font-weight: 700;
         margin-bottom: 20px;
         color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    /* Cards Generales */
+    .section-title svg {
+        width: 24px;
+        height: 24px;
+        color: var(--color-primary);
+    }
+
+    /* Custom Card */
     .custom-card {
         background-color: var(--color-card-bg);
         border-radius: 20px;
-        padding: 30px;
+        padding: 25px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-    }
-
-    /* Sección Etapas de Revisión */
-    .revision-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        padding: 0 10px;
-        font-weight: 700;
-        font-size: 1rem;
-    }
-
-    .revision-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .btn-equipo {
-        background-color: #FCFCFC;
-        color: #A4AEB7;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-weight: 600;
-        width: 45%;
-        text-align: center;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    .btn-fecha {
-        background-color: #EBC08D; /* Tono naranja suave/dorado */
-        color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-weight: 600;
-        width: 45%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    /* Sección Progreso */
-    .project-title {
-        text-align: center;
-        font-weight: 700;
-        font-size: 1.2rem;
         margin-bottom: 25px;
     }
 
-    .progress-content {
+    /* Pendientes List */
+    .pendiente-item {
         display: flex;
-        gap: 30px;
         align-items: center;
-    }
-
-    .inputs-container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .custom-input {
-        background-color: #FCFCFC;
-        border: none;
-        padding: 12px;
-        border-radius: 10px;
-        color: #A4AEB7;
-        font-weight: 500;
-        text-align: center;
-        width: 100%;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    .chart-wrapper {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* Sección Eventos Actuales */
-    .event-card {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    }
-
-    .event-header {
-        background-color: #DB8C57;
-        color: white;
+        justify-content: space-between;
         padding: 15px;
-        text-align: center;
-        font-weight: 700;
-        font-size: 1.1rem;
+        background: #FCFCFC;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
+        border-left: 4px solid var(--color-primary);
     }
 
-    .event-body {
-        background-color: var(--color-card-bg);
-        padding: 25px;
-        color: #666;
-        font-size: 0.95rem;
-        line-height: 1.6;
+    .pendiente-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    /* Grid Inferior de Tarjetas */
-    .bottom-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        margin-top: 20px;
+    .pendiente-info {
+        flex: 1;
     }
 
-    .info-card {
-        background-color: var(--color-card-bg);
-        border-radius: 20px;
-        overflow: hidden;
-        display: flex;
-        height: 100px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        transition: transform 0.2s;
-    }
-    
-    .info-card:hover {
-        transform: translateY(-3px);
-    }
-
-    .card-img {
-        width: 35%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .card-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    
-    .card-img.blue-icon { background-color: #002B5C; color: white; }
-    .card-img.purple-icon { background-color: #2D2A4A; color: white; }
-    .card-img.photo { background-color: #333; }
-
-    .card-content {
-        width: 65%;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .card-content h5 {
-        font-weight: 700;
-        font-size: 0.9rem;
-        margin-bottom: 5px;
+    .pendiente-equipo {
+        font-weight: 600;
+        font-size: 1rem;
         color: var(--text-dark);
-        text-transform: uppercase;
+        margin-bottom: 4px;
     }
 
-    .card-content p {
+    .pendiente-evento {
+        font-size: 0.85rem;
+        color: var(--text-gray);
+    }
+
+    .pendiente-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
         font-size: 0.75rem;
-        color: #A4AEB7;
-        font-weight: 500;
-        line-height: 1.2;
+        font-weight: 600;
+        margin-right: 10px;
+    }
+
+    .badge-borrador {
+        background-color: #FFF3E0;
+        color: #E65100;
+    }
+
+    .badge-pendiente {
+        background-color: #E3F2FD;
+        color: #1565C0;
+    }
+
+    .btn-evaluar {
+        background: linear-gradient(135deg, #DB8C57, #E77F30);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .btn-evaluar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(219, 140, 87, 0.4);
+        color: white;
+    }
+
+    .btn-retomar {
+        background: linear-gradient(135deg, #FF9800, #F57C00);
+    }
+
+    /* Eventos List */
+    .evento-item {
+        display: flex;
+        align-items: center;
+        padding: 18px;
+        background: #FCFCFC;
+        border-radius: 15px;
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .evento-item:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .evento-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+    }
+
+    .evento-icon.activo {
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    }
+
+    .evento-icon.progreso {
+        background: linear-gradient(135deg, #2196F3, #1565C0);
+    }
+
+    .evento-icon.proximo {
+        background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+    }
+
+    .evento-icon.cerrado {
+        background: linear-gradient(135deg, #607D8B, #455A64);
+    }
+
+    .evento-icon svg {
+        width: 24px;
+        height: 24px;
+        color: white;
+    }
+
+    .evento-info {
+        flex: 1;
+    }
+
+    .evento-nombre {
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+    }
+
+    .evento-meta {
+        font-size: 0.85rem;
+        color: var(--text-gray);
+    }
+
+    .evento-estado {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .estado-activo {
+        background-color: #E8F5E9;
+        color: #2E7D32;
+    }
+
+    .estado-progreso {
+        background-color: #E3F2FD;
+        color: #1565C0;
+    }
+
+    .estado-proximo {
+        background-color: #F3E5F5;
+        color: #7B1FA2;
+    }
+
+    .estado-cerrado {
+        background-color: #ECEFF1;
+        color: #455A64;
+    }
+
+    /* Evaluaciones Recientes */
+    .evaluacion-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        background: #FCFCFC;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .evaluacion-score {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-right: 15px;
+        color: white;
+    }
+
+    .score-high {
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    }
+
+    .score-medium {
+        background: linear-gradient(135deg, #FF9800, #F57C00);
+    }
+
+    .score-low {
+        background: linear-gradient(135deg, #f44336, #c62828);
+    }
+
+    .evaluacion-info {
+        flex: 1;
+    }
+
+    .evaluacion-equipo {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+    }
+
+    .evaluacion-fecha {
+        font-size: 0.8rem;
+        color: var(--text-gray);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-gray);
+    }
+
+    .empty-state svg {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 15px;
+        opacity: 0.5;
+    }
+
+    .empty-state p {
+        font-size: 0.95rem;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .quick-action-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 25px;
+        background: var(--color-card-bg);
+        border-radius: 15px;
+        text-decoration: none;
+        color: var(--text-dark);
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .quick-action-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        color: var(--color-primary);
+    }
+
+    .quick-action-btn svg {
+        width: 24px;
+        height: 24px;
+        color: var(--color-primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 
     @media (max-width: 768px) {
-        .progress-content {
-            flex-direction: column;
+        .dashboard-container {
+            padding: 20px;
         }
-        .bottom-grid {
+        
+        .stats-grid {
             grid-template-columns: 1fr;
+        }
+        
+        .pendiente-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .pendiente-actions {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
         }
     }
 </style>
 
 <div class="dashboard-container">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        
-        <!-- Columna Izquierda -->
-        <div class="space-y-10">
-            
-            <!-- Etapas de revisión -->
-            <div>
-                <h3 class="section-title">Etapas de revision</h3>
-                <div class="custom-card">
-                    <div class="revision-header">
-                        <span>Equipos</span>
-                        <span>Fecha de revision</span>
-                    </div>
-                    
-                    <div class="space-y-4">
-                        @if($etapasRevision->count() > 0)
-                            @foreach($etapasRevision as $etapa)
-                                <div class="revision-row">
-                                    <div class="btn-equipo">{{ $etapa->equipo }}</div>
-                                    <div class="btn-fecha">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                                            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
-                                        </svg>
-                                        {{ $etapa->fecha->format('d de F') }}
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="text-center text-gray-500 py-4">No hay revisiones pendientes</div>
-                        @endif
-                    </div>
-                </div>
-            </div>
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <h1 class="welcome-title">¡Bienvenido, {{ Auth::user()->nombre }}!</h1>
+        <p class="welcome-subtitle">Panel de control del jurado - {{ now()->format('d de F, Y') }}</p>
+    </div>
 
-            <!-- Eventos actuales -->
-            <div>
-                <h3 class="section-title">Eventos actuales</h3>
-                <div class="event-card">
-                    @if($eventoActual)
-                        <div class="event-header">
-                            {{ $eventoActual->nombre }}
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ $estadisticas['eventosActivos'] }}</div>
+            <div class="stat-label">Eventos Activos</div>
+            <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+        </div>
+
+        <div class="stat-card alt">
+            <div class="stat-number">{{ $estadisticas['totalEquipos'] }}</div>
+            <div class="stat-label">Equipos Asignados</div>
+            <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">{{ $estadisticas['evaluacionesPendientes'] }}</div>
+            <div class="stat-label">Evaluaciones Pendientes</div>
+            <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+        </div>
+
+        <div class="stat-card alt">
+            <div class="stat-number">{{ $estadisticas['evaluacionesCompletadas'] }}</div>
+            <div class="stat-label">Evaluaciones Completadas</div>
+            <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="mb-8">
+        <div class="quick-actions">
+            <a href="{{ route('jurado.eventos.index') }}" class="quick-action-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Ver Eventos
+            </a>
+            <a href="{{ route('jurado.acuses.index') }}" class="quick-action-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Mis Acuses
+            </a>
+           
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Columna Izquierda -->
+        <div>
+            <!-- Evaluaciones Pendientes -->
+            <h3 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Evaluaciones Pendientes
+            </h3>
+            <div class="custom-card">
+                @if($evaluacionesPendientes->count() > 0)
+                    @foreach($evaluacionesPendientes->take(5) as $pendiente)
+                        <div class="pendiente-item">
+                            <div class="pendiente-info">
+                                <div class="pendiente-equipo">{{ $pendiente->equipo->nombre }}</div>
+                                <div class="pendiente-evento">{{ $pendiente->evento->nombre }}</div>
+                            </div>
+                            <div class="pendiente-actions" style="display: flex; align-items: center;">
+                                @if($pendiente->tieneBorrador)
+                                    <span class="pendiente-badge badge-borrador">Borrador</span>
+                                    <a href="{{ route('jurado.evaluaciones.create', $pendiente->inscripcion->id_inscripcion) }}" class="btn-evaluar btn-retomar">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                        </svg>
+                                        Retomar
+                                    </a>
+                                @else
+                                    <span class="pendiente-badge badge-pendiente">Pendiente</span>
+                                    <a href="{{ route('jurado.evaluaciones.create', $pendiente->inscripcion->id_inscripcion) }}" class="btn-evaluar">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" />
+                                        </svg>
+                                        Evaluar
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                        <div class="event-body">
-                            <p class="mb-4">{{ Str::limit($eventoActual->descripcion, 100) }}</p>
-                            <p class="mb-4">{{ $eventoActual->fecha_inicio->format('d de F, Y') }}</p>
-                            <p>Equipos Participantes: {{ $eventoActual->inscripciones_count }}</p>
-                        </div>
-                    @else
-                        <div class="event-header">Sin Eventos</div>
-                        <div class="event-body text-center">
-                            No tienes eventos asignados actualmente.
+                    @endforeach
+                    
+                    @if($evaluacionesPendientes->count() > 5)
+                        <div class="text-center mt-4">
+                            <a href="{{ route('jurado.eventos.index') }}" class="text-sm text-orange-600 hover:text-orange-800 font-medium">
+                                Ver todas las evaluaciones pendientes ({{ $evaluacionesPendientes->count() }})
+                            </a>
                         </div>
                     @endif
-                </div>
+                @else
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p>¡Excelente! No tienes evaluaciones pendientes.</p>
+                    </div>
+                @endif
             </div>
 
+            <!-- Evaluaciones Recientes -->
+            <h3 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+                Evaluaciones Recientes
+            </h3>
+            <div class="custom-card">
+                @if($evaluacionesRecientes->count() > 0)
+                    @foreach($evaluacionesRecientes as $evaluacion)
+                        @php
+                            $scoreClass = $evaluacion->calificacion_final >= 80 ? 'score-high' : ($evaluacion->calificacion_final >= 60 ? 'score-medium' : 'score-low');
+                        @endphp
+                        <div class="evaluacion-item">
+                            <div class="evaluacion-score {{ $scoreClass }}">
+                                {{ $evaluacion->calificacion_final }}
+                            </div>
+                            <div class="evaluacion-info">
+                                <div class="evaluacion-equipo">{{ $evaluacion->inscripcion->equipo->nombre ?? 'Equipo' }}</div>
+                                <div class="evaluacion-fecha">{{ $evaluacion->updated_at->diffForHumans() }}</div>
+                            </div>
+                            <a href="{{ route('jurado.evaluaciones.show', $evaluacion->id_evaluacion) }}" class="text-orange-600 hover:text-orange-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                            </a>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <p>Aún no has realizado evaluaciones.</p>
+                    </div>
+                @endif
+            </div>
         </div>
 
         <!-- Columna Derecha -->
-        <div class="space-y-10">
-            
-            <!-- Progreso Actual -->
-            <div>
-                <h3 class="section-title">Progreso Actual del proyecto</h3>
-                <div class="custom-card">
-                    @if($proyectoDestacado)
-                        <h4 class="project-title">{{ $proyectoDestacado->nombre }}</h4>
-                        
-                        <div class="progress-content">
-                            <div class="inputs-container">
-                                <div class="custom-input">{{ $nombreEquipoProyecto }}</div>
-                                <div class="custom-input">{{ $nombreEventoProyecto }}</div>
-                                <div class="custom-input" style="height: 45px;"></div>
+        <div>
+            <!-- Eventos Asignados -->
+            <h3 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Mis Eventos Asignados
+            </h3>
+            <div class="custom-card">
+                @if($eventosAsignados->count() > 0)
+                    @foreach($eventosAsignados->take(5) as $evento)
+                        @php
+                            $estadoClass = match($evento->estado) {
+                                'Activo' => ['icon' => 'activo', 'badge' => 'estado-activo'],
+                                'En Progreso' => ['icon' => 'progreso', 'badge' => 'estado-progreso'],
+                                'Próximo' => ['icon' => 'proximo', 'badge' => 'estado-proximo'],
+                                default => ['icon' => 'cerrado', 'badge' => 'estado-cerrado'],
+                            };
+                        @endphp
+                        <a href="{{ route('jurado.eventos.show', $evento->id_evento) }}" class="evento-item block">
+                            <div class="evento-icon {{ $estadoClass['icon'] }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
                             </div>
-                            
-                            <div class="chart-wrapper">
-                                <div class="relative w-40 h-40">
-                                    <svg class="w-full h-full" viewBox="0 0 100 100">
-                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#FFE0B2" stroke-width="8" />
-                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#FF9800" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="{{ 251.2 - (251.2 * $avancePorcentaje / 100) }}" stroke-linecap="round" transform="rotate(-90 50 50)" />
-                                    </svg>
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span class="text-gray-400 font-bold text-sm">Avance</span>
-                                        <span class="text-4xl font-bold text-yellow-500">{{ $avancePorcentaje }}</span>
-                                    </div>
-                                </div>
+                            <div class="evento-info">
+                                <div class="evento-nombre">{{ $evento->nombre }}</div>
+                                <div class="evento-meta">{{ $evento->inscripciones_count }} equipos · {{ $evento->fecha_inicio->format('d M, Y') }}</div>
                             </div>
-                        </div>
-                    @else
-                        <h4 class="project-title">Sin proyectos activos</h4>
-                        <div class="text-center text-gray-500 py-8">
-                            No hay proyectos para mostrar progreso.
+                            <span class="evento-estado {{ $estadoClass['badge'] }}">{{ $evento->estado }}</span>
+                        </a>
+                    @endforeach
+                    
+                    @if($eventosAsignados->count() > 5)
+                        <div class="text-center mt-4">
+                            <a href="{{ route('jurado.eventos.index') }}" class="text-sm text-orange-600 hover:text-orange-800 font-medium">
+                                Ver todos los eventos ({{ $eventosAsignados->count() }})
+                            </a>
                         </div>
                     @endif
-                </div>
+                @else
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p>No tienes eventos asignados actualmente.</p>
+                    </div>
+                @endif
             </div>
 
-            <!-- Grid de Tarjetas Pequeñas -->
-            <div class="bottom-grid">
+            <!-- Resumen de Actividad -->
+            <h3 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Resumen de Actividad
+            </h3>
+            <div class="custom-card">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl">
+                        <div class="text-3xl font-bold text-orange-600">{{ $estadisticas['totalEventos'] }}</div>
+                        <div class="text-sm text-gray-600 mt-1">Total Eventos</div>
+                    </div>
+                    <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
+                        <div class="text-3xl font-bold text-blue-600">{{ $estadisticas['avancesPorCalificar'] }}</div>
+                        <div class="text-sm text-gray-600 mt-1">Avances por Calificar</div>
+                    </div>
+                </div>
                 
-                <!-- Card 1 -->
-                <div class="info-card">
-                    <div class="card-img blue-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 0 1 0 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 0 1 0-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                        </svg>
+                @if($estadisticas['totalEquipos'] > 0)
+                    <div class="mt-6">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-600">Progreso de Evaluaciones</span>
+                            <span class="font-semibold">{{ $estadisticas['evaluacionesCompletadas'] }}/{{ $estadisticas['totalEquipos'] }}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            @php
+                                $porcentaje = $estadisticas['totalEquipos'] > 0 
+                                    ? round(($estadisticas['evaluacionesCompletadas'] / $estadisticas['totalEquipos']) * 100) 
+                                    : 0;
+                            @endphp
+                            <div class="bg-gradient-to-r from-orange-400 to-orange-600 h-3 rounded-full transition-all duration-500" style="width: {{ $porcentaje }}%"></div>
+                        </div>
+                        <div class="text-right text-sm text-gray-500 mt-1">{{ $porcentaje }}% completado</div>
                     </div>
-                    <div class="card-content">
-                        <h5>EVENTOS ACTIVOS</h5>
-                        <p>{{ $eventosActivosCount }} eventos en curso</p>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <a href="{{ route('jurado.constancias.index') }}">
-                <div class="info-card">
-                    <div class="card-img purple-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                        </svg>
-                    </div>
-                    <div class="card-content">
-                        <h5>Acuses</h5>
-                        <p>{{ $acusesCount }} acuses generados</p>
-                    </div>
-                </div>
-                </a>
-
-                <!-- Card 3 -->
-                <a href="{{ route('jurado.proyectos.index') }}" class="info-card" style="text-decoration: none;">
-                    <div class="card-img photo">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Proyectos">
-                    </div>
-                    <div class="card-content">
-                        <h5>PROYECTOS</h5>
-                        <p>{{ $proyectosCount }} proyectos asignados</p>
-                    </div>
-                </a>
-
-                <!-- Card 4 -->
-                <div class="info-card">
-                    <div class="card-img photo">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Equipos">
-                    </div>
-                    <div class="card-content">
-                        <h5>EQUIPOS</h5>
-                        <p>{{ $equiposCount }} equipos a evaluar</p>
-                    </div>
-                </div>
-
+                @endif
             </div>
-
         </div>
     </div>
 </div>

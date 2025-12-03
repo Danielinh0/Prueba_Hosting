@@ -39,24 +39,50 @@
         width: 24px;
         height: 24px;
     }
+
+    /* Left section (hamburger + logo) */
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex: 1;
+    }
+
+    /* Header logo */
+    .header-logo-img {
+        height: 50px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    /* Center section (title) */
+    .header-center {
+        flex: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     
     /* Page title en header */
     .page-title {
         font-family: 'Poppins', sans-serif;
         color: #ffffff;
         font-size: 1.5rem;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin: 0;
     }
-    
-    /* Logo en header */
-    .header-logo img {
-        height: 60px;
-        width: 60px;
-        object-fit: contain;
-        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+
+    /* Right section (user dropdown) */
+    .header-right {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
     
     /* Sidebar overlay */
@@ -207,18 +233,178 @@
         width: 24px;
         height: 24px;
     }
+
+    /* User Dropdown en Header */
+    .user-dropdown-container {
+        position: relative;
+    }
+
+    .user-dropdown-trigger {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 253, 244, 0.9);
+        border-radius: 12px;
+        padding: 8px 16px;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15), -2px -2px 6px rgba(255, 255, 255, 0.7);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .user-dropdown-trigger:hover {
+        box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), -3px -3px 8px rgba(255, 255, 255, 0.8);
+        transform: scale(1.02);
+    }
+
+    .user-dropdown-trigger img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        
+    }
+
+    .user-dropdown-trigger .user-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .user-dropdown-trigger svg {
+        width: 16px;
+        height: 16px;
+        color: #333;
+        transition: transform 0.3s ease;
+    }
+
+    .user-dropdown-container.open .user-dropdown-trigger svg {
+        transform: rotate(180deg);
+    }
+
+    .user-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        min-width: 200px;
+        background: rgba(255, 253, 244, 0.98);
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 100;
+        overflow: hidden;
+    }
+
+    .user-dropdown-container.open .user-dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .user-dropdown-menu a,
+    .user-dropdown-menu button {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 14px 20px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #333;
+        text-decoration: none;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .user-dropdown-menu a:hover,
+    .user-dropdown-menu button:hover {
+        background-color: rgba(232, 154, 60, 0.15);
+    }
+
+    .user-dropdown-menu a svg,
+    .user-dropdown-menu button svg {
+        width: 20px;
+        height: 20px;
+        color: #e89a3c;
+    }
+
+    .user-dropdown-divider {
+        height: 1px;
+        background: rgba(232, 154, 60, 0.2);
+        margin: 0;
+    }
 </style>
 
 <!-- Header Visible -->
 <div class="header-neuro">
-    <button class="hamburger-button" onclick="toggleMenu()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path fill-rule="evenodd" d="M2.25 4.5A.75.75 0 0 1 3 3.75h14.25a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75Zm0 4.5A.75.75 0 0 1 3 8.25h9.75a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 9Zm15-.75A.75.75 0 0 1 18 9v10.19l2.47-2.47a.75.75 0 1 1 1.06 1.06l-3.75 3.75a.75.75 0 0 1-1.06 0l-3.75-3.75a.75.75 0 1 1 1.06-1.06l2.47 2.47V9a.75.75 0 0 1 .75-.75Zm-15 5.25a.75.75 0 0 1 .75-.75h9.75a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-        </svg>
-    </button>
-    <div class="page-title">Inicio</div>
-    <div class="header-logo">
-        <img src="{{ asset('images/logito.png') }}" alt="Logo">
+    <!-- Left: Hamburger + Logo -->
+    <div class="header-left">
+        <button class="hamburger-button" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M2.25 4.5A.75.75 0 0 1 3 3.75h14.25a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75Zm0 4.5A.75.75 0 0 1 3 8.25h9.75a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 9Zm15-.75A.75.75 0 0 1 18 9v10.19l2.47-2.47a.75.75 0 1 1 1.06 1.06l-3.75 3.75a.75.75 0 0 1-1.06 0l-3.75-3.75a.75.75 0 1 1 1.06-1.06l2.47 2.47V9a.75.75 0 0 1 .75-.75Zm-15 5.25a.75.75 0 0 1 .75-.75h9.75a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+            </svg>
+        </button>
+        <img src="{{ asset('images/logito.png') }}" alt="Logo" class="header-logo-img">
+    </div>
+    
+    <!-- Center: Title -->
+    <div class="header-center">
+        <h1 class="page-title">
+            @if(request()->routeIs('jurado.dashboard'))
+                INICIO
+            @elseif(request()->routeIs('jurado.eventos.*'))
+                EVENTOS
+            @elseif(request()->routeIs('jurado.evaluaciones.*'))
+                EVALUACIONES
+            @elseif(request()->routeIs('jurado.acuses.*'))
+                ACUSES
+            @elseif(request()->routeIs('jurado.constancias.*'))
+                CONSTANCIAS
+            @elseif(request()->routeIs('profile.*'))
+                PERFIL
+            @else
+                PANEL JURADO
+            @endif
+        </h1>
+    </div>
+    
+    <!-- Right: User Dropdown -->
+    <div class="header-right">
+        <div class="user-dropdown-container" id="userDropdown">
+        <button class="user-dropdown-trigger" onclick="toggleUserDropdown()">
+            <img src="{{ Auth::user()->foto_perfil_url }}" alt="{{ Auth::user()->nombre }}">
+            <span class="user-name hidden sm:inline">{{ Auth::user()->nombre }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+        </button>
+        
+        <div class="user-dropdown-menu">
+            <a href="{{ route('profile.edit') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+                </svg>
+                Mi Perfil
+            </a>
+            <div class="user-dropdown-divider"></div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5h6ZM5.78 8.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 0 0 1.06-1.06l-1.72-1.72H15a.75.75 0 0 0 0-1.5H4.06l1.72-1.72a.75.75 0 0 0 0-1.06Z" clip-rule="evenodd" />
+                    </svg>
+                    Cerrar Sesión
+                </button>
+            </form>
+        </div>
+        </div>
     </div>
 </div>
 
@@ -283,5 +469,21 @@
         const overlay = document.getElementById('sidebarOverlay');
         menu.classList.toggle('active');
         overlay.classList.toggle('active');
+        
+        // Cerrar dropdown de usuario si está abierto
+        document.getElementById('userDropdown').classList.remove('open');
     }
+
+    function toggleUserDropdown() {
+        const dropdown = document.getElementById('userDropdown');
+        dropdown.classList.toggle('open');
+    }
+
+    // Cerrar dropdown al hacer clic fuera
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('userDropdown');
+        if (!dropdown.contains(event.target)) {
+            dropdown.classList.remove('open');
+        }
+    });
 </script>
