@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::patch('/profile/student', [ProfileController::class, 'updateStudentInfo'])->name('profile.student.update');
+    Route::patch('/profile/jury', [ProfileController::class, 'updateJuryInfo'])->name('profile.jury.update');
+    
+    Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+    
     Route::post('/inscripciones/{inscripcion}/unirse', [InscripcionController::class, 'unirse'])->name('inscripciones.unirse');
 });
 

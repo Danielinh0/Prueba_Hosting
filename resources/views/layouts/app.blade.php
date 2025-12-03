@@ -32,5 +32,41 @@
                 @yield('content')
             </main>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Vista previa de foto de perfil
+                const fotoInput = document.getElementById('foto_perfil');
+                const profileImage = document.querySelector('img[alt="Profile photo"]');
+                
+                if (fotoInput && profileImage) {
+                    fotoInput.addEventListener('change', function(e) {
+                        if (this.files && this.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                profileImage.src = e.target.result;
+                            }
+                            reader.readAsDataURL(this.files[0]);
+                        }
+                    });
+                }
+                
+                // Validación de contraseña en tiempo real
+                const passwordInput = document.getElementById('update_password_password');
+                const confirmPasswordInput = document.getElementById('update_password_password_confirmation');
+                
+                if (passwordInput && confirmPasswordInput) {
+                    function validatePasswords() {
+                        if (passwordInput.value !== confirmPasswordInput.value) {
+                            confirmPasswordInput.classList.add('border-red-500');
+                        } else {
+                            confirmPasswordInput.classList.remove('border-red-500');
+                        }
+                    }
+                    
+                    passwordInput.addEventListener('input', validatePasswords);
+                    confirmPasswordInput.addEventListener('input', validatePasswords);
+                }
+            });
+        </script>
     </body>
 </html>
