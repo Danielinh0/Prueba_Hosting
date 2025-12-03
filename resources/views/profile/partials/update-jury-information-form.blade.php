@@ -8,7 +8,7 @@
             <div class="info-field">
                 <label for="especialidad" class="info-label">Especialidad</label>
                 <input type="text" id="especialidad" name="especialidad" 
-                       class="neuromorphic-input"
+                       class="neuromorphic-input jurado-input"
                        value="{{ old('especialidad', $user->jurado->especialidad) }}"
                        placeholder="Ingresa tu especialidad">
                 @error('especialidad')
@@ -19,7 +19,7 @@
             <div class="info-field">
                 <label for="empresa_institucion" class="info-label">Empresa/Institución</label>
                 <input type="text" id="empresa_institucion" name="empresa_institucion" 
-                       class="neuromorphic-input"
+                       class="neuromorphic-input jurado-input"
                        value="{{ old('empresa_institucion', $user->jurado->empresa_institucion) }}"
                        placeholder="Nombre de la empresa o institución">
                 @error('empresa_institucion')
@@ -30,7 +30,7 @@
             <div class="info-field">
                 <label for="cedula_profesional" class="info-label">Cédula Profesional</label>
                 <input type="text" id="cedula_profesional" name="cedula_profesional" 
-                       class="neuromorphic-input"
+                       class="neuromorphic-input jurado-input"
                        value="{{ old('cedula_profesional', $user->jurado->cedula_profesional) }}"
                        placeholder="Número de cédula profesional">
                 @error('cedula_profesional')

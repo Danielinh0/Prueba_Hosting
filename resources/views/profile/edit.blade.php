@@ -111,6 +111,10 @@
         border-color: rgba(253, 184, 100, 0.4);
     }
     
+    .jurado-input {
+        width: 100%;
+    }
+
     .neuromorphic-button {
         background: linear-gradient(145deg, #febb68ff, #d59342ff);
         border-radius: 12px;
