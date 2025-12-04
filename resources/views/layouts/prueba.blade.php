@@ -19,18 +19,23 @@
     
     <style>
         :root {
-            --primary-color: #6366f1;
+            --primary-color: #e89a3c;
+            --primary-dark: #d98a2c;
             --secondary-color: #8b5cf6;
             --accent-color: #ec4899;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
+            --bg-base: #FFFDF4;
+            --bg-secondary: #FFEEE2;
+            --card-bg: #FFEEE2;
+            --text-primary: #2c2c2c;
+            --text-secondary: #6b6b6b;
+            --shadow-light: #ffffff;
+            --shadow-dark: #e6d5c9;
         }
 
         body {
-            background-color: var(--bg-color);
+            background: linear-gradient(to bottom, var(--bg-base), var(--bg-secondary)) !important;
             font-family: 'Figtree', sans-serif;
+            min-height: 100vh;
         }
 
         .dashboard-container {
@@ -60,14 +65,12 @@
             background: var(--card-bg);
             border-radius: 20px;
             padding: 1.5rem;
-            box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1),
-                        -8px -8px 16px rgba(255, 255, 255, 0.7);
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
             transition: all 0.3s ease;
         }
 
         .neu-card:hover {
-            box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.15),
-                        -12px -12px 24px rgba(255, 255, 255, 0.8);
+            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
             transform: translateY(-2px);
         }
 
@@ -77,7 +80,7 @@
         }
 
         .event-card-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
             color: white;
             padding: 1rem;
             border-radius: 12px;
@@ -121,12 +124,13 @@
         }
 
         .info-item {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: rgba(255, 255, 255, 0.3);
+            color: var(--text-primary);
             padding: 0.75rem 1rem;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 500;
             font-size: 0.95rem;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
         }
 
         .progress-circle-container {
@@ -143,20 +147,20 @@
             background: conic-gradient(
                 var(--primary-color) 0%,
                 var(--primary-color) 50%,
-                var(--bg-color) 50%,
-                var(--bg-color) 100%
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.3) 100%
             );
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
 
         .progress-ring::before {
             content: '';
             width: 110px;
             height: 110px;
-            background: white;
+            background: var(--card-bg);
             border-radius: 50%;
             position: absolute;
         }
@@ -213,22 +217,23 @@
             font-size: 1.5rem;
             color: white;
             flex-shrink: 0;
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
 
         .icon-athena {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
         }
 
         .icon-const {
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         }
 
         .icon-projects {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
         }
 
         .icon-teams {
-            background: linear-gradient(135deg, #ec4899, #be185d);
+            background: linear-gradient(135deg, #10b981, #059669);
         }
 
         .card-content-box h4 {
@@ -248,10 +253,16 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* Contenedor principal sin fondo gris */
+        .main-wrapper {
+            min-height: 100vh;
+            background: transparent;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="main-wrapper">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
