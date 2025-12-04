@@ -26,7 +26,7 @@
         font-weight: 500;
         margin-bottom: 1rem;
         padding: 0.5rem 1rem;
-        background: rgba(255, 253, 244, 0.9);
+        background: #FFEEE2;
         border-radius: 10px;
         box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
         transition: all 0.2s ease;
