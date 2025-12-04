@@ -1,347 +1,995 @@
-@extends('layouts.prueba')
+@extends('layouts.app')
 
 @section('content')
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-        
-        .neomorphic-page {
-            font-family: 'Poppins', sans-serif;
-            background: #e8d5c4;
-            min-height: 100vh;
-        }
-        
-        .neomorphic-card {
-            background: #e8d5c4;
-            border-radius: 20px;
-            box-shadow: 8px 8px 16px #c4b5a6, -8px -8px 16px #fff5e2;
-        }
-        
-        .neomorphic-card-inset {
-            background: #e8d5c4;
-            border-radius: 20px;
-            box-shadow: inset 6px 6px 12px #c4b5a6, inset -6px -6px 12px #fff5e2;
-        }
-        
-        .neomorphic-stat {
-            background: #e8d5c4;
-            border-radius: 15px;
-            box-shadow: 6px 6px 12px #c4b5a6, -6px -6px 12px #fff5e2;
-            transition: all 0.3s ease;
-        }
-        
-        .neomorphic-stat:hover {
-            box-shadow: 10px 10px 20px #c4b5a6, -10px -10px 20px #fff5e2;
-            transform: translateY(-5px);
-        }
-        
-        .neomorphic-progress {
-            background: #d4c1b0;
-            border-radius: 10px;
-            box-shadow: inset 3px 3px 6px #b8a899, inset -3px -3px 6px #f0dac9;
-        }
-        
-        .neomorphic-progress-bar {
-            background: linear-gradient(135deg, #e89a3c, #f5a847);
-            border-radius: 10px;
-            box-shadow: 2px 2px 4px rgba(232, 154, 60, 0.3);
-        }
-        
-        .neomorphic-badge {
-            border-radius: 20px;
-            font-weight: 600;
-            padding: 8px 16px;
-            box-shadow: 4px 4px 8px #c4b5a6, -4px -4px 8px #fff5e2;
-        }
-        
-        .neomorphic-image-card {
-            border-radius: 20px;
-            overflow: hidden;
-            background: #e8d5c4;
-            box-shadow: 8px 8px 16px #c4b5a6, -8px -8px 16px #fff5e2;
-        }
-        
-        .neomorphic-scroll-container {
-            overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #e89a3c #e8d5c4;
-        }
-        
-        .neomorphic-scroll-container::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        .neomorphic-scroll-container::-webkit-scrollbar-track {
-            background: #d4c1b0;
-            border-radius: 10px;
-        }
-        
-        .neomorphic-scroll-container::-webkit-scrollbar-thumb {
-            background: #e89a3c;
-            border-radius: 10px;
-        }
-        
-        .text-primary-neuro {
-            color: #2c2c2c;
-        }
-        
-        .text-secondary-neuro {
-            color: #6b6b6b;
-        }
-        
-        .text-accent-neuro {
-            color: #e89a3c;
-        }
-        
-        .bg-warning-neuro {
-            background: #fff4e6;
-            color: #e89a3c;
-        }
-        
-        .bg-danger-neuro {
-            background: #ffe6e6;
-            color: #d94545;
-        }
-        
-        .bg-success-neuro {
-            background: #e6f7e6;
-            color: #45a045;
-        }
-        
-        .bg-neutral-neuro {
-            background: #f0f0f0;
-            color: #6b6b6b;
-        }
-    </style>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    .student-dashboard {
+        background: linear-gradient(135deg, #FFFDF4 0%, #FFF8F0 50%, #FFEEE2 100%);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .student-dashboard * {
+        font-family: 'Poppins', sans-serif;
+    }
 
-    <div class="neomorphic-page py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h2 class="font-bold text-2xl text-primary-neuro mb-6">Mi Panel</h2>
+    /* Hero Welcome Section */
+    .welcome-hero {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #3d3d3d 100%);
+        border-radius: 24px;
+        padding: 2rem 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="neomorphic-stat p-5 text-center">
-                    <div class="text-primary-neuro">
-                        <p class="text-4xl font-bold">Nivel {{ Auth::user()->stats->nivel ?? 1 }}</p>
-                        <p class="text-xs mt-2 text-secondary-neuro">{{ number_format(Auth::user()->stats->total_xp ?? 0) }} XP Total</p>
-                        <div class="neomorphic-progress w-full h-2 mt-3">
-                            <div class="neomorphic-progress-bar h-2" style="width: {{ Auth::user()->stats->progreso_nivel ?? 0 }}%"></div>
-                        </div>
-                    </div>
+    .welcome-hero::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.2) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .welcome-hero::after {
+        content: '';
+        position: absolute;
+        bottom: -50px;
+        left: -50px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.1) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .welcome-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .welcome-text h1 {
+        color: #ffffff;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .welcome-text h1 span {
+        color: #e89a3c;
+    }
+
+    .welcome-text p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+    }
+
+    .welcome-stats {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .welcome-stat {
+        text-align: center;
+        padding: 0.75rem 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .welcome-stat-number {
+        color: #e89a3c;
+        font-size: 1.75rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .welcome-stat-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 0.25rem;
+    }
+
+    /* Main Grid Layout */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Section Titles */
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .section-title-icon {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .section-title-icon svg {
+        width: 16px;
+        height: 16px;
+        color: white;
+    }
+
+    .section-link {
+        color: #e89a3c;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: all 0.2s ease;
+    }
+
+    .section-link:hover {
+        color: #d98a2c;
+        transform: translateX(3px);
+    }
+
+    .section-link svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Event Cards */
+    .event-card {
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        transition: all 0.3s ease;
+    }
+
+    .event-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-card-active {
+        border: 2px solid #e89a3c;
+    }
+
+    .event-card-header {
+        background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+        padding: 1.25rem 1.5rem;
+        position: relative;
+    }
+
+    .event-card-active .event-card-header {
+        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+    }
+
+    .event-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .event-card-active .event-badge {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .event-title {
+        color: #ffffff;
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        padding-right: 80px;
+    }
+
+    .event-card-body {
+        padding: 1.5rem;
+    }
+
+    .event-desc {
+        color: #6b7280;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .event-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .event-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+
+    .event-meta-item svg {
+        width: 16px;
+        height: 16px;
+        color: #e89a3c;
+    }
+
+    .event-action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+        color: #ffffff;
+        padding: 0.75rem 1.25rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .event-action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        color: #ffffff;
+    }
+
+    .event-action-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Progress Section */
+    .progress-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 1.75rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        margin-bottom: 1.5rem;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+    }
+
+    .progress-info {
+        flex: 1;
+    }
+
+    .progress-team-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+    }
+
+    .progress-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .progress-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        background: linear-gradient(135deg, rgba(232, 154, 60, 0.1), rgba(232, 154, 60, 0.05));
+        color: #b37a2e;
+        padding: 0.375rem 0.75rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .progress-tag svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .progress-circle {
+        position: relative;
+        width: 100px;
+        height: 100px;
+    }
+
+    .progress-circle-bg {
+        fill: none;
+        stroke: #f3f4f6;
+        stroke-width: 8;
+    }
+
+    .progress-circle-fill {
+        fill: none;
+        stroke: url(#progressGradient);
+        stroke-width: 8;
+        stroke-linecap: round;
+        stroke-dasharray: 251.2;
+        stroke-dashoffset: 251.2;
+        transform: rotate(-90deg);
+        transform-origin: center;
+        transition: stroke-dashoffset 1s ease;
+    }
+
+    .progress-circle-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .progress-percentage {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #e89a3c;
+        line-height: 1;
+    }
+
+    .progress-label {
+        font-size: 0.65rem;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .progress-details {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #f3f4f6;
+    }
+
+    .progress-detail-item {
+        text-align: center;
+    }
+
+    .progress-detail-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a1a1a;
+    }
+
+    .progress-detail-label {
+        font-size: 0.7rem;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .progress-link {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.25rem;
+    }
+
+    .progress-link a {
+        color: #e89a3c;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: all 0.2s ease;
+    }
+
+    .progress-link a:hover {
+        color: #d98a2c;
+    }
+
+    /* Quick Actions Grid */
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .quick-action-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .quick-action-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        border-color: #e89a3c;
+    }
+
+    .quick-action-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .quick-action-icon svg {
+        width: 24px;
+        height: 24px;
+        color: white;
+    }
+
+    .icon-events {
+        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+    }
+
+    .icon-project {
+        background: linear-gradient(135deg, #1a1a1a, #3d3d3d);
+    }
+
+    .icon-certificates {
+        background: linear-gradient(135deg, #059669, #34d399);
+    }
+
+    .icon-team {
+        background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    }
+
+    .quick-action-content h4 {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 0.125rem;
+    }
+
+    .quick-action-content p {
+        font-size: 0.75rem;
+        color: #9ca3af;
+    }
+
+    .quick-action-disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .quick-action-disabled:hover {
+        transform: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        border-color: rgba(0, 0, 0, 0.04);
+    }
+
+    /* Empty State */
+    .empty-state {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 2.5rem;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .empty-state-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, rgba(232, 154, 60, 0.1), rgba(232, 154, 60, 0.05));
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+    }
+
+    .empty-state-icon svg {
+        width: 32px;
+        height: 32px;
+        color: #e89a3c;
+    }
+
+    .empty-state h3 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .empty-state-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+        color: #ffffff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .empty-state-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(232, 154, 60, 0.3);
+        color: #ffffff;
+    }
+
+    /* No Progress State */
+    .no-progress-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .no-progress-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .no-progress-icon svg {
+        width: 40px;
+        height: 40px;
+        color: #9ca3af;
+    }
+
+    .no-progress-text {
+        text-align: center;
+    }
+
+    .no-progress-text h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #4b5563;
+        margin-bottom: 0.25rem;
+    }
+
+    .no-progress-text p {
+        font-size: 0.875rem;
+        color: #9ca3af;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .welcome-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .welcome-stats {
+            justify-content: center;
+        }
+
+        .quick-actions {
+            grid-template-columns: 1fr;
+        }
+
+        .progress-header {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .progress-details {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+    }
+</style>
+
+<div class="student-dashboard py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        
+        <!-- Welcome Hero Section -->
+        <div class="welcome-hero">
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <h1>¡Hola, <span>{{ Auth::user()->name }}</span>!</h1>
+                    <p>Bienvenido a tu panel de control. Aquí puedes ver tus eventos, proyectos y progreso.</p>
                 </div>
-                
-                <div class="neomorphic-stat p-5 text-center">
-                    <div class="text-primary-neuro">
-                        <svg class="w-8 h-8 mx-auto mb-1 text-accent-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        <p class="text-3xl font-bold">{{ Auth::user()->stats->eventos_participados ?? 0 }}</p>
-                        <p class="text-xs mt-1 text-secondary-neuro">Eventos Participados</p>
+                <div class="welcome-stats">
+                    <div class="welcome-stat">
+                        <div class="welcome-stat-number">{{ $miInscripcion ? 1 : 0 }}</div>
+                        <div class="welcome-stat-label">Evento Activo</div>
                     </div>
-                </div>
-                
-                <div class="neomorphic-stat p-5 text-center">
-                    <div class="text-primary-neuro">
-                        <svg class="w-8 h-8 mx-auto mb-1 text-accent-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                        </svg>
-                        <p class="text-3xl font-bold">{{ Auth::user()->habilidades->count() }}</p>
-                        <p class="text-xs mt-1 text-secondary-neuro">Habilidades</p>
-                    </div>
-                </div>
-                
-                <div class="neomorphic-stat p-5 text-center">
-                    <div class="text-primary-neuro">
-                        <svg class="w-8 h-8 mx-auto mb-1 text-accent-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                        </svg>
-                        <p class="text-3xl font-bold">{{ Auth::user()->logros->count() }}</p>
-                        <p class="text-xs mt-1 text-secondary-neuro">Logros Desbloqueados</p>
+                    <div class="welcome-stat">
+                        <div class="welcome-stat-number">{{ $eventosDisponibles->count() }}</div>
+                        <div class="welcome-stat-label">Disponibles</div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            @if($miInscripcion && $miInscripcion->evento)
-                <div class="neomorphic-card p-6 mb-8">
-                    <div class="flex items-center mb-4">
-                        <svg class="w-6 h-6 mr-3 text-primary-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <h3 class="text-xl font-bold text-primary-neuro">Próximas Fechas Importantes</h3>
-                    </div>
-                    
-                    <div class="space-y-3">
-                        <div class="neomorphic-card-inset rounded-lg p-4">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <p class="font-semibold text-primary-neuro text-lg">{{ $miInscripcion->evento->nombre }}</p>
-                                    <p class="text-sm text-secondary-neuro">Finaliza el {{ $miInscripcion->evento->fecha_fin->format('d/m/Y') }}</p>
-                                </div>
-                                @php
-                                    $diasRestantes = now()->diffInDays($miInscripcion->evento->fecha_fin, false);
-                                    $badgeColor = 'bg-neutral-neuro'; 
-                                    if ($diasRestantes <= 7 && $diasRestantes > 0) {
-                                        $badgeColor = 'bg-danger-neuro'; 
-                                    } elseif ($diasRestantes <= 14 && $diasRestantes > 7) {
-                                        $badgeColor = 'bg-warning-neuro'; 
-                                    } elseif ($diasRestantes == 0) {
-                                        $badgeColor = 'bg-success-neuro'; 
-                                    } elseif ($diasRestantes < 0) {
-                                        $badgeColor = 'bg-danger-neuro'; 
-                                    }
-                                @endphp
-                                <span class="neomorphic-badge {{ $badgeColor }}">
-                                    @if($diasRestantes > 0)
-                                        En {{ $diasRestantes }} {{ $diasRestantes == 1 ? 'día' : 'días' }}
-                                    @elseif($diasRestantes == 0)
-                                        HOY
-                                    @else
-                                        Finalizado
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-
-                        @if($miInscripcion->proyecto && $miInscripcion->proyecto->hitos->where('completado', false)->count() > 0)
-                            @php
-                                $proximoHito = $miInscripcion->proyecto->hitos->where('completado', false)->sortBy('fecha_limite')->first();
-                            @endphp
-                            @if($proximoHito && $proximoHito->fecha_limite)
-                                <div class="neomorphic-card-inset rounded-lg p-4">
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <p class="font-semibold text-primary-neuro">Hito: {{ $proximoHito->nombre }}</p>
-                                            <p class="text-sm text-secondary-neuro">Fecha límite: {{ $proximoHito->fecha_limite->format('d/m/Y') }}</p>
-                                        </div>
-                                        @php
-                                            $diasHito = now()->diffInDays($proximoHito->fecha_limite, false);
-                                            $badgeHito = 'bg-neutral-neuro'; 
-                                            if ($diasHito <= 3 && $diasHito > 0) {
-                                                $badgeHito = 'bg-danger-neuro'; 
-                                            } elseif ($diasHito <= 7 && $diasHito > 3) {
-                                                $badgeHito = 'bg-warning-neuro'; 
-                                            } elseif ($diasHito == 0) {
-                                                $badgeHito = 'bg-success-neuro'; 
-                                            } elseif ($diasHito < 0) {
-                                                $badgeHito = 'bg-danger-neuro'; 
-                                            }
-                                        @endphp
-                                        <span class="neomorphic-badge {{ $badgeHito }}">
-                                            @if($diasHito > 0)
-                                                En {{ $diasHito }} {{ $diasHito == 1 ? 'día' : 'días' }}
-                                            @elseif($diasHito == 0)
-                                                HOY
-                                            @else
-                                                Vencido
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            @endif
-                        @endif
-                    </div>
-                </div>
-            @endif
-
-            @if ($miInscripcion && $miInscripcion->evento)
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-                    
-                    <div class="lg:col-span-2">
-                        <h3 class="text-lg font-semibold text-primary-neuro mb-4">Mi Evento Activo</h3>
-                        <div class="neomorphic-image-card">
-                            <a href="{{ route('estudiante.eventos.show', $miInscripcion->evento) }}">
-                                <img class="h-56 w-full object-cover" src="{{ asset('storage/' . $miInscripcion->evento->ruta_imagen) }}" alt="Imagen del evento">
-                            </a>
-                            <div class="p-6 bg-[#e8d5c4]">
-                                <h4 class="font-bold text-xl text-primary-neuro">{{ $miInscripcion->evento->nombre }}</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-lg font-semibold text-primary-neuro mb-4">Mi Equipo</h3>
-                        <div class="neomorphic-image-card">
-                            @if($miInscripcion->equipo->ruta_imagen)
-                                <a href="{{ route('estudiante.equipo.index') }}">
-                                    <img class="h-40 w-full object-cover" src="{{ asset('storage/' . $miInscripcion->equipo->ruta_imagen) }}" alt="Imagen del equipo">
-                                </a>
-                            @endif
-                            <div class="p-6 bg-[#e8d5c4]">
-                                <a href="{{ route('estudiante.equipo.index') }}" class="font-bold text-xl text-primary-neuro hover:text-accent-neuro transition">
-                                    {{ $miInscripcion->equipo->nombre }}
-                                </a>
-                                
-                                @if($miInscripcion->equipo->descripcion)
-                                    <p class="text-sm text-secondary-neuro mt-2 line-clamp-2">{{ $miInscripcion->equipo->descripcion }}</p>
-                                @endif
-
-                                <div class="mt-4">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-semibold text-secondary-neuro">Progreso del Proyecto</span>
-                                        <span class="text-xs font-semibold text-accent-neuro">0%</span>
-                                    </div>
-                                    <div class="neomorphic-progress w-full h-2.5">
-                                        <div class="neomorphic-progress-bar h-2.5 transition-all duration-500" style="width: 0%"></div>
-                                    </div>
-                                    <p class="text-xs text-secondary-neuro mt-1 italic">La lógica de progreso se implementará con el sistema de avances</p>
-                                </div>
-
-                                <a href="{{ route('estudiante.equipo.index') }}" class="mt-4 inline-flex items-center text-sm text-accent-neuro font-semibold hover:opacity-80 transition">
-                                    Ver Detalles del Equipo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @else
-                <div class="neomorphic-card p-6 mb-12 border-l-4 border-accent-neuro">
-                    <h3 class="font-bold text-lg text-primary-neuro">Bienvenido</h3>
-                    <p class="mt-2 text-secondary-neuro">Parece que no estás participando en ningún evento activo en este momento. Explora los próximos eventos para unirte a la acción.</p>
-                </div>
-            @endif
-
-
-            <div>
-                <h3 class="text-2xl font-bold text-primary-neuro mb-6">Eventos Disponibles</h3>
-                <div class="neomorphic-scroll-container flex overflow-x-auto space-x-6 pb-4">
-                    @forelse ($eventosDisponibles as $evento)
-                        <div class="flex-shrink-0 w-80 neomorphic-image-card transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                            <a href="{{ route('estudiante.eventos.show', $evento) }}">
-                                <img class="h-40 w-full object-cover" src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
-                            </a>
-                            <div class="p-4 bg-[#e8d5c4]">
-                                <h4 class="font-semibold text-lg text-primary-neuro truncate">{{ $evento->nombre }}</h4>
-                                <p class="text-secondary-neuro text-sm mt-1">
-                                    Inicia: {{ $evento->fecha_inicio->format('d M, Y') }}
-                                </p>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-1 text-center py-10 w-full">
-                            <p class="text-secondary-neuro">No hay eventos disponibles en este momento.</p>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-
-            @if ($miInscripcion && $miInscripcion->evento)
-                <div class="mt-12">
-                    <h3 class="text-2xl font-bold text-primary-neuro mb-6">Mis Constancias</h3>
-                    <div class="neomorphic-card p-8">
-                        <div class="text-center">
-                            <svg class="mx-auto h-16 w-16 text-secondary-neuro" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
+            
+            <!-- Left Column - Events -->
+            <div class="left-column">
+                
+                <!-- Active Event -->
+                @if ($miInscripcion)
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <span class="section-title-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                             </svg>
-                            <h3 class="mt-4 text-lg font-medium text-primary-neuro">Constancias no disponibles aún</h3>
-                            <p class="mt-2 text-sm text-secondary-neuro">
-                                Las constancias se generarán automáticamente cuando se complete el proyecto y se realice la evaluación final por los jurados.
-                            </p>
-                            <p class="mt-1 text-xs text-secondary-neuro italic">
-                                Esta funcionalidad se implementará con el sistema de evaluaciones y proyectos.
-                            </p>
+                        </span>
+                        Evento Activo
+                    </h3>
+                </div>
+                
+                <div class="event-card event-card-active">
+                    <div class="event-card-header">
+                        <span class="event-badge">Participando</span>
+                        <h4 class="event-title">{{ $miInscripcion->evento->nombre }}</h4>
+                    </div>
+                    <div class="event-card-body">
+                        <p class="event-desc">{{ Str::limit($miInscripcion->evento->descripcion ?? 'Sin descripción disponible', 120) }}</p>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                {{ $miInscripcion->evento->fecha_inicio->format('d M, Y') }}
+                            </div>
+                            <div class="event-meta-item">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                {{ $miInscripcion->evento->inscripciones->count() }} equipos
+                            </div>
                         </div>
+                        <a href="{{ route('estudiante.eventos.show', $miInscripcion->evento) }}" class="event-action-btn">
+                            Ver detalles
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
-            @endif
+                @endif
 
+                <!-- Available Events -->
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <span class="section-title-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </span>
+                        Eventos Disponibles
+                    </h3>
+                    <a href="{{ route('estudiante.eventos.index') }}" class="section-link">
+                        Ver todos
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                @forelse ($eventosDisponibles->take(2) as $evento)
+                <div class="event-card">
+                    <div class="event-card-header">
+                        <span class="event-badge">{{ $evento->estado }}</span>
+                        <h4 class="event-title">{{ $evento->nombre }}</h4>
+                    </div>
+                    <div class="event-card-body">
+                        <p class="event-desc">{{ Str::limit($evento->descripcion ?? 'Sin descripción', 100) }}</p>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                Inicia: {{ $evento->fecha_inicio->format('d M, Y') }}
+                            </div>
+                            <div class="event-meta-item">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                {{ $evento->inscripciones->count() }} participantes
+                            </div>
+                        </div>
+                        <a href="{{ route('estudiante.eventos.show', $evento) }}" class="event-action-btn">
+                            Ver detalles
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                @empty
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Sin eventos disponibles</h3>
+                    <p>No hay eventos disponibles en este momento. Vuelve pronto para ver nuevas oportunidades.</p>
+                    <a href="{{ route('estudiante.eventos.index') }}" class="empty-state-btn">
+                        Explorar eventos
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+                @endforelse
+            </div>
+
+            <!-- Right Column - Progress & Actions -->
+            <div class="right-column">
+                
+                <!-- Progress Section -->
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <span class="section-title-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </span>
+                        Progreso del Proyecto
+                    </h3>
+                </div>
+
+                <div class="progress-card">
+                    @if($miInscripcion && $miInscripcion->equipo)
+                        @php
+                            $equipo = $miInscripcion->equipo;
+                            $miembro = $equipo->miembros->where('id_estudiante', Auth::user()->estudiante->id_estudiante)->first();
+                            $progreso = 0; // Aquí puedes calcular el progreso real
+                        @endphp
+                        
+                        <div class="progress-header">
+                            <div class="progress-info">
+                                <h4 class="progress-team-name">{{ $equipo->nombre }}</h4>
+                                <div class="progress-tags">
+                                    <span class="progress-tag">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                        </svg>
+                                        {{ $miInscripcion->evento->nombre }}
+                                    </span>
+                                    <span class="progress-tag">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                        {{ $miembro->rol->nombre ?? 'Miembro' }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="progress-circle">
+                                <svg width="100" height="100" viewBox="0 0 100 100">
+                                    <defs>
+                                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#e89a3c"/>
+                                            <stop offset="100%" style="stop-color:#f5b76c"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <circle class="progress-circle-bg" cx="50" cy="50" r="40"/>
+                                    <circle class="progress-circle-fill" cx="50" cy="50" r="40" style="stroke-dashoffset: {{ 251.2 - (251.2 * $progreso / 100) }}"/>
+                                </svg>
+                                <div class="progress-circle-text">
+                                    <span class="progress-percentage">{{ $progreso }}%</span>
+                                    <span class="progress-label">Avance</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress-details">
+                            <div class="progress-detail-item">
+                                <div class="progress-detail-value">{{ $equipo->miembros->count() }}</div>
+                                <div class="progress-detail-label">Miembros</div>
+                            </div>
+                            <div class="progress-detail-item">
+                                <div class="progress-detail-value">0</div>
+                                <div class="progress-detail-label">Tareas</div>
+                            </div>
+                            <div class="progress-detail-item">
+                                <div class="progress-detail-value">0</div>
+                                <div class="progress-detail-label">Avances</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-link">
+                            <a href="{{ route('estudiante.equipo.index') }}">
+                                Ver detalles del equipo
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    @else
+                        <div class="no-progress-state">
+                            <div class="no-progress-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div class="no-progress-text">
+                                <h4>Sin equipo asignado</h4>
+                                <p>Únete a un equipo para comenzar tu proyecto</p>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <span class="section-title-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </span>
+                        Acciones Rápidas
+                    </h3>
+                </div>
+
+                <div class="quick-actions">
+                    <a href="{{ route('estudiante.eventos.index') }}" class="quick-action-card">
+                        <div class="quick-action-icon icon-events">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div class="quick-action-content">
+                            <h4>Eventos</h4>
+                            <p>Explora eventos activos</p>
+                        </div>
+                    </a>
+
+                    @if($miInscripcion && $miInscripcion->evento->estado === 'En Progreso')
+                        @php
+                            $evento = $miInscripcion->evento;
+                            $proyectoEvento = $evento->tipo_proyecto === 'general' 
+                                ? $evento->proyectoGeneral 
+                                : $miInscripcion->proyectoEvento;
+                        @endphp
+                        
+                        @if($proyectoEvento && $proyectoEvento->publicado)
+                            <a href="{{ route('estudiante.proyecto-evento.show') }}" class="quick-action-card">
+                                <div class="quick-action-icon icon-project">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="quick-action-content">
+                                    <h4>Proyecto del Evento</h4>
+                                    <p>{{ Str::limit($proyectoEvento->titulo, 20) }}</p>
+                                </div>
+                            </a>
+                        @else
+                            <div class="quick-action-card quick-action-disabled">
+                                <div class="quick-action-icon icon-project">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="quick-action-content">
+                                    <h4>Proyecto del Evento</h4>
+                                    <p>Esperando publicación...</p>
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        <a href="{{ route('estudiante.constancias.index') }}" class="quick-action-card">
+                            <div class="quick-action-icon icon-certificates">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                </svg>
+                            </div>
+                            <div class="quick-action-content">
+                                <h4>Constancias</h4>
+                                <p>Genera tus constancias</p>
+                            </div>
+                        </a>
+                    @endif
+
+                    @if($miInscripcion && $miInscripcion->proyecto)
+                        <a href="#" class="quick-action-card">
+                            <div class="quick-action-icon icon-project">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div class="quick-action-content">
+                                <h4>Mi Proyecto</h4>
+                                <p>Ver mi proyecto actual</p>
+                            </div>
+                        </a>
+                    @else
+                        <div class="quick-action-card quick-action-disabled">
+                            <div class="quick-action-icon icon-project">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div class="quick-action-content">
+                                <h4>Mi Proyecto</h4>
+                                <p>Sin proyectos activos</p>
+                            </div>
+                        </div>
+                    @endif
+
+                    <a href="{{ route('estudiante.equipo.index') }}" class="quick-action-card">
+                        <div class="quick-action-icon icon-team">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div class="quick-action-content">
+                            <h4>Mi Equipo</h4>
+                            <p>Gestiona tu equipo</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 @endsection

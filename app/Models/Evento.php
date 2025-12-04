@@ -115,4 +115,48 @@ class Evento extends Model
 
         return $totalEquiposCompletos === $proyectosPublicados;
     }
+
+    /**
+     * Criterios de evaluación del evento
+     */
+    public function criteriosEvaluacion()
+    {
+        return $this->hasMany(CriterioEvaluacion::class, 'id_evento', 'id_evento');
+    }
+
+    /**
+     * Verificar si la suma de ponderaciones es 100%
+     */
+    public function ponderacionesCompletas(): bool
+    {
+        return $this->criteriosEvaluacion()->sum('ponderacion') === 100;
+    }
+
+    /**
+     * Verificar si el evento puede ser activado
+     * (debe tener criterios y ponderaciones completas)
+     */
+    public function puedeSerActivado(): bool
+    {
+        return $this->criteriosEvaluacion()->count() > 0 && $this->ponderacionesCompletas();
+    }
+
+    /**
+     * Verificar si se pueden cambiar los criterios de evaluación
+     * Solo se pueden cambiar si el evento no tiene evaluaciones realizadas
+     */
+    public function puedeCambiarCriterios(): bool
+    {
+        // Si el evento está finalizado, no se pueden cambiar
+        if ($this->estado === 'Finalizado') {
+            return false;
+        }
+
+        // Verificar si hay evaluaciones asociadas a los criterios del evento
+        $tieneEvaluaciones = EvaluacionCriterio::whereHas('criterio', function ($query) {
+            $query->where('id_evento', $this->id_evento);
+        })->exists();
+
+        return !$tieneEvaluaciones;
+    }
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Evento;
+use App\Models\CriterioEvaluacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class EventoController extends Controller
 {
@@ -64,16 +66,48 @@ class EventoController extends Controller
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'cupo_max_equipos' => 'required|integer|min:1',
             'ruta_imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'criterios' => 'required|array|min:1',
+            'criterios.*.nombre' => 'required|string|max:100',
+            'criterios.*.descripcion' => 'nullable|string|max:500',
+            'criterios.*.ponderacion' => 'required|numeric|min:1|max:100',
         ]);
 
-        if ($request->hasFile('ruta_imagen')) {
-            $rutaImagen = $request->file('ruta_imagen')->store('imagenes_eventos', 'public');
-            $datosValidados['ruta_imagen'] = $rutaImagen;
+        // Validar que la suma de ponderaciones sea 100%
+        $sumaPonderaciones = collect($request->criterios)->sum('ponderacion');
+        if (abs($sumaPonderaciones - 100) > 0.01) {
+            return back()->withInput()->withErrors([
+                'criterios' => 'La suma de las ponderaciones debe ser exactamente 100%. Actualmente suma ' . $sumaPonderaciones . '%.'
+            ]);
         }
 
-        Evento::create($datosValidados);
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('ruta_imagen')) {
+                $rutaImagen = $request->file('ruta_imagen')->store('imagenes_eventos', 'public');
+                $datosValidados['ruta_imagen'] = $rutaImagen;
+            }
 
-        return redirect()->route('admin.eventos.index')->with('success', 'Evento creado exitosamente.');
+            // Eliminar criterios del array antes de crear el evento
+            unset($datosValidados['criterios']);
+            
+            $evento = Evento::create($datosValidados);
+
+            // Crear los criterios de evaluación
+            foreach ($request->criterios as $criterio) {
+                CriterioEvaluacion::create([
+                    'id_evento' => $evento->id_evento,
+                    'nombre' => $criterio['nombre'],
+                    'descripcion' => $criterio['descripcion'] ?? null,
+                    'ponderacion' => $criterio['ponderacion'],
+                ]);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.eventos.index')->with('success', 'Evento creado exitosamente con ' . count($request->criterios) . ' criterios de evaluación.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->withErrors(['error' => 'Error al crear el evento: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -90,7 +124,7 @@ class EventoController extends Controller
      */
     public function edit(Evento $evento)
     {
-        
+        $evento->load('criteriosEvaluacion');
         return view('admin.eventos.edit', compact('evento'));
     }
 
@@ -99,29 +133,76 @@ class EventoController extends Controller
      */
     public function update(Request $request, Evento $evento)
     {
-        $datosValidados = $request->validate([
+        $validationRules = [
             'nombre' => 'required|string|max:150',
             'descripcion' => 'nullable|string',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'cupo_max_equipos' => 'required|integer|min:1',
             'ruta_imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ];
 
-        if ($request->hasFile('ruta_imagen')) {
-            // Eliminar la imagen anterior si existe
-            if ($evento->ruta_imagen) {
-                Storage::disk('public')->delete($evento->ruta_imagen);
-            }
-            
-            // Guardar la nueva imagen
-            $rutaImagen = $request->file('ruta_imagen')->store('imagenes_eventos', 'public');
-            $datosValidados['ruta_imagen'] = $rutaImagen;
+        // Solo validar criterios si el evento permite cambiarlos
+        $puedeCambiarCriterios = $evento->puedeCambiarCriterios();
+        if ($puedeCambiarCriterios && $request->has('criterios')) {
+            $validationRules['criterios'] = 'required|array|min:1';
+            $validationRules['criterios.*.nombre'] = 'required|string|max:100';
+            $validationRules['criterios.*.descripcion'] = 'nullable|string|max:500';
+            $validationRules['criterios.*.ponderacion'] = 'required|numeric|min:1|max:100';
         }
 
-        $evento->update($datosValidados);
+        $datosValidados = $request->validate($validationRules);
 
-        return redirect()->route('admin.eventos.index')->with('success', 'Evento actualizado exitosamente.');
+        // Validar suma de ponderaciones si hay criterios
+        if ($puedeCambiarCriterios && $request->has('criterios')) {
+            $sumaPonderaciones = collect($request->criterios)->sum('ponderacion');
+            if (abs($sumaPonderaciones - 100) > 0.01) {
+                return back()->withInput()->withErrors([
+                    'criterios' => 'La suma de las ponderaciones debe ser exactamente 100%. Actualmente suma ' . $sumaPonderaciones . '%.'
+                ]);
+            }
+        }
+
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('ruta_imagen')) {
+                // Eliminar la imagen anterior si existe
+                if ($evento->ruta_imagen) {
+                    Storage::disk('public')->delete($evento->ruta_imagen);
+                }
+                
+                // Guardar la nueva imagen
+                $rutaImagen = $request->file('ruta_imagen')->store('imagenes_eventos', 'public');
+                $datosValidados['ruta_imagen'] = $rutaImagen;
+            }
+
+            // Eliminar criterios del array antes de actualizar el evento
+            unset($datosValidados['criterios']);
+            
+            $evento->update($datosValidados);
+
+            // Actualizar criterios solo si el evento lo permite
+            if ($puedeCambiarCriterios && $request->has('criterios')) {
+                // Eliminar criterios anteriores
+                $evento->criteriosEvaluacion()->delete();
+
+                // Crear nuevos criterios
+                foreach ($request->criterios as $criterio) {
+                    CriterioEvaluacion::create([
+                        'id_evento' => $evento->id_evento,
+                        'nombre' => $criterio['nombre'],
+                        'descripcion' => $criterio['descripcion'] ?? null,
+                        'ponderacion' => $criterio['ponderacion'],
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('admin.eventos.index')->with('success', 'Evento actualizado exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->withErrors(['error' => 'Error al actualizar el evento: ' . $e->getMessage()]);
+        }
     }
 
     /**

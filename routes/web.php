@@ -79,6 +79,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('eventos/{evento}/proyecto/{inscripcion}/create-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'createIndividual'])->name('proyectos-evento.create-individual');
     Route::post('eventos/{evento}/proyecto/{inscripcion}/store-individual', [App\Http\Controllers\Admin\ProyectoEventoController::class, 'storeIndividual'])->name('proyectos-evento.store-individual');
 
+    //? Rutas para gestión de proyectos y evaluaciones
+    Route::get('proyectos-evaluaciones', [App\Http\Controllers\Admin\ProyectoEvaluacionController::class, 'index'])->name('proyectos-evaluaciones.index');
+    Route::get('proyectos-evaluaciones/{inscripcion}', [App\Http\Controllers\Admin\ProyectoEvaluacionController::class, 'show'])->name('proyectos-evaluaciones.show');
+
     Route::resource('eventos', EventoController::class);
     Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
     Route::resource('equipos', AdminEquipoController::class)->except(['create', 'store']);

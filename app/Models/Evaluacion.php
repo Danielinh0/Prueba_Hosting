@@ -12,10 +12,6 @@ class Evaluacion extends Model
     protected $fillable = [
         'id_inscripcion',
         'id_jurado',
-        'calificacion_innovacion',
-        'calificacion_funcionalidad',
-        'calificacion_presentacion',
-        'calificacion_impacto',
         'calificacion_final',
         'comentarios_fortalezas',
         'comentarios_areas_mejora',
@@ -24,10 +20,6 @@ class Evaluacion extends Model
     ];
 
     protected $casts = [
-        'calificacion_innovacion' => 'decimal:2',
-        'calificacion_funcionalidad' => 'decimal:2',
-        'calificacion_presentacion' => 'decimal:2',
-        'calificacion_impacto' => 'decimal:2',
         'calificacion_final' => 'decimal:2',
     ];
 
@@ -48,35 +40,57 @@ class Evaluacion extends Model
     }
 
     /**
-     * Calcular calificación final promedio
+     * Calificaciones por criterio de esta evaluación
+     */
+    public function criteriosCalificados()
+    {
+        return $this->hasMany(EvaluacionCriterio::class, 'id_evaluacion', 'id_evaluacion');
+    }
+
+    /**
+     * Calcular calificación final ponderada
+     * Fórmula: Σ (calificacion × ponderacion / 100)
      */
     public function calcularCalificacionFinal()
     {
-        $criterios = [
-            $this->calificacion_innovacion,
-            $this->calificacion_funcionalidad,
-            $this->calificacion_presentacion,
-            $this->calificacion_impacto,
-        ];
-
-        $criteriosValidos = array_filter($criterios, fn($c) => $c !== null);
+        $calificaciones = $this->criteriosCalificados()->with('criterio')->get();
         
-        if (count($criteriosValidos) === 0) {
+        if ($calificaciones->isEmpty()) {
             return null;
         }
 
-        return round(array_sum($criteriosValidos) / count($criteriosValidos), 2);
+        $total = 0;
+        foreach ($calificaciones as $calificacion) {
+            if ($calificacion->calificacion !== null && $calificacion->criterio) {
+                $total += ($calificacion->calificacion * $calificacion->criterio->ponderacion) / 100;
+            }
+        }
+
+        return round($total, 2);
     }
 
     /**
      * Verificar si la evaluación está completa
+     * (todos los criterios del evento tienen calificación)
      */
     public function estaCompleta(): bool
     {
-        return $this->calificacion_innovacion !== null &&
-               $this->calificacion_funcionalidad !== null &&
-               $this->calificacion_presentacion !== null &&
-               $this->calificacion_impacto !== null;
+        // Obtener el evento a través de la inscripción
+        $evento = $this->inscripcion->evento;
+        
+        if (!$evento) {
+            return false;
+        }
+
+        // Contar criterios del evento
+        $totalCriterios = $evento->criteriosEvaluacion()->count();
+        
+        // Contar criterios calificados en esta evaluación
+        $criteriosCalificados = $this->criteriosCalificados()
+            ->whereNotNull('calificacion')
+            ->count();
+
+        return $totalCriterios > 0 && $totalCriterios === $criteriosCalificados;
     }
 
     /**
@@ -89,3 +103,4 @@ class Evaluacion extends Model
         $this->save();
     }
 }
+
