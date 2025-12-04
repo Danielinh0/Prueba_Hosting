@@ -116,8 +116,7 @@ Route::middleware(['auth', 'role:jurado'])->prefix('jurado')->name('jurado.')->g
     Route::get('/eventos/{evento}/equipos/{equipo}/avance/{avance}', [EventosController::class, 'calificar_avance'])->name('eventos.calificar_avance');
     Route::post('/eventos/{evento}/equipos/{equipo}/avance/{avance}/guardar', [EventosController::class, 'guardar_calificacion'])->name('eventos.guardar_calificacion');
 
-    // Acuses
-    Route::get('/acuses', [AcusesController::class, 'index'])->name('acuses.index');
+   
 });
 
 //? Rutas para Estudiantes
@@ -217,11 +216,6 @@ Route::post('equipos/guardar', [EstudianteEquipoController::class, 'storeSinEven
 Route::middleware(['auth', 'role:jurado'])->prefix('jurado')->name('jurado.')->group(function () {
     Route::get('/dashboard', App\Http\Controllers\Jurado\DashboardController::class)->name('dashboard');
     
-    // Rutas para Proyectos que ya no se ocupan
-    // Route::get('/proyectos', [App\Http\Controllers\Jurado\ProyectoController::class, 'index'])->name('proyectos.index');
-    // Route::get('/proyectos/{proyectoEvento}', [App\Http\Controllers\Jurado\ProyectoController::class, 'show'])->name('proyectos.show');
-    // Route::get('/eventos/{evento}/proyectos', [App\Http\Controllers\Jurado\ProyectoController::class, 'evento'])->name('proyectos.evento');
-
     // Rutas para constancias
     Route::get('/constancias', [App\Http\Controllers\Jurado\ConstanciaController::class, 'index'])->name('constancias.index');
     Route::get('/constancias/{evento}', [App\Http\Controllers\Jurado\ConstanciaController::class, 'generarPdf'])->name('constancias.ver');

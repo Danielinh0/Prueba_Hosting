@@ -1,4 +1,11 @@
-@extends('layouts.app')
+@php
+    $layout = 'layouts.app';
+    if(Auth::user()->rolSistema && Auth::user()->rolSistema->nombre === 'jurado') {
+        $layout = 'jurado.layouts.app';
+    }
+@endphp
+
+@extends($layout)
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">

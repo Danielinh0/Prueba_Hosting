@@ -96,6 +96,16 @@ CREATE TABLE IF NOT EXISTS public.constancias
     CONSTRAINT constancias_pkey PRIMARY KEY (id_constancia)
 );
 
+CREATE TABLE IF NOT EXISTS public.criterios_evaluacion
+(
+    id_criterio bigserial NOT NULL,
+    id_evento bigint NOT NULL,
+    nombre character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    descripcion text COLLATE pg_catalog."default",
+    ponderacion integer NOT NULL,
+    CONSTRAINT criterios_evaluacion_pkey PRIMARY KEY (id_criterio)
+);
+
 CREATE TABLE IF NOT EXISTS public.equipos
 (
     id_equipo bigserial NOT NULL,
@@ -140,15 +150,21 @@ CREATE TABLE IF NOT EXISTS public.estudiantes
     CONSTRAINT estudiantes_numero_control_unique UNIQUE (numero_control)
 );
 
+CREATE TABLE IF NOT EXISTS public.evaluacion_criterios
+(
+    id bigserial NOT NULL,
+    id_evaluacion bigint NOT NULL,
+    id_criterio bigint NOT NULL,
+    calificacion numeric(5, 2) NOT NULL,
+    CONSTRAINT evaluacion_criterios_pkey PRIMARY KEY (id),
+    CONSTRAINT evaluacion_criterios_id_evaluacion_id_criterio_unique UNIQUE (id_evaluacion, id_criterio)
+);
+
 CREATE TABLE IF NOT EXISTS public.evaluaciones
 (
     id_evaluacion bigserial NOT NULL,
     id_inscripcion bigint NOT NULL,
     id_jurado bigint NOT NULL,
-    calificacion_innovacion numeric(5, 2),
-    calificacion_funcionalidad numeric(5, 2),
-    calificacion_presentacion numeric(5, 2),
-    calificacion_impacto numeric(5, 2),
     calificacion_final numeric(5, 2),
     comentarios_fortalezas text COLLATE pg_catalog."default",
     comentarios_areas_mejora text COLLATE pg_catalog."default",
@@ -158,6 +174,19 @@ CREATE TABLE IF NOT EXISTS public.evaluaciones
     updated_at timestamp(0) without time zone,
     CONSTRAINT evaluaciones_pkey PRIMARY KEY (id_evaluacion),
     CONSTRAINT evaluaciones_id_inscripcion_id_jurado_unique UNIQUE (id_inscripcion, id_jurado)
+);
+
+CREATE TABLE IF NOT EXISTS public.evaluaciones_avances
+(
+    id bigserial NOT NULL,
+    id_avance bigint NOT NULL,
+    id_jurado bigint NOT NULL,
+    calificacion integer NOT NULL,
+    comentarios text COLLATE pg_catalog."default",
+    fecha_evaluacion timestamp(0) without time zone NOT NULL,
+    created_at timestamp(0) without time zone,
+    updated_at timestamp(0) without time zone,
+    CONSTRAINT evaluaciones_avances_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS public.evento_jurados
@@ -202,22 +231,6 @@ CREATE TABLE IF NOT EXISTS public.funcionalidades_avanzadas_tables
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
     CONSTRAINT funcionalidades_avanzadas_tables_pkey PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS public.hitos_proyecto
-(
-    id_hito bigserial NOT NULL,
-    id_proyecto bigint NOT NULL,
-    titulo character varying(150) COLLATE pg_catalog."default" NOT NULL,
-    descripcion text COLLATE pg_catalog."default",
-    fecha_limite timestamp(0) without time zone,
-    completado boolean NOT NULL DEFAULT false,
-    fecha_completado timestamp(0) without time zone,
-    orden integer NOT NULL DEFAULT 0,
-    completado_por bigint,
-    created_at timestamp(0) without time zone,
-    updated_at timestamp(0) without time zone,
-    CONSTRAINT hitos_proyecto_pkey PRIMARY KEY (id_hito)
 );
 
 CREATE TABLE IF NOT EXISTS public.inscripciones_evento
@@ -386,7 +399,7 @@ CREATE TABLE IF NOT EXISTS public.tareas_proyecto
 (
     id_tarea bigserial NOT NULL,
     id_proyecto bigint NOT NULL,
-    nombre character varying(255) COLLATE pg_catalog."default",
+    nombre character varying(150) COLLATE pg_catalog."default" NOT NULL,
     descripcion text COLLATE pg_catalog."default",
     asignado_a bigint,
     completada boolean NOT NULL DEFAULT false,
@@ -494,6 +507,13 @@ ALTER TABLE IF EXISTS public.constancias
     ON DELETE NO ACTION;
 
 
+ALTER TABLE IF EXISTS public.criterios_evaluacion
+    ADD CONSTRAINT criterios_evaluacion_id_evento_foreign FOREIGN KEY (id_evento)
+    REFERENCES public.eventos (id_evento) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
+
+
 ALTER TABLE IF EXISTS public.estudiante_habilidades
     ADD CONSTRAINT estudiante_habilidades_id_habilidad_foreign FOREIGN KEY (id_habilidad)
     REFERENCES public.cat_habilidades (id_habilidad) MATCH SIMPLE
@@ -533,6 +553,20 @@ CREATE INDEX IF NOT EXISTS estudiantes_pkey
     ON public.estudiantes(id_usuario);
 
 
+ALTER TABLE IF EXISTS public.evaluacion_criterios
+    ADD CONSTRAINT evaluacion_criterios_id_criterio_foreign FOREIGN KEY (id_criterio)
+    REFERENCES public.criterios_evaluacion (id_criterio) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
+
+
+ALTER TABLE IF EXISTS public.evaluacion_criterios
+    ADD CONSTRAINT evaluacion_criterios_id_evaluacion_foreign FOREIGN KEY (id_evaluacion)
+    REFERENCES public.evaluaciones (id_evaluacion) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
+
+
 ALTER TABLE IF EXISTS public.evaluaciones
     ADD CONSTRAINT evaluaciones_id_inscripcion_foreign FOREIGN KEY (id_inscripcion)
     REFERENCES public.inscripciones_evento (id_inscripcion) MATCH SIMPLE
@@ -542,6 +576,20 @@ ALTER TABLE IF EXISTS public.evaluaciones
 
 ALTER TABLE IF EXISTS public.evaluaciones
     ADD CONSTRAINT evaluaciones_id_jurado_foreign FOREIGN KEY (id_jurado)
+    REFERENCES public.jurados (id_usuario) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
+
+
+ALTER TABLE IF EXISTS public.evaluaciones_avances
+    ADD CONSTRAINT evaluaciones_avances_id_avance_foreign FOREIGN KEY (id_avance)
+    REFERENCES public.avances (id_avance) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
+
+
+ALTER TABLE IF EXISTS public.evaluaciones_avances
+    ADD CONSTRAINT evaluaciones_avances_id_jurado_foreign FOREIGN KEY (id_jurado)
     REFERENCES public.jurados (id_usuario) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE CASCADE;
@@ -557,20 +605,6 @@ ALTER TABLE IF EXISTS public.evento_jurados
 ALTER TABLE IF EXISTS public.evento_jurados
     ADD CONSTRAINT evento_jurados_id_jurado_foreign FOREIGN KEY (id_jurado)
     REFERENCES public.jurados (id_usuario) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE CASCADE;
-
-
-ALTER TABLE IF EXISTS public.hitos_proyecto
-    ADD CONSTRAINT hitos_proyecto_completado_por_foreign FOREIGN KEY (completado_por)
-    REFERENCES public.users (id_usuario) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE SET NULL;
-
-
-ALTER TABLE IF EXISTS public.hitos_proyecto
-    ADD CONSTRAINT hitos_proyecto_id_proyecto_foreign FOREIGN KEY (id_proyecto)
-    REFERENCES public.proyectos (id_proyecto) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE CASCADE;
 
@@ -681,7 +715,7 @@ ALTER TABLE IF EXISTS public.tareas_proyecto
     ADD CONSTRAINT tareas_proyecto_completada_por_foreign FOREIGN KEY (completada_por)
     REFERENCES public.users (id_usuario) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE SET NULL;
+    ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS public.tareas_proyecto
