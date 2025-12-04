@@ -3,8 +3,15 @@
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
+        <a href="{{ route('estudiante.dashboard') }}" class="back-link">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Volver al Dashboard
+        </a>
         <!-- Encabezado -->
         <div class="mb-12 text-center">
+            
             <p class="text-gray-600 text-lg">Gestiona tu información personal y configuraciones</p>
         </div>
 
@@ -79,25 +86,50 @@
 </div>
 
 <style>
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 253, 244, 0.9);
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
     .neuromorphic-card {
         background: linear-gradient(145deg, #FFEEE2, #f0f0f0);
-        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        box-shadow: 8px 8px 16px #e6d5c9;
         border-radius: 20px;
         overflow: hidden;
         transition: all 0.3s ease;
     }
     
     .neuromorphic-card:hover {
-        box-shadow: 25px 25px 50px rgba(232, 154, 60, 0.15),
-                    -25px -25px 50px rgba(255, 255, 255, 0.9);
+        box-shadow: 25px 25px 50px rgba(232, 154, 60, 0.15);
         transform: translateY(-2px);
     }
     
     .neuromorphic-input {
         background: linear-gradient(145deg, #FFEEE2, #f8f8f8);
         border-radius: 12px;
-        box-shadow: inset 4px 4px 8px rgba(236, 169, 87, 0.1),
-                    inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+        box-shadow: inset 4px 4px 8px rgba(236, 169, 87, 0.1);
         border: 1px solid rgba(251, 184, 103, 0.2);
         transition: all 0.3s ease;
         padding: 0.75rem 1rem;
