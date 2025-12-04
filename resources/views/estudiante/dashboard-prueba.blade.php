@@ -7,26 +7,35 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
         
         /* =============================================== */
-        /* PALETA DE COLORES: Naranja, Blanco y Negro */
+        /* COLORES NEUROMÓRFICOS */
         /* =============================================== */
         :root {
-            --color-primary: #E67E22;      /* Naranja principal */
-            --color-primary-light: #F39C12; /* Naranja claro */
-            --color-primary-muted: #FAD7A0; /* Naranja muy suave */
+            --color-primary: #e89a3c;
+            --color-primary-dark: #d98a2c;
+            --color-bg-base: #FFFDF4;
+            --color-bg-secondary: #FFEEE2;
+            --color-card: #FFEEE2;
             --color-white: #FFFFFF;
-            --color-off-white: #FAFAFA;
-            --color-light-gray: #F5F5F5;
-            --color-gray: #E0E0E0;
-            --color-dark-gray: #666666;
-            --color-charcoal: #333333;
-            --color-black: #1A1A1A;
+            --color-text-primary: #2c2c2c;
+            --color-text-secondary: #6b6b6b;
+            --color-text-muted: #9ca3af;
+            --shadow-light: #ffffff;
+            --shadow-dark: #e6d5c9;
         }
         
-        /* Fondo limpio */
+        /* Fondo degradado */
         body {
-            background: var(--color-off-white);
+            background: linear-gradient(to bottom, #FFFDF4, #FFEEE2) !important;
             min-height: 100vh;
         }
+
+        
+
+        .habilidades-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
         
         /* Configuración global */
         .left-col,
@@ -37,31 +46,34 @@
         /* Títulos de sección */
         .section-title {
             font-family: 'Poppins', sans-serif;
-            color: var(--color-black);
+            color: var(--color-text-primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
         }
 
         .section-title i {
             color: var(--color-primary);
+            font-size: 1.25rem;
         }
         
         /* =============================================== */
-        /* CARRUSEL STYLES - VANILLA CSS */
+        /* CARRUSEL NEUROMÓRFICO */
         /* =============================================== */
         .carousel-container {
             position: relative;
             width: 100%;
             overflow: visible;
-            border-radius: 16px;
+            border-radius: 20px;
             margin-bottom: 2rem;
         }
 
         .carousel-track-container {
             overflow: hidden;
-            border-radius: 16px;
+            border-radius: 20px;
         }
 
         .carousel-track {
@@ -76,7 +88,7 @@
             box-sizing: border-box;
         }
 
-        /* Carousel Navigation - DEBAJO del contenido */
+        /* Carousel Navigation */
         .carousel-nav {
             display: flex;
             align-items: center;
@@ -87,36 +99,32 @@
 
         .carousel-arrow {
             position: relative;
-            top: auto;
-            left: auto;
-            right: auto;
-            transform: none;
             width: 40px;
             height: 40px;
-            background: var(--color-white);
-            border: 2px solid var(--color-gray);
+            background: rgba(255, 253, 244, 0.9);
+            border: none;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1rem;
-            color: var(--color-charcoal);
+            color: var(--color-text-primary);
             transition: all 0.3s ease;
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
 
         .carousel-arrow:hover {
-            background: var(--color-primary);
-            border-color: var(--color-primary);
-            color: var(--color-white);
-            transform: scale(1.05);
+            color: var(--color-primary);
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            transform: translateY(-2px);
         }
 
         .carousel-arrow:active {
             transform: scale(0.95);
         }
 
-        /* Carousel Dots/Indicators */
+        /* Carousel Dots */
         .carousel-dots {
             display: flex;
             justify-content: center;
@@ -128,64 +136,68 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: var(--color-gray);
+            background: rgba(232, 154, 60, 0.3);
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
+            box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
         }
 
         .carousel-dot:hover {
-            background: var(--color-primary-muted);
+            background: rgba(232, 154, 60, 0.5);
         }
 
         .carousel-dot.active {
             background: var(--color-primary);
             width: 24px;
             border-radius: 5px;
+            box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
         }
 
-        /* Progress Bar del carrusel */
+        /* Progress Bar */
         .carousel-progress {
-            height: 3px;
-            background: var(--color-gray);
-            border-radius: 2px;
-            margin-top: 0.5rem;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 0.75rem;
             overflow: hidden;
+            box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
         }
 
         .carousel-progress-bar {
             height: 100%;
-            background: var(--color-primary);
-            border-radius: 2px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+            border-radius: 4px;
             transition: width 0.1s linear;
             width: 0%;
         }
 
         /* =============================================== */
-        /* Cards - Estilo limpio */
+        /* CARDS NEUROMÓRFICAS */
         /* =============================================== */
         .neu-card {
-            background: var(--color-white);
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            background: var(--color-card);
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
             transition: all 0.3s ease;
-            border: 1px solid var(--color-gray);
+            border: none;
         }
         
         .neu-card:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            transform: translateY(-2px);
+            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
+            transform: translateY(-5px);
         }
         
         /* Event cards */
         .event-card-header {
             font-family: 'Poppins', sans-serif;
-            background: var(--color-black);
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
             color: var(--color-white);
             position: relative;
             overflow: hidden;
-            border-radius: 16px 16px 0 0;
+            border-radius: 20px 20px 0 0;
             padding: 1.25rem;
+            font-weight: 600;
         }
 
         .event-card-header::after {
@@ -194,32 +206,31 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: var(--color-primary);
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
         }
 
         .event-badge {
             position: absolute;
             top: 12px;
             right: 12px;
-            background: var(--color-primary);
-            padding: 4px 12px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--color-white);
             z-index: 5;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         .event-card-body {
-            background: var(--color-white);
+            background: var(--color-card);
             padding: 1.25rem;
-            border-radius: 0 0 16px 16px;
+            border-radius: 0 0 20px 20px;
         }
 
-        /* =============================================== */
         /* Event cards con imagen */
-        /* =============================================== */
         .event-card-with-image {
             overflow: hidden;
         }
@@ -227,8 +238,9 @@
         .event-image {
             position: relative;
             width: 100%;
-            height: 140px;
+            height: 160px;
             overflow: hidden;
+            border-radius: 20px 20px 0 0;
         }
 
         .event-image img {
@@ -243,7 +255,7 @@
         }
 
         .event-image-placeholder {
-            background: linear-gradient(135deg, var(--color-charcoal), var(--color-black));
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -251,27 +263,29 @@
 
         .event-image-placeholder i {
             font-size: 3rem;
-            color: var(--color-dark-gray);
-            opacity: 0.5;
+            color: var(--color-text-muted);
+            opacity: 0.3;
         }
 
         .event-card-content {
-            padding: 1rem;
+            padding: 1.25rem;
+            background: var(--color-card);
+            border-radius: 0 0 20px 20px;
         }
 
         .event-title {
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             font-weight: 600;
-            color: var(--color-black);
+            color: var(--color-text-primary);
             margin: 0 0 0.5rem 0;
         }
         
         .event-desc {
             font-family: 'Poppins', sans-serif;
-            color: var(--color-dark-gray);
-            font-size: 0.85rem;
-            line-height: 1.4;
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
             margin: 0 0 0.75rem 0;
         }
 
@@ -284,7 +298,7 @@
         .event-date,
         .event-participants {
             font-family: 'Poppins', sans-serif;
-            color: var(--color-charcoal);
+            color: var(--color-text-secondary);
             display: flex;
             align-items: center;
             gap: 0.35rem;
@@ -299,48 +313,34 @@
             font-size: 0.7rem;
         }
         
-        .event-card-body a {
-            font-family: 'Poppins', sans-serif;
-            color: var(--color-primary);
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            text-decoration: none;
-        }
-        
-        .event-card-body a:hover {
-            color: var(--color-black);
-            gap: 0.75rem;
-        }
-
+        .event-card-body a,
         .event-link {
             font-family: 'Poppins', sans-serif;
             color: var(--color-primary);
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.5rem;
             font-weight: 500;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.875rem;
         }
         
+        .event-card-body a:hover,
         .event-link:hover {
-            color: var(--color-black);
-            gap: 0.5rem;
+            color: var(--color-primary-dark);
+            gap: 0.75rem;
         }
 
         /* =============================================== */
-        /* EQUIPOS CAROUSEL CARD */
+        /* TEAM CARD NEUROMÓRFICA */
         /* =============================================== */
         .team-card {
-            background: var(--color-white);
-            border-radius: 16px;
+            background: var(--color-card);
+            border-radius: 20px;
             padding: 1.5rem;
-            border: 1px solid var(--color-gray);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border: none;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
         }
 
         .team-header {
@@ -353,25 +353,28 @@
         .team-avatar {
             width: 48px;
             height: 48px;
-            background: var(--color-black);
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-white);
             font-size: 1.25rem;
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
 
         .team-info h4 {
+            font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            color: var(--color-black);
+            color: var(--color-text-primary);
             margin: 0;
             font-size: 1rem;
         }
 
         .team-info p {
+            font-family: 'Poppins', sans-serif;
             font-size: 0.8rem;
-            color: var(--color-dark-gray);
+            color: var(--color-text-secondary);
             margin: 0;
         }
 
@@ -384,9 +387,9 @@
         .member-avatar {
             width: 32px;
             height: 32px;
-            background: var(--color-charcoal);
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
             border-radius: 50%;
-            border: 2px solid var(--color-white);
+            border: 3px solid var(--color-card);
             margin-left: -8px;
             display: flex;
             align-items: center;
@@ -394,6 +397,7 @@
             color: var(--color-white);
             font-size: 0.7rem;
             font-weight: 600;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .member-avatar:first-child {
@@ -401,33 +405,34 @@
         }
 
         .member-avatar.more {
-            background: var(--color-primary);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
             font-size: 0.65rem;
         }
 
         .team-status {
             margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            padding: 0.625rem 1rem;
+            border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 500;
             text-align: center;
+            font-family: 'Poppins', sans-serif;
         }
 
         .team-status.completo {
-            background: var(--color-light-gray);
-            color: var(--color-charcoal);
-            border: 1px solid var(--color-gray);
+            background: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(167, 243, 208, 0.8));
+            color: #065f46;
+            box-shadow: inset 2px 2px 4px rgba(16, 185, 129, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.5);
         }
 
         .team-status.incompleto {
-            background: var(--color-primary-muted);
-            color: var(--color-primary);
-            border: 1px solid var(--color-primary);
+            background: linear-gradient(135deg, rgba(254, 240, 138, 0.8), rgba(252, 211, 77, 0.8));
+            color: #92400e;
+            box-shadow: inset 2px 2px 4px rgba(245, 158, 11, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.5);
         }
 
         /* =============================================== */
-        /* GRÁFICAS DE PROGRESO */
+        /* GRÁFICAS DE PROGRESO NEUROMÓRFICAS */
         /* =============================================== */
         .progress-charts-container {
             display: grid;
@@ -437,18 +442,18 @@
         }
 
         .progress-chart-card {
-            background: var(--color-white);
+            background: var(--color-card);
             border-radius: 16px;
             padding: 1.25rem;
             text-align: center;
-            border: 1px solid var(--color-gray);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: none;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
             transition: all 0.3s ease;
         }
 
         .progress-chart-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
         }
 
         .circular-progress {
@@ -466,7 +471,7 @@
 
         .circular-progress .bg {
             fill: none;
-            stroke: var(--color-light-gray);
+            stroke: rgba(255, 255, 255, 0.3);
             stroke-width: 6;
         }
 
@@ -484,15 +489,15 @@
         }
 
         .circular-progress .progress.green {
-            stroke: #2D3436;
+            stroke: #10b981;
         }
 
         .circular-progress .progress.purple {
-            stroke: var(--color-charcoal);
+            stroke: #8b5cf6;
         }
 
         .circular-progress .progress.blue {
-            stroke: var(--color-black);
+            stroke: #3b82f6;
         }
 
         .circular-progress .percentage {
@@ -502,35 +507,39 @@
             transform: translate(-50%, -50%);
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--color-black);
+            color: var(--color-text-primary);
+            font-family: 'Poppins', sans-serif;
         }
 
         .progress-chart-card h5 {
+            font-family: 'Poppins', sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--color-black);
+            color: var(--color-text-primary);
             margin: 0;
         }
 
         .progress-chart-card p {
+            font-family: 'Poppins', sans-serif;
             font-size: 0.75rem;
-            color: var(--color-dark-gray);
+            color: var(--color-text-secondary);
             margin: 0.25rem 0 0;
         }
 
         /* =============================================== */
-        /* Progress card principal */
+        /* INFO ITEMS NEUROMÓRFICAS */
         /* =============================================== */
         .info-item {
             font-family: 'Poppins', sans-serif;
-            background: var(--color-light-gray);
-            color: var(--color-black);
+            background: rgba(255, 255, 255, 0.3);
+            color: var(--color-text-primary);
             padding: 0.75rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--color-gray);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+            font-size: 0.875rem;
         }
 
         .info-item i {
@@ -538,17 +547,17 @@
         }
         
         .progress-ring {
-            background: conic-gradient(var(--color-primary) 0%, var(--color-primary) 50%, var(--color-light-gray) 50%, var(--color-light-gray) 100%);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: conic-gradient(var(--color-primary) 0%, var(--color-primary) 50%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.89) 100%);
+            box-shadow: 4px 4px 8px var(--shadow-dark);
         }
         
         .progress-ring::before {
-            background: var(--color-white);
+            background: var(--color-card);
         }
         
         .progress-text span {
             font-family: 'Poppins', sans-serif;
-            color: var(--color-dark-gray);
+            color: var(--color-text-secondary);
         }
         
         .progress-text strong {
@@ -563,69 +572,84 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            transition: all 0.2s ease;
         }
         
         .progress-main-card a:hover {
-            color: var(--color-black);
+            color: var(--color-primary-dark);
+            gap: 0.75rem;
         }
         
         /* Small cards */
         .small-card {
-            background: var(--color-white);
-            border: 1px solid var(--color-gray);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            background: var(--color-card);
+            border: none;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
             transition: all 0.3s ease;
-            border-radius: 12px;
+            border-radius: 16px;
+            text-decoration: none;
+            display: block;
         }
         
         .small-card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
             transform: translateY(-4px);
-            border-color: var(--color-primary-muted);
         }
         
         .card-icon-box {
-            box-shadow: none;
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            border-radius: 12px;
         }
         
         .icon-athena {
-            background: var(--color-black);
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
         }
 
         .icon-projects {
-            background: var(--color-charcoal);
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
         }
         
         .icon-const {
-            background: var(--color-primary);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
         }
 
         .icon-teams {
-            background: var(--color-dark-gray);
+            background: linear-gradient(135deg, #10b981, #059669);
         }
         
         .card-content-box h4 {
             font-family: 'Poppins', sans-serif;
-            color: var(--color-black);
+            color: var(--color-text-primary);
         }
         
         .card-content-box p {
             font-family: 'Poppins', sans-serif;
-            color: var(--color-dark-gray);
+            color: var(--color-text-secondary);
         }
 
         /* Empty state */
         .empty-state {
             text-align: center;
-            padding: 2rem;
-            color: var(--color-dark-gray);
+            padding: 2.5rem 1rem;
+            color: var(--color-text-muted);
         }
 
         .empty-state i {
             font-size: 3rem;
             color: var(--color-primary);
             margin-bottom: 1rem;
-            opacity: 0.5;
+            opacity: 0.4;
+        }
+
+        .empty-state p {
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-text-muted);
+            font-size: 0.9375rem;
+        }
+
+        #titulodescuadrado {
+            margin-top: 2rem;
+            
         }
 
         /* Animación de entrada */
@@ -644,10 +668,10 @@
             animation: fadeInUp 0.6s ease forwards;
         }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
     </style>
 
     <!-- SVG Gradients for Charts -->
@@ -713,9 +737,7 @@
             </div>
         @endif
 
-        {{-- ============================================== --}}
         {{-- CARRUSEL DE EVENTOS DISPONIBLES --}}
-        {{-- ============================================== --}}
         <h3 class="section-title animate-in delay-2">
             <i class="fas fa-calendar-star"></i>
             Eventos Disponibles
@@ -727,42 +749,40 @@
                     <div class="carousel-track" id="eventosTrack">
                         @foreach ($eventosDisponibles as $evento)
                             <div class="carousel-slide">
-                                <a href="{{ route('estudiante.eventos.show', $evento) }}" class="event-card-link" style="text-decoration: none; display: block;">
-                                    <div class="event-card-container neu-card event-card-with-image" style="margin-bottom: 0; cursor: pointer;">
-                                        @if($evento->ruta_imagen)
-                                            <div class="event-image">
-                                                <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="{{ $evento->nombre }}">
-                                                <span class="event-badge">
-                                                    <i class="fas fa-clock"></i> Próximo
-                                                </span>
-                                            </div>
-                                        @else
-                                            <div class="event-image event-image-placeholder">
-                                                <i class="fas fa-calendar-alt"></i>
-                                                <span class="event-badge">
-                                                    <i class="fas fa-clock"></i> Próximo
-                                                </span>
-                                            </div>
-                                        @endif
-                                        <div class="event-card-content">
-                                            <h4 class="event-title">{{ $evento->nombre }}</h4>
-                                            <p class="event-desc">{{ Str::limit($evento->descripcion ?? 'Sin descripción', 80) }}</p>
-                                            <div class="event-meta">
-                                                <p class="event-date">
-                                                    <i class="fas fa-calendar-alt"></i>
-                                                    {{ $evento->fecha_inicio->format('d M, Y') }}
-                                                </p>
-                                                <p class="event-participants">
-                                                    <i class="fas fa-users"></i>
-                                                    {{ $evento->inscripciones->count() }} equipos
-                                                </p>
-                                            </div>
-                                            <span class="event-link">
-                                                Ver detalles <i class="fas fa-arrow-right"></i>
+                                <div class="event-card-container neu-card event-card-with-image" style="margin-bottom: 0;">
+                                    @if($evento->ruta_imagen)
+                                        <div class="event-image">
+                                            <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="{{ $evento->nombre }}">
+                                            <span class="event-badge">
+                                                <i class="fas fa-clock"></i> Próximo
                                             </span>
                                         </div>
+                                    @else
+                                        <div class="event-image event-image-placeholder">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <span class="event-badge">
+                                                <i class="fas fa-clock"></i> Próximo
+                                            </span>
+                                        </div>
+                                    @endif
+                                    <div class="event-card-content">
+                                        <h4 class="event-title">{{ $evento->nombre }}</h4>
+                                        <p class="event-desc">{{ Str::limit($evento->descripcion ?? 'Sin descripción', 80) }}</p>
+                                        <div class="event-meta">
+                                            <p class="event-date">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                {{ $evento->fecha_inicio->format('d M, Y') }}
+                                            </p>
+                                            <p class="event-participants">
+                                                <i class="fas fa-users"></i>
+                                                {{ $evento->inscripciones->count() }} equipos
+                                            </p>
+                                        </div>
+                                        <a href="{{ route('estudiante.eventos.show', $evento) }}" class="event-link">
+                                            Ver detalles <i class="fas fa-arrow-right"></i>
+                                        </a>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -791,28 +811,21 @@
             </div>
         @endif
 
-        {{-- ============================================== --}}
         {{-- CARRUSEL DE EQUIPOS --}}
-        {{-- ============================================== --}}
         <h3 class="section-title animate-in delay-3">
             <i class="fas fa-users-cog"></i>
             Equipos Disponibles
         </h3>
         
         @php
-            // Obtener TODOS los equipos con menos de 5 miembros de eventos activos/próximos/en progreso
             $equiposDisponibles = \App\Models\InscripcionEvento::whereHas('evento', function($q) {
-                $q->whereIn('estado', ['Próximo', 'Activo', 'En Progreso']);
+                $q->where('estado', 'Próximo')
+                  ->orWhere('estado', 'Activo');
             })
-            ->whereNotIn('status_registro', ['Descalificado']) // Excluir solo descalificados
-            ->with(['equipo', 'evento', 'miembros.user', 'miembros.rol'])
-            ->get()
-            ->filter(function($inscripcion) {
-                // Mostrar equipos que tienen entre 1 y 4 miembros (necesitan más)
-                $cantidadMiembros = $inscripcion->miembros->count();
-                return $cantidadMiembros >= 1 && $cantidadMiembros < 5;
-            })
-            ->take(6);
+            ->where('status_registro', 'Incompleto')
+            ->with(['equipo', 'evento', 'miembros.rol'])
+            ->take(6)
+            ->get();
         @endphp
 
         @if($equiposDisponibles->count() > 0)
@@ -821,52 +834,40 @@
                     <div class="carousel-track" id="equiposTrack">
                         @foreach ($equiposDisponibles as $inscripcion)
                             <div class="carousel-slide">
-                                <a href="{{ route('estudiante.eventos.equipos.show', ['evento' => $inscripcion->evento, 'equipo' => $inscripcion->equipo]) }}" style="text-decoration: none; display: block;">
-                                    <div class="team-card" style="cursor: pointer;">
-                                        <div class="team-header">
-                                            <div class="team-avatar">
-                                                <i class="fas fa-users"></i>
-                                            </div>
-                                            <div class="team-info">
-                                                <h4>{{ $inscripcion->equipo->nombre }}</h4>
-                                                <p>{{ $inscripcion->evento->nombre }}</p>
-                                            </div>
+                                <div class="team-card">
+                                    <div class="team-header">
+                                        <div class="team-avatar">
+                                            <i class="fas fa-users"></i>
                                         </div>
-                                        
-                                        <div class="team-members">
-                                            @foreach($inscripcion->miembros->take(4) as $miembro)
-                                                <div class="member-avatar" title="{{ $miembro->user->nombre ?? 'Miembro' }}">
-                                                    {{ strtoupper(substr($miembro->user->nombre ?? 'M', 0, 1)) }}
-                                                </div>
-                                            @endforeach
-                                            @if($inscripcion->miembros->count() > 4)
-                                                <div class="member-avatar more">
-                                                    +{{ $inscripcion->miembros->count() - 4 }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        
-                                        <div class="team-status-info" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem;">
-                                            <span style="font-size: 0.75rem; color: var(--color-dark-gray);">
-                                                <i class="fas fa-user-friends"></i> {{ $inscripcion->miembros->count() }}/5 miembros
-                                            </span>
-                                            <span style="font-size: 0.75rem; color: var(--color-primary); font-weight: 600;">
-                                                {{ 5 - $inscripcion->miembros->count() }} {{ (5 - $inscripcion->miembros->count()) == 1 ? 'lugar disponible' : 'lugares disponibles' }}
-                                            </span>
-                                        </div>
-                                        
-                                        <div class="team-status incompleto">
-                                            <i class="fas fa-user-plus"></i>
-                                            Buscando Miembros
+                                        <div class="team-info">
+                                            <h4>{{ $inscripcion->equipo->nombre }}</h4>
+                                            <p>{{ $inscripcion->evento->nombre }}</p>
                                         </div>
                                     </div>
-                                </a>
+                                    
+                                    <div class="team-members">
+                                        @foreach($inscripcion->miembros->take(4) as $miembro)
+                                            <div class="member-avatar" title="{{ $miembro->estudiante->user->nombre ?? 'Miembro' }}">
+                                                {{ strtoupper(substr($miembro->estudiante->user->nombre ?? 'M', 0, 1)) }}
+                                            </div>
+                                        @endforeach
+                                        @if($inscripcion->miembros->count() > 4)
+                                            <div class="member-avatar more">
+                                                +{{ $inscripcion->miembros->count() - 4 }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    
+                                    <div class="team-status {{ $inscripcion->status_registro === 'Completo' ? 'completo' : 'incompleto' }}">
+                                        <i class="fas {{ $inscripcion->status_registro === 'Completo' ? 'fa-check-circle' : 'fa-user-plus' }}"></i>
+                                        {{ $inscripcion->status_registro === 'Completo' ? 'Equipo Completo' : 'Buscando Miembros' }}
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
                 
-                <!-- Navegación debajo del contenido -->
                 <div class="carousel-nav">
                     <button class="carousel-arrow prev" onclick="equiposCarousel.prev()">
                         <i class="fas fa-chevron-left"></i>
@@ -891,15 +892,12 @@
     </section>
 
     <section class="right-col">
-        {{-- ============================================== --}}
         {{-- GRÁFICAS DE PROGRESO DE PROYECTOS --}}
-        {{-- ============================================== --}}
         <h3 class="section-title animate-in">
             <i class="fas fa-chart-pie"></i>
             Progreso de Proyectos
         </h3>
         
-        {{-- Calcular progreso real del proyecto --}}
         @php
             $tieneProyecto = $miInscripcion && $miInscripcion->proyecto;
             $progressData = [];
@@ -914,7 +912,6 @@
                 $tareasCompletadas = $tareas->where('completada', true)->count();
                 $porcentajeGeneral = $totalTareas > 0 ? round(($tareasCompletadas / $totalTareas) * 100) : 0;
 
-                // Agrupar tareas por prioridad para las gráficas
                 $tareasAlta = $tareas->where('prioridad', 'Alta');
                 $tareasMedia = $tareas->where('prioridad', 'Media');
                 $tareasBaja = $tareas->where('prioridad', 'Baja');
@@ -967,7 +964,7 @@
                                     <circle class="progress {{ $data['color'] }}" cx="50" cy="50" r="40"/>
                                 </svg>
                                 <div class="percentage">
-                                    <span style="font-size: 1.1rem; color: var(--color-black);">{{ $data['percentage'] }}%</span>
+                                    <span>{{ $data['percentage'] }}%</span>
                                 </div>
                             </div>
                             <h5>{{ $data['name'] }}</h5>
@@ -991,7 +988,7 @@
             </div>
         @endif
 
-        <h3 class="section-title animate-in delay-2">
+        <h3 class="section-title animate-in delay-2" id="titulodescuadrado">
             <i class="fas fa-tasks"></i>
             Progreso del Proyecto Actual
         </h3>
@@ -1047,7 +1044,6 @@
                 </div>
             </a>
 
-            {{-- Card Proyecto del Evento --}}
             @if($miInscripcion && $miInscripcion->evento->estado === 'En Progreso')
                 @php
                     $evento = $miInscripcion->evento;
@@ -1113,17 +1109,7 @@
         </div>
     </section>
 
-    {{-- ============================================== --}}
-    {{-- JAVASCRIPT PARA CARRUSELES Y GRÁFICAS --}}
-    {{-- ============================================== --}}
     <script>
-        /**
-         * Clase Carousel - Carrusel reutilizable con vanilla JS
-         * @param {string} trackId - ID del contenedor del track
-         * @param {string} dotsId - ID del contenedor de dots
-         * @param {string} progressId - ID de la barra de progreso
-         * @param {number} autoPlayDelay - Tiempo en ms para auto-slide (0 para desactivar)
-         */
         class Carousel {
             constructor(trackId, dotsId, progressId, autoPlayDelay = 5000) {
                 this.track = document.getElementById(trackId);
@@ -1152,14 +1138,12 @@
                     this.startAutoPlay();
                 }
                 
-                // Pausar en hover
                 const container = this.track.closest('.carousel-container');
                 if (container) {
                     container.addEventListener('mouseenter', () => this.pauseAutoPlay());
                     container.addEventListener('mouseleave', () => this.startAutoPlay());
                 }
                 
-                // Soporte para touch/swipe
                 this.initTouchSupport();
             }
             
@@ -1177,10 +1161,8 @@
             }
             
             updateCarousel() {
-                // Mover el track
                 this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
                 
-                // Actualizar dots
                 if (this.dotsContainer) {
                     const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
                     dots.forEach((dot, index) => {
@@ -1289,23 +1271,14 @@
             }
         }
         
-        // Inicializar carruseles cuando el DOM esté listo
         let eventosCarousel, equiposCarousel;
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Carrusel de eventos - cambia cada 6 segundos
             eventosCarousel = new Carousel('eventosTrack', 'eventosDots', 'eventosProgress', 6000);
-            
-            // Carrusel de equipos - cambia cada 5 segundos
             equiposCarousel = new Carousel('equiposTrack', 'equiposDots', 'equiposProgress', 5000);
-            
-            // Animar las gráficas circulares
             animateProgressCharts();
         });
         
-        /**
-         * Animar las gráficas de progreso circular
-         */
         function animateProgressCharts() {
             const charts = document.querySelectorAll('.progress-chart-card');
             
@@ -1317,11 +1290,9 @@
                         const progressCircle = card.querySelector('.progress');
                         
                         if (progressCircle) {
-                            // Calcular el offset (circunferencia = 2 * PI * r = 2 * 3.14159 * 40 ≈ 251)
                             const circumference = 251;
                             const offset = circumference - (percentage / 100) * circumference;
                             
-                            // Aplicar la animación después de un pequeño delay
                             setTimeout(() => {
                                 progressCircle.style.strokeDashoffset = offset;
                             }, 300);

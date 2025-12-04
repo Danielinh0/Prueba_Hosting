@@ -5,7 +5,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
     .equipos-page {
-        background: linear-gradient(135deg, #FFFDF4 0%, #FFF8F0 50%, #FFEEE2 100%);
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
         min-height: 100vh;
         font-family: 'Poppins', sans-serif;
     }
@@ -14,15 +14,15 @@
         font-family: 'Poppins', sans-serif;
     }
 
-    /* Hero Section */
+    /* Hero Section Neuromórfica - Tonos Grises Pastel */
     .hero-section {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #3d3d3d 100%);
+        background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
         border-radius: 24px;
         padding: 2.5rem;
         margin-bottom: 2rem;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
     }
 
     .hero-section::before {
@@ -32,7 +32,7 @@
         right: -100px;
         width: 350px;
         height: 350px;
-        background: radial-gradient(circle, rgba(232, 154, 60, 0.15) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.08) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -43,7 +43,7 @@
         left: -80px;
         width: 250px;
         height: 250px;
-        background: radial-gradient(circle, rgba(232, 154, 60, 0.1) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.05) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -56,18 +56,20 @@
     }
 
     .hero-text h1 {
-        color: #ffffff;
+        color: #c1c1c1ff;
         font-size: 2rem;
         font-weight: 800;
         margin-bottom: 0.5rem;
+        text-shadow: 1px 1px 2px rgba(235, 132, 72, 0.8);
     }
 
     .hero-text h1 span {
         color: #e89a3c;
+        text-shadow: 1px 1px 2px rgba(232, 154, 60, 0.2);
     }
 
     .hero-text p {
-        color: rgba(255, 255, 255, 0.7);
+        color: #cfcfcfff;
         font-size: 1rem;
         max-width: 500px;
     }
@@ -80,9 +82,9 @@
     .hero-stat {
         text-align: center;
         padding: 1rem 1.5rem;
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(248, 244, 244, 0.85);
         border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: inset 4px 4px 8px rgba(200, 200, 200, 0.3);
         backdrop-filter: blur(10px);
     }
 
@@ -91,14 +93,41 @@
         font-size: 2rem;
         font-weight: 800;
         line-height: 1;
+        text-shadow: 1px 1px 2px rgba(232, 154, 60, 0.2);
     }
 
     .hero-stat-label {
-        color: rgba(255, 255, 255, 0.6);
+        color: #47494cff;
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin-top: 0.25rem;
+    }
+
+    /* Botón Crear Equipo */
+    .btn-crear-equipo {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: white;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    .btn-crear-equipo:hover {
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .btn-crear-equipo svg {
+        width: 20px;
+        height: 20px;
     }
 
     /* Teams Grid */
@@ -114,20 +143,20 @@
         }
     }
 
-    /* Team Card */
+    /* Team Card Neuromórfica */
     .team-card {
-        background: #ffffff;
+        background: #FFEEE2;
         border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        border: 1px solid rgba(0, 0, 0, 0.04);
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
+        border: none;
     }
 
     .team-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        box-shadow: 12px 12px 24px #e6d5c9, -12px -12px 24px #ffffff;
     }
 
     .team-card-leader {
@@ -139,18 +168,18 @@
         position: absolute;
         top: 1rem;
         right: 1rem;
-        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
         color: white;
         font-size: 0.7rem;
         font-weight: 700;
         padding: 0.35rem 0.75rem;
         border-radius: 20px;
         z-index: 10;
-        box-shadow: 0 4px 12px rgba(232, 154, 60, 0.3);
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
     }
 
     .team-card-header {
-        background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         padding: 1.5rem;
         position: relative;
     }
@@ -162,7 +191,7 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, #e89a3c, #f5b76c, #e89a3c);
+        background: linear-gradient(90deg, #e89a3c, #f5a847, #e89a3c);
     }
 
     .team-name {
@@ -189,6 +218,7 @@
 
     .team-card-body {
         padding: 1.5rem;
+        background: #FFEEE2;
     }
 
     /* Team Stats Row */
@@ -202,14 +232,15 @@
     .team-stat-item {
         text-align: center;
         padding: 0.75rem;
-        background: linear-gradient(135deg, rgba(232, 154, 60, 0.08), rgba(232, 154, 60, 0.03));
+        background: rgba(255, 255, 255, 0.4);
         border-radius: 12px;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
     }
 
     .team-stat-value {
         font-size: 1.25rem;
         font-weight: 800;
-        color: #1a1a1a;
+        color: #2c2c2c;
     }
 
     .team-stat-label {
@@ -217,6 +248,7 @@
         color: #9ca3af;
         text-transform: uppercase;
         letter-spacing: 0.05em;
+        margin-top: 0.25rem;
     }
 
     /* Members Preview */
@@ -242,16 +274,16 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         font-weight: 700;
         font-size: 0.875rem;
-        border: 3px solid #ffffff;
+        border: 3px solid #FFEEE2;
         margin-left: -10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
         transition: all 0.3s ease;
         position: relative;
     }
@@ -266,14 +298,15 @@
     }
 
     .member-avatar-leader {
-        background: linear-gradient(135deg, #1a1a1a, #3d3d3d);
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         border-color: #e89a3c;
     }
 
     .member-avatar-more {
-        background: #f3f4f6;
+        background: rgba(255, 255, 255, 0.6);
         color: #6b7280;
         font-size: 0.75rem;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
     }
 
     /* My Role Badge */
@@ -281,18 +314,20 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: linear-gradient(135deg, rgba(232, 154, 60, 0.1), rgba(232, 154, 60, 0.05));
+        background: rgba(255, 255, 255, 0.4);
         color: #b37a2e;
         padding: 0.5rem 1rem;
         border-radius: 10px;
         font-size: 0.8rem;
         font-weight: 600;
         margin-bottom: 1.25rem;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
     }
 
     .my-role-badge svg {
         width: 16px;
         height: 16px;
+        color: #e89a3c;
     }
 
     /* Team Actions */
@@ -323,25 +358,29 @@
     }
 
     .team-action-primary {
-        background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         color: #ffffff;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .team-action-primary:hover {
-        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(232, 154, 60, 0.3);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.3);
         color: #ffffff;
     }
 
     .team-action-secondary {
-        background: #f3f4f6;
+        background: rgba(255, 255, 255, 0.6);
         color: #4b5563;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
     }
 
     .team-action-secondary:hover {
-        background: #e5e7eb;
-        color: #1f2937;
+        background: rgba(255, 255, 255, 0.8);
+        color: #2c2c2c;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
     }
 
     /* Pending Requests Indicator */
@@ -349,7 +388,7 @@
         position: absolute;
         top: 1rem;
         left: 1rem;
-        background: #ef4444;
+        background: linear-gradient(135deg, #fca5a5, #ef4444);
         color: white;
         font-size: 0.7rem;
         font-weight: 700;
@@ -360,11 +399,12 @@
         gap: 0.35rem;
         animation: pulse 2s infinite;
         z-index: 10;
+        box-shadow: 4px 4px 8px rgba(239, 68, 68, 0.3);
     }
 
     @keyframes pulse {
         0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
+        50% { opacity: 0.8; }
     }
 
     .pending-requests svg {
@@ -372,7 +412,7 @@
         height: 14px;
     }
 
-    /* Event Status Badge */
+    /* Event Status Badge - Paleta Pastel */
     .event-status-badge {
         display: inline-flex;
         align-items: center;
@@ -385,44 +425,50 @@
     }
 
     .status-en-progreso {
-        background: rgba(16, 185, 129, 0.1);
-        color: #059669;
+        background: linear-gradient(135deg, rgba(167, 243, 208, 0.8), rgba(134, 239, 172, 0.8));
+        color: #065f46;
+        box-shadow: inset 2px 2px 4px rgba(16, 185, 129, 0.2);
     }
 
     .status-activo {
-        background: rgba(59, 130, 246, 0.1);
-        color: #2563eb;
+        background: linear-gradient(135deg, rgba(191, 219, 254, 0.8), rgba(147, 197, 253, 0.8));
+        color: #1e40af;
+        box-shadow: inset 2px 2px 4px rgba(59, 130, 246, 0.2);
     }
 
-    .status-pendiente {
-        background: rgba(245, 158, 11, 0.1);
-        color: #d97706;
+    .status-pendiente,
+    .status-próximo {
+        background: linear-gradient(135deg, rgba(254, 240, 138, 0.8), rgba(252, 211, 77, 0.8));
+        color: #92400e;
+        box-shadow: inset 2px 2px 4px rgba(245, 158, 11, 0.2);
     }
 
     .status-finalizado {
-        background: rgba(107, 114, 128, 0.1);
-        color: #6b7280;
+        background: linear-gradient(135deg, rgba(229, 231, 235, 0.8), rgba(209, 213, 219, 0.8));
+        color: #4b5563;
+        box-shadow: inset 2px 2px 4px rgba(107, 114, 128, 0.2);
     }
 
-    /* Empty State */
+    /* Empty State Neuromórfico */
     .empty-state {
-        background: #ffffff;
+        background: #FFEEE2;
         border-radius: 24px;
         padding: 4rem 2rem;
         text-align: center;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        border: 1px solid rgba(0, 0, 0, 0.04);
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        border: none;
     }
 
     .empty-state-icon {
         width: 100px;
         height: 100px;
-        background: linear-gradient(135deg, rgba(232, 154, 60, 0.1), rgba(232, 154, 60, 0.05));
+        background: rgba(255, 255, 255, 0.5);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 1.5rem;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
     }
 
     .empty-state-icon svg {
@@ -434,7 +480,7 @@
     .empty-state h3 {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #1a1a1a;
+        color: #2c2c2c;
         margin-bottom: 0.75rem;
     }
 
@@ -465,26 +511,34 @@
         transition: all 0.3s ease;
     }
 
+    .empty-state-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
     .empty-state-btn-primary {
-        background: linear-gradient(135deg, #e89a3c, #f5b76c);
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
         color: #ffffff;
-        box-shadow: 0 4px 16px rgba(232, 154, 60, 0.3);
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
     }
 
     .empty-state-btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(232, 154, 60, 0.4);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
         color: #ffffff;
     }
 
     .empty-state-btn-secondary {
-        background: #f3f4f6;
+        background: rgba(255, 255, 255, 0.6);
         color: #4b5563;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
     }
 
     .empty-state-btn-secondary:hover {
-        background: #e5e7eb;
-        color: #1f2937;
+        background: rgba(255, 255, 255, 0.8);
+        color: #2c2c2c;
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
     }
 
     /* Responsive */
@@ -520,9 +574,8 @@
                     <p>Gestiona tus equipos, revisa solicitudes pendientes y colabora con tus compañeros en los proyectos.</p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 1.5rem;">
-                    <a href="{{ route('estudiante.equipos.create-sin-evento') }}" 
-                       style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; background: linear-gradient(135deg, #e89a3c, #f5b76c); color: white; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(232, 154, 60, 0.3);">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                    <a href="{{ route('estudiante.equipos.create-sin-evento') }}" class="btn-crear-equipo">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
                         Crear Equipo
@@ -657,13 +710,13 @@
                 <p>Únete a un equipo existente o crea uno nuevo para participar en los eventos y colaborar con otros estudiantes.</p>
                 <div class="empty-state-actions">
                     <a href="{{ route('estudiante.equipos.create-sin-evento') }}" class="empty-state-btn empty-state-btn-primary">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
                         Crear Nuevo Equipo
                     </a>
                     <a href="{{ route('estudiante.eventos.index') }}" class="empty-state-btn empty-state-btn-secondary">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                         Explorar Eventos
