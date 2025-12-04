@@ -519,14 +519,23 @@
                     <h1>Mis <span>Equipos</span></h1>
                     <p>Gestiona tus equipos, revisa solicitudes pendientes y colabora con tus compañeros en los proyectos.</p>
                 </div>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="hero-stat-number">{{ $equipos->count() }}</div>
-                        <div class="hero-stat-label">Equipos</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-number">{{ $equipos->where('esLider', true)->count() }}</div>
-                        <div class="hero-stat-label">Como Líder</div>
+                <div style="display: flex; align-items: center; gap: 1.5rem;">
+                    <a href="{{ route('estudiante.equipos.create-sin-evento') }}" 
+                       style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; background: linear-gradient(135deg, #e89a3c, #f5b76c); color: white; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(232, 154, 60, 0.3);">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Crear Equipo
+                    </a>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">{{ $equipos->count() }}</div>
+                            <div class="hero-stat-label">Equipos</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">{{ $equipos->where('esLider', true)->count() }}</div>
+                            <div class="hero-stat-label">Como Líder</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -647,17 +656,17 @@
                 <h3>Aún no tienes equipos</h3>
                 <p>Únete a un equipo existente o crea uno nuevo para participar en los eventos y colaborar con otros estudiantes.</p>
                 <div class="empty-state-actions">
-                    <a href="{{ route('estudiante.eventos.index') }}" class="empty-state-btn empty-state-btn-primary">
+                    <a href="{{ route('estudiante.equipos.create-sin-evento') }}" class="empty-state-btn empty-state-btn-primary">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
-                        Explorar Eventos
+                        Crear Nuevo Equipo
                     </a>
-                    <a href="{{ route('estudiante.dashboard') }}" class="empty-state-btn empty-state-btn-secondary">
+                    <a href="{{ route('estudiante.eventos.index') }}" class="empty-state-btn empty-state-btn-secondary">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        Volver al Inicio
+                        Explorar Eventos
                     </a>
                 </div>
             </div>

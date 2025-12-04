@@ -334,11 +334,21 @@
                 <div>
                     <h1 class="team-name">{{ $equipo->nombre }}</h1>
                     @if($inscripcion = $equipo->inscripciones->first())
-                        <p class="text-sm mt-2" style="color: #6b6b6b;">
-                            Inscrito en: 
-                            <a href="{{ route('admin.eventos.show', $inscripcion->evento) }}" class="team-evento-link">
-                                {{ $inscripcion->evento->nombre }}
-                            </a>
+                        @if($inscripcion->evento)
+                            <p class="text-sm mt-2" style="color: #6b6b6b;">
+                                Inscrito en: 
+                                <a href="{{ route('admin.eventos.show', $inscripcion->evento) }}" class="team-evento-link">
+                                    {{ $inscripcion->evento->nombre }}
+                                </a>
+                            </p>
+                        @else
+                            <p class="text-sm mt-2" style="color: #9ca3af;">
+                                Este equipo no está inscrito en ningún evento actualmente.
+                            </p>
+                        @endif
+                    @else
+                        <p class="text-sm mt-2" style="color: #9ca3af;">
+                            Este equipo no tiene inscripciones.
                         </p>
                     @endif
                 </div>

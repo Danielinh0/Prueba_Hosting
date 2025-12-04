@@ -249,6 +249,40 @@
                     </p>
                 </div>
 
+                {{-- Sección de Jurados --}}
+                @if($evento->jurados->isNotEmpty())
+                    <div class="section-divider">
+                        <h3 class="text-lg font-medium">
+                            <i class="fas fa-gavel" style="color: #e89a3c; margin-right: 0.5rem;"></i>
+                            Jurados del Evento ({{ $evento->jurados->count() }})
+                        </h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+                            @foreach($evento->jurados as $jurado)
+                                <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 12px; box-shadow: 2px 2px 6px rgba(0,0,0,0.05);">
+                                    <div style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #e89a3c, #f5b76c); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1rem; box-shadow: 0 2px 8px rgba(232, 154, 60, 0.3);">
+                                        {{ strtoupper(substr($jurado->user->nombre ?? 'J', 0, 1)) }}{{ strtoupper(substr($jurado->user->app_paterno ?? '', 0, 1)) }}
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: 600; color: #2c2c2c; margin: 0; font-size: 0.9rem;">
+                                            {{ $jurado->user->nombre ?? 'Jurado' }} {{ $jurado->user->app_paterno ?? '' }}
+                                        </p>
+                                        @if($jurado->especialidad)
+                                            <p style="font-size: 0.75rem; color: #9ca3af; margin: 0;">
+                                                {{ $jurado->especialidad }}
+                                            </p>
+                                        @endif
+                                        @if($jurado->empresa_institucion)
+                                            <p style="font-size: 0.7rem; color: #6b6b6b; margin: 0;">
+                                                <i class="fas fa-building" style="margin-right: 0.25rem;"></i>{{ $jurado->empresa_institucion }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
                 {{-- Proyecto del Evento (si está publicado y es general) --}}
                 @if($evento->tipo_proyecto === 'general' && $evento->proyectoGeneral && $evento->proyectoGeneral->publicado)
                     <div class="section-divider">

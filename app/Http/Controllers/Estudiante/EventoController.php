@@ -39,11 +39,13 @@ class EventoController extends Controller
         // 3. Eventos disponibles para unirse (no inscritos)
         $eventosActivos = Evento::where('estado', 'Activo')
                                  ->whereNotIn('id_evento', $eventosInscritosIds)
+                                 ->with('jurados.user')
                                  ->orderBy('fecha_inicio', 'asc')
                                  ->get();
         
         $eventosProximos = Evento::where('estado', 'Próximo')
                                  ->whereNotIn('id_evento', $eventosInscritosIds)
+                                 ->with('jurados.user')
                                  ->orderBy('fecha_inicio', 'asc')
                                  ->get();
                                  
@@ -60,7 +62,7 @@ class EventoController extends Controller
      */
     public function show(Evento $evento)
     {
-        $evento->load('inscripciones.equipo');
+        $evento->load(['inscripciones.equipo', 'jurados.user']);
         
         // Verificar si el usuario ya tiene un equipo en este evento
         $user = Auth::user();

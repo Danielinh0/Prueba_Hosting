@@ -727,40 +727,42 @@
                     <div class="carousel-track" id="eventosTrack">
                         @foreach ($eventosDisponibles as $evento)
                             <div class="carousel-slide">
-                                <div class="event-card-container neu-card event-card-with-image" style="margin-bottom: 0;">
-                                    @if($evento->ruta_imagen)
-                                        <div class="event-image">
-                                            <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="{{ $evento->nombre }}">
-                                            <span class="event-badge">
-                                                <i class="fas fa-clock"></i> Próximo
-                                            </span>
-                                        </div>
-                                    @else
-                                        <div class="event-image event-image-placeholder">
-                                            <i class="fas fa-calendar-alt"></i>
-                                            <span class="event-badge">
-                                                <i class="fas fa-clock"></i> Próximo
-                                            </span>
-                                        </div>
-                                    @endif
-                                    <div class="event-card-content">
-                                        <h4 class="event-title">{{ $evento->nombre }}</h4>
-                                        <p class="event-desc">{{ Str::limit($evento->descripcion ?? 'Sin descripción', 80) }}</p>
-                                        <div class="event-meta">
-                                            <p class="event-date">
+                                <a href="{{ route('estudiante.eventos.show', $evento) }}" class="event-card-link" style="text-decoration: none; display: block;">
+                                    <div class="event-card-container neu-card event-card-with-image" style="margin-bottom: 0; cursor: pointer;">
+                                        @if($evento->ruta_imagen)
+                                            <div class="event-image">
+                                                <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="{{ $evento->nombre }}">
+                                                <span class="event-badge">
+                                                    <i class="fas fa-clock"></i> Próximo
+                                                </span>
+                                            </div>
+                                        @else
+                                            <div class="event-image event-image-placeholder">
                                                 <i class="fas fa-calendar-alt"></i>
-                                                {{ $evento->fecha_inicio->format('d M, Y') }}
-                                            </p>
-                                            <p class="event-participants">
-                                                <i class="fas fa-users"></i>
-                                                {{ $evento->inscripciones->count() }} equipos
-                                            </p>
+                                                <span class="event-badge">
+                                                    <i class="fas fa-clock"></i> Próximo
+                                                </span>
+                                            </div>
+                                        @endif
+                                        <div class="event-card-content">
+                                            <h4 class="event-title">{{ $evento->nombre }}</h4>
+                                            <p class="event-desc">{{ Str::limit($evento->descripcion ?? 'Sin descripción', 80) }}</p>
+                                            <div class="event-meta">
+                                                <p class="event-date">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    {{ $evento->fecha_inicio->format('d M, Y') }}
+                                                </p>
+                                                <p class="event-participants">
+                                                    <i class="fas fa-users"></i>
+                                                    {{ $evento->inscripciones->count() }} equipos
+                                                </p>
+                                            </div>
+                                            <span class="event-link">
+                                                Ver detalles <i class="fas fa-arrow-right"></i>
+                                            </span>
                                         </div>
-                                        <a href="{{ route('estudiante.eventos.show', $evento) }}" class="event-link">
-                                            Ver detalles <i class="fas fa-arrow-right"></i>
-                                        </a>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -798,15 +800,19 @@
         </h3>
         
         @php
-            // Obtener equipos disponibles (puedes ajustar esta query según tu lógica)
+            // Obtener TODOS los equipos con menos de 5 miembros de eventos activos/próximos/en progreso
             $equiposDisponibles = \App\Models\InscripcionEvento::whereHas('evento', function($q) {
-                $q->where('estado', 'Próximo')
-                  ->orWhere('estado', 'Activo');
+                $q->whereIn('estado', ['Próximo', 'Activo', 'En Progreso']);
             })
-            ->where('status_registro', 'Incompleto')
-            ->with(['equipo', 'evento', 'miembros.rol'])
-            ->take(6)
-            ->get();
+            ->whereNotIn('status_registro', ['Descalificado']) // Excluir solo descalificados
+            ->with(['equipo', 'evento', 'miembros.user', 'miembros.rol'])
+            ->get()
+            ->filter(function($inscripcion) {
+                // Mostrar equipos que tienen entre 1 y 4 miembros (necesitan más)
+                $cantidadMiembros = $inscripcion->miembros->count();
+                return $cantidadMiembros >= 1 && $cantidadMiembros < 5;
+            })
+            ->take(6);
         @endphp
 
         @if($equiposDisponibles->count() > 0)
@@ -815,35 +821,46 @@
                     <div class="carousel-track" id="equiposTrack">
                         @foreach ($equiposDisponibles as $inscripcion)
                             <div class="carousel-slide">
-                                <div class="team-card">
-                                    <div class="team-header">
-                                        <div class="team-avatar">
-                                            <i class="fas fa-users"></i>
-                                        </div>
-                                        <div class="team-info">
-                                            <h4>{{ $inscripcion->equipo->nombre }}</h4>
-                                            <p>{{ $inscripcion->evento->nombre }}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="team-members">
-                                        @foreach($inscripcion->miembros->take(4) as $miembro)
-                                            <div class="member-avatar" title="{{ $miembro->estudiante->user->nombre ?? 'Miembro' }}">
-                                                {{ strtoupper(substr($miembro->estudiante->user->nombre ?? 'M', 0, 1)) }}
+                                <a href="{{ route('estudiante.eventos.equipos.show', ['evento' => $inscripcion->evento, 'equipo' => $inscripcion->equipo]) }}" style="text-decoration: none; display: block;">
+                                    <div class="team-card" style="cursor: pointer;">
+                                        <div class="team-header">
+                                            <div class="team-avatar">
+                                                <i class="fas fa-users"></i>
                                             </div>
-                                        @endforeach
-                                        @if($inscripcion->miembros->count() > 4)
-                                            <div class="member-avatar more">
-                                                +{{ $inscripcion->miembros->count() - 4 }}
+                                            <div class="team-info">
+                                                <h4>{{ $inscripcion->equipo->nombre }}</h4>
+                                                <p>{{ $inscripcion->evento->nombre }}</p>
                                             </div>
-                                        @endif
+                                        </div>
+                                        
+                                        <div class="team-members">
+                                            @foreach($inscripcion->miembros->take(4) as $miembro)
+                                                <div class="member-avatar" title="{{ $miembro->user->nombre ?? 'Miembro' }}">
+                                                    {{ strtoupper(substr($miembro->user->nombre ?? 'M', 0, 1)) }}
+                                                </div>
+                                            @endforeach
+                                            @if($inscripcion->miembros->count() > 4)
+                                                <div class="member-avatar more">
+                                                    +{{ $inscripcion->miembros->count() - 4 }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        
+                                        <div class="team-status-info" style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem;">
+                                            <span style="font-size: 0.75rem; color: var(--color-dark-gray);">
+                                                <i class="fas fa-user-friends"></i> {{ $inscripcion->miembros->count() }}/5 miembros
+                                            </span>
+                                            <span style="font-size: 0.75rem; color: var(--color-primary); font-weight: 600;">
+                                                {{ 5 - $inscripcion->miembros->count() }} {{ (5 - $inscripcion->miembros->count()) == 1 ? 'lugar disponible' : 'lugares disponibles' }}
+                                            </span>
+                                        </div>
+                                        
+                                        <div class="team-status incompleto">
+                                            <i class="fas fa-user-plus"></i>
+                                            Buscando Miembros
+                                        </div>
                                     </div>
-                                    
-                                    <div class="team-status {{ $inscripcion->status_registro === 'Completo' ? 'completo' : 'incompleto' }}">
-                                        <i class="fas {{ $inscripcion->status_registro === 'Completo' ? 'fa-check-circle' : 'fa-user-plus' }}"></i>
-                                        {{ $inscripcion->status_registro === 'Completo' ? 'Equipo Completo' : 'Buscando Miembros' }}
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
                     </div>

@@ -221,6 +221,34 @@
                                 <p class="mt-1">
                                     Finaliza: {{ $evento->fecha_fin->format('d M, Y') }}
                                 </p>
+                                
+                                {{-- Sección de Jurados --}}
+                                @if($evento->jurados->isNotEmpty())
+                                    <div class="mt-4 pt-4" style="border-top: 1px solid rgba(232, 154, 60, 0.2);">
+                                        <p style="font-size: 0.75rem; color: #6b6b6b; margin-bottom: 0.5rem;">
+                                            <i class="fas fa-gavel" style="color: #e89a3c;"></i> Jurados del evento:
+                                        </p>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                            @foreach($evento->jurados->take(4) as $jurado)
+                                                <a href="{{ route('profile.edit') }}" 
+                                                   title="{{ $jurado->user->nombre ?? 'Jurado' }} {{ $jurado->user->app_paterno ?? '' }}"
+                                                   style="display: inline-flex; align-items: center; padding: 0.25rem 0.5rem; background: rgba(232, 154, 60, 0.1); border-radius: 20px; text-decoration: none; transition: all 0.2s;">
+                                                    <span style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #e89a3c, #d98a2c); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; margin-right: 0.35rem;">
+                                                        {{ strtoupper(substr($jurado->user->nombre ?? 'J', 0, 1)) }}
+                                                    </span>
+                                                    <span style="font-size: 0.75rem; color: #2c2c2c; font-weight: 500;">
+                                                        {{ $jurado->user->nombre ?? 'Jurado' }}
+                                                    </span>
+                                                </a>
+                                            @endforeach
+                                            @if($evento->jurados->count() > 4)
+                                                <span style="display: inline-flex; align-items: center; padding: 0.25rem 0.5rem; background: rgba(107, 107, 107, 0.1); border-radius: 20px; font-size: 0.75rem; color: #6b6b6b;">
+                                                    +{{ $evento->jurados->count() - 4 }} más
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         @endif
@@ -249,6 +277,34 @@
                                 <p class="mt-1">
                                     Inicia: {{ $evento->fecha_inicio->format('d M, Y') }}
                                 </p>
+                                
+                                {{-- Sección de Jurados --}}
+                                @if($evento->jurados->isNotEmpty())
+                                    <div class="mt-4 pt-4" style="border-top: 1px solid rgba(232, 154, 60, 0.2);">
+                                        <p style="font-size: 0.75rem; color: #6b6b6b; margin-bottom: 0.5rem;">
+                                            <i class="fas fa-gavel" style="color: #e89a3c;"></i> Jurados del evento:
+                                        </p>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                            @foreach($evento->jurados->take(4) as $jurado)
+                                                <a href="{{ route('profile.edit') }}" 
+                                                   title="{{ $jurado->user->nombre ?? 'Jurado' }} {{ $jurado->user->app_paterno ?? '' }}"
+                                                   style="display: inline-flex; align-items: center; padding: 0.25rem 0.5rem; background: rgba(232, 154, 60, 0.1); border-radius: 20px; text-decoration: none; transition: all 0.2s;">
+                                                    <span style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #e89a3c, #d98a2c); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 600; margin-right: 0.35rem;">
+                                                        {{ strtoupper(substr($jurado->user->nombre ?? 'J', 0, 1)) }}
+                                                    </span>
+                                                    <span style="font-size: 0.75rem; color: #2c2c2c; font-weight: 500;">
+                                                        {{ $jurado->user->nombre ?? 'Jurado' }}
+                                                    </span>
+                                                </a>
+                                            @endforeach
+                                            @if($evento->jurados->count() > 4)
+                                                <span style="display: inline-flex; align-items: center; padding: 0.25rem 0.5rem; background: rgba(107, 107, 107, 0.1); border-radius: 20px; font-size: 0.75rem; color: #6b6b6b;">
+                                                    +{{ $evento->jurados->count() - 4 }} más
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         @endif
