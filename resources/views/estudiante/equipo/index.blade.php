@@ -283,7 +283,7 @@
         font-size: 0.875rem;
         border: 3px solid #FFEEE2;
         margin-left: -10px;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        box-shadow: 4px 4px 8px #e6d5c9;
         transition: all 0.3s ease;
         position: relative;
     }
