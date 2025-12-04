@@ -565,7 +565,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     <p style="color: #065f46;">Hitos</p>
-                    <p style="color: #10b981;">{{ $inscripcion->proyecto ? $inscripcion->proyecto->hitos->where('completado', true)->count() . '/' . $inscripcion->proyecto->hitos->count() : '0/0' }}</p>
+                    <p style="color: #10b981;">{{ $inscripcion->proyecto && $inscripcion->proyecto->hitos ? $inscripcion->proyecto->hitos->where('completado', true)->count() . '/' . $inscripcion->proyecto->hitos->count() : '0/0' }}</p>
                 </a>
                 
                 <!-- Tecnologías -->

@@ -49,11 +49,5 @@ class Proyecto extends Model
             *}
     */
 
-    /**
-     * Hitos/milestones del proyecto
-     */
-    public function hitos()
-    {
-        return $this->hasMany(HitoProyecto::class, 'id_proyecto', 'id_proyecto');
-    }
+
 }

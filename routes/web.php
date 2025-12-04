@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\InscripcionController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EventoController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\Estudiante\MiEquipoController;
 use App\Http\Controllers\Estudiante\MiembroController;
 use App\Http\Controllers\Estudiante\SolicitudController;
 use App\Http\Controllers\Estudiante\HabilidadController;
-use App\Http\Controllers\Estudiante\HitoController;
+
 use App\Http\Controllers\Estudiante\RecursoController;
 use App\Http\Controllers\Estudiante\TecnologiaController;
 use App\Http\Controllers\Estudiante\ActividadController;
@@ -25,7 +26,6 @@ use App\Http\Controllers\Estudiante\StatsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Jurado\AcusesController;
 use App\Http\Controllers\Jurado\EventosController;
-use App\Http\Controllers\PasswordController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -147,12 +147,7 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::patch('habilidades/{habilidad}', [HabilidadController::class, 'update'])->name('habilidades.update');
     Route::delete('habilidades/{habilidad}', [HabilidadController::class, 'destroy'])->name('habilidades.destroy');
     
-    // Rutas para Hitos del Proyecto
-    Route::post('proyectos/{proyecto}/hitos', [HitoController::class, 'store'])->name('hitos.store');
-    Route::patch('hitos/{hito}/completar', [HitoController::class, 'marcarCompletado'])->name('hitos.completar');
-    Route::patch('hitos/{hito}', [HitoController::class, 'update'])->name('hitos.update');
-    Route::delete('hitos/{hito}', [HitoController::class, 'destroy'])->name('hitos.destroy');
-    
+
     // Rutas para Recursos del Equipo
     Route::get('equipos/{equipo}/recursos', [RecursoController::class, 'index'])->name('recursos.index');
     Route::post('equipos/{equipo}/recursos', [RecursoController::class, 'store'])->name('recursos.store');
