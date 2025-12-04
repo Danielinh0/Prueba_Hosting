@@ -1062,7 +1062,7 @@
                     <div class="card-icon-box icon-const"><i class="fas fa-certificate"></i></div>
                     <div class="card-content-box">
                         <h4>CONSTANCIAS</h4>
-                        <p>Genera tus constancias</p>
+                        <p>Aquí puedes generar constancias de tus eventos</p>
                     </div>
                 </div>
             </a>
