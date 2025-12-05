@@ -240,35 +240,98 @@
         font-weight: 600;
     }
 
+    /* Botones de acción múltiples */
+    .acciones-grupo {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-accion-small {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .btn-accion-small svg {
+        width: 0.85rem;
+        height: 0.85rem;
+    }
+
+    .btn-final {
+        background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        color: white;
+        box-shadow: 0 3px 8px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-final:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        color: white;
+    }
+
+    .btn-avances {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: white;
+        box-shadow: 0 3px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    .btn-avances:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(232, 154, 60, 0.4);
+        color: white;
+    }
+
     .stats-summary {
         display: flex;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
         flex-wrap: wrap;
     }
 
     .stat-card {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding: 1rem 1.5rem;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
         background: rgba(255, 255, 255, 0.9);
         border-radius: 12px;
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-card.active {
+        border-color: #e89a3c;
+        background: rgba(254, 243, 226, 0.9);
     }
 
     .stat-icon {
-        width: 3rem;
-        height: 3rem;
+        width: 2.5rem;
+        height: 2.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 10px;
+        border-radius: 8px;
     }
 
     .stat-icon svg {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.25rem;
+        height: 1.25rem;
         color: white;
     }
 
@@ -276,18 +339,140 @@
     .stat-icon.blue { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
     .stat-icon.green { background: linear-gradient(135deg, #10b981, #34d399); }
     .stat-icon.gray { background: linear-gradient(135deg, #6b7280, #9ca3af); }
+    .stat-icon.purple { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
 
     .stat-info h4 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 700;
         color: #2c2c2c;
         line-height: 1;
     }
 
     .stat-info p {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         color: #6b7280;
         margin: 0;
+    }
+
+    /* Barra de búsqueda y filtros */
+    .search-filter-container {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .search-box {
+        flex: 1;
+        min-width: 250px;
+        position: relative;
+    }
+
+    .search-box input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        border: 2px solid rgba(232, 154, 60, 0.2);
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+    }
+
+    .search-box input:focus {
+        outline: none;
+        border-color: #e89a3c;
+        box-shadow: 0 0 0 3px rgba(232, 154, 60, 0.1);
+    }
+
+    .search-box input::placeholder {
+        color: #9ca3af;
+    }
+
+    .search-box svg {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #9ca3af;
+    }
+
+    .filter-select {
+        padding: 0.75rem 2.5rem 0.75rem 1rem;
+        border: 2px solid rgba(232, 154, 60, 0.2);
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.9);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1.25rem;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: #e89a3c;
+        box-shadow: 0 0 0 3px rgba(232, 154, 60, 0.1);
+    }
+
+    .clear-filters {
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        background: rgba(156, 163, 175, 0.2);
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .clear-filters:hover {
+        background: rgba(156, 163, 175, 0.3);
+    }
+
+    .clear-filters svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 15px;
+        margin-top: 1rem;
+    }
+
+    .no-results svg {
+        width: 3rem;
+        height: 3rem;
+        color: #d1d5db;
+        margin-bottom: 0.75rem;
+    }
+
+    .no-results p {
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    .equipo-card.hidden {
+        display: none;
+    }
+
+    .evento-section.hidden {
+        display: none;
     }
 
     @media (max-width: 768px) {
@@ -320,30 +505,52 @@
 
         @php
             $totalEquipos = 0;
-            $equiposPendientes = 0;
-            $equiposEnProgreso = 0;
+            $evalFinalesPendientes = 0;
+            $avancesPendientesTotal = 0;
             $equiposEvaluados = 0;
+            $equiposReevaluacion = 0;
+            $eventosUnicos = [];
             
             foreach($eventos as $evento) {
+                $eventosUnicos[$evento->id_evento] = $evento->nombre;
                 foreach($evento->inscripciones as $inscripcion) {
                     $totalEquipos++;
                     $evaluacionJurado = $inscripcion->evaluaciones->where('id_jurado', $jurado->id_usuario)->first();
                     $avances = $inscripcion->proyecto?->avances ?? collect();
                     
+                    // Contar avances pendientes y calificados
+                    $avancesPendientesEquipo = 0;
+                    $avancesCalificadosEquipo = 0;
+                    foreach($avances as $avance) {
+                        $evaluacionAvance = $avance->evaluaciones->where('id_jurado', $jurado->id_usuario)->first();
+                        if (!$evaluacionAvance) {
+                            $avancesPendientesTotal++;
+                            $avancesPendientesEquipo++;
+                        } else {
+                            $avancesCalificadosEquipo++;
+                        }
+                    }
+                    
+                    // Eval Final Pendiente: solo si TODOS los avances están calificados y NO ha evaluado el proyecto
+                    $todosAvancesCalificados = $avances->count() > 0 && $avancesPendientesEquipo == 0;
+                    $noHaEvaluadoProyecto = !$evaluacionJurado || $evaluacionJurado->estado !== 'Completada';
+                    
+                    if ($todosAvancesCalificados && $noHaEvaluadoProyecto) {
+                        $evalFinalesPendientes++;
+                    }
+                    
+                    // Equipo completamente evaluado (puede reevaluar)
                     if ($evaluacionJurado && $evaluacionJurado->estado === 'Completada') {
                         $equiposEvaluados++;
-                    } elseif ($evaluacionJurado || $avances->count() > 0) {
-                        $equiposEnProgreso++;
-                    } else {
-                        $equiposPendientes++;
+                        $equiposReevaluacion++;
                     }
                 }
             }
         @endphp
 
-        <!-- Stats Summary -->
+        <!-- Stats Summary (clickeables para filtrar) -->
         <div class="stats-summary">
-            <div class="stat-card">
+            <div class="stat-card active" data-filter="todos" onclick="filterByStatus('todos')">
                 <div class="stat-icon orange">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -355,31 +562,31 @@
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-icon blue">
+            <div class="stat-card" data-filter="eval-final" onclick="filterByStatus('eval-final')">
+                <div class="stat-icon purple">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                     </svg>
                 </div>
                 <div class="stat-info">
-                    <h4>{{ $equiposPendientes }}</h4>
-                    <p>Pendientes</p>
+                    <h4>{{ $evalFinalesPendientes }}</h4>
+                    <p>Eval. Final Pend.</p>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-icon gray">
+            <div class="stat-card" data-filter="avances" onclick="filterByStatus('avances')">
+                <div class="stat-icon blue">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
                 </div>
                 <div class="stat-info">
-                    <h4>{{ $equiposEnProgreso }}</h4>
-                    <p>En Progreso</p>
+                    <h4>{{ $avancesPendientesTotal }}</h4>
+                    <p>Avances Pend.</p>
                 </div>
             </div>
 
-            <div class="stat-card">
+            <div class="stat-card" data-filter="evaluados" onclick="filterByStatus('evaluados')">
                 <div class="stat-icon green">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -387,9 +594,53 @@
                 </div>
                 <div class="stat-info">
                     <h4>{{ $equiposEvaluados }}</h4>
-                    <p>Evaluados</p>
+                    <p>Completados</p>
                 </div>
             </div>
+
+            <div class="stat-card" data-filter="reevaluacion" onclick="filterByStatus('reevaluacion')">
+                <div class="stat-icon gray">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h4>{{ $equiposReevaluacion }}</h4>
+                    <p>Reevaluación</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de búsqueda y filtros -->
+        <div class="search-filter-container">
+            <div class="search-box">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Buscar por equipo, líder o proyecto..." oninput="applyFilters()">
+            </div>
+            
+            <select class="filter-select" id="eventoFilter" onchange="applyFilters()">
+                <option value="">Todos los eventos</option>
+                @foreach($eventosUnicos as $idEvento => $nombreEvento)
+                    <option value="{{ $idEvento }}">{{ $nombreEvento }}</option>
+                @endforeach
+            </select>
+            
+            <button class="clear-filters" onclick="clearFilters()">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+                Limpiar
+            </button>
+        </div>
+
+        <!-- Mensaje de no resultados (oculto por defecto) -->
+        <div id="no-results" class="no-results" style="display: none;">
+            <div style="font-size: 3rem; font-weight: 700; color: #d1d5db; margin-bottom: 0.5rem;">
+                 <span style="color: black">404</span>
+        </div>
+            <p>No se encontraron equipos con los filtros seleccionados</p>
         </div>
 
         @if($eventos->isEmpty())
@@ -471,7 +722,22 @@
                                     }
                                 @endphp
                                 
-                                <div class="equipo-card">
+                                @php
+                                    $tieneAvancesPendientes = $avancesPendientes > 0;
+                                    $estaCompleto = $evaluacionJurado && $evaluacionJurado->estado === 'Completada';
+                                    // Listo para eval final: todos avances calificados Y no ha evaluado proyecto
+                                    $listoParaEvalFinal = ($avances->count() > 0 && $avancesPendientes == 0) && (!$evaluacionJurado || $evaluacionJurado->estado !== 'Completada');
+                                    $puedeReevaluar = $estaCompleto;
+                                @endphp
+                                <div class="equipo-card" 
+                                     data-nombre="{{ strtolower($equipo->nombre) }}" 
+                                     data-lider="{{ strtolower($lider?->user?->nombre ?? '') }}"
+                                     data-proyecto="{{ strtolower($proyecto?->nombre ?? '') }}"
+                                     data-evento="{{ $evento->id_evento }}"
+                                     data-eval-final="{{ $listoParaEvalFinal ? '1' : '0' }}"
+                                     data-avances="{{ $tieneAvancesPendientes ? '1' : '0' }}"
+                                     data-completo="{{ $estaCompleto ? '1' : '0' }}"
+                                     data-reevaluacion="{{ $puedeReevaluar ? '1' : '0' }}">
                                     <div class="equipo-info">
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -486,25 +752,50 @@
                                         <span>Líder: {{ $lider?->user?->nombre ?? 'Sin asignar' }}</span>
                                     </div>
 
+                                    <!-- Proyecto -->
                                     <div class="equipo-info">
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
-                                        <span>{{ $numMiembros }} miembro(s)</span>
-                                        @if($avances->count() > 0)
-                                            <span class="avances-badge">
-                                                {{ $avances->count() }} avance(s)
-                                            </span>
-                                        @endif
+                                        <span>{{ $proyecto?->nombre ?? 'Sin proyecto' }}</span>
                                     </div>
 
-                                    <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $evento->id_evento, 'equipo' => $equipo->id_equipo]) }}" 
-                                       class="btn-accion {{ $btnClass }}">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            {!! $btnIcon !!}
-                                        </svg>
-                                        {{ $btnText }}
-                                    </a>
+                                    <!-- Botones de evaluación separados -->
+                                    <div class="acciones-grupo">
+                                        @if($evaluacionJurado && $evaluacionJurado->estado === 'Completada')
+                                            <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $evento->id_evento, 'equipo' => $equipo->id_equipo]) }}" 
+                                               class="btn-accion btn-evaluado">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                Evaluación completa
+                                            </a>
+                                        @else
+                                            @if($avancesPendientes > 0)
+                                                <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $evento->id_evento, 'equipo' => $equipo->id_equipo]) }}" 
+                                                   class="btn-accion-small btn-avances">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    </svg>
+                                                    {{ $avancesPendientes }} Avance(s)
+                                                </a>
+                                            @elseif($avances->count() == 0)
+                                                <span class="btn-accion-small btn-sin-avances">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                    Sin avances
+                                                </span>
+                                            @else
+                                                <span class="btn-accion-small btn-evaluado">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                    Avances OK
+                                                </span>
+                                            @endif
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -514,4 +805,86 @@
         @endif
     </div>
 </div>
+
+<script>
+    let currentStatusFilter = 'todos';
+
+    function filterByStatus(status) {
+        currentStatusFilter = status;
+        
+        // Actualizar cards activas
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.classList.remove('active');
+            if (card.dataset.filter === status) {
+                card.classList.add('active');
+            }
+        });
+        
+        applyFilters();
+    }
+
+    function applyFilters() {
+        const searchText = document.getElementById('searchInput').value.toLowerCase();
+        const eventoFilter = document.getElementById('eventoFilter').value;
+        
+        let visibleCount = 0;
+        
+        document.querySelectorAll('.equipo-card').forEach(card => {
+            const nombre = card.dataset.nombre || '';
+            const lider = card.dataset.lider || '';
+            const proyecto = card.dataset.proyecto || '';
+            const evento = card.dataset.evento || '';
+            const tieneEvalFinal = card.dataset.evalFinal === '1';
+            const tieneAvances = card.dataset.avances === '1';
+            const estaCompleto = card.dataset.completo === '1';
+            const puedeReevaluar = card.dataset.reevaluacion === '1';
+            
+            let visible = true;
+            
+            // Filtro de búsqueda (equipo, líder o proyecto)
+            if (searchText && !nombre.includes(searchText) && !lider.includes(searchText) && !proyecto.includes(searchText)) {
+                visible = false;
+            }
+            
+            // Filtro de evento
+            if (eventoFilter && evento !== eventoFilter) {
+                visible = false;
+            }
+            
+            // Filtro de estado
+            if (currentStatusFilter === 'eval-final' && !tieneEvalFinal) {
+                visible = false;
+            } else if (currentStatusFilter === 'avances' && !tieneAvances) {
+                visible = false;
+            } else if (currentStatusFilter === 'evaluados' && !estaCompleto) {
+                visible = false;
+            } else if (currentStatusFilter === 'reevaluacion' && !puedeReevaluar) {
+                visible = false;
+            }
+            
+            card.classList.toggle('hidden', !visible);
+            if (visible) visibleCount++;
+        });
+        
+        // Ocultar secciones de eventos vacías
+        document.querySelectorAll('.evento-section').forEach(section => {
+            const visibleCards = section.querySelectorAll('.equipo-card:not(.hidden)').length;
+            section.classList.toggle('hidden', visibleCards === 0);
+        });
+        
+        // Mostrar mensaje si no hay resultados
+        const noResultsDiv = document.getElementById('no-results');
+        if (visibleCount === 0) {
+            noResultsDiv.style.display = 'block';
+        } else {
+            noResultsDiv.style.display = 'none';
+        }
+    }
+
+    function clearFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('eventoFilter').value = '';
+        filterByStatus('todos');
+    }
+</script>
 @endsection
