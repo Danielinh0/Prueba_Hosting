@@ -1020,7 +1020,7 @@
             @endif
 
             @if($miInscripcion && $miInscripcion->proyecto)
-                <a href="#" class="small-card neu-card">
+                <a href="{{ route('estudiante.proyectos.index') }}" class="small-card neu-card">
                     <div class="card-icon-box icon-projects"><i class="fas fa-cogs"></i></div>
                     <div class="card-content-box">
                         <h4>MIS PROYECTOS</h4>
