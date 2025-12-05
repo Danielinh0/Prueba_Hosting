@@ -594,11 +594,11 @@
 <div class="equipos-page py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <a href="{{ route('estudiante.dashboard') }}" class="back-link">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        Volver al Dashboard
-    </a>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Volver al Dashboard
+        </a>
         <!-- Hero Section -->
         <div class="hero-section">
             <div class="hero-content">
@@ -711,6 +711,7 @@
 
                             <!-- Actions -->
                             <div class="team-actions">
+                                <!-- Ver Equipo -->
                                 <a href="{{ route('estudiante.equipo.show-detalle', $inscripcion) }}" class="team-action-btn team-action-primary">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
