@@ -362,24 +362,7 @@
             </div>
         </div>
 
-        <!-- Habilidades Destacadas -->
-        <div class="content-card mt-8">
-            <div class="flex items-center justify-between mb-4">
-                <h3>Mis Habilidades</h3>
-                <a href="{{ route('estudiante.habilidades.index') }}">Gestionar →</a>
-            </div>
-            
-            <div class="flex flex-wrap gap-2">
-                @forelse($habilidades as $habilidad)
-                    <span class="habilidad-badge" style="background-color: {{ $habilidad->color }};">
-                        {{ $habilidad->nombre }}
-                        <span class="ml-1 text-xs" style="opacity: 0.75;">({{ $habilidad->pivot->nivel }})</span>
-                    </span>
-                @empty
-                    <p style="color: #6b6b6b; font-size: 0.875rem;">No has agregado habilidades aún</p>
-                @endforelse
-            </div>
-        </div>
+        
     </div>
 </div>
 @endsection
