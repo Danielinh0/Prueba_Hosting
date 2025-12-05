@@ -50,15 +50,56 @@
         margin-right: 0.5rem;
     }
 
-    /* Hero Section - MANTENER INTACTO */
+    /* Hero Section con imagen */
     .hero-card {
         background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #3d3d3d 100%);
         border-radius: 24px;
-        padding: 2.5rem;
+        padding: 0;
         margin-bottom: 2rem;
         position: relative;
         overflow: hidden;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        display: flex;
+        min-height: 220px;
+    }
+
+    .hero-image-container {
+        width: 280px;
+        min-width: 280px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .hero-card:hover .hero-image {
+        transform: scale(1.05);
+    }
+
+    .hero-image-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #e89a3c 0%, #f5a847 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-image-placeholder svg {
+        width: 80px;
+        height: 80px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-main-content {
+        flex: 1;
+        padding: 2.5rem;
+        position: relative;
     }
 
     .hero-card::before {
@@ -70,6 +111,17 @@
         height: 350px;
         background: radial-gradient(circle, rgba(232, 154, 60, 0.15) 0%, transparent 70%);
         pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+        .hero-card {
+            flex-direction: column;
+        }
+        .hero-image-container {
+            width: 100%;
+            min-width: 100%;
+            height: 180px;
+        }
     }
 
     .hero-content {
@@ -737,15 +789,30 @@
             Volver a Mis Equipos
         </a>
 
-        <!-- Hero Card - INTACTO -->
+        <!-- Hero Card con imagen -->
         <div class="hero-card">
-            <div class="hero-content">
-                <div class="hero-info">
-                    <div class="hero-badge">
+            <!-- Imagen del equipo -->
+            <div class="hero-image-container">
+                @if($inscripcion->equipo->ruta_imagen)
+                    <img src="{{ asset('storage/' . $inscripcion->equipo->ruta_imagen) }}" alt="{{ $inscripcion->equipo->nombre }}" class="hero-image">
+                @else
+                    <div class="hero-image-placeholder">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
-                        {{ $inscripcion->miembros->count() }} Miembros
+                    </div>
+                @endif
+            </div>
+            
+            <!-- Contenido principal -->
+            <div class="hero-main-content">
+                <div class="hero-content">
+                    <div class="hero-info">
+                        <div class="hero-badge">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            {{ $inscripcion->miembros->count() }} Miembros
                     </div>
                     <h1 class="hero-title">{{ $inscripcion->equipo->nombre }}</h1>
                     <p class="hero-event">
@@ -776,6 +843,7 @@
                     @endif
                 </div>
             </div>
+            </div> {{-- Cierre hero-main-content --}}
         </div>
 
         <!-- Stats Grid -->

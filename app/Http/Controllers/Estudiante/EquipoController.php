@@ -196,6 +196,8 @@ class EquipoController extends Controller
             ->with('inscripcion.equipo')
             ->firstOrFail();
         $equipo = $miembro->inscripcion->equipo;
+        $inscripcion = $miembro->inscripcion;
+        
         $request->validate([
             'nombre' => ['required', 'string', 'max:100', Rule::unique('equipos')->ignore($equipo->id_equipo, 'id_equipo')],
             'descripcion' => 'nullable|string|max:1000',
@@ -209,7 +211,7 @@ class EquipoController extends Controller
             $data['ruta_imagen'] = $request->file('ruta_imagen')->store('imagenes_equipos', 'public');
         }
         $equipo->update($data);
-        return redirect()->route('estudiante.equipo.index')->with('success', 'Equipo actualizado correctamente.');
+        return redirect()->route('estudiante.equipo.show-detalle', $inscripcion)->with('success', 'Equipo actualizado correctamente.');
     }
 
     public function show(Evento $evento, Equipo $equipo)

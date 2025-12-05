@@ -84,7 +84,7 @@ class EquipoController extends Controller
      */
     public function edit(Equipo $equipo)
     {
-        return view('estudiante.equipos.create', compact('equipo'));
+        return view('admin.equipos.edit', compact('equipo'));
     }
 
     /**
