@@ -305,6 +305,56 @@
                     </div>
                 @endif
 
+                {{-- Criterios de Evaluación --}}
+                @if($evento->criteriosEvaluacion->isNotEmpty())
+                    <div class="section-divider">
+                        <h3 class="text-lg font-medium" style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clipboard-check" style="color: #e89a3c;"></i>
+                            Criterios de Evaluación ({{ $evento->criteriosEvaluacion->count() }})
+                        </h3>
+                        
+                        <div class="mt-4">
+                            {{-- Barra de progreso de ponderación total --}}
+                            @php $totalPonderacion = $evento->criteriosEvaluacion->sum('ponderacion'); @endphp
+                            <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.6); border-radius: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 0.875rem; color: #6b6b6b;">Ponderación Total:</span>
+                                    <span style="font-weight: 700; color: {{ $totalPonderacion == 100 ? '#10b981' : '#f59e0b' }};">
+                                        {{ $totalPonderacion }}%
+                                        @if($totalPonderacion == 100)
+                                            ✓
+                                        @endif
+                                    </span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
+                                    <div style="width: {{ min($totalPonderacion, 100) }}%; height: 100%; background: {{ $totalPonderacion == 100 ? 'linear-gradient(90deg, #10b981, #34d399)' : 'linear-gradient(90deg, #f59e0b, #fbbf24)' }}; border-radius: 4px;"></div>
+                                </div>
+                            </div>
+
+                            {{-- Lista de criterios --}}
+                            <div style="display: grid; gap: 1rem;">
+                                @foreach($evento->criteriosEvaluacion as $criterio)
+                                    <div style="padding: 1.25rem; background: #FFEEE2; border-radius: 16px; box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;">
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                                            <h4 style="font-weight: 600; color: #2c2c2c; font-size: 1rem; margin: 0;">
+                                                {{ $criterio->nombre }}
+                                            </h4>
+                                            <span style="padding: 0.25rem 0.75rem; background: linear-gradient(135deg, #e89a3c, #f5b76c); color: white; border-radius: 20px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 2px 6px rgba(232, 154, 60, 0.3);">
+                                                {{ $criterio->ponderacion }}%
+                                            </span>
+                                        </div>
+                                        @if($criterio->descripcion)
+                                            <p style="color: #6b6b6b; font-size: 0.875rem; margin: 0; line-height: 1.5;">
+                                                {{ $criterio->descripcion }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 {{-- Proyecto del Evento (si está publicado y es general) --}}
                 @if($evento->tipo_proyecto === 'general' && $evento->proyectoGeneral && $evento->proyectoGeneral->publicado)
                     <div class="section-divider">

@@ -62,7 +62,7 @@ class EventoController extends Controller
      */
     public function show(Evento $evento)
     {
-        $evento->load(['inscripciones.equipo', 'jurados.user']);
+        $evento->load(['inscripciones.equipo', 'jurados.user', 'criteriosEvaluacion']);
         
         // Verificar si el usuario ya tiene un equipo en este evento
         $user = Auth::user();

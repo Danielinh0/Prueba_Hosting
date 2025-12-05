@@ -66,7 +66,7 @@ class DashboardController extends Controller
         });
 
         // 3. Evaluaciones del jurado
-        $evaluacionesDelJurado = Evaluacion::where('id_jurado', $jurado->id_jurado)
+        $evaluacionesDelJurado = Evaluacion::where('id_jurado', $jurado->id_usuario)
             ->whereIn('id_inscripcion', $inscripcionIds)
             ->with(['inscripcion.equipo', 'inscripcion.evento', 'inscripcion.proyecto'])
             ->get();
@@ -112,7 +112,7 @@ class DashboardController extends Controller
                             foreach ($inscripcion->proyecto->avances as $avance) {
                                 $yaCalificado = DB::table('evaluaciones_avances')
                                     ->where('id_avance', $avance->id_avance)
-                                    ->where('id_jurado', $jurado->id_jurado)
+                                    ->where('id_jurado', $jurado->id_usuario)
                                     ->exists();
                                 if ($yaCalificado) {
                                     $avancesCalificados++;
@@ -158,7 +158,7 @@ class DashboardController extends Controller
                             // Verificar si este jurado ya calificó este avance
                             $yaCalificado = DB::table('evaluaciones_avances')
                                 ->where('id_avance', $avance->id_avance)
-                                ->where('id_jurado', $jurado->id_jurado)
+                                ->where('id_jurado', $jurado->id_usuario)
                                 ->exists();
                             
                             if (!$yaCalificado) {

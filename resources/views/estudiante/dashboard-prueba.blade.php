@@ -51,13 +51,13 @@
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
-            font-size: 1.125rem;
-            margin-bottom: 1rem;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .section-title i {
             color: var(--color-primary);
-            font-size: 1.25rem;
+            font-size: 1rem;
         }
         
         /* =============================================== */
@@ -66,25 +66,28 @@
         .carousel-container {
             position: relative;
             width: 100%;
-            overflow: visible;
-            border-radius: 20px;
-            margin-bottom: 2rem;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 1rem;
         }
 
         .carousel-track-container {
             overflow: hidden;
-            border-radius: 20px;
+            border-radius: 12px;
+            width: 100%;
         }
 
         .carousel-track {
             display: flex;
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
         }
 
         .carousel-slide {
             min-width: 100%;
+            width: 100%;
             flex-shrink: 0;
-            padding: 0 0.25rem;
+            padding: 0;
             box-sizing: border-box;
         }
 
@@ -99,8 +102,8 @@
 
         .carousel-arrow {
             position: relative;
-            width: 40px;
-            height: 40px;
+            width: 28px;
+            height: 28px;
             background: rgba(255, 253, 244, 0.9);
             border: none;
             border-radius: 50%;
@@ -108,10 +111,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.75rem;
             color: var(--color-text-primary);
             transition: all 0.3s ease;
-            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            box-shadow: 2px 2px 4px var(--shadow-dark), -2px -2px 4px var(--shadow-light);
         }
 
         .carousel-arrow:hover {
@@ -133,14 +136,14 @@
         }
 
         .carousel-dot {
-            width: 10px;
-            height: 10px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: rgba(232, 154, 60, 0.3);
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
-            box-shadow: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
+            box-shadow: inset 1px 1px 2px var(--shadow-dark), inset -1px -1px 2px var(--shadow-light);
         }
 
         .carousel-dot:hover {
@@ -149,9 +152,9 @@
 
         .carousel-dot.active {
             background: var(--color-primary);
-            width: 24px;
-            border-radius: 5px;
-            box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+            width: 16px;
+            border-radius: 3px;
+            box-shadow: 2px 2px 4px rgba(232, 154, 60, 0.3);
         }
 
         /* Progress Bar */
@@ -177,15 +180,15 @@
         /* =============================================== */
         .neu-card {
             background: var(--color-card);
-            border-radius: 20px;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            border-radius: 12px;
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
             transition: all 0.3s ease;
             border: none;
         }
         
         .neu-card:hover {
-            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
-            transform: translateY(-5px);
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            transform: translateY(-2px);
         }
         
         /* Event cards */
@@ -195,8 +198,8 @@
             color: var(--color-white);
             position: relative;
             overflow: hidden;
-            border-radius: 20px 20px 0 0;
-            padding: 1.25rem;
+            border-radius: 12px 12px 0 0;
+            padding: 0.75rem;
             font-weight: 600;
         }
 
@@ -212,22 +215,22 @@
 
         .event-badge {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 6px;
+            right: 6px;
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.6rem;
             font-weight: 600;
             color: var(--color-white);
             z-index: 5;
-            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .event-card-body {
             background: var(--color-card);
-            padding: 1.25rem;
-            border-radius: 0 0 20px 20px;
+            padding: 0.75rem;
+            border-radius: 0 0 12px 12px;
         }
 
         /* Event cards con imagen */
@@ -238,9 +241,9 @@
         .event-image {
             position: relative;
             width: 100%;
-            height: 160px;
+            height: 100px;
             overflow: hidden;
-            border-radius: 20px 20px 0 0;
+            border-radius: 12px 12px 0 0;
         }
 
         .event-image img {
@@ -268,31 +271,37 @@
         }
 
         .event-card-content {
-            padding: 1.25rem;
+            padding: 0.75rem;
             background: var(--color-card);
-            border-radius: 0 0 20px 20px;
+            border-radius: 0 0 12px 12px;
         }
 
         .event-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--color-text-primary);
-            margin: 0 0 0.5rem 0;
+            margin: 0 0 0.35rem 0;
+            line-height: 1.3;
         }
         
         .event-desc {
             font-family: 'Poppins', sans-serif;
             color: var(--color-text-secondary);
-            font-size: 0.875rem;
-            line-height: 1.5;
-            margin: 0 0 0.75rem 0;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin: 0 0 0.5rem 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .event-meta {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 0.75rem;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
         }
         
         .event-date,
@@ -309,7 +318,7 @@
         .event-date i,
         .event-participants i {
             color: var(--color-primary);
-            width: 14px;
+            width: 12px;
             font-size: 0.7rem;
         }
         
@@ -320,10 +329,10 @@
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.35rem;
             font-weight: 500;
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
         }
         
         .event-card-body a:hover,
@@ -337,30 +346,30 @@
         /* =============================================== */
         .team-card {
             background: var(--color-card);
-            border-radius: 20px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 0.875rem;
             border: none;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
 
         .team-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 0.625rem;
+            margin-bottom: 0.5rem;
         }
 
         .team-avatar {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-white);
-            font-size: 1.25rem;
-            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+            font-size: 0.9rem;
+            box-shadow: 2px 2px 4px var(--shadow-dark), -2px -2px 4px var(--shadow-light);
         }
 
         .team-info h4 {
@@ -368,12 +377,12 @@
             font-weight: 600;
             color: var(--color-text-primary);
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .team-info p {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--color-text-secondary);
             margin: 0;
         }
@@ -381,23 +390,23 @@
         .team-members {
             display: flex;
             align-items: center;
-            margin-top: 1rem;
+            margin-top: 0.625rem;
         }
 
         .member-avatar {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
             border-radius: 50%;
-            border: 3px solid var(--color-card);
-            margin-left: -8px;
+            border: 1px solid var(--color-card);
+            margin-left: -4px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-white);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
         }
 
         .member-avatar:first-child {
@@ -406,13 +415,13 @@
 
         .member-avatar.more {
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-            font-size: 0.65rem;
+            font-size: 0.6rem;
         }
 
         .team-status {
-            margin-top: 1rem;
-            padding: 0.625rem 1rem;
-            border-radius: 12px;
+            margin-top: 0.625rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 500;
             text-align: center;
@@ -422,13 +431,13 @@
         .team-status.completo {
             background: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(167, 243, 208, 0.8));
             color: #065f46;
-            box-shadow: inset 2px 2px 4px rgba(16, 185, 129, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.5);
+            box-shadow: inset 1px 1px 2px rgba(16, 185, 129, 0.2), inset -1px -1px 2px rgba(255, 255, 255, 0.5);
         }
 
         .team-status.incompleto {
             background: linear-gradient(135deg, rgba(254, 240, 138, 0.8), rgba(252, 211, 77, 0.8));
             color: #92400e;
-            box-shadow: inset 2px 2px 4px rgba(245, 158, 11, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.5);
+            box-shadow: inset 1px 1px 2px rgba(245, 158, 11, 0.2), inset -1px -1px 2px rgba(255, 255, 255, 0.5);
         }
 
         /* =============================================== */
@@ -672,6 +681,62 @@
         .delay-2 { animation-delay: 0.2s; opacity: 0; }
         .delay-3 { animation-delay: 0.3s; opacity: 0; }
         .delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #F5B97A, #e89a3c);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            border-radius: 50%;
+            transform: translate(40%, -40%);
+            opacity: 0.3;
+        }
+
+        .welcome-banner .welcome-svg {
+            position: absolute;
+            bottom: -5px;
+            left: 15px;
+            width: 70px;
+            height: 70px;
+            opacity: 0.2;
+        }
+
+        .welcome-banner h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 0.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-banner p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-highlight {
+            color: #2c2c2c;
+        }
     </style>
 
     <!-- SVG Gradients for Charts -->
@@ -695,6 +760,16 @@
             </linearGradient>
         </defs>
     </svg>
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner animate-in" style="grid-column: 1 / -1;">
+        <svg class="welcome-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" stroke="white" stroke-width="2"/>
+            <path d="M35 50 L45 60 L65 40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h2>¡Hola, <span class="welcome-highlight">{{ Auth::user()->nombre }}</span>!</h2>
+        <p>Panel de estudiante — {{ now()->translatedFormat('d \\d\\e F, Y') }}</p>
+    </div>
 
     <section class="left-col">
         <h3 class="section-title animate-in">
@@ -892,8 +967,87 @@
     </section>
 
     <section class="right-col">
-        {{-- GRÁFICAS DE PROGRESO DE PROYECTOS --}}
+        {{-- ACCESO RÁPIDO --}}
         <h3 class="section-title animate-in">
+            <i class="fas fa-bolt"></i>
+            Acceso Rápido
+        </h3>
+
+        <div class="cards-grid animate-in delay-1">
+            <a href="{{ route('estudiante.eventos.index') }}" class="small-card neu-card">
+                <div class="card-icon-box icon-athena"><i class="fas fa-calendar-alt"></i></div>
+                <div class="card-content-box">
+                    <h4>EVENTOS ACTIVOS</h4>
+                    <p>Verifica los eventos en curso</p>
+                </div>
+            </a>
+
+            @if($miInscripcion && $miInscripcion->evento->estado === 'En Progreso')
+                @php
+                    $evento = $miInscripcion->evento;
+                    $proyectoEvento = $evento->tipo_proyecto === 'general' 
+                        ? $evento->proyectoGeneral 
+                        : $miInscripcion->proyectoEvento;
+                @endphp
+                
+                @if($proyectoEvento && $proyectoEvento->publicado)
+                    <a href="{{ route('estudiante.proyecto-evento.show') }}" class="small-card neu-card">
+                        <div class="card-icon-box icon-const"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="card-content-box">
+                            <h4>PROYECTO DEL EVENTO</h4>
+                            <p>{{ Str::limit($proyectoEvento->titulo, 30) }}</p>
+                        </div>
+                    </a>
+                @else
+                    <div class="small-card neu-card">
+                        <div class="card-icon-box icon-const"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="card-content-box">
+                            <h4>PROYECTO DEL EVENTO</h4>
+                            <p>Esperando publicación...</p>
+                        </div>
+                    </div>
+                @endif
+            @else
+            <a href="{{ route('estudiante.constancias.index') }}">
+                <div class="small-card neu-card">
+                    <div class="card-icon-box icon-const"><i class="fas fa-certificate"></i></div>
+                    <div class="card-content-box">
+                        <h4>CONSTANCIAS</h4>
+                        <p>Aquí puedes generar constancias de tus eventos</p>
+                    </div>
+                </div>
+            </a>
+            @endif
+
+            @if($miInscripcion && $miInscripcion->proyecto)
+                <a href="#" class="small-card neu-card">
+                    <div class="card-icon-box icon-projects"><i class="fas fa-cogs"></i></div>
+                    <div class="card-content-box">
+                        <h4>MIS PROYECTOS</h4>
+                        <p>Verifica tus proyectos</p>
+                    </div>
+                </a>
+            @else
+                <div class="small-card neu-card">
+                    <div class="card-icon-box icon-projects"><i class="fas fa-cogs"></i></div>
+                    <div class="card-content-box">
+                        <h4>MIS PROYECTOS</h4>
+                        <p>Sin proyectos activos</p>
+                    </div>
+                </div>
+            @endif
+
+            <a href="{{ route('estudiante.equipo.index') }}" class="small-card neu-card">
+                <div class="card-icon-box icon-teams"><i class="fas fa-users"></i></div>
+                <div class="card-content-box">
+                    <h4>EQUIPOS</h4>
+                    <p>Verifica los equipos disponibles</p>
+                </div>
+            </a>
+        </div>
+
+        {{-- GRÁFICAS DE PROGRESO DE PROYECTOS --}}
+        <h3 class="section-title animate-in delay-2">
             <i class="fas fa-chart-pie"></i>
             Progreso de Proyectos
         </h3>
@@ -1033,79 +1187,6 @@
                     </div>
                 </div>
             @endif
-        </div>
-
-        <div class="cards-grid animate-in delay-3">
-            <a href="{{ route('estudiante.eventos.index') }}" class="small-card neu-card">
-                <div class="card-icon-box icon-athena"><i class="fas fa-calendar-alt"></i></div>
-                <div class="card-content-box">
-                    <h4>EVENTOS ACTIVOS</h4>
-                    <p>Verifica los eventos en curso</p>
-                </div>
-            </a>
-
-            @if($miInscripcion && $miInscripcion->evento->estado === 'En Progreso')
-                @php
-                    $evento = $miInscripcion->evento;
-                    $proyectoEvento = $evento->tipo_proyecto === 'general' 
-                        ? $evento->proyectoGeneral 
-                        : $miInscripcion->proyectoEvento;
-                @endphp
-                
-                @if($proyectoEvento && $proyectoEvento->publicado)
-                    <a href="{{ route('estudiante.proyecto-evento.show') }}" class="small-card neu-card">
-                        <div class="card-icon-box icon-const"><i class="fas fa-clipboard-list"></i></div>
-                        <div class="card-content-box">
-                            <h4>PROYECTO DEL EVENTO</h4>
-                            <p>{{ Str::limit($proyectoEvento->titulo, 30) }}</p>
-                        </div>
-                    </a>
-                @else
-                    <div class="small-card neu-card">
-                        <div class="card-icon-box icon-const"><i class="fas fa-clipboard-list"></i></div>
-                        <div class="card-content-box">
-                            <h4>PROYECTO DEL EVENTO</h4>
-                            <p>Esperando publicación...</p>
-                        </div>
-                    </div>
-                @endif
-            @else
-            <a href="{{ route('estudiante.constancias.index') }}">
-                <div class="small-card neu-card">
-                    <div class="card-icon-box icon-const"><i class="fas fa-certificate"></i></div>
-                    <div class="card-content-box">
-                        <h4>CONSTANCIAS</h4>
-                        <p>Aquí puedes generar constancias de tus eventos</p>
-                    </div>
-                </div>
-            </a>
-            @endif
-
-            @if($miInscripcion && $miInscripcion->proyecto)
-                <a href="#" class="small-card neu-card">
-                    <div class="card-icon-box icon-projects"><i class="fas fa-cogs"></i></div>
-                    <div class="card-content-box">
-                        <h4>MIS PROYECTOS</h4>
-                        <p>Verifica tus proyectos</p>
-                    </div>
-                </a>
-            @else
-                <div class="small-card neu-card">
-                    <div class="card-icon-box icon-projects"><i class="fas fa-cogs"></i></div>
-                    <div class="card-content-box">
-                        <h4>MIS PROYECTOS</h4>
-                        <p>Sin proyectos activos</p>
-                    </div>
-                </div>
-            @endif
-
-            <a href="{{ route('estudiante.equipo.index') }}" class="small-card neu-card">
-                <div class="card-icon-box icon-teams"><i class="fas fa-users"></i></div>
-                <div class="card-content-box">
-                    <h4>EQUIPOS</h4>
-                    <p>Verifica los equipos disponibles</p>
-                </div>
-            </a>
         </div>
     </section>
 

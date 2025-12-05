@@ -26,10 +26,15 @@ class DashboardController extends Controller
         $equiposRegistradosCount = Equipo::count();
         $juradosAsignadosCount = Jurado::count();
         
-        // Lista de Próximos y Actuales Eventos para el feed principal
-        $eventosDashboard = Evento::whereIn('estado', ['Activo', 'Próximo'])
-                                    ->orderBy('fecha_inicio')
-                                    ->get();
+        // Eventos Activos (en curso)
+        $eventosActivos = Evento::where('estado', 'Activo')
+                                ->orderBy('fecha_inicio')
+                                ->get();
+        
+        // Eventos Próximos (por venir)
+        $eventosProximos = Evento::where('estado', 'Próximo')
+                                 ->orderBy('fecha_inicio')
+                                 ->get();
 
         // Sección "Eventos que Requieren Atención"
         $eventosPorIniciar = Evento::where('estado', 'Próximo')
@@ -56,7 +61,8 @@ class DashboardController extends Controller
             'eventosEnCursoCount', 
             'equiposRegistradosCount', 
             'juradosAsignadosCount',
-            'eventosDashboard',
+            'eventosActivos',
+            'eventosProximos',
             'eventosPorIniciar',
             'eventosSinJurados',
             'eventosConEquiposIncompletos'

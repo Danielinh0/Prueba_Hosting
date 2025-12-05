@@ -295,21 +295,59 @@
     .empty-state p {
         color: #9ca3af;
     }
+
+    /* Hero Section Negro */
+    .hero-section {
+        background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .hero-text h1 {
+        color: #c1c1c1ff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-text h1 span {
+        color: #e89a3c;
+    }
+
+    .hero-text p {
+        color: #cfcfcfff;
+        font-size: 1rem;
+    }
 </style>
 
 <div class="equipos-evento-page py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="flex items-center mb-6">
-            <a href="{{ route('estudiante.dashboard') }}" class="back-link">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Volver al Dashboard
-            </a>
-            <div class="flex-grow flex justify-between items-center ml-2">
-                <h2 class="font-semibold text-xl">
-                    Equipos para: {{ $evento->nombre }}
-                </h2>
+        <a href="{{ route('estudiante.dashboard') }}" class="back-link">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Volver al Dashboard
+        </a>
+        
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Equipos para: <span>{{ $evento->nombre }}</span></h1>
+                    <p>Explora los equipos disponibles o crea uno nuevo para participar.</p>
+                </div>
                 @if(!$miInscripcionDeEquipoId)
                 <a href="{{ route('estudiante.eventos.equipos.create', $evento) }}" class="btn-create">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>

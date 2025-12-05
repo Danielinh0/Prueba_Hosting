@@ -345,6 +345,38 @@
     .constancia-card:nth-child(3) { animation-delay: 0.3s; }
     .constancia-card:nth-child(4) { animation-delay: 0.4s; }
     .constancia-card:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Hero Section Negro */
+    .hero-section {
+        background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-text h1 {
+        color: #c1c1c1ff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-text h1 span {
+        color: #e89a3c;
+    }
+
+    .hero-text p {
+        color: #cfcfcfff;
+        font-size: 1rem;
+    }
 </style>
 
 <div class="constancias-container">
@@ -354,8 +386,16 @@
         </svg>
         Volver al Dashboard
     </a>
-    <h1 class="constancias-title">Constancias Disponibles</h1>
-    <p class="constancias-subtitle">Eventos en los que has participado y puedes generar constancia</p>
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1><span>Constancias</span></h1>
+                <p>Descarga las constancias de participación de los eventos en los que has participado.</p>
+            </div>
+        </div>
+    </div>
 
     <div class="constancias-grid">
         @forelse($eventosTotalesInscritos as $evento)

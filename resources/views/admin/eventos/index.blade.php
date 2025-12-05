@@ -17,6 +17,40 @@
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
     }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+        border-radius: 25px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.3), -6px -6px 12px rgba(60, 60, 60, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -30%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.15) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-title {
+        color: #ffffff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+    }
     
     .eventos-index-page p {
         font-family: 'Poppins', sans-serif;
@@ -309,14 +343,13 @@
             Volver al Dashboard
         </a>
         <div class="flex justify-between items-center mb-6">
-            <h2 class="font-semibold text-xl">
-                {{ __('Gestión de Eventos') }}
-            </h2>
-            <a href="{{ route('admin.eventos.create') }}" class="create-button inline-flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                Crear Nuevo Evento
-            </a>
+            <!-- Hero Section -->
+            <div class="hero-section" style="flex: 1;">
+                <h1 class="hero-title">Gestión de Eventos</h1>
+                <p class="hero-subtitle">Crea, administra y supervisa todos los eventos académicos del sistema</p>
+            </div>
         </div>
+       
         
         @if (session('success'))
             <div class="alert-success" role="alert">
@@ -350,6 +383,12 @@
                     </div>
                 </div>
             </form>
+        </div>
+         <div class="flex justify-end mb-4">
+            <a href="{{ route('admin.eventos.create') }}" class="create-button inline-flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                Crear Nuevo Evento
+            </a>
         </div>
 
         @php

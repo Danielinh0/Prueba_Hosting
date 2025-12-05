@@ -1,14 +1,45 @@
 @extends('jurado.layouts.app')
 
 @section('content')
+<style>
+    /* Botón volver */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.9);
+        color: #e89a3c;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.08), -2px -2px 8px rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+
+    .back-btn:hover {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(232, 154, 60, 0.3);
+    }
+
+    .back-btn:hover svg path {
+        stroke: #ffffff;
+    }
+</style>
+
 <div class="py-8 px-6 lg:px-12" style="background-color: #FFFDF4; min-height: 100vh;">
     <div class="max-w-4xl mx-auto">
         {{-- Botón Volver --}}
-        <a href="{{ route('jurado.eventos.equipo_evento', [$evento, $equipo]) }}" class="inline-flex items-center gap-2 mb-6 text-sm font-medium" style="color: #CE894D;">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        <a href="{{ route('jurado.eventos.equipo_evento', [$evento, $equipo]) }}" class="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Volver al equipo
+            Volver al Equipo
         </a>
 
         {{-- Título de la página --}}
@@ -85,18 +116,22 @@
                 {{-- Calificación --}}
                 <div class="mb-4">
                     <label for="calificacion" class="block text-sm font-medium mb-2" style="color: #4B4B4B;">
-                        Calificación (0-100)
+                        Calificación (1-100)
                     </label>
                     <input type="number" 
                            id="calificacion" 
                            name="calificacion" 
-                           min="0" 
+                           min="1" 
                            max="100" 
+                           step="1"
                            required
                            value="{{ old('calificacion', isset($evaluacionExistente) && $evaluacionExistente ? $evaluacionExistente->calificacion : '') }}"
                            class="w-full rounded-xl px-4 py-3 focus:outline-none focus:ring-2"
                            style="background-color: rgba(255, 255, 255, 0.5); border: 1px solid #E5E7EB; color: #4B4B4B;"
-                           placeholder="Ingresa una calificación del 0 al 100">
+                           placeholder="Ingresa una calificación del 1 al 100"
+                           oninput="validarCalificacion(this)"
+                           onkeydown="return validarTecla(event)">
+                    <p id="error-calificacion" class="text-sm mt-1 hidden" style="color: #DC2626;">La calificación debe ser un número entero entre 1 y 100</p>
                     @error('calificacion')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
@@ -121,6 +156,7 @@
                 {{-- Botones --}}
                 <div class="flex gap-4">
                     <button type="submit" 
+                            id="btn-submit"
                             class="flex-1 rounded-full py-3 text-white font-semibold transition-colors hover:opacity-90"
                             style="background-color: {{ isset($evaluacionExistente) && $evaluacionExistente ? '#CE894D' : '#F0BC7B' }};">
                         {{ isset($evaluacionExistente) && $evaluacionExistente ? 'Actualizar Calificación' : 'Guardar Calificación' }}
@@ -135,4 +171,89 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Validar que solo se ingresen números enteros del 1 al 100
+    function validarCalificacion(input) {
+        const valor = input.value;
+        const errorMsg = document.getElementById('error-calificacion');
+        const btnSubmit = document.getElementById('btn-submit');
+        
+        // Eliminar decimales si los hay
+        if (valor.includes('.') || valor.includes(',')) {
+            input.value = Math.floor(parseFloat(valor.replace(',', '.')));
+        }
+        
+        const numero = parseInt(input.value);
+        
+        if (input.value === '' || isNaN(numero)) {
+            errorMsg.classList.add('hidden');
+            btnSubmit.disabled = false;
+            btnSubmit.style.opacity = '1';
+            return;
+        }
+        
+        if (numero < 1 || numero > 100) {
+            errorMsg.classList.remove('hidden');
+            btnSubmit.disabled = true;
+            btnSubmit.style.opacity = '0.5';
+            
+            // Corregir automáticamente valores fuera de rango
+            if (numero < 1) {
+                input.value = 1;
+            } else if (numero > 100) {
+                input.value = 100;
+            }
+            
+            setTimeout(() => {
+                errorMsg.classList.add('hidden');
+                btnSubmit.disabled = false;
+                btnSubmit.style.opacity = '1';
+            }, 1500);
+        } else {
+            errorMsg.classList.add('hidden');
+            btnSubmit.disabled = false;
+            btnSubmit.style.opacity = '1';
+        }
+    }
+    
+    // Prevenir caracteres no numéricos
+    function validarTecla(event) {
+        // Permitir: backspace, delete, tab, escape, enter, flechas
+        if ([8, 9, 27, 13, 46, 37, 38, 39, 40].includes(event.keyCode)) {
+            return true;
+        }
+        
+        // Permitir Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+        if ((event.keyCode === 65 || event.keyCode === 67 || event.keyCode === 86 || event.keyCode === 88) && event.ctrlKey) {
+            return true;
+        }
+        
+        // Bloquear punto, coma y signo menos
+        if (event.key === '.' || event.key === ',' || event.key === '-' || event.key === 'e' || event.key === 'E') {
+            event.preventDefault();
+            return false;
+        }
+        
+        // Permitir solo números
+        if (event.key >= '0' && event.key <= '9') {
+            return true;
+        }
+        
+        event.preventDefault();
+        return false;
+    }
+    
+    // Validar al enviar el formulario
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const input = document.getElementById('calificacion');
+        const valor = parseInt(input.value);
+        
+        if (isNaN(valor) || valor < 1 || valor > 100) {
+            e.preventDefault();
+            document.getElementById('error-calificacion').classList.remove('hidden');
+            input.focus();
+        }
+    });
+</script>
 @endsection

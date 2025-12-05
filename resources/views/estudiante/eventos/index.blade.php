@@ -148,6 +148,52 @@
         font-family: 'Poppins', sans-serif;
         color: #6b6b6b;
     }
+    /* Hero Section Negro */
+    .hero-section {
+        background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .hero-text h1 {
+        color: #c1c1c1ff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-text h1 span {
+        color: #e89a3c;
+    }
+
+    .hero-text p {
+        color: #cfcfcfff;
+        font-size: 1rem;
+        max-width: 500px;
+    }
 </style>
 
 <div class="eventos-page py-12">
@@ -158,7 +204,16 @@
             </svg>
             Volver al Dashboard
         </a>
-        <h2 class="font-semibold text-xl mb-6">Panel de Eventos</h2>
+        
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1><span>Eventos</span></h1>
+                    <p>Descubre los eventos disponibles y gestiona tus inscripciones.</p>
+                </div>
+            </div>
+        </div>
 
         @if (session('info'))
             <div class="info-alert mb-6" role="alert">

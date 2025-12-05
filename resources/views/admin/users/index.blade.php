@@ -17,6 +17,40 @@
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
     }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+        border-radius: 25px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.3), -6px -6px 12px rgba(60, 60, 60, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -30%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.15) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-title {
+        color: #ffffff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+    }
     
     .users-page p,
     .users-page td,
@@ -265,9 +299,11 @@
             </svg>
             Volver al Dashboard
         </a>
-        <h2 class="font-semibold text-xl mb-6">
-            {{ __('Gestión de Usuarios') }}
-        </h2>
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Gestión de Usuarios</h1>
+            <p class="hero-subtitle">Administra los usuarios del sistema: administradores, jurados y estudiantes</p>
+        </div>
 
         <!-- Contadores -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

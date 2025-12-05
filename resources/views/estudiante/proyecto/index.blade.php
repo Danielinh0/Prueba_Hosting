@@ -330,6 +330,66 @@
         height: 1.25rem;
         margin-right: 0.5rem;
     }
+
+    /* Hero Section Negro */
+    .hero-section {
+        background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-text h1 {
+        color: #c1c1c1ff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-text h1 span {
+        color: #e89a3c;
+    }
+
+    .hero-text p {
+        color: #cfcfcfff;
+        font-size: 1rem;
+    }
+
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
 </style>
 
 <div class="mis-proyectos-page py-12">
@@ -340,9 +400,16 @@
             </svg>
             Volver al Dashboard
         </a>
-        <h2 class="font-semibold text-2xl mb-6">
-            Mis Proyectos
-        </h2>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1><span>Proyectos</span></h1>
+                    <p>Gestiona y visualiza todos los proyectos en los que participas.</p>
+                </div>
+            </div>
+        </div>
 
         @if($proyectos->isEmpty())
             <div class="empty-state">

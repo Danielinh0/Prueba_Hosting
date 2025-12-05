@@ -15,10 +15,57 @@ class EquipoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $equipos = Equipo::with('miembros.user', 'inscripciones.evento')->get();
-        return view('admin.equipos.index', compact('equipos'));
+        // Contadores
+        $totalEquipos = Equipo::count();
+        $equiposCompletos = Equipo::whereHas('inscripciones', function($q) {
+            $q->where('status_registro', 'Completo');
+        })->count();
+        $equiposIncompletos = Equipo::whereHas('inscripciones', function($q) {
+            $q->where('status_registro', 'Incompleto');
+        })->count();
+        
+        // Query base con relaciones
+        $query = Equipo::with('miembros.user', 'inscripciones.evento');
+        
+        // Filtro de búsqueda por nombre
+        if ($request->filled('search')) {
+            $query->where('nombre', 'ilike', '%' . $request->search . '%');
+        }
+        
+        // Filtro por estado (completo/incompleto)
+        if ($request->filled('estado')) {
+            if ($request->estado === 'completo') {
+                $query->whereHas('inscripciones', function($q) {
+                    $q->where('status_registro', 'Completo');
+                });
+            } elseif ($request->estado === 'incompleto') {
+                $query->whereHas('inscripciones', function($q) {
+                    $q->where('status_registro', 'Incompleto');
+                });
+            }
+        }
+        
+        // Filtro por evento
+        if ($request->filled('evento')) {
+            $query->whereHas('inscripciones', function($q) use ($request) {
+                $q->where('id_evento', $request->evento);
+            });
+        }
+        
+        $equipos = $query->orderBy('nombre')->paginate(15);
+        
+        // Lista de eventos para el filtro
+        $eventos = \App\Models\Evento::whereIn('estado', ['Activo', 'Próximo'])->orderBy('nombre')->get();
+        
+        return view('admin.equipos.index', compact(
+            'equipos',
+            'totalEquipos',
+            'equiposCompletos',
+            'equiposIncompletos',
+            'eventos'
+        ));
     }
 
     /**

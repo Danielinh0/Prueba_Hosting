@@ -115,7 +115,7 @@ class EventoController extends Controller
      */
     public function show(Evento $evento)
     {
-        $evento->load('jurados.user', 'inscripciones.equipo');
+        $evento->load('jurados.user', 'inscripciones.equipo', 'criteriosEvaluacion');
         return view('admin.eventos.show', compact('evento'));
     }
 

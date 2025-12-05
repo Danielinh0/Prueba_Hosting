@@ -603,7 +603,7 @@
         <div class="hero-section">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Mis <span>Equipos</span></h1>
+                    <h1><span>Equipos</span></h1>
                     <p>Gestiona tus equipos, revisa solicitudes pendientes y colabora con tus compañeros en los proyectos.</p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 1.5rem;">

@@ -106,25 +106,33 @@
 
         .carousel-arrow {
             position: relative;
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #000000, #000000);
+            width: 48px;
+            height: 48px;
+            background: var(--color-card);
             border: none;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            color: white;
             transition: all 0.3s ease;
             box-shadow: 4px 4px 12px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
         }
 
+        .carousel-arrow svg {
+            width: 22px;
+            height: 22px;
+            transition: all 0.3s ease;
+        }
+
         .carousel-arrow:hover {
-            background: linear-gradient(135deg, #e89a3c, #d98a2c);
+            background: linear-gradient(135deg, #F5B97A, #e89a3c);
             box-shadow: 6px 6px 16px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
             transform: translateY(-3px) scale(1.05);
+        }
+
+        .carousel-arrow:hover svg path {
+            stroke: white;
         }
 
         .carousel-dots {
@@ -426,7 +434,7 @@
         }
 
         .progress-bar.complete {
-            background: linear-gradient(90deg, #10b981, #059669);
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
         }
 
         .progress-text {
@@ -450,6 +458,11 @@
         .eval-status.pendiente {
             background: linear-gradient(135deg, rgba(254, 240, 138, 0.8), rgba(252, 211, 77, 0.8));
             color: #92400e;
+        }
+
+        .eval-status.sin-avances {
+            background: linear-gradient(135deg, rgba(209, 213, 219, 0.8), rgba(156, 163, 175, 0.6));
+            color: #4b5563;
         }
 
         .eval-status.listo {
@@ -883,11 +896,15 @@
                         
                         <div class="carousel-nav">
                             <button class="carousel-arrow prev" onclick="eventosCarousel.prev()">
-                                <i class="fas fa-chevron-left"></i>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </button>
                             <div class="carousel-dots" id="eventosDots"></div>
                             <button class="carousel-arrow next" onclick="eventosCarousel.next()">
-                                <i class="fas fa-chevron-right"></i>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 6L15 12L9 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </button>
                         </div>
                         <div class="carousel-progress">
@@ -975,6 +992,10 @@
                                                     <span class="eval-status borrador">
                                                         <i class="fas fa-file-alt"></i> Borrador guardado
                                                     </span>
+                                                @elseif($pendiente->totalAvances === 0)
+                                                    <span class="eval-status sin-avances">
+                                                        <i class="fas fa-inbox"></i> No hay avances
+                                                    </span>
                                                 @elseif($pendiente->todosAvancesCalificados)
                                                     <span class="eval-status listo">
                                                         <i class="fas fa-check-circle"></i> Listo para evaluar
@@ -997,11 +1018,15 @@
                         
                         <div class="carousel-nav">
                             <button class="carousel-arrow prev" onclick="evalCarousel.prev()">
-                                <i class="fas fa-chevron-left"></i>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </button>
                             <div class="carousel-dots" id="evalDots"></div>
                             <button class="carousel-arrow next" onclick="evalCarousel.next()">
-                                <i class="fas fa-chevron-right"></i>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 6L15 12L9 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </button>
                         </div>
                         <div class="carousel-progress">

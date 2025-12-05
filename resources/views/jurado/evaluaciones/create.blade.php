@@ -246,6 +246,147 @@
     .feedback-textarea::placeholder {
         color: #a4aeb7;
     }
+    
+    /* Modal de Confirmación */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .modal-content {
+        background: linear-gradient(145deg, #ffffff, #fff8f0);
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 420px;
+        width: 90%;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(232, 154, 60, 0.1);
+        transform: scale(0.9) translateY(20px);
+        transition: all 0.3s ease;
+    }
+    
+    .modal-overlay.active .modal-content {
+        transform: scale(1) translateY(0);
+    }
+    
+    .modal-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(232, 154, 60, 0.15), rgba(232, 154, 60, 0.05));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+    }
+    
+    .modal-icon svg {
+        width: 32px;
+        height: 32px;
+        color: #e89a3c;
+    }
+    
+    .modal-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #2c2c2c;
+        text-align: center;
+        margin-bottom: 0.75rem;
+    }
+    
+    .modal-message {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        color: #6b7280;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+    
+    .modal-warning {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .modal-warning svg {
+        width: 18px;
+        height: 18px;
+        color: #dc2626;
+        flex-shrink: 0;
+    }
+    
+    .modal-warning span {
+        font-size: 0.8rem;
+        color: #dc2626;
+        font-weight: 500;
+    }
+    
+    .modal-buttons {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+    }
+    
+    .modal-btn-cancel {
+        background: rgba(255, 255, 255, 0.9);
+        color: #6b7280;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .modal-btn-cancel:hover {
+        background: #f3f4f6;
+        transform: translateY(-2px);
+    }
+    
+    .modal-btn-confirm {
+        background: linear-gradient(135deg, #e89a3c, #d4842c);
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(232, 154, 60, 0.3);
+    }
+    
+    .modal-btn-confirm:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(232, 154, 60, 0.4);
+    }
 </style>
 
 <div class="evaluacion-page py-8 px-6 lg:px-12">
@@ -293,7 +434,7 @@
             </div>
         @endif
 
-        <form action="{{ route('jurado.evaluaciones.store', $inscripcion) }}" method="POST"
+        <form id="evaluacionForm" action="{{ route('jurado.evaluaciones.store', $inscripcion) }}" method="POST"
               x-data="{
                   criterios: {
                       @foreach($criterios as $criterio)
@@ -521,8 +662,8 @@
                         </svg>
                         Guardar Borrador
                     </button>
-                    <button type="submit" name="finalizar" value="1" class="btn-finalizar inline-flex items-center justify-center gap-2"
-                            onclick="return confirm('¿Finalizar evaluación? Esta acción no se puede deshacer.')">
+                    <button type="button" class="btn-finalizar inline-flex items-center justify-center gap-2"
+                            onclick="openFinalizarModal()">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -543,4 +684,78 @@
         </form>
     </div>
 </div>
+
+{{-- Modal de Confirmación --}}
+<div id="finalizarModal" class="modal-overlay" onclick="closeFinalizarModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+        </div>
+        <h3 class="modal-title">¿Finalizar Evaluación?</h3>
+        <p class="modal-message">
+            Estás a punto de finalizar la evaluación del proyecto. Una vez finalizada, la calificación quedará registrada permanentemente.
+        </p>
+        <div class="modal-warning">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <span>Esta acción no se puede deshacer</span>
+        </div>
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn-cancel" onclick="closeFinalizarModal()">
+                Cancelar
+            </button>
+            <button type="button" class="modal-btn-confirm" onclick="submitFinalizar()">
+                Sí, Finalizar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openFinalizarModal() {
+        document.getElementById('finalizarModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeFinalizarModal(event) {
+        if (event && event.target !== event.currentTarget) return;
+        document.getElementById('finalizarModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    function submitFinalizar() {
+        // Obtener el formulario por ID
+        const form = document.getElementById('evaluacionForm');
+        if (!form) {
+            console.error('Formulario no encontrado');
+            return;
+        }
+        
+        // Verificar si ya existe el input hidden
+        let input = form.querySelector('input[name="finalizar"]');
+        if (!input) {
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'finalizar';
+            form.appendChild(input);
+        }
+        input.value = '1';
+        
+        // Cerrar el modal
+        closeFinalizarModal();
+        
+        // Enviar el formulario
+        form.submit();
+    }
+    
+    // Cerrar con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeFinalizarModal();
+        }
+    });
+</script>
 @endsection

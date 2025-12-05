@@ -268,11 +268,19 @@ class InicializadorSeeder extends Seeder
             $rolesEquipo = CatRolEquipo::all();
             $todosEstudiantes = Estudiante::with('user')->get();
             
-            // Diego Eduardo es el segundo en la lista original, debe ser líder
-            $diegoUser = User::where('email', 'diego469quiroga@gmail.com')->first();
-            $diegoEstudiante = $diegoUser ? Estudiante::where('id_usuario', $diegoUser->id_usuario)->first() : null;
+            // Estudiantes originales serán líderes (los primeros 8)
+            $estudiantesOriginalesEmails = [
+                'leonardo@ito.mx',
+                'diego469quiroga@gmail.com', 
+                'joel@ito.mx',
+                'daniel@ito.mx',
+                'gael@ito.mx',
+                'lorea@ito.mx',
+                'carlos.dias@ito.mx',
+                'leslie.arogon@ito.mx',
+            ];
 
-            // ===== EVENTO 1: Hackathon de Innovación 2025 =====
+            // ===== EVENTO 1: Hackathon de Innovación 2025 (Activo) =====
             $evento1 = Evento::updateOrCreate(
                 ['nombre' => 'Hackathon de Innovación 2025'],
                 [
@@ -281,9 +289,17 @@ class InicializadorSeeder extends Seeder
                     'fecha_fin' => now()->addDays(15),
                     'cupo_max_equipos' => 20,
                     'estado' => 'Activo',
-                    'tipo_proyecto' => 'individual'
                 ]
             );
+
+            // Criterios de evaluación para Evento 1
+            DB::table('criterios_evaluacion')->insertOrIgnore([
+                ['id_evento' => $evento1->id_evento, 'nombre' => 'Innovación', 'descripcion' => 'Originalidad y creatividad de la solución', 'ponderacion' => 25],
+                ['id_evento' => $evento1->id_evento, 'nombre' => 'Funcionalidad', 'descripcion' => 'El proyecto funciona correctamente', 'ponderacion' => 25],
+                ['id_evento' => $evento1->id_evento, 'nombre' => 'Diseño UI/UX', 'descripcion' => 'Experiencia de usuario y diseño visual', 'ponderacion' => 20],
+                ['id_evento' => $evento1->id_evento, 'nombre' => 'Presentación', 'descripcion' => 'Claridad y calidad de la presentación', 'ponderacion' => 15],
+                ['id_evento' => $evento1->id_evento, 'nombre' => 'Código Limpio', 'descripcion' => 'Calidad y organización del código', 'ponderacion' => 15],
+            ]);
 
             // ===== EVENTO 2: Feria de Proyectos TI 2025 =====
             $evento2 = Evento::updateOrCreate(
@@ -294,9 +310,15 @@ class InicializadorSeeder extends Seeder
                     'fecha_fin' => now()->addDays(32),
                     'cupo_max_equipos' => 30,
                     'estado' => 'Próximo',
-                    'tipo_proyecto' => 'general'
                 ]
             );
+
+            DB::table('criterios_evaluacion')->insertOrIgnore([
+                ['id_evento' => $evento2->id_evento, 'nombre' => 'Impacto Social', 'descripcion' => 'Beneficio para la comunidad', 'ponderacion' => 30],
+                ['id_evento' => $evento2->id_evento, 'nombre' => 'Viabilidad Técnica', 'descripcion' => 'Factibilidad de implementación', 'ponderacion' => 25],
+                ['id_evento' => $evento2->id_evento, 'nombre' => 'Documentación', 'descripcion' => 'Calidad de la documentación técnica', 'ponderacion' => 20],
+                ['id_evento' => $evento2->id_evento, 'nombre' => 'Demostración', 'descripcion' => 'Efectividad de la demostración en vivo', 'ponderacion' => 25],
+            ]);
 
             // ===== EVENTO 3: Concurso de Apps Móviles =====
             $evento3 = Evento::updateOrCreate(
@@ -307,9 +329,15 @@ class InicializadorSeeder extends Seeder
                     'fecha_fin' => now()->addDays(60),
                     'cupo_max_equipos' => 15,
                     'estado' => 'Próximo',
-                    'tipo_proyecto' => 'individual'
                 ]
             );
+
+            DB::table('criterios_evaluacion')->insertOrIgnore([
+                ['id_evento' => $evento3->id_evento, 'nombre' => 'Usabilidad', 'descripcion' => 'Facilidad de uso de la aplicación', 'ponderacion' => 30],
+                ['id_evento' => $evento3->id_evento, 'nombre' => 'Rendimiento', 'descripcion' => 'Velocidad y optimización', 'ponderacion' => 25],
+                ['id_evento' => $evento3->id_evento, 'nombre' => 'Diseño Mobile', 'descripcion' => 'Adaptación a estándares móviles', 'ponderacion' => 25],
+                ['id_evento' => $evento3->id_evento, 'nombre' => 'Innovación', 'descripcion' => 'Creatividad en la solución', 'ponderacion' => 20],
+            ]);
 
             // ===== EVENTO 4: Maratón de Programación =====
             $evento4 = Evento::updateOrCreate(
@@ -320,9 +348,14 @@ class InicializadorSeeder extends Seeder
                     'fecha_fin' => now()->addDays(61),
                     'cupo_max_equipos' => 25,
                     'estado' => 'Próximo',
-                    'tipo_proyecto' => 'individual'
                 ]
             );
+
+            DB::table('criterios_evaluacion')->insertOrIgnore([
+                ['id_evento' => $evento4->id_evento, 'nombre' => 'Problemas Resueltos', 'descripcion' => 'Cantidad de problemas solucionados', 'ponderacion' => 40],
+                ['id_evento' => $evento4->id_evento, 'nombre' => 'Eficiencia', 'descripcion' => 'Complejidad algorítmica de soluciones', 'ponderacion' => 35],
+                ['id_evento' => $evento4->id_evento, 'nombre' => 'Tiempo', 'descripcion' => 'Velocidad de resolución', 'ponderacion' => 25],
+            ]);
 
             // ===== EVENTO 5: Expo Tecnología Sustentable =====
             $evento5 = Evento::updateOrCreate(
@@ -333,113 +366,98 @@ class InicializadorSeeder extends Seeder
                     'fecha_fin' => now()->addDays(92),
                     'cupo_max_equipos' => 20,
                     'estado' => 'Próximo',
-                    'tipo_proyecto' => 'general'
                 ]
             );
 
-            // Configuración de equipos por evento
-            $configuracionEventos = [
-                [
-                    'evento' => $evento1,
-                    'equipos' => [
-                        ['nombre' => 'Quantum Coders', 'lider_email' => 'diego469quiroga@gmail.com'],
-                        ['nombre' => 'Team Alpha', 'lider_email' => 'leonardo@ito.mx'],
-                        ['nombre' => 'Digital Wizards', 'lider_email' => 'joel@ito.mx'],
-                        ['nombre' => 'Code Breakers', 'lider_email' => 'daniel@ito.mx'],
-                    ]
-                ],
-                [
-                    'evento' => $evento2,
-                    'equipos' => [
-                        ['nombre' => 'Tech Innovators', 'lider_email' => 'gael@ito.mx'],
-                        ['nombre' => 'Future Devs', 'lider_email' => 'lorea@ito.mx'],
-                        ['nombre' => 'Binary Masters', 'lider_email' => 'carlos.dias@ito.mx'],
-                    ]
-                ],
-                [
-                    'evento' => $evento3,
-                    'equipos' => [
-                        ['nombre' => 'App Warriors', 'lider_email' => 'leslie.arogon@ito.mx'],
-                        ['nombre' => 'Mobile Pioneers', 'lider_email' => 'diego469quiroga@gmail.com'],
-                        ['nombre' => 'Smart Solutions', 'lider_email' => 'leonardo@ito.mx'],
-                    ]
-                ],
-                [
-                    'evento' => $evento4,
-                    'equipos' => [
-                        ['nombre' => 'Algorithm Kings', 'lider_email' => 'joel@ito.mx'],
-                        ['nombre' => 'Speed Coders', 'lider_email' => 'daniel@ito.mx'],
-                    ]
-                ],
-                [
-                    'evento' => $evento5,
-                    'equipos' => [
-                        ['nombre' => 'Green Tech', 'lider_email' => 'gael@ito.mx'],
-                        ['nombre' => 'Eco Developers', 'lider_email' => 'lorea@ito.mx'],
-                        ['nombre' => 'Sustainable Minds', 'lider_email' => 'carlos.dias@ito.mx'],
-                    ]
-                ],
-            ];
+            DB::table('criterios_evaluacion')->insertOrIgnore([
+                ['id_evento' => $evento5->id_evento, 'nombre' => 'Impacto Ambiental', 'descripcion' => 'Contribución al medio ambiente', 'ponderacion' => 35],
+                ['id_evento' => $evento5->id_evento, 'nombre' => 'Sustentabilidad', 'descripcion' => 'Viabilidad a largo plazo', 'ponderacion' => 25],
+                ['id_evento' => $evento5->id_evento, 'nombre' => 'Tecnología Verde', 'descripcion' => 'Uso de tecnologías ecológicas', 'ponderacion' => 20],
+                ['id_evento' => $evento5->id_evento, 'nombre' => 'Escalabilidad', 'descripcion' => 'Potencial de crecimiento', 'ponderacion' => 20],
+            ]);
 
-            $estudiantesUsados = [];
-            $miembroIndex = 0;
-            $estudiantesNuevos = $todosEstudiantes->filter(function($est) {
-                return Str::startsWith($est->numero_control, '2020');
+            // Obtener estudiantes que NO son los líderes originales (para asignar como miembros)
+            $estudiantesNuevos = $todosEstudiantes->filter(function($est) use ($estudiantesOriginalesEmails) {
+                return !in_array($est->user->email, $estudiantesOriginalesEmails);
             })->values();
 
-            foreach ($configuracionEventos as $config) {
-                $evento = $config['evento'];
+            $miembroIndex = 0;
+            $equipoNumero = 0;
+
+            // Configuración: 14 equipos total (7 completos, 7 incompletos)
+            // Equipos completos: 4 miembros | Equipos incompletos: 3 miembros
+            $configuracionEquipos = [
+                // EQUIPOS COMPLETOS (7) - 4 miembros cada uno
+                ['nombre' => 'Quantum Coders', 'lider_email' => 'leonardo@ito.mx', 'evento' => $evento1, 'completo' => true, 'miembros' => 3],
+                ['nombre' => 'Team Alpha', 'lider_email' => 'diego469quiroga@gmail.com', 'evento' => $evento1, 'completo' => true, 'miembros' => 3],
+                ['nombre' => 'Digital Wizards', 'lider_email' => 'joel@ito.mx', 'evento' => $evento1, 'completo' => true, 'miembros' => 3],
+                ['nombre' => 'Code Breakers', 'lider_email' => 'daniel@ito.mx', 'evento' => $evento2, 'completo' => true, 'miembros' => 3],
+                ['nombre' => 'Tech Innovators', 'lider_email' => 'gael@ito.mx', 'evento' => $evento2, 'completo' => true, 'miembros' => 3],
+                ['nombre' => 'Future Devs', 'lider_email' => 'lorea@ito.mx', 'evento' => $evento3, 'completo' => true, 'miembros' => 2],
+                ['nombre' => 'Binary Masters', 'lider_email' => 'carlos.dias@ito.mx', 'evento' => $evento3, 'completo' => true, 'miembros' => 2],
                 
-                foreach ($config['equipos'] as $equipoConfig) {
-                    // Crear equipo
-                    $equipo = Equipo::updateOrCreate(['nombre' => $equipoConfig['nombre']]);
-                    
-                    // Crear inscripción
-                    $inscripcion = InscripcionEvento::updateOrCreate(
-                        ['id_equipo' => $equipo->id_equipo, 'id_evento' => $evento->id_evento],
-                        ['codigo_acceso_equipo' => Str::upper(Str::random(6)), 'status_registro' => 'Completo']
-                    );
+                // EQUIPOS INCOMPLETOS (7) - 3 miembros cada uno, buscando más
+                ['nombre' => 'App Warriors', 'lider_email' => 'leslie.arogon@ito.mx', 'evento' => $evento1, 'completo' => false, 'miembros' => 2],
+                ['nombre' => 'Mobile Pioneers', 'lider_email' => 'leonardo@ito.mx', 'evento' => $evento4, 'completo' => false, 'miembros' => 2],
+                ['nombre' => 'Smart Solutions', 'lider_email' => 'diego469quiroga@gmail.com', 'evento' => $evento4, 'completo' => false, 'miembros' => 2],
+                ['nombre' => 'Algorithm Kings', 'lider_email' => 'joel@ito.mx', 'evento' => $evento5, 'completo' => false, 'miembros' => 2],
+                ['nombre' => 'Speed Coders', 'lider_email' => 'daniel@ito.mx', 'evento' => $evento5, 'completo' => false, 'miembros' => 2],
+                ['nombre' => 'Green Tech', 'lider_email' => 'gael@ito.mx', 'evento' => $evento5, 'completo' => false, 'miembros' => 2],
+                ['nombre' => 'Eco Developers', 'lider_email' => 'lorea@ito.mx', 'evento' => $evento4, 'completo' => false, 'miembros' => 2],
+            ];
 
-                    // Buscar y asignar líder
-                    $liderUser = User::where('email', $equipoConfig['lider_email'])->first();
-                    if ($liderUser) {
-                        $liderEstudiante = Estudiante::where('id_usuario', $liderUser->id_usuario)->first();
-                        if ($liderEstudiante) {
-                            MiembroEquipo::updateOrCreate(
-                                ['id_inscripcion' => $inscripcion->id_inscripcion, 'id_estudiante' => $liderEstudiante->id_usuario],
-                                ['es_lider' => true, 'id_rol_equipo' => $rolesEquipo->where('nombre', 'Líder')->first()->id_rol_equipo]
-                            );
-                        }
+            foreach ($configuracionEquipos as $equipoConfig) {
+                $evento = $equipoConfig['evento'];
+                
+                // Crear equipo
+                $equipo = Equipo::updateOrCreate(['nombre' => $equipoConfig['nombre']]);
+                
+                // Crear inscripción con status según si está completo o no
+                $inscripcion = InscripcionEvento::updateOrCreate(
+                    ['id_equipo' => $equipo->id_equipo, 'id_evento' => $evento->id_evento],
+                    [
+                        'codigo_acceso_equipo' => Str::upper(Str::random(6)), 
+                        'status_registro' => $equipoConfig['completo'] ? 'Completo' : 'Incompleto'
+                    ]
+                );
+
+                // Buscar y asignar líder
+                $liderUser = User::where('email', $equipoConfig['lider_email'])->first();
+                if ($liderUser) {
+                    $liderEstudiante = Estudiante::where('id_usuario', $liderUser->id_usuario)->first();
+                    if ($liderEstudiante) {
+                        MiembroEquipo::updateOrCreate(
+                            ['id_inscripcion' => $inscripcion->id_inscripcion, 'id_estudiante' => $liderEstudiante->id_usuario],
+                            ['es_lider' => true, 'id_rol_equipo' => $rolesEquipo->where('nombre', 'Líder')->first()->id_rol_equipo]
+                        );
                     }
+                }
 
-                    // Asignar 4 miembros más (estudiantes nuevos) para completar equipo de 5
-                    $miembrosAgregados = 0;
-                    while ($miembrosAgregados < 4 && $miembroIndex < $estudiantesNuevos->count()) {
-                        $estudiante = $estudiantesNuevos->get($miembroIndex);
-                        $miembroIndex++;
+                // Asignar miembros adicionales
+                $miembrosAgregados = 0;
+                $cantidadMiembros = $equipoConfig['miembros'];
+                
+                while ($miembrosAgregados < $cantidadMiembros && $miembroIndex < $estudiantesNuevos->count()) {
+                    $estudiante = $estudiantesNuevos->get($miembroIndex);
+                    $miembroIndex++;
 
-                        // Verificar que no sea el líder y que no esté en este evento
-                        if ($liderUser && $estudiante->id_usuario == $liderUser->id_usuario) {
-                            continue;
-                        }
+                    // Verificar que no esté ya en este evento
+                    $yaEnEvento = MiembroEquipo::whereHas('inscripcion', function($q) use ($evento) {
+                        $q->where('id_evento', $evento->id_evento);
+                    })->where('id_estudiante', $estudiante->id_usuario)->exists();
 
-                        $yaEnEvento = MiembroEquipo::whereHas('inscripcion', function($q) use ($evento) {
-                            $q->where('id_evento', $evento->id_evento);
-                        })->where('id_estudiante', $estudiante->id_usuario)->exists();
-
-                        if (!$yaEnEvento) {
-                            // Asignar rol rotativo (evitar Líder)
-                            $rolesNoLider = $rolesEquipo->where('nombre', '!=', 'Líder')->values();
-                            $rol = $rolesNoLider->get($miembrosAgregados % $rolesNoLider->count());
-                            
-                            MiembroEquipo::create([
-                                'id_inscripcion' => $inscripcion->id_inscripcion,
-                                'id_estudiante' => $estudiante->id_usuario,
-                                'es_lider' => false,
-                                'id_rol_equipo' => $rol->id_rol_equipo
-                            ]);
-                            $miembrosAgregados++;
-                        }
+                    if (!$yaEnEvento) {
+                        // Asignar rol rotativo (evitar Líder)
+                        $rolesNoLider = $rolesEquipo->where('nombre', '!=', 'Líder')->values();
+                        $rol = $rolesNoLider->get($miembrosAgregados % $rolesNoLider->count());
+                        
+                        MiembroEquipo::create([
+                            'id_inscripcion' => $inscripcion->id_inscripcion,
+                            'id_estudiante' => $estudiante->id_usuario,
+                            'es_lider' => false,
+                            'id_rol_equipo' => $rol->id_rol_equipo
+                        ]);
+                        $miembrosAgregados++;
                     }
                 }
             }

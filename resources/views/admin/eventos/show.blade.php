@@ -455,6 +455,72 @@
                     </div>
                 </div>
 
+                {{-- Criterios de Evaluación --}}
+                <div class="section-divider">
+                    <h3 class="text-lg font-medium" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <svg class="w-5 h-5" style="color: #e89a3c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        </svg>
+                        Criterios de Evaluación ({{ $evento->criteriosEvaluacion->count() }})
+                    </h3>
+                    
+                    @if($evento->criteriosEvaluacion->isNotEmpty())
+                        <div class="mt-4">
+                            {{-- Barra de progreso de ponderación total --}}
+                            @php $totalPonderacion = $evento->criteriosEvaluacion->sum('ponderacion'); @endphp
+                            <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.5); border-radius: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 0.875rem; color: #6b6b6b;">Ponderación Total:</span>
+                                    <span style="font-weight: 700; color: {{ $totalPonderacion == 100 ? '#10b981' : '#ef4444' }};">
+                                        {{ $totalPonderacion }}%
+                                        @if($totalPonderacion == 100)
+                                            <svg class="inline w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                        @else
+                                            <svg class="inline w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                                        @endif
+                                    </span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
+                                    <div style="width: {{ min($totalPonderacion, 100) }}%; height: 100%; background: {{ $totalPonderacion == 100 ? 'linear-gradient(90deg, #10b981, #34d399)' : 'linear-gradient(90deg, #f59e0b, #fbbf24)' }}; border-radius: 4px; transition: width 0.3s ease;"></div>
+                                </div>
+                            </div>
+
+                            {{-- Lista de criterios --}}
+                            <div style="display: grid; gap: 1rem;">
+                                @foreach($evento->criteriosEvaluacion as $criterio)
+                                    <div style="padding: 1.25rem; background: #FFEEE2; border-radius: 16px; box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;">
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                                            <h4 style="font-weight: 600; color: #2c2c2c; font-size: 1rem; margin: 0;">
+                                                {{ $criterio->nombre }}
+                                            </h4>
+                                            <span style="padding: 0.25rem 0.75rem; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); color: white; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">
+                                                {{ $criterio->ponderacion }}%
+                                            </span>
+                                        </div>
+                                        @if($criterio->descripcion)
+                                            <p style="color: #6b6b6b; font-size: 0.875rem; margin: 0; line-height: 1.5;">
+                                                {{ $criterio->descripcion }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @else
+                        <div style="margin-top: 1rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 12px; text-align: center;">
+                            <svg class="mx-auto w-12 h-12" style="color: #d1d5db;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                            <p style="color: #9ca3af; margin-top: 0.75rem; font-size: 0.875rem;">
+                                No se han definido criterios de evaluación para este evento.
+                            </p>
+                            <a href="{{ route('admin.eventos.edit', $evento) }}" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); color: white; border-radius: 8px; font-size: 0.875rem; font-weight: 500; text-decoration: none;">
+                                + Agregar Criterios
+                            </a>
+                        </div>
+                    @endif
+                </div>
+
                 {{-- Proyecto del Evento (si está publicado) --}}
                 @if($evento->tipo_proyecto && ($evento->tipo_proyecto === 'general' && $evento->proyectoGeneral && $evento->proyectoGeneral->publicado))
                     <div class="section-divider">

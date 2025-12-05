@@ -110,7 +110,7 @@ class EvaluacionController extends Controller
                 if ($evaluacion->estaCompleta()) {
                     $evaluacion->finalizar();
                     DB::commit();
-                    return redirect()->route('jurado.evaluaciones.create', $inscripcion)
+                    return redirect()->route('jurado.evaluaciones.show', $evaluacion)
                         ->with('success', '¡Evaluación finalizada exitosamente! Calificación final: ' . $evaluacion->calificacion_final);
                 } else {
                     DB::commit();

@@ -4,10 +4,14 @@
     /* Header naranja */
     .header-neuro {
         background: linear-gradient(135deg, #e89a3c, #f5a847);
-        box-shadow: 0 4px 12px rgba(232, 154, 60, 0.3);
         font-family: 'Poppins', sans-serif;
-        position: relative;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
         z-index: 40;
+        
     }
     
     /* Hamburger button */
@@ -19,6 +23,7 @@
         transition: all 0.3s ease;
         border: none;
         cursor: pointer;
+        
     }
     
     .hamburger-button:hover {
@@ -230,7 +235,7 @@
     }
 </style>
 
-<nav x-data="{ sidebarOpen: false }" class="header-neuro border-b border-gray-100">
+<nav x-data="{ sidebarOpen: false }" class="header-neuro">
     <!-- Header Principal -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">

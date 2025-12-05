@@ -40,7 +40,7 @@
 
         .dashboard-container {
             display: grid;
-            grid-template-columns: 400px 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
             max-width: 1400px;
             margin: 0 auto;
@@ -109,83 +109,6 @@
         .event-participants {
             color: var(--text-secondary);
             font-size: 0.75rem;
-        }
-
-        /* Progress Card */
-        .progress-main-card {
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .progress-info-items {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .info-item {
-            background: rgba(255, 255, 255, 0.3);
-            color: var(--text-primary);
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
-        }
-
-        .progress-circle-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-        }
-
-        .progress-ring {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: conic-gradient(
-                var(--primary-color) 0%,
-                var(--primary-color) 50%,
-                rgba(255, 255, 255, 0.3) 50%,
-                rgba(255, 255, 255, 0.3) 100%
-            );
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
-        }
-
-        .progress-ring::before {
-            content: '';
-            width: 110px;
-            height: 110px;
-            background: var(--card-bg);
-            border-radius: 50%;
-            position: absolute;
-        }
-
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-        }
-
-        .progress-text span {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .progress-text strong {
-            font-size: 2rem;
-            color: var(--primary-color);
-            font-weight: 700;
         }
 
         /* Small Cards Grid */
@@ -264,7 +187,7 @@
 </head>
 <body class="font-sans antialiased">
     <div class="main-wrapper">
-        @include('layouts.navigation')
+        @include('jurado.layouts.navigation')
 
         <!-- Page Heading -->
         @isset($header)
@@ -276,7 +199,7 @@
         @endisset
 
         <!-- Page Content -->
-        <main class="pt-24 pb-8">
+        <main class="py-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="dashboard-container">
                     @yield('content')

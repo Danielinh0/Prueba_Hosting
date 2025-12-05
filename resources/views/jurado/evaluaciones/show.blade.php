@@ -101,6 +101,34 @@
     .feedback-show-body {
         padding: 1.25rem;
     }
+    
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
 </style>
 
 <div class="evaluacion-show-page py-8 px-6 lg:px-12">
