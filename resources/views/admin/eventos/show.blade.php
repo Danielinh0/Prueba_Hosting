@@ -293,7 +293,7 @@
     .modal-content {
         background: #FFEEE2;
         border-radius: 20px;
-        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        box-shadow: 8px 8px 16px #e6d5c9;
         padding: 1.25rem;
     }
     
@@ -359,6 +359,19 @@
     .alert-danger p {
         color: #991b1b;
         font-size: 0.875rem;
+    }
+
+    .radio-option {
+    display: flex;
+    align-items: center;
+    padding: 12px;    /* o más */
+    border-radius: 8px;
+    }
+
+    .radio-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 0;    /* evita que se corte */
     }
 </style>
 
@@ -766,7 +779,6 @@
                             <div class="space-y-3">
                                 <label class="radio-option {{ $evento->tipo_proyecto === 'general' ? 'radio-option-selected' : '' }}">
                                     <input type="radio" name="tipo_proyecto" value="general" 
-                                           class="mt-1" 
                                            {{ $evento->tipo_proyecto === 'general' ? 'checked' : '' }}
                                            {{ $evento->tipo_proyecto === 'individual' ? 'disabled' : 'required' }}>
                                     <div class="ml-3">
@@ -781,7 +793,6 @@
                                 </label>
                                 <label class="radio-option {{ $evento->tipo_proyecto === 'individual' ? 'radio-option-selected' : '' }}">
                                     <input type="radio" name="tipo_proyecto" value="individual" 
-                                           class="mt-1" 
                                            {{ $evento->tipo_proyecto === 'individual' ? 'checked' : '' }}
                                            {{ !$evento->tipo_proyecto || $evento->tipo_proyecto === 'general' ? 'required' : '' }}>
                                     <div class="ml-3">
