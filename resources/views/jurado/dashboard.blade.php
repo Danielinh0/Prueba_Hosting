@@ -434,7 +434,7 @@
         }
 
         .progress-bar.complete {
-            background: linear-gradient(90deg, #10b981, #059669);
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
         }
 
         .progress-text {
@@ -458,6 +458,11 @@
         .eval-status.pendiente {
             background: linear-gradient(135deg, rgba(254, 240, 138, 0.8), rgba(252, 211, 77, 0.8));
             color: #92400e;
+        }
+
+        .eval-status.sin-avances {
+            background: linear-gradient(135deg, rgba(209, 213, 219, 0.8), rgba(156, 163, 175, 0.6));
+            color: #4b5563;
         }
 
         .eval-status.listo {
@@ -986,6 +991,10 @@
                                                 @if($pendiente->tieneBorrador)
                                                     <span class="eval-status borrador">
                                                         <i class="fas fa-file-alt"></i> Borrador guardado
+                                                    </span>
+                                                @elseif($pendiente->totalAvances === 0)
+                                                    <span class="eval-status sin-avances">
+                                                        <i class="fas fa-inbox"></i> No hay avances
                                                     </span>
                                                 @elseif($pendiente->todosAvancesCalificados)
                                                     <span class="eval-status listo">

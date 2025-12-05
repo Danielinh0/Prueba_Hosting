@@ -280,6 +280,35 @@
         border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
+    /* Botón volver */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.9);
+        color: #e89a3c;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.08), -2px -2px 8px rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+
+    .back-btn:hover {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(232, 154, 60, 0.3);
+    }
+
+    .back-btn:hover svg path {
+        stroke: #ffffff;
+    }
+
     @media (max-width: 900px) {
         .evento-header {
             flex-direction: column;
@@ -309,6 +338,14 @@
 <div class="evento-detail-page">
     <div class="evento-detail-container">
         
+        <!-- Botón volver a eventos -->
+        <a href="{{ route('jurado.eventos.index') }}" class="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Volver a Eventos
+        </a>
+
         <!-- Header con imagen y descripción -->
         <div class="evento-header">
             <!-- Imagen del evento -->
