@@ -206,9 +206,52 @@
         box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
     }
 
+    /* Team Image */
+    .team-image-container {
+        position: relative;
+        height: 140px;
+        overflow: hidden;
+    }
+
+    .team-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .team-card:hover .team-image {
+        transform: scale(1.08);
+    }
+
+    .team-image-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #e89a3c 0%, #f5a847 50%, #e89a3c 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .team-image-placeholder svg {
+        width: 50px;
+        height: 50px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .team-image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        pointer-events: none;
+    }
+
     .team-card-header {
         background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
-        padding: 1.5rem;
+        padding: 1.25rem 1.5rem;
         position: relative;
     }
 
@@ -218,15 +261,15 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 4px;
+        height: 3px;
         background: linear-gradient(90deg, #e89a3c, #f5a847, #e89a3c);
     }
 
     .team-name {
         color: #ffffff;
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         font-weight: 700;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
         padding-right: 100px;
     }
 
@@ -235,17 +278,17 @@
         align-items: center;
         gap: 0.5rem;
         color: rgba(255, 255, 255, 0.7);
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .team-event svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         color: #e89a3c;
     }
 
     .team-card-body {
-        padding: 1.5rem;
+        padding: 1.25rem 1.5rem;
         background: #FFEEE2;
     }
 
@@ -254,7 +297,7 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
     }
 
     .team-stat-item {
@@ -650,6 +693,20 @@
                                 {{ $solicitudes->count() }} solicitud{{ $solicitudes->count() > 1 ? 'es' : '' }}
                             </div>
                         @endif
+
+                        <!-- Imagen del equipo -->
+                        <div class="team-image-container">
+                            @if($equipo->ruta_imagen)
+                                <img src="{{ asset('storage/' . $equipo->ruta_imagen) }}" alt="{{ $equipo->nombre }}" class="team-image">
+                            @else
+                                <div class="team-image-placeholder">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </div>
+                            @endif
+                            <div class="team-image-overlay"></div>
+                        </div>
 
                         <div class="team-card-header">
                             <h3 class="team-name">{{ $equipo->nombre }}</h3>

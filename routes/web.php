@@ -127,9 +127,9 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
 
     // Rutas para Equipos
     Route::get('mi-equipo', MiEquipoController::class)->name('equipo.index');
-    Route::get('mi-equipo/{inscripcion}', [MiEquipoController::class, 'showDetalle'])->name('equipo.show-detalle');
     Route::get('mi-equipo/edit', [EstudianteEquipoController::class, 'edit'])->name('equipo.edit');
     Route::put('mi-equipo', [EstudianteEquipoController::class, 'update'])->name('equipo.update');
+    Route::get('mi-equipo/{inscripcion}', [MiEquipoController::class, 'showDetalle'])->name('equipo.show-detalle');
     Route::resource('eventos.equipos', EstudianteEquipoController::class)->only(['index', 'create', 'store', 'show']);
 
     // Rutas para registrar equipo existente a evento
