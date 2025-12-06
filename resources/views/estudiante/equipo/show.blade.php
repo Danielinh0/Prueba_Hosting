@@ -815,12 +815,18 @@
                             {{ $inscripcion->miembros->count() }} Miembros
                     </div>
                     <h1 class="hero-title">{{ $inscripcion->equipo->nombre }}</h1>
-                    <p class="hero-event">
-                        Participando en 
-                        <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}">
-                            {{ $inscripcion->evento->nombre }}
-                        </a>
-                    </p>
+@if($inscripcion->evento)
+    <p class="hero-event">
+        Participando en 
+        <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}">
+            {{ $inscripcion->evento->nombre }}
+        </a>
+    </p>
+@else
+    <p class="hero-event">
+        Equipo sin evento asignado
+    </p>
+@endif
                 </div>
                 <div class="hero-actions">
                     @if($esLider)
@@ -1034,29 +1040,38 @@
             <div class="right-column">
                 
                 <!-- Associated Event -->
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            Evento Asociado
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}" class="event-link-card">
-                            <div class="event-link-icon">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-                                </svg>
-                            </div>
-                            <div class="event-link-info">
-                                <h4>{{ $inscripcion->evento->nombre }}</h4>
-                                <p>{{ $inscripcion->evento->fecha_inicio->format('d M, Y') }} - {{ $inscripcion->evento->fecha_fin->format('d M, Y') }}</p>
-                            </div>
-                        </a>
-                    </div>
+<div class="content-card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Evento Asociado
+        </h3>
+    </div>
+    <div class="card-body">
+        @if($inscripcion->evento)
+            <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}" class="event-link-card">
+                <div class="event-link-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
                 </div>
+                <div class="event-link-info">
+                    <h4>{{ $inscripcion->evento->nombre }}</h4>
+                    <p>{{ $inscripcion->evento->fecha_inicio->format('d M, Y') }} - {{ $inscripcion->evento->fecha_fin->format('d M, Y') }}</p>
+                </div>
+            </a>
+        @else
+            <div class="empty-state">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <p>Este equipo aún no está registrado en ningún evento</p>
+            </div>
+        @endif
+    </div>
+</div>
 
                 <!-- Quick Links -->
                 <div class="content-card">
@@ -1070,22 +1085,32 @@
                     </div>
                     <div class="card-body">
                         <div class="quick-links-grid">
-                            <a href="{{ route('estudiante.recursos.index', $inscripcion->equipo) }}" class="quick-link quick-link-blue">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/>
-                                </svg>
-                                <span>Recursos</span>
-                                <small>{{ $inscripcion->equipo->recursos->count() ?? 0 }} archivos</small>
-                            </a>
-                            <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}" class="quick-link quick-link-green">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                                <span>Ver Evento</span>
-                                <small>Detalles completos</small>
-                            </a>
-                        </div>
+    <a href="{{ route('estudiante.recursos.index', $inscripcion->equipo) }}" class="quick-link quick-link-blue">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/>
+        </svg>
+        <span>Recursos</span>
+        <small>{{ $inscripcion->equipo->recursos->count() ?? 0 }} archivos</small>
+    </a>
+    @if($inscripcion->evento)
+        <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}" class="quick-link quick-link-green">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            <span>Ver Evento</span>
+            <small>Detalles completos</small>
+        </a>
+    @else
+        <a href="{{ route('estudiante.eventos.index') }}" class="quick-link quick-link-green">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span>Buscar Eventos</span>
+            <small>Registra tu equipo</small>
+        </a>
+    @endif
+</div>
                     </div>
                 </div>
 
