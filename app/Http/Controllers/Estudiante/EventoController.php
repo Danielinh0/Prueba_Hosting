@@ -132,7 +132,7 @@ class EventoController extends Controller
     public function show(Evento $evento)
     {
         $evento->load(['inscripciones.equipo', 'jurados.user', 'criteriosEvaluacion']);
-        
+
         // Verificar si el usuario ya tiene un equipo en este evento
         $user = Auth::user();
         $yaTieneEquipo = MiembroEquipo::where('id_estudiante', $user->id_usuario)
@@ -140,7 +140,36 @@ class EventoController extends Controller
                 $query->where('id_evento', $evento->id_evento);
             })
             ->exists();
-        
+
         return view('estudiante.eventos.show', compact('evento', 'yaTieneEquipo'));
+    }
+
+    /**
+     * Mostrar las posiciones de los equipos en el evento
+     */
+    public function posiciones(Evento $evento)
+    {
+        // Verificar que el evento esté finalizado
+        if ($evento->estado !== 'Finalizado') {
+            return redirect()->route('estudiante.eventos.show', $evento)
+                ->with('error', 'El evento aún no ha finalizado.');
+        }
+
+        // Obtener inscripciones con sus equipos, ordenadas por puesto_ganador
+        $inscripciones = $evento->inscripciones()
+            ->with(['equipo', 'miembros.user'])
+            ->whereNotNull('puesto_ganador')
+            ->orderBy('puesto_ganador')
+            ->get();
+
+        // Obtener el equipo del usuario actual (si participa)
+        $user = Auth::user();
+        $miInscripcion = $evento->inscripciones()
+            ->whereHas('miembros', function ($query) use ($user) {
+                $query->where('id_estudiante', $user->id_usuario);
+            })
+            ->first();
+
+        return view('estudiante.eventos.posiciones', compact('evento', 'inscripciones', 'miInscripcion'));
     }
 }

@@ -209,6 +209,71 @@
         resize: none;
     }
 
+    /* Estilos para la barra personalizada de calificación */
+    .criterio-input-container {
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+    }
+
+    .criterio-input {
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        padding: 0.875rem 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        color: #2c2c2c;
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .criterio-input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .criterio-input::placeholder {
+        color: #9ca3af;
+    }
+
+    .score-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .score-bar {
+        flex: 1;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    }
+
+    .score-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.3s ease, background 0.3s ease;
+        width: 0%;
+    }
+
+    .score-indicator span {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #9ca3af;
+        font-family: 'Poppins', sans-serif;
+        min-width: 30px;
+        text-align: center;
+    }
+
     /* Error message */
     .error-message {
         font-size: 0.875rem;
@@ -304,7 +369,7 @@
             <div>
                 <p class="alert-title">Este avance ya fue calificado</p>
                 <p class="alert-details">
-                    Calificación anterior: <strong>{{ $evaluacionExistente->calificacion }}/100</strong> 
+                    Calificación anterior: <strong>{{ $evaluacionExistente->calificacion }}/100</strong>
                     · Fecha: {{ $evaluacionExistente->fecha_evaluacion->translatedFormat('d/m/Y H:i') }}
                 </p>
             </div>
@@ -361,18 +426,28 @@
                     <label for="calificacion" class="form-label">
                         Calificación (1-100)
                     </label>
-                    <input type="number" 
-                           id="calificacion" 
-                           name="calificacion" 
-                           min="1" 
-                           max="100" 
-                           step="1"
-                           required
-                           value="{{ old('calificacion', isset($evaluacionExistente) && $evaluacionExistente ? $evaluacionExistente->calificacion : '') }}"
-                           class="form-input"
-                           placeholder="Ingresa una calificación del 1 al 100"
-                           oninput="validarCalificacion(this)"
-                           onkeydown="return validarTecla(event)">
+                    <div class="criterio-input-container">
+                        <input type="number"
+                               id="calificacion"
+                               name="calificacion"
+                               min="1"
+                               max="100"
+                               step="1"
+                               required
+                               value="{{ old('calificacion', isset($evaluacionExistente) && $evaluacionExistente ? $evaluacionExistente->calificacion : '') }}"
+                               class="criterio-input"
+                               placeholder="1-100"
+                               oninput="actualizarBarra(this)"
+                               onkeydown="return validarTecla(event)">
+
+                        <div class="score-indicator">
+                            <span>0</span>
+                            <div class="score-bar">
+                                <div class="score-fill" id="calificacion-bar"></div>
+                            </div>
+                            <span>100</span>
+                        </div>
+                    </div>
                     <p id="error-calificacion" class="error-message hidden">La calificación debe ser un número entero entre 1 y 100</p>
                     @error('calificacion')
                         <p class="error-message">{{ $message }}</p>
@@ -384,8 +459,8 @@
                     <label for="comentarios" class="form-label">
                         Comentarios (opcional)
                     </label>
-                    <textarea id="comentarios" 
-                              name="comentarios" 
+                    <textarea id="comentarios"
+                              name="comentarios"
                               rows="4"
                               class="form-textarea"
                               placeholder="Escribe tus comentarios sobre este avance...">{{ old('comentarios', isset($evaluacionExistente) && $evaluacionExistente ? $evaluacionExistente->comentarios : '') }}</textarea>
@@ -396,12 +471,12 @@
 
                 {{-- Botones --}}
                 <div class="action-buttons">
-                    <button type="submit" 
+                    <button type="submit"
                             id="btn-submit"
                             class="btn-action btn-submit">
                         {{ isset($evaluacionExistente) && $evaluacionExistente ? 'Actualizar Calificación' : 'Guardar Calificación' }}
                     </button>
-                    <a href="{{ route('jurado.eventos.equipo_evento', [$evento, $equipo]) }}" 
+                    <a href="{{ route('jurado.eventos.equipo_evento', [$evento, $equipo]) }}"
                        class="btn-action btn-cancel">
                         Cancelar
                     </a>
@@ -412,82 +487,103 @@
 </div>
 
 <script>
-    // Validar que solo se ingresen números enteros del 1 al 100
-    function validarCalificacion(input) {
+    // Función para actualizar la barra de calificación
+    function actualizarBarra(input) {
         const valor = input.value;
+        const barra = document.getElementById('calificacion-bar');
         const errorMsg = document.getElementById('error-calificacion');
         const btnSubmit = document.getElementById('btn-submit');
-        
+
         // Eliminar decimales si los hay
         if (valor.includes('.') || valor.includes(',')) {
             input.value = Math.floor(parseFloat(valor.replace(',', '.')));
         }
-        
-        const numero = parseInt(input.value);
-        
-        if (input.value === '' || isNaN(numero)) {
-            errorMsg.classList.add('hidden');
-            btnSubmit.disabled = false;
-            btnSubmit.style.opacity = '1';
-            return;
+
+        const numero = parseInt(input.value) || 0;
+
+        // Actualizar la barra
+        barra.style.width = numero + '%';
+
+        // Cambiar color según la calificación
+        if (numero >= 80) {
+            barra.style.background = '#10b981'; // Verde
+        } else if (numero >= 60) {
+            barra.style.background = '#f59e0b'; // Amarillo
+        } else if (numero >= 40) {
+            barra.style.background = '#f97316'; // Naranja
+        } else {
+            barra.style.background = '#ef4444'; // Rojo
         }
-        
+
+        // Validar rango
         if (numero < 1 || numero > 100) {
-            errorMsg.classList.remove('hidden');
-            btnSubmit.disabled = true;
-            btnSubmit.style.opacity = '0.5';
-            
-            // Corregir automáticamente valores fuera de rango
-            if (numero < 1) {
-                input.value = 1;
-            } else if (numero > 100) {
-                input.value = 100;
+            if (numero !== 0) {
+                errorMsg.classList.remove('hidden');
+                btnSubmit.disabled = true;
+                btnSubmit.style.opacity = '0.5';
+
+                // Corregir automáticamente
+                if (numero < 1) {
+                    input.value = 1;
+                    actualizarBarra(input);
+                } else if (numero > 100) {
+                    input.value = 100;
+                    actualizarBarra(input);
+                }
+
+                setTimeout(() => {
+                    errorMsg.classList.add('hidden');
+                    btnSubmit.disabled = false;
+                    btnSubmit.style.opacity = '1';
+                }, 1500);
             }
-            
-            setTimeout(() => {
-                errorMsg.classList.add('hidden');
-                btnSubmit.disabled = false;
-                btnSubmit.style.opacity = '1';
-            }, 1500);
         } else {
             errorMsg.classList.add('hidden');
             btnSubmit.disabled = false;
             btnSubmit.style.opacity = '1';
         }
     }
-    
+
     // Prevenir caracteres no numéricos
     function validarTecla(event) {
         // Permitir: backspace, delete, tab, escape, enter, flechas
         if ([8, 9, 27, 13, 46, 37, 38, 39, 40].includes(event.keyCode)) {
             return true;
         }
-        
+
         // Permitir Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
         if ((event.keyCode === 65 || event.keyCode === 67 || event.keyCode === 86 || event.keyCode === 88) && event.ctrlKey) {
             return true;
         }
-        
+
         // Bloquear punto, coma y signo menos
         if (event.key === '.' || event.key === ',' || event.key === '-' || event.key === 'e' || event.key === 'E') {
             event.preventDefault();
             return false;
         }
-        
+
         // Permitir solo números
         if (event.key >= '0' && event.key <= '9') {
             return true;
         }
-        
+
         event.preventDefault();
         return false;
     }
-    
+
+    // Inicializar la barra al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('calificacion');
+        if (input && input.value) {
+            actualizarBarra(input);
+        }
+    });
+
     // Validar al enviar el formulario
     document.querySelector('form').addEventListener('submit', function(e) {
         const input = document.getElementById('calificacion');
         const valor = parseInt(input.value);
-        
+
         if (isNaN(valor) || valor < 1 || valor > 100) {
             e.preventDefault();
             document.getElementById('error-calificacion').classList.remove('hidden');

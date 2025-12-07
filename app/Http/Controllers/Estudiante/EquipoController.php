@@ -221,9 +221,10 @@ class EquipoController extends Controller
         // Obtener la inscripción del equipo para este evento
         $inscripcion = InscripcionEvento::where('id_equipo', $equipo->id_equipo)
             ->where('id_evento', $evento->id_evento)
-            ->with(['equipo.miembros.user.estudiante.carrera', 'equipo.miembros.rol', 'evento'])
+            ->with(['equipo', 'miembros.user.estudiante.carrera', 'miembros.rol', 'evento'])
             ->firstOrFail();
-        
+
+            
         // Verificar si el usuario ya es miembro de un equipo en este evento
         $miInscripcion = MiembroEquipo::where('id_estudiante', $user->id_usuario)
             ->whereHas('inscripcion', function ($query) use ($evento) {

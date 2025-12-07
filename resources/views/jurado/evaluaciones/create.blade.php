@@ -802,7 +802,7 @@
                                        @input="if($event.target.value > 100) { $event.target.value = 100; criterios[{{ $criterio->id_criterio }}] = 100; } else if($event.target.value < 0) { $event.target.value = 0; criterios[{{ $criterio->id_criterio }}] = 0; }"
                                        min="0" 
                                        max="100" 
-                                       step="0.5"
+                                       step="1"
                                        class="criterio-input"
                                        placeholder="0-100"
                                        {{ $evaluacion->estado == 'Finalizada' ? 'disabled' : '' }}>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Estudiante;
 use App\Http\Controllers\Controller;
 use App\Models\TareaProyecto;
 use App\Models\InscripcionEvento;
+use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,14 +88,25 @@ class TareaController extends Controller
         return back()->with('success', 'Tarea creada exitosamente.');
     }
 
+
     /**
      * Marcar tarea como completada/pendiente
      */
     public function toggle(TareaProyecto $tarea)
     {
-        $inscripcion = $this->getInscripcion();
+        // Obtener la inscripción desde el proyecto de la tarea
+        $inscripcion = $tarea->proyecto->inscripcion;
 
-        if (!$inscripcion || $tarea->proyecto->id_inscripcion != $inscripcion->id_inscripcion) {
+        if (!$inscripcion) {
+            return back()->with('error', 'Proyecto no válido.');
+        }
+
+        // Verificar que el usuario es miembro del equipo
+        $esMiembro = $inscripcion->miembros()
+            ->where('id_estudiante', Auth::id())
+            ->exists();
+
+        if (!$esMiembro) {
             return back()->with('error', 'No tienes permiso para modificar esta tarea.');
         }
 
@@ -127,5 +139,73 @@ class TareaController extends Controller
         $tarea->delete();
 
         return back()->with('success', 'Tarea eliminada exitosamente.');
+    }
+
+    /**
+     * Mostrar lista de tareas para un proyecto específico
+     */
+    public function indexSpecific(Proyecto $proyecto)
+    {
+        // Verificar que el usuario tiene permiso para ver este proyecto
+        $inscripcion = $proyecto->inscripcion;
+
+        if (!$inscripcion) {
+            return redirect()->route('estudiante.proyectos.index')
+                ->with('error', 'Proyecto no válido.');
+        }
+
+        // Verificar que el usuario es miembro del equipo
+        $esMiembro = $inscripcion->miembros()
+            ->where('id_estudiante', Auth::id())
+            ->exists();
+
+        if (!$esMiembro) {
+            return redirect()->route('estudiante.proyectos.index')
+                ->with('error', 'No tienes permiso para ver este proyecto.');
+        }
+
+        $esLider = $this->esLider($inscripcion);
+        $tareas = $proyecto->tareas()->with(['asignadoA.user', 'completadaPor'])->orderBy('completada')->orderBy('created_at', 'desc')->get();
+        $miembros = $inscripcion->miembros;
+
+        return view('estudiante.tarea.index-specific', compact(
+            'proyecto',
+            'tareas',
+            'miembros',
+            'esLider',
+            'inscripcion'
+        ));
+    }
+
+    /**
+     * Guardar nueva tarea para un proyecto específico
+     */
+    public function storeSpecific(Request $request, Proyecto $proyecto)
+    {
+        // Verificar que el usuario tiene permiso
+        $inscripcion = $proyecto->inscripcion;
+
+        if (!$inscripcion || !$this->esLider($inscripcion)) {
+            return back()->with('error', 'Solo el líder puede crear tareas.');
+        }
+
+        $request->validate([
+            'nombre' => 'required|string|max:200',
+            'descripcion' => 'nullable|string',
+            'asignado_a' => 'nullable|exists:users,id_usuario',
+            'fecha_vencimiento' => 'nullable|date|after_or_equal:today',
+        ]);
+
+        TareaProyecto::create([
+            'id_proyecto' => $proyecto->id_proyecto,
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'asignado_a' => $request->asignado_a,
+            'fecha_vencimiento' => $request->fecha_vencimiento,
+            'creado_por' => Auth::id(),
+        ]);
+
+        return redirect()->route('estudiante.tareas.index-specific', $proyecto->id_proyecto)
+            ->with('success', 'Tarea creada exitosamente.');
     }
 }

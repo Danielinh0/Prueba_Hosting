@@ -18,13 +18,13 @@
         transition: all 0.2s ease;
         text-decoration: none;
     }
-    
+
     .back-link:hover {
         color: #4f46e5;
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
     }
-    
+
     .back-link svg {
         width: 1rem;
         height: 1rem;
@@ -36,30 +36,38 @@
         min-height: 100vh;
         font-family: 'Poppins', sans-serif;
     }
-    
+
     /* Textos */
     .proyecto-form-page h2 {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
     }
-    
+
     .proyecto-form-page p {
         font-family: 'Poppins', sans-serif;
         color: #6b6b6b;
     }
-    
+
     .proyecto-form-page label {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-weight: 600;
     }
-    
+
     /* Cards neuromórficas */
     .neuro-card {
         background: #FFEEE2;
         box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
     }
-    
+
+    .event-info-card {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
     /* Inputs y textareas neuromórficos */
     .neuro-input,
     .neuro-textarea {
@@ -71,18 +79,18 @@
         backdrop-filter: blur(10px);
         color: #2c2c2c;
     }
-    
+
     .neuro-input::placeholder,
     .neuro-textarea::placeholder {
         color: #9ca3af;
     }
-    
+
     .neuro-input:focus,
     .neuro-textarea:focus {
         outline: none;
         box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
     }
-    
+
     /* Botón principal */
     .neuro-button-primary {
         font-family: 'Poppins', sans-serif;
@@ -93,12 +101,12 @@
         transition: all 0.3s ease;
         border: none;
     }
-    
+
     .neuro-button-primary:hover {
         box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
         transform: translateY(-2px);
     }
-    
+
     /* Botón secundario */
     .neuro-button-secondary {
         font-family: 'Poppins', sans-serif;
@@ -110,19 +118,19 @@
         border: 1px solid transparent;
         backdrop-filter: blur(10px);
     }
-    
+
     .neuro-button-secondary:hover {
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
     }
-    
+
     /* Mensajes de error */
     .error-message {
         font-family: 'Poppins', sans-serif;
         color: #dc2626;
         font-size: 0.875rem;
     }
-    
+
     /* Asterisco requerido */
     .required-asterisk {
         color: #ef4444;
@@ -131,40 +139,91 @@
 
 <div class="proyecto-form-page py-12">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <a href="{{ route('estudiante.proyecto-evento.show') }}" class="back-link">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Volver a Proyectos
-            </a>
-            @if(isset($proyecto))
-            <a href="{{ route('estudiante.proyecto.show') }}" class="back-link">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Volver al Proyecto {{ $proyecto->nombre }}
-            </a>
-            @endif
+        <a href="{{ route('estudiante.proyecto-evento.especifico', $evento->id_evento) }}" class="back-link">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Volver al Proyecto del Evento
+        </a>
+
         <div class="mb-6">
-            <h2 class="font-semibold text-2xl">{{ isset($proyecto) ? 'Editar Proyecto' : 'Crear Proyecto' }}</h2>
-            <p class="mt-1">Define la información básica de tu proyecto</p>
+            <h2 class="font-semibold text-2xl">Crear Proyecto para el Evento</h2>
+            <p class="mt-1">Estás creando un proyecto para tu equipo en este evento específico</p>
         </div>
 
-        <div class="neuro-card rounded-lg p-6">
-            <form action="{{ isset($proyecto) ? route('estudiante.proyecto.update') : route('estudiante.proyecto.store') }}" method="POST">
-                @csrf
-                @if(isset($proyecto))
-                    @method('PATCH')
+        <!-- Información del Evento -->
+        <div class="event-info-card">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="font-semibold text-lg" style="color: #6366f1;">{{ $evento->nombre }}</h3>
+                    <p class="text-sm mt-1" style="color: #6b7280;">
+                        <i class="far fa-calendar me-1"></i>
+                        Del {{ $evento->fecha_inicio->format('d M Y') }} al {{ $evento->fecha_fin->format('d M Y') }}
+                    </p>
+                    <p class="text-sm mt-1" style="color: #6b7280;">
+                        <i class="fas fa-users me-1"></i>
+                        Equipo: {{ $inscripcion->equipo->nombre }}
+                    </p>
+                </div>
+                <div class="text-right">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
+                          style="background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white;">
+                        {{ $evento->estado }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información del Proyecto del Evento (si existe) -->
+        @if($evento->tipo_proyecto === 'general' && $evento->proyectoGeneral)
+            <div class="event-info-card" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1)); border-color: rgba(34, 197, 94, 0.2);">
+                <h4 class="font-semibold text-sm mb-2" style="color: #059669;">
+                    <i class="fas fa-info-circle me-2"></i>Proyecto General del Evento
+                </h4>
+                <p class="text-sm" style="color: #047857;">
+                    <strong>{{ $evento->proyectoGeneral->titulo }}</strong>
+                </p>
+                @if($evento->proyectoGeneral->objetivo)
+                    <p class="text-sm mt-2" style="color: #065f46;">
+                        <strong>Objetivo:</strong> {{ $evento->proyectoGeneral->objetivo }}
+                    </p>
                 @endif
+                <p class="text-xs mt-2" style="color: #6b7280; font-style: italic;">
+                    Tu proyecto será la solución que tu equipo desarrolla para este proyecto general.
+                </p>
+            </div>
+        @elseif($evento->tipo_proyecto === 'individual' && $inscripcion->proyectoEvento)
+            <div class="event-info-card" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1)); border-color: rgba(34, 197, 94, 0.2);">
+                <h4 class="font-semibold text-sm mb-2" style="color: #059669;">
+                    <i class="fas fa-info-circle me-2"></i>Proyecto Asignado a tu Equipo
+                </h4>
+                <p class="text-sm" style="color: #047857;">
+                    <strong>{{ $inscripcion->proyectoEvento->titulo }}</strong>
+                </p>
+                @if($inscripcion->proyectoEvento->objetivo)
+                    <p class="text-sm mt-2" style="color: #065f46;">
+                        <strong>Objetivo:</strong> {{ $inscripcion->proyectoEvento->objetivo }}
+                    </p>
+                @endif
+                <p class="text-xs mt-2" style="color: #6b7280; font-style: italic;">
+                    A continuación, registra la solución específica que tu equipo desarrollará.
+                </p>
+            </div>
+        @endif
+
+        <div class="neuro-card rounded-lg p-6">
+            <form action="{{ route('estudiante.proyecto.store-from-evento', $evento->id_evento) }}" method="POST">
+                @csrf
 
                 {{-- Nombre del Proyecto --}}
                 <div class="mb-6">
                     <label for="nombre" class="block text-sm mb-2">
                         Nombre del Proyecto <span class="required-asterisk">*</span>
                     </label>
-                    <input type="text" name="nombre" id="nombre" 
-                           value="{{ old('nombre', $proyecto->nombre ?? '') }}"
+                    <input type="text" name="nombre" id="nombre"
+                           value="{{ old('nombre') }}"
                            class="neuro-input w-full px-4 py-2 rounded-lg"
+                           placeholder="Ej: Sistema de Gestión Escolar"
                            required maxlength="200">
                     @error('nombre')
                         <p class="error-message mt-1">{{ $message }}</p>
@@ -178,7 +237,7 @@
                     </label>
                     <textarea name="descripcion_tecnica" id="descripcion_tecnica" rows="5"
                               class="neuro-textarea w-full px-4 py-2 rounded-lg"
-                              placeholder="Describe las características técnicas, stack tecnológico, objetivos...">{{ old('descripcion_tecnica', $proyecto->descripcion_tecnica ?? '') }}</textarea>
+                              placeholder="Describe las características técnicas, stack tecnológico, arquitectura, funcionalidades principales...">{{ old('descripcion_tecnica') }}</textarea>
                     @error('descripcion_tecnica')
                         <p class="error-message mt-1">{{ $message }}</p>
                     @enderror
@@ -190,23 +249,26 @@
                         URL del Repositorio (GitHub, GitLab, etc.)
                     </label>
                     <input type="url" name="repositorio_url" id="repositorio_url"
-                           value="{{ old('repositorio_url', $proyecto->repositorio_url ?? '') }}"
+                           value="{{ old('repositorio_url') }}"
                            class="neuro-input w-full px-4 py-2 rounded-lg"
-                           placeholder="https://github.com/usuario/proyecto">
+                           placeholder="https://github.com/tu-usuario/nombre-del-proyecto">
                     @error('repositorio_url')
                         <p class="error-message mt-1">{{ $message }}</p>
                     @enderror
+                    <p class="text-xs mt-1" style="color: #9ca3af;">
+                        Opcional: Puedes agregarlo más tarde si aún no tienes el repositorio
+                    </p>
                 </div>
 
                 {{-- Botones --}}
                 <div class="flex justify-end space-x-3">
-                    <a href="{{ route('estudiante.proyecto.show') }}" 
+                    <a href="{{ route('estudiante.proyecto-evento.especifico', $evento->id_evento) }}"
                        class="neuro-button-secondary px-6 py-2 rounded-lg">
                         Cancelar
                     </a>
-                    <button type="submit" 
+                    <button type="submit"
                             class="neuro-button-primary px-6 py-2 rounded-lg">
-                        {{ isset($proyecto) ? 'Actualizar Proyecto' : 'Crear Proyecto' }}
+                        Crear Proyecto para este Evento
                     </button>
                 </div>
             </form>

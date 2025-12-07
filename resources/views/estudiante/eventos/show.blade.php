@@ -226,6 +226,173 @@
         padding-top: 1.5rem;
         margin-top: 2rem;
     }
+
+    /* Botón Ver Posiciones - Estilo Premium */
+    .btn-positions {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: 1px solid rgba(232, 154, 60, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-positions::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(232, 154, 60, 0.5), transparent);
+    }
+
+    .btn-positions:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        border-color: rgba(232, 154, 60, 0.6);
+        color: #ffffff;
+    }
+
+    .btn-positions i {
+        color: #e89a3c;
+        font-size: 1rem;
+        filter: drop-shadow(0 0 4px rgba(232, 154, 60, 0.5));
+    }
+
+    .btn-positions:hover i {
+        animation: trophy-bounce 0.5s ease;
+    }
+
+    @keyframes trophy-bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2) rotate(-10deg); }
+    }
+
+    /* Criterios de Evaluación - Diseño Compacto */
+    .criterios-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 0.75rem;
+    }
+
+    .criterio-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+        background: #ffffff;
+        border-radius: 10px;
+        border-left: 3px solid #e89a3c;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        transition: all 0.2s ease;
+    }
+
+    .criterio-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .criterio-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .criterio-nombre {
+        font-weight: 600;
+        color: #1a1a1a;
+        font-size: 0.875rem;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .criterio-desc {
+        color: #6b7280;
+        font-size: 0.75rem;
+        margin: 0.25rem 0 0 0;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .criterio-peso {
+        flex-shrink: 0;
+        margin-left: 0.75rem;
+        padding: 0.25rem 0.625rem;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: #ffffff;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .ponderacion-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 1rem;
+        background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        margin-bottom: 1rem;
+    }
+
+    .ponderacion-label {
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    .ponderacion-track {
+        flex: 1;
+        height: 6px;
+        background: #e5e7eb;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .ponderacion-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.5s ease;
+    }
+
+    .ponderacion-fill.complete {
+        background: linear-gradient(90deg, #10b981, #34d399);
+    }
+
+    .ponderacion-fill.incomplete {
+        background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    .ponderacion-value {
+        font-weight: 700;
+        font-size: 0.875rem;
+        min-width: 45px;
+        text-align: right;
+    }
+
+    .ponderacion-value.complete {
+        color: #10b981;
+    }
+
+    .ponderacion-value.incomplete {
+        color: #f59e0b;
+    }
 </style>
 
 <div class="evento-detail-page py-12">
@@ -255,13 +422,21 @@
                             Del {{ $evento->fecha_inicio->format('d/m/Y') }} al {{ $evento->fecha_fin->format('d/m/Y') }}
                         </p>
                     </div>
-                    <span class="status-badge 
-                        @if ($evento->estado == 'Activo') status-activo
-                        @elseif ($evento->estado == 'En Progreso') status-en-progreso
-                        @elseif ($evento->estado == 'Próximo') status-proximo
-                        @else status-finalizado @endif">
-                        {{ $evento->estado }}
-                    </span>
+                    <div class="flex items-center gap-3">
+                        @if($evento->estado == 'Finalizado' && $evento->inscripciones()->whereNotNull('puesto_ganador')->exists())
+                            <a href="{{ route('estudiante.eventos.posiciones', $evento) }}" class="btn-positions">
+                                <i class="fas fa-trophy"></i>
+                                Ver Posiciones
+                            </a>
+                        @endif
+                        <span class="status-badge
+                            @if ($evento->estado == 'Activo') status-activo
+                            @elseif ($evento->estado == 'En Progreso') status-en-progreso
+                            @elseif ($evento->estado == 'Próximo') status-proximo
+                            @else status-finalizado @endif">
+                            {{ $evento->estado }}
+                        </span>
+                    </div>
                 </div>
 
                 <div class="section-divider">
@@ -313,41 +488,30 @@
                             Criterios de Evaluación ({{ $evento->criteriosEvaluacion->count() }})
                         </h3>
                         
-                        <div class="mt-4">
-                            {{-- Barra de progreso de ponderación total --}}
+                        <div class="mt-3">
+                            {{-- Barra de progreso compacta --}}
                             @php $totalPonderacion = $evento->criteriosEvaluacion->sum('ponderacion'); @endphp
-                            <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.6); border-radius: 12px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                    <span style="font-size: 0.875rem; color: #6b6b6b;">Ponderación Total:</span>
-                                    <span style="font-weight: 700; color: {{ $totalPonderacion == 100 ? '#10b981' : '#f59e0b' }};">
-                                        {{ $totalPonderacion }}%
-                                        @if($totalPonderacion == 100)
-                                            ✓
-                                        @endif
-                                    </span>
+                            <div class="ponderacion-bar">
+                                <span class="ponderacion-label">Ponderación Total:</span>
+                                <div class="ponderacion-track">
+                                    <div class="ponderacion-fill {{ $totalPonderacion == 100 ? 'complete' : 'incomplete' }}" style="width: {{ min($totalPonderacion, 100) }}%;"></div>
                                 </div>
-                                <div style="width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
-                                    <div style="width: {{ min($totalPonderacion, 100) }}%; height: 100%; background: {{ $totalPonderacion == 100 ? 'linear-gradient(90deg, #10b981, #34d399)' : 'linear-gradient(90deg, #f59e0b, #fbbf24)' }}; border-radius: 4px;"></div>
-                                </div>
+                                <span class="ponderacion-value {{ $totalPonderacion == 100 ? 'complete' : 'incomplete' }}">
+                                    {{ $totalPonderacion }}% @if($totalPonderacion == 100)✓@endif
+                                </span>
                             </div>
 
-                            {{-- Lista de criterios --}}
-                            <div style="display: grid; gap: 1rem;">
+                            {{-- Grid de criterios compacto --}}
+                            <div class="criterios-grid">
                                 @foreach($evento->criteriosEvaluacion as $criterio)
-                                    <div style="padding: 1.25rem; background: #FFEEE2; border-radius: 16px; box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;">
-                                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-                                            <h4 style="font-weight: 600; color: #2c2c2c; font-size: 1rem; margin: 0;">
-                                                {{ $criterio->nombre }}
-                                            </h4>
-                                            <span style="padding: 0.25rem 0.75rem; background: linear-gradient(135deg, #e89a3c, #f5b76c); color: white; border-radius: 20px; font-size: 0.75rem; font-weight: 700; box-shadow: 0 2px 6px rgba(232, 154, 60, 0.3);">
-                                                {{ $criterio->ponderacion }}%
-                                            </span>
+                                    <div class="criterio-card">
+                                        <div class="criterio-info">
+                                            <p class="criterio-nombre" title="{{ $criterio->nombre }}">{{ $criterio->nombre }}</p>
+                                            @if($criterio->descripcion)
+                                                <p class="criterio-desc" title="{{ $criterio->descripcion }}">{{ $criterio->descripcion }}</p>
+                                            @endif
                                         </div>
-                                        @if($criterio->descripcion)
-                                            <p style="color: #6b6b6b; font-size: 0.875rem; margin: 0; line-height: 1.5;">
-                                                {{ $criterio->descripcion }}
-                                            </p>
-                                        @endif
+                                        <span class="criterio-peso">{{ $criterio->ponderacion }}%</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -460,7 +624,7 @@
             <div class="flex flex-wrap items-center gap-4">
                 {{-- If student is in a team, show the "Ver Mi Proyecto" button only if the event is "En Progreso" --}}
                 @if($evento->estado === 'En Progreso')
-                    <a href="{{ route('estudiante.proyecto-evento.show') }}"
+                    <a href="{{ route('estudiante.proyecto-evento.especifico', $evento->id_evento) }}"
                        class="action-button-primary inline-flex items-center justify-center px-6 py-3 rounded-md">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Ver Mi Proyecto

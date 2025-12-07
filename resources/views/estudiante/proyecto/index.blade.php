@@ -521,11 +521,22 @@
                                 </div>
                             </div>
 
-                            {{-- Botón Ver Detalles --}}
-                            <a href="{{ route('estudiante.proyecto.show') }}" 
-                               class="btn-view-details">
-                                Ver Proyecto →
-                            </a>
+                            {{-- Botones de Acción --}}
+                            <div class="space-y-3">
+                                <a href="{{ route('estudiante.proyecto.show-specific', $proyecto->id_proyecto) }}"
+                                   class="btn-view-details">
+                                    Ver Proyecto →
+                                </a>
+
+                                @if($esLider)
+                                    <a href="{{ route('estudiante.proyecto.edit-specific', $proyecto->id_proyecto) }}"
+                                       class="btn-view-details"
+                                       style="background: linear-gradient(135deg, #e89a3c, #f5a847); box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);">
+                                        <i class="fas fa-edit mr-2"></i>
+                                        Editar Proyecto
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 @endforeach

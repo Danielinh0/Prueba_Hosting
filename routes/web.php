@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardRedirectController;
 use App\Http\Controllers\Estudiante\MiEquipoController;
 use App\Http\Controllers\Estudiante\MiembroController;
 use App\Http\Controllers\Estudiante\SolicitudController;
+use App\Http\Controllers\Estudiante\EquipoPreviewController;
 use App\Http\Controllers\Estudiante\HabilidadController;
 
 use App\Http\Controllers\Estudiante\RecursoController;
@@ -127,6 +128,7 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::get('/stats', [StatsController::class, 'dashboard'])->name('stats.dashboard');
     Route::get('eventos', [EstudianteEventoController::class, 'index'])->name('eventos.index');
     Route::get('eventos/{evento}', [EstudianteEventoController::class, 'show'])->name('eventos.show');
+    Route::get('eventos/{evento}/posiciones', [EstudianteEventoController::class, 'posiciones'])->name('eventos.posiciones');
 
     // Rutas para Equipos
     Route::get('mi-equipo', MiEquipoController::class)->name('equipo.index');
@@ -148,6 +150,8 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::post('equipos/{equipo}/solicitar', [SolicitudController::class, 'store'])->name('solicitudes.store');
     Route::post('solicitudes/{solicitud}/aceptar', [SolicitudController::class, 'accept'])->name('solicitudes.accept');
     Route::post('solicitudes/{solicitud}/rechazar', [SolicitudController::class, 'reject'])->name('solicitudes.reject');
+    Route::get('equipos/{equipo}/preview', [EquipoPreviewController::class, 'show'])->name('equipos.preview');
+    Route::get('api/equipos/disponibles', [EquipoPreviewController::class, 'getAvailableTeams']);
     
     // Rutas para Habilidades del Estudiante
     Route::get('habilidades', [HabilidadController::class, 'index'])->name('habilidades.index');
@@ -178,21 +182,43 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::post('equipo/proyecto', [App\Http\Controllers\Estudiante\ProyectoController::class, 'store'])->name('proyecto.store');
     Route::get('equipo/proyecto/edit', [App\Http\Controllers\Estudiante\ProyectoController::class, 'edit'])->name('proyecto.edit');
     Route::patch('equipo/proyecto', [App\Http\Controllers\Estudiante\ProyectoController::class, 'update'])->name('proyecto.update');
+
+    //! Rutas para Proyectos Específicos (desde mis-proyectos)
+    Route::get('proyectos/{proyecto}', [App\Http\Controllers\Estudiante\ProyectoController::class, 'showSpecific'])->name('proyecto.show-specific');
+    Route::get('proyectos/{proyecto}/edit', [App\Http\Controllers\Estudiante\ProyectoController::class, 'editSpecific'])->name('proyecto.edit-specific');
+    Route::patch('proyectos/{proyecto}', [App\Http\Controllers\Estudiante\ProyectoController::class, 'updateSpecific'])->name('proyecto.update-specific');
+
+    //! Rutas para Crear Proyecto basado en Evento
+    Route::get('proyecto-evento/{evento}/create', [App\Http\Controllers\Estudiante\ProyectoController::class, 'createFromEvento'])->name('proyecto.create-from-evento');
+    Route::post('proyecto-evento/{evento}/store', [App\Http\Controllers\Estudiante\ProyectoController::class, 'storeFromEvento'])->name('proyecto.store-from-evento');
     
     //! Ruta para ver Proyecto del Evento (asignado por admin)
     Route::get('proyecto-evento', [App\Http\Controllers\Estudiante\ProyectoController::class, 'showProyectoEvento'])->name('proyecto-evento.show');
+    Route::get('proyecto-evento/{evento}', [App\Http\Controllers\Estudiante\ProyectoController::class, 'showProyectoEventoEspecifico'])->name('proyecto-evento.especifico');
     
     // Rutas para Tareas del Proyecto
     Route::get('equipo/proyecto/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'index'])->name('tareas.index');
     Route::post('equipo/proyecto/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'store'])->name('tareas.store');
     Route::patch('tareas/{tarea}/toggle', [App\Http\Controllers\Estudiante\TareaController::class, 'toggle'])->name('tareas.toggle');
     Route::delete('tareas/{tarea}', [App\Http\Controllers\Estudiante\TareaController::class, 'destroy'])->name('tareas.destroy');
-    
+
+    // Rutas para Tareas Específicas de Proyecto
+    Route::get('proyectos/{proyecto}/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'indexSpecific'])->name('tareas.index-specific');
+    Route::post('proyectos/{proyecto}/tareas', [App\Http\Controllers\Estudiante\TareaController::class, 'storeSpecific'])->name('tareas.store-specific');
+    Route::patch('proyectos/tareas/{tarea}/toggle', [App\Http\Controllers\Estudiante\TareaController::class, 'toggle'])->name('proyectos.tareas.toggle');
+    Route::delete('proyectos/tareas/{tarea}', [App\Http\Controllers\Estudiante\TareaController::class, 'destroy'])->name('proyectos.tareas.destroy');
+
     // Rutas para Avances del Proyecto
     Route::get('equipo/proyecto/avances', [App\Http\Controllers\Estudiante\AvanceController::class, 'index'])->name('avances.index');
     Route::get('equipo/proyecto/avances/create', [App\Http\Controllers\Estudiante\AvanceController::class, 'create'])->name('avances.create');
     Route::post('equipo/proyecto/avances', [App\Http\Controllers\Estudiante\AvanceController::class, 'store'])->name('avances.store');
     Route::get('equipo/proyecto/avances/{avance}', [App\Http\Controllers\Estudiante\AvanceController::class, 'show'])->name('avances.show');
+
+    // Rutas para Avances Específicos de Proyecto
+    Route::get('proyectos/{proyecto}/avances', [App\Http\Controllers\Estudiante\AvanceController::class, 'indexSpecific'])->name('avances.index-specific');
+    Route::get('proyectos/{proyecto}/avances/create', [App\Http\Controllers\Estudiante\AvanceController::class, 'createSpecific'])->name('avances.create-specific');
+    Route::post('proyectos/{proyecto}/avances', [App\Http\Controllers\Estudiante\AvanceController::class, 'storeSpecific'])->name('avances.store-specific');
+    Route::get('proyectos/avances/{avance}', [App\Http\Controllers\Estudiante\AvanceController::class, 'showSpecific'])->name('avances.show-specific');
 
     Route::get('constancias', [App\Http\Controllers\Estudiante\ConstanciaController::class, 'index'])->name('constancias.index');
     //Ruta para ver constancias

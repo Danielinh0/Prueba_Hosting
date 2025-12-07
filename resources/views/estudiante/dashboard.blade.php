@@ -637,6 +637,178 @@
             gap: 0.75rem;
         }
     }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #FFEEE2;
+            box-shadow: 8px 8px 16px rgba(230, 213, 201, 0.5);
+        }
+
+        .carousel-track-container {
+            overflow: hidden;
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            width: 100%;
+            flex-shrink: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .carousel-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .carousel-arrow {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c2c2c;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 8px rgba(230, 213, 201, 0.5);
+        }
+
+        .carousel-arrow:hover {
+            color: #e89a3c;
+            box-shadow: 6px 6px 12px rgba(230, 213, 201, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(232, 154, 60, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .carousel-dot.active {
+            background: #e89a3c;
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        .carousel-progress {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 0.75rem;
+            overflow: hidden;
+        }
+
+        .carousel-progress-bar {
+            height: 100%;
+            background: #e89a3c;
+            border-radius: 4px;
+            transition: width 0.1s linear;
+            width: 0%;
+        }
+
+        .team-card {
+            background: #FFEEE2;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 4px 4px 8px rgba(230, 213, 201, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 12px rgba(230, 213, 201, 0.3);
+        }
+
+        .team-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .team-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .team-members {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .member-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #e89a3c, #f5a847);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .member-avatar.more {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+        }
+
+        .team-status {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .team-status.incompleto {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+
+        .team-status.completo {
+            background: rgba(107, 114, 128, 0.1);
+            color: #6b7280;
+        }
 </style>
 
 <div class="student-dashboard py-12">
@@ -661,6 +833,104 @@
                 </div>
             </div>
         </div>
+
+        <!-- Equipos Disponibles Carousel -->
+        <div class="section-header">
+            <h3 class="section-title">
+                <span class="section-title-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </span>
+                Equipos Disponibles
+            </h3>
+            <a href="{{ route('estudiante.eventos.index') }}" class="section-link">
+                Ver todos
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+
+        @php
+            $equiposDisponibles = \App\Models\InscripcionEvento::whereHas('evento', function($q) {
+                $q->where('estado', 'Próximo')
+                  ->orWhere('estado', 'Activo');
+            })
+            ->where('status_registro', 'Incompleto')
+            ->with(['equipo', 'evento', 'miembros.rol'])
+            ->take(6)
+            ->get();
+        @endphp
+
+        @if($equiposDisponibles->count() > 0)
+            <div style="margin-bottom: 2rem;">
+                <div class="carousel-container animate-in delay-3" id="equiposCarousel">
+                    <div class="carousel-track-container">
+                        <div class="carousel-track" id="equiposTrack">
+                            @foreach ($equiposDisponibles as $inscripcion)
+                                <div class="carousel-slide">
+                                    <a href="{{ route('estudiante.equipos.show', $inscripcion->equipo) }}" class="team-card" style="text-decoration: none; color: inherit; display: block;">
+                                        <div class="team-header">
+                                            <div class="team-avatar">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #fff;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="team-info">
+                                                <h4 style="color: #2c2c2c; margin: 0; font-size: 0.95rem;">{{ $inscripcion->equipo->nombre }}</h4>
+                                                <p style="color: #9ca3af; margin: 0; font-size: 0.8rem;">{{ $inscripcion->evento->nombre }}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="team-members">
+                                            @foreach($inscripcion->miembros->take(4) as $miembro)
+                                                <div class="member-avatar" title="{{ $miembro->estudiante->user->nombre ?? 'Miembro' }}">
+                                                    {{ strtoupper(substr($miembro->estudiante->user->nombre ?? 'M', 0, 1)) }}
+                                                </div>
+                                            @endforeach
+                                            @if($inscripcion->miembros->count() > 4)
+                                                <div class="member-avatar more">
+                                                    +{{ $inscripcion->miembros->count() - 4 }}
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="team-status {{ $inscripcion->miembros->count() >= 5 ? 'completo' : 'incompleto' }}">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; margin-right: 0.25rem;">
+                                                @if($inscripcion->miembros->count() >= 5)
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                @else
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                                @endif
+                                            </svg>
+                                            {{ $inscripcion->miembros->count() >= 5 ? 'Equipo Completo' : (5 - $inscripcion->miembros->count()) . ' espacio' . ((5 - $inscripcion->miembros->count()) != 1 ? 's' : '') . ' disponible' }}
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="carousel-nav">
+                        <button class="carousel-arrow prev" onclick="equiposCarousel.prev()">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                        <div class="carousel-dots" id="equiposDots"></div>
+                        <button class="carousel-arrow next" onclick="equiposCarousel.next()">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="carousel-progress">
+                        <div class="carousel-progress-bar" id="equiposProgress"></div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <!-- Main Grid -->
         <div class="dashboard-grid">
@@ -992,4 +1262,93 @@
         </div>
     </div>
 </div>
+
+<script>
+// Carousel functionality for equipos
+class Carousel {
+    constructor(trackId, dotsId, progressBarId) {
+        this.track = document.getElementById(trackId);
+        this.dotsContainer = document.getElementById(dotsId);
+        this.progressBar = document.getElementById(progressBarId);
+        this.currentIndex = 0;
+        this.slides = this.track.querySelectorAll('.carousel-slide');
+        this.totalSlides = this.slides.length;
+
+        this.init();
+    }
+
+    init() {
+        if (this.totalSlides <= 1) return;
+
+        // Create dots
+        this.createDots();
+
+        // Set initial state
+        this.updateCarousel();
+
+        // Auto-play
+        this.startAutoPlay();
+
+        // Pause on hover
+        this.track.addEventListener('mouseenter', () => this.stopAutoPlay());
+        this.track.addEventListener('mouseleave', () => this.startAutoPlay());
+    }
+
+    createDots() {
+        for (let i = 0; i < this.totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot';
+            dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+            dot.onclick = () => this.goToSlide(i);
+            this.dotsContainer.appendChild(dot);
+        }
+    }
+
+    goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+    }
+
+    next() {
+        this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+        this.updateCarousel();
+    }
+
+    prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+        this.updateCarousel();
+    }
+
+    updateCarousel() {
+        // Update position
+        this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+
+        // Update dots
+        const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentIndex);
+        });
+
+        // Update progress bar
+        const progress = ((this.currentIndex + 1) / this.totalSlides) * 100;
+        this.progressBar.style.width = `${progress}%`;
+    }
+
+    startAutoPlay() {
+        this.stopAutoPlay();
+        this.autoPlayInterval = setInterval(() => this.next(), 5000);
+    }
+
+    stopAutoPlay() {
+        if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+        }
+    }
+}
+
+// Initialize carousels
+document.addEventListener('DOMContentLoaded', function() {
+    const equiposCarousel = new Carousel('equiposTrack', 'equiposDots', 'equiposProgress');
+});
+</script>
 @endsection

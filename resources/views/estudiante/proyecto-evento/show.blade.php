@@ -306,8 +306,8 @@
                         
                         @if($esLider)
                         <div class="mt-4">
-                            <a href="{{ route('estudiante.proyecto.create') }}" class="action-button">
-                                 Crear Nuestro Proyecto
+                            <a href="{{ route('estudiante.proyecto.create-from-evento', $inscripcion->evento->id_evento) }}" class="action-button">
+                                 Crear Proyecto para este Evento
                             </a>
                         </div>
                         @endif

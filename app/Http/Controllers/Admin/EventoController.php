@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Evento;
 use App\Models\CriterioEvaluacion;
+use App\Jobs\EventoFinalizadoNotificationJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -233,7 +234,50 @@ class EventoController extends Controller
     {
         $evento->estado = 'Finalizado';
         $evento->save();
-        return redirect()->route('admin.eventos.show', $evento)->with('success', 'El evento ha sido finalizado.');
+
+        // Enviar correos sincrónicamente para entrega inmediata
+        // Solo si hay posiciones asignadas
+        if ($evento->inscripciones()->whereNotNull('puesto_ganador')->exists()) {
+            // Opción 1: Usar Job pero procesarlo inmediatamente
+            EventoFinalizadoNotificationJob::dispatch($evento)->onConnection('sync');
+
+            // Opción 2: Enviar directamente (comentado por ahora)
+            // $this->sendEventFinalizationNotifications($evento);
+        }
+
+        return redirect()->route('admin.eventos.show', $evento)->with('success', 'El evento ha sido finalizado y se han enviado las notificaciones.');
+    }
+
+    /**
+     * Enviar notificaciones de finalización de evento
+     */
+    private function sendEventFinalizationNotifications(Evento $evento)
+    {
+        $inscripciones = $evento->inscripciones()
+            ->with(['equipo', 'miembros.user'])
+            ->whereNotNull('puesto_ganador')
+            ->get();
+
+        foreach ($inscripciones as $inscripcion) {
+            foreach ($inscripcion->miembros as $miembro) {
+                try {
+                    Mail::to($miembro->user->email)->send(
+                        new EventoFinalizadoNotification(
+                            $miembro->user,
+                            $evento,
+                            $inscripcion->equipo->nombre,
+                            $inscripcion->puesto_ganador
+                        )
+                    );
+                } catch (\Exception $e) {
+                    \Log::error('Error al enviar correo de finalización de evento: ' . $e->getMessage(), [
+                        'usuario' => $miembro->user->id_usuario,
+                        'evento' => $evento->id_evento,
+                        'equipo' => $inscripcion->equipo->id_equipo
+                    ]);
+                }
+            }
+        }
     }
 
     public function cerrar(Evento $evento)

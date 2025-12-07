@@ -497,16 +497,17 @@
                 <div class="stat-value">{{ $inscripcion->miembros->count() }}</div>
                 <div class="stat-label">Miembros Actuales</div>
             </div>
-            <div class="stat-card {{ $inscripcion->status_registro === 'Completo' ? 'status-complete' : 'status-looking' }}">
+            <?php $miembrosCount = $inscripcion->miembros->count(); ?>
+            <div class="stat-card {{ $miembrosCount >= 5 ? 'status-complete' : 'status-looking' }}">
                 <div class="stat-value">
-                    @if($inscripcion->status_registro === 'Completo')
+                    @if($miembrosCount >= 5)
                         ✓
                     @else
                         🔍
                     @endif
                 </div>
                 <div class="stat-label">
-                    {{ $inscripcion->status_registro === 'Completo' ? 'Equipo Completo' : 'Buscando Miembros' }}
+                    {{ $miembrosCount >= 5 ? 'Equipo Completo' : (5 - $miembrosCount) . ' espacio' . ((5 - $miembrosCount) != 1 ? 's' : '') . ' disponible' }}
                 </div>
             </div>
             <div class="stat-card">
@@ -585,7 +586,7 @@
                         </h3>
                     </div>
                     
-                    @if ($evento->estado === 'Activo' && $inscripcion->status_registro !== 'Completo')
+                    @if (in_array($evento->estado, ['Activo', 'En Progreso']) && $inscripcion->status_registro !== 'Completo')
                         @if ($miInscripcionDeEquipoId)
                             @if ($miInscripcionDeEquipoId === $inscripcion->equipo->id_equipo)
                                 <div class="alert-box alert-success">
@@ -636,7 +637,7 @@
                                 </p>
                             @endif
                         @endif
-                    @elseif ($inscripcion->status_registro === 'Completo')
+                    @elseif ($inscripcion->miembros->count() >= 5)
                         <div class="alert-box alert-gray">
                             <p class="font-semibold">Equipo completo</p>
                             <p style="font-size: 0.85rem; margin-top: 0.25rem;">No hay espacios disponibles.</p>
@@ -644,7 +645,7 @@
                     @else
                         <div class="alert-box alert-gray">
                             <p class="font-semibold">Inscripciones no disponibles</p>
-                            <p style="font-size: 0.85rem; margin-top: 0.25rem;">El evento aún no está activo.</p>
+                            <p style="font-size: 0.85rem; margin-top: 0.25rem;">El evento no está activo o el equipo está completo.</p>
                         </div>
                     @endif
                 </div>

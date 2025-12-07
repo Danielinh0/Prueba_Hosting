@@ -373,6 +373,122 @@
     height: 18px;
     margin-top: 0;    /* evita que se corte */
     }
+
+    /* Criterios de Evaluación - Diseño Compacto */
+    .criterios-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 0.75rem;
+    }
+
+    .criterio-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+        background: #ffffff;
+        border-radius: 10px;
+        border-left: 3px solid #e89a3c;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        transition: all 0.2s ease;
+    }
+
+    .criterio-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .criterio-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .criterio-nombre {
+        font-weight: 600;
+        color: #1a1a1a;
+        font-size: 0.875rem;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .criterio-desc {
+        color: #6b7280;
+        font-size: 0.75rem;
+        margin: 0.25rem 0 0 0;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .criterio-peso {
+        flex-shrink: 0;
+        margin-left: 0.75rem;
+        padding: 0.25rem 0.625rem;
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+        color: #ffffff;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .ponderacion-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 1rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        margin-bottom: 1rem;
+    }
+
+    .ponderacion-label {
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    .ponderacion-track {
+        flex: 1;
+        height: 6px;
+        background: #e5e7eb;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .ponderacion-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.5s ease;
+    }
+
+    .ponderacion-fill.complete {
+        background: linear-gradient(90deg, #10b981, #34d399);
+    }
+
+    .ponderacion-fill.incomplete {
+        background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    .ponderacion-value {
+        font-weight: 700;
+        font-size: 0.875rem;
+        min-width: 50px;
+        text-align: right;
+    }
+
+    .ponderacion-value.complete {
+        color: #10b981;
+    }
+
+    .ponderacion-value.incomplete {
+        color: #f59e0b;
+    }
 </style>
 
 <div class="evento-detail-page py-12">
@@ -764,43 +880,31 @@
                     </h3>
                     
                     @if($evento->criteriosEvaluacion->isNotEmpty())
-                        <div class="mt-4">
-                            {{-- Barra de progreso de ponderación total --}}
+                        <div class="mt-3">
+                            {{-- Barra de progreso compacta --}}
                             @php $totalPonderacion = $evento->criteriosEvaluacion->sum('ponderacion'); @endphp
-                            <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.5); border-radius: 12px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                    <span style="font-size: 0.875rem; color: #6b6b6b;">Ponderación Total:</span>
-                                    <span style="font-weight: 700; color: {{ $totalPonderacion == 100 ? '#10b981' : '#ef4444' }};">
-                                        {{ $totalPonderacion }}%
-                                        @if($totalPonderacion == 100)
-                                            <svg class="inline w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                        @else
-                                            <svg class="inline w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                        @endif
-                                    </span>
+                            <div class="ponderacion-bar">
+                                <span class="ponderacion-label">Ponderación Total:</span>
+                                <div class="ponderacion-track">
+                                    <div class="ponderacion-fill {{ $totalPonderacion == 100 ? 'complete' : 'incomplete' }}" style="width: {{ min($totalPonderacion, 100) }}%;"></div>
                                 </div>
-                                <div style="width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
-                                    <div style="width: {{ min($totalPonderacion, 100) }}%; height: 100%; background: {{ $totalPonderacion == 100 ? 'linear-gradient(90deg, #10b981, #34d399)' : 'linear-gradient(90deg, #f59e0b, #fbbf24)' }}; border-radius: 4px; transition: width 0.3s ease;"></div>
-                                </div>
+                                <span class="ponderacion-value {{ $totalPonderacion == 100 ? 'complete' : 'incomplete' }}">
+                                    {{ $totalPonderacion }}%
+                                    @if($totalPonderacion == 100)✓@else⚠@endif
+                                </span>
                             </div>
 
-                            {{-- Lista de criterios --}}
-                            <div style="display: grid; gap: 1rem;">
+                            {{-- Grid de criterios compacto --}}
+                            <div class="criterios-grid">
                                 @foreach($evento->criteriosEvaluacion as $criterio)
-                                    <div style="padding: 1.25rem; background: #FFEEE2; border-radius: 16px; box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;">
-                                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-                                            <h4 style="font-weight: 600; color: #2c2c2c; font-size: 1rem; margin: 0;">
-                                                {{ $criterio->nombre }}
-                                            </h4>
-                                            <span style="padding: 0.25rem 0.75rem; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); color: white; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">
-                                                {{ $criterio->ponderacion }}%
-                                            </span>
+                                    <div class="criterio-card">
+                                        <div class="criterio-info">
+                                            <p class="criterio-nombre" title="{{ $criterio->nombre }}">{{ $criterio->nombre }}</p>
+                                            @if($criterio->descripcion)
+                                                <p class="criterio-desc" title="{{ $criterio->descripcion }}">{{ $criterio->descripcion }}</p>
+                                            @endif
                                         </div>
-                                        @if($criterio->descripcion)
-                                            <p style="color: #6b6b6b; font-size: 0.875rem; margin: 0; line-height: 1.5;">
-                                                {{ $criterio->descripcion }}
-                                            </p>
-                                        @endif
+                                        <span class="criterio-peso">{{ $criterio->ponderacion }}%</span>
                                     </div>
                                 @endforeach
                             </div>

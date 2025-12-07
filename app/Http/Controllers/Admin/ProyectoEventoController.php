@@ -8,6 +8,8 @@ use App\Models\ProyectoEvento;
 use App\Models\InscripcionEvento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use App\Services\EmailNotificacionService;
 
 class ProyectoEventoController extends Controller
 {
@@ -240,7 +242,7 @@ class ProyectoEventoController extends Controller
         }
 
         // Usar updateOrCreate para evitar error de llave duplicada
-        ProyectoEvento::updateOrCreate(
+        $proyecto = ProyectoEvento::updateOrCreate(
             [
                 'id_evento' => $evento->id_evento,
                 'id_inscripcion' => $inscripcion->id_inscripcion
@@ -248,7 +250,36 @@ class ProyectoEventoController extends Controller
             $data
         );
 
+        // Enviar email al líder del equipo (solo si es un proyecto nuevo)
+        if ($proyecto->wasRecentlyCreated) {
+            Log::info("Enviando email de proyecto asignado al líder del equipo");
+
+            // Buscar al líder del equipo
+            $lider = $inscripcion->equipo->miembros()
+                ->where('es_lider', true)
+                ->with('user')
+                ->first();
+
+            if ($lider && $lider->user) {
+                Log::info("Líder encontrado: " . $lider->user->nombre);
+
+                $emailService = new EmailNotificacionService();
+                $emailService->notificarProyectoAsignado(
+                    $lider->user->id_usuario,
+                    [
+                        'nombre_equipo' => $inscripcion->equipo->nombre,
+                        'nombre_evento' => $evento->nombre,
+                        'nombre_proyecto' => $request->titulo,
+                        'descripcion' => $request->descripcion_completa ?? 'Sin descripción',
+                        'objetivo' => $request->objetivo ?? 'Sin objetivo específico'
+                    ]
+                );
+            } else {
+                Log::warning("No se encontró líder para el equipo " . $inscripcion->equipo->nombre);
+            }
+        }
+
         return redirect()->route('admin.proyectos-evento.asignar', $evento)
-            ->with('success', 'Proyecto asignado exitosamente.');
+            ->with('success', 'Proyecto asignado exitosamente' . ($proyecto->wasRecentlyCreated ? '. Email enviado al líder del equipo.' : '.'));
     }
 }

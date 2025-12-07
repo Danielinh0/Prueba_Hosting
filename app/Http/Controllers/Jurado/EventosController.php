@@ -8,6 +8,7 @@ use App\Models\Evento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Avance;
+use App\Services\EmailNotificacionService;
 
 class EventosController extends Controller
 {
@@ -204,8 +205,28 @@ public function calificar_avance(Evento $evento, Equipo $equipo, Avance $avance)
             ]
         );
 
-        $mensaje = $evaluacion->wasRecentlyCreated 
-            ? 'Avance calificado exitosamente.' 
+        // Enviar email de notificación (solo si es nueva evaluación)
+        if ($evaluacion->wasRecentlyCreated) {
+            $emailService = new EmailNotificacionService();
+
+            // Obtener el equipo para encontrar al líder
+            $equipoConLider = $equipo->load('miembros.user');
+            $lider = $equipoConLider->miembros->where('es_lider', true)->first();
+
+            if ($lider && $lider->user) {
+                $emailService->notificarAvanceCalificado(
+                    $lider->user->id_usuario,
+                    [
+                        'nombre' => $avance->proyecto->nombre ?? 'Proyecto del equipo ' . $equipo->nombre,
+                        'nombre_jurado' => Auth::user()->nombre,
+                        'comentarios' => $request->comentarios ?: 'Tu avance ha sido revisado y calificado por el jurado.'
+                    ]
+                );
+            }
+        }
+
+        $mensaje = $evaluacion->wasRecentlyCreated
+            ? 'Avance calificado exitosamente.' . ($evaluacion->wasRecentlyCreated ? ' (Email enviado al estudiante)' : '')
             : 'Calificación actualizada exitosamente.';
 
         return redirect()->route('jurado.eventos.equipo_evento', [$evento, $equipo])

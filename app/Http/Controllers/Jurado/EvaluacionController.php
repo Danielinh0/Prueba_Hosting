@@ -9,6 +9,8 @@ use App\Models\InscripcionEvento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Services\EmailNotificacionService;
 
 class EvaluacionController extends Controller
 {
@@ -109,9 +111,43 @@ class EvaluacionController extends Controller
                 
                 if ($evaluacion->estaCompleta()) {
                     $evaluacion->finalizar();
+
+                    // Enviar email al estudiante
+                    Log::info("=== INICIANDO ENVÍO EMAIL EVALUACIÓN FINAL ===");
+                    Log::info("ID Líder del equipo: " . $inscripcion->equipo->id_lider);
+
+                    // Cargar el líder del equipo con su usuario
+                    $lider = $inscripcion->equipo->miembros()->where('es_lider', true)->with('user')->first();
+
+                    if ($lider && $lider->user) {
+                        Log::info("Líder encontrado: " . $lider->user->nombre);
+                        Log::info("Email del líder: " . $lider->user->email);
+
+                        $emailService = new EmailNotificacionService();
+                        $proyecto = $inscripcion->proyecto;
+
+                        $resultado = $emailService->notificarCalificacionFinal(
+                            $lider->user->id_usuario,
+                            [
+                                'nombre' => $proyecto->nombre ?? 'Proyecto sin nombre',
+                                'nombre_jurado' => Auth::user()->nombre,
+                                'comentarios' => 'Tu proyecto ha sido evaluado. Revisa el sistema para más detalles.'
+                            ],
+                            $evaluacion->calificacion_final
+                        );
+
+                        if ($resultado) {
+                            Log::info("✅ Email de evaluación final enviado a " . $lider->user->email);
+                        } else {
+                            Log::error("❌ Falló envío de email de evaluación final");
+                        }
+                    } else {
+                        Log::error("❌ No se encontró líder o el líder no tiene usuario");
+                    }
+
                     DB::commit();
                     return redirect()->route('jurado.evaluaciones.show', $evaluacion)
-                        ->with('success', '¡Evaluación finalizada exitosamente! Calificación final: ' . $evaluacion->calificacion_final);
+                        ->with('success', '¡Evaluación finalizada exitosamente! Calificación final: ' . $evaluacion->calificacion_final . ' (Email enviado al estudiante)');
                 } else {
                     DB::commit();
                     return redirect()->route('jurado.evaluaciones.create', $inscripcion)

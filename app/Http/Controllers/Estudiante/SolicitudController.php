@@ -10,6 +10,8 @@ use App\Models\InscripcionEvento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Services\EmailNotificacionService;
 
 class SolicitudController extends Controller
 {
@@ -74,6 +76,23 @@ class SolicitudController extends Controller
                     'status' => 'pendiente',
                 ]
             );
+
+            // Enviar email al líder del equipo
+            $lider = $equipo->miembros()->where('es_lider', true)->with('user')->first();
+
+            if ($lider && $lider->user) {
+                Log::info("Enviando email de solicitud al líder: " . $lider->user->nombre);
+
+                $emailService = new EmailNotificacionService();
+                $emailService->notificarSolicitudEquipo(
+                    $lider->user->id_usuario,
+                    [
+                        'nombre_estudiante' => $user->nombre,
+                        'nombre_equipo' => $equipo->nombre,
+                        'nombre_evento' => $evento->nombre
+                    ]
+                );
+            }
 
             return back()->with('success', '¡Solicitud para unirte al equipo "' . $equipo->nombre . '" enviada exitosamente!');
         } catch (\Exception $e) {
@@ -166,6 +185,29 @@ class SolicitudController extends Controller
         }
 
         $solicitud->update(['status' => 'rechazada']);
+
+        // Enviar email de notificación al estudiante
+        try {
+            $emailService = new EmailNotificacionService();
+
+            // Obtener la inscripción para el evento
+            $inscripcion = $equipo->inscripciones()->first();
+
+            if ($inscripcion) {
+                Log::info("Enviando email de rechazo al estudiante");
+
+                $emailService->notificarSolicitudRechazada(
+                    $solicitud->estudiante_id,
+                    [
+                        'nombre_equipo' => $equipo->nombre,
+                        'nombre_evento' => $inscripcion->evento->nombre,
+                        'nombre_lider' => $user->nombre
+                    ]
+                );
+            }
+        } catch (\Exception $e) {
+            Log::error("Error al enviar email de rechazo: " . $e->getMessage());
+        }
 
         return back()->with('success', 'Solicitud rechazada correctamente.');
     }
