@@ -84,19 +84,19 @@
     }
     
     .stat-blue {
-        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
     }
     
     .stat-purple {
-        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        background: linear-gradient(135deg, #a855f7, #7c3aed) !important;
     }
     
     .stat-green {
-        background: linear-gradient(135deg, #10b981, #059669);
+        background: linear-gradient(135deg, #10b981, #059669) !important;
     }
     
     .stat-orange {
-        background: linear-gradient(135deg, #f59e0b, #d97706);
+        background: linear-gradient(135deg, #f59e0b, #d97706) !important;
     }
     
     /* Quick action cards */

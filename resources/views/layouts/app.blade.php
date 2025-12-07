@@ -12,7 +12,29 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css','resources/css/admin/dashboard.css','resources/css/admin/', 'resources/css/navigation.css','resources/js/app.js'])
+        @vite([
+            'resources/css/app.css',
+            'resources/css/admin/dashboard.css',
+            'resources/css/admin/users/index.css',
+            'resources/css/admin/users/edit.css',
+            'resources/css/admin/proyectos-evaluaciones/index.css',
+            'resources/css/admin/proyectos-evaluaciones/show.css',
+            'resources/css/admin/proyectos-evento/edit.css',
+            'resources/css/admin/proyectos-evento/asignar.css',
+            'resources/css/admin/proyectos-evento/create-individual.css',
+            'resources/css/admin/proyectos-evento/create.css',
+            'resources/css/admin/eventos/index.css',
+            'resources/css/admin/eventos/show.css',
+            'resources/css/admin/eventos/asignar-jurados.css',
+            'resources/css/admin/eventos/create.css',
+            'resources/css/admin/eventos/edit.css',
+            'resources/css/admin/eventos/resultados.css',
+            'resources/css/admin/equipos/index.css',
+            'resources/css/admin/equipos/show.css',
+            'resources/css/admin/equipos/edit.css',
+            'resources/css/admin/equipos/create.css',
+            'resources/css/navigation.css',
+            'resources/js/app.js'])
 
         <!-- Alpine.js -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>

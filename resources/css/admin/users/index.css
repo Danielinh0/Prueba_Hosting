@@ -1,0 +1,287 @@
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    /* Fondo degradado */
+    .users-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Textos */
+    .users-page h2,
+    .users-page h3 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+        border-radius: 25px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.3), -6px -6px 12px rgba(60, 60, 60, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -30%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.15) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-title {
+        color: #ffffff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+    }
+    
+    .users-page p,
+    .users-page td,
+    .users-page th {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Counter cards */
+    .counter-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        transition: all 0.3s ease;
+    }
+    
+    .counter-card:hover {
+        box-shadow: 10px 10px 20px #e6d5c9, -10px -10px 20px #ffffff;
+        transform: translateY(-3px);
+    }
+    
+    .counter-card h3 {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .counter-card p {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-size: 1.875rem;
+        font-weight: 600;
+        margin-top: 0.25rem;
+    }
+    
+    /* Filter card */
+    .filter-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+    }
+    
+    /* Inputs y selects */
+    .neuro-input,
+    .neuro-select {
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(10px);
+        color: #2c2c2c;
+    }
+    
+    .neuro-input::placeholder {
+        color: #9ca3af;
+    }
+    
+    .neuro-input:focus,
+    .neuro-select:focus {
+        outline: none;
+        box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
+    }
+    
+    /* Buttons */
+    .neuro-button-primary {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .neuro-button-primary:hover {
+        box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .neuro-button-secondary {
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.5);
+        color: #2c2c2c;
+        font-weight: 500;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.3s ease;
+        border: none;
+        backdrop-filter: blur(10px);
+    }
+    
+    .neuro-button-secondary:hover {
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    /* Table container */
+    .table-container {
+        background: #FFEEE2;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+    }
+    
+    /* Table */
+    .neuro-table {
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .neuro-table thead {
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(5px);
+    }
+    
+    .neuro-table thead th {
+        padding: 0.75rem 1.5rem;
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #2c2c2c;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .neuro-table tbody {
+        background: transparent;
+    }
+    
+    .neuro-table tbody tr {
+        border-bottom: 1px solid rgba(107, 107, 107, 0.1);
+        transition: all 0.2s ease;
+    }
+    
+    .neuro-table tbody tr:hover {
+        background: rgba(232, 154, 60, 0.05);
+    }
+    
+    .neuro-table tbody tr:last-child {
+        border-bottom: none;
+    }
+    
+    .neuro-table tbody td {
+        padding: 1rem 1.5rem;
+        color: #2c2c2c;
+        font-size: 0.875rem;
+    }
+    
+    .user-name {
+        font-weight: 600;
+        color: #2c2c2c;
+    }
+    
+    .user-email {
+        color: #6b6b6b;
+    }
+    
+    /* Role badges */
+    .role-badge {
+        font-family: 'Poppins', sans-serif;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .role-admin {
+        background: rgba(254, 202, 202, 0.8);
+        color: #991b1b;
+    }
+    
+    .role-jurado {
+        background: rgba(254, 240, 138, 0.8);
+        color: #854d0e;
+    }
+    
+    .role-estudiante {
+        background: rgba(191, 219, 254, 0.8);
+        color: #1e40af;
+    }
+    
+    /* Edit link */
+    .edit-link {
+        font-family: 'Poppins', sans-serif;
+        color: #e89a3c;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    
+    .edit-link:hover {
+        color: #d98a2c;
+    }
+    
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 2rem;
+        color: #6b6b6b;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Pagination container */
+    .pagination-container {
+        padding: 1rem 1.5rem;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(5px);
+    }

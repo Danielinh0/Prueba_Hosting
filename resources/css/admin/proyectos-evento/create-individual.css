@@ -1,0 +1,193 @@
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    /* Fondo degradado */
+    .proyecto-individual-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Textos */
+    .proyecto-individual-page h2,
+    .proyecto-individual-page h3 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+    }
+    
+    .proyecto-individual-page p,
+    .proyecto-individual-page label {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+    }
+    
+    /* Back link */
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Info box equipo */
+    .equipo-info-box {
+        background: linear-gradient(135deg, rgba(224, 231, 255, 0.5), rgba(237, 233, 254, 0.5));
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-top: 1rem;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        backdrop-filter: blur(10px);
+    }
+    
+    .equipo-info-box h3 {
+        font-family: 'Poppins', sans-serif;
+        color: #312e81;
+        font-weight: 600;
+    }
+    
+    .equipo-info-box p {
+        font-family: 'Poppins', sans-serif;
+        color: #4338ca;
+        font-size: 0.875rem;
+    }
+    
+    .equipo-info-box .codigo-label {
+        font-size: 0.875rem;
+        color: #4f46e5;
+    }
+    
+    .equipo-info-box .codigo-value {
+        font-family: 'Courier New', monospace;
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #312e81;
+    }
+    
+    /* Main card */
+    .main-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        padding: 2rem;
+    }
+    
+    /* Labels */
+    .form-label {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .required-asterisk {
+        color: #ef4444;
+    }
+    
+    /* Inputs y textareas */
+    .neuro-input,
+    .neuro-textarea,
+    .neuro-file {
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(10px);
+        color: #2c2c2c;
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+    }
+    
+    .neuro-input::placeholder,
+    .neuro-textarea::placeholder {
+        color: #9ca3af;
+    }
+    
+    .neuro-input:focus,
+    .neuro-textarea:focus,
+    .neuro-file:focus {
+        outline: none;
+        box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
+    }
+    
+    /* Helper text */
+    .helper-text {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+    }
+    
+    /* Error messages */
+    .error-message {
+        font-family: 'Poppins', sans-serif;
+        color: #dc2626;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+    
+    /* Divider */
+    .section-divider {
+        border-top: 1px solid rgba(232, 154, 60, 0.2);
+        margin: 2rem 0;
+    }
+    
+    /* Buttons */
+    .button-secondary {
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.5);
+        color: #2c2c2c;
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.3s ease;
+        border: none;
+        backdrop-filter: blur(10px);
+    }
+    
+    .button-secondary:hover {
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .button-primary {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .button-primary:hover {
+        box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
+        transform: translateY(-2px);
+    }
