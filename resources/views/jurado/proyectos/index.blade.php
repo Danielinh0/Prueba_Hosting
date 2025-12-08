@@ -1,6 +1,102 @@
 @extends('jurado.layouts.app')
 
 @section('content')
+
+<div class="proyectos-page">
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Botón Volver al Dashboard -->
+        <a href="{{ route('jurado.dashboard') }}" class="inline-flex items-center mb-4 px-4 py-2 rounded-lg font-semibold text-sm" style="background: linear-gradient(135deg, #e89a3c, #f5a847); color: white; box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            Volver al Dashboard
+        </a>
+        
+        <div class="page-header">
+            <h1 class="page-title">Proyectos de Eventos</h1>
+            <p style="color: #6b7280; margin-top: 0.5rem;">Revisa los proyectos de los eventos en los que participas como jurado</p>
+        </div>
+
+        @if($eventosEnProgreso->isEmpty())
+            <div class="empty-state">
+                <div class="empty-state-icon">📋</div>
+                <h3 style="color: #4b5563; margin-bottom: 0.5rem;">No hay eventos en progreso</h3>
+                <p>Los eventos aparecerán aquí cuando estén activos y tengan proyectos publicados.</p>
+            </div>
+        @else
+            @foreach($eventosEnProgreso as $evento)
+                <div class="event-card">
+                    <div class="event-header">
+                        <div>
+                            <h2 class="event-name">{{ $evento->nombre }}</h2>
+                            <span class="event-badge">En Progreso</span>
+                        </div>
+                    </div>
+
+                    <div class="event-info">
+                        <div class="info-item">
+                            <span class="info-label">Fecha:</span><br>
+                            {{ $evento->fecha_inicio->format('d/m/Y') }} - {{ $evento->fecha_fin->format('d/m/Y') }}
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Equipos:</span><br>
+                            {{ $evento->inscripciones_count }} inscritos
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Tipo:</span><br>
+                            <span class="project-type-badge {{ $evento->tipo_proyecto === 'general' ? 'type-general' : 'type-individual' }}">
+                                {{ $evento->tipo_proyecto === 'general' ? '📋 Proyecto General' : '📁 Proyectos Individuales' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    @if($evento->tipo_proyecto === 'general')
+                        {{-- Proyecto General --}}
+                        @if($evento->proyectoGeneral)
+                            <div class="project-list">
+                                <div class="project-item">
+                                    <div>
+                                        <div class="project-title">{{ $evento->proyectoGeneral->titulo }}</div>
+                                        <div class="project-team">Todos los equipos trabajan en este proyecto</div>
+                                    </div>
+                                    <a href="{{ route('jurado.proyectos.show', $evento->proyectoGeneral) }}" class="btn-view">
+                                        Ver Proyecto →
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        {{-- Proyectos Individuales --}}
+                        <div class="project-list">
+                            <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.75rem;">
+                                <strong>{{ $evento->proyectosEventoIndividuales->count() }}</strong> proyectos asignados
+                            </p>
+                            
+                            @foreach($evento->proyectosEventoIndividuales->take(3) as $proyecto)
+                                <div class="project-item">
+                                    <div>
+                                        <div class="project-title">{{ $proyecto->titulo }}</div>
+                                        <div class="project-team">Equipo: {{ $proyecto->inscripcion->equipo->nombre }}</div>
+                                    </div>
+                                    <a href="{{ route('jurado.proyectos.show', $proyecto) }}" class="btn-view">
+                                        Ver →
+                                    </a>
+                                </div>
+                            @endforeach
+
+                            @if($evento->proyectosEventoIndividuales->count() > 3)
+                                <div style="text-align: center; margin-top: 1rem;">
+                                    <a href="{{ route('jurado.proyectos.evento', $evento) }}" class="btn-view">
+                                        Ver todos los proyectos ({{ $evento->proyectosEventoIndividuales->count() }})
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+        @endif
+    </div>
+</div>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
@@ -145,99 +241,4 @@
         margin-bottom: 1rem;
     }
 </style>
-
-<div class="proyectos-page">
-    <div class="max-w-7xl mx-auto px-4">
-        <!-- Botón Volver al Dashboard -->
-        <a href="{{ route('jurado.dashboard') }}" class="inline-flex items-center mb-4 px-4 py-2 rounded-lg font-semibold text-sm" style="background: linear-gradient(135deg, #e89a3c, #f5a847); color: white; box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            Volver al Dashboard
-        </a>
-        
-        <div class="page-header">
-            <h1 class="page-title">Proyectos de Eventos</h1>
-            <p style="color: #6b7280; margin-top: 0.5rem;">Revisa los proyectos de los eventos en los que participas como jurado</p>
-        </div>
-
-        @if($eventosEnProgreso->isEmpty())
-            <div class="empty-state">
-                <div class="empty-state-icon">📋</div>
-                <h3 style="color: #4b5563; margin-bottom: 0.5rem;">No hay eventos en progreso</h3>
-                <p>Los eventos aparecerán aquí cuando estén activos y tengan proyectos publicados.</p>
-            </div>
-        @else
-            @foreach($eventosEnProgreso as $evento)
-                <div class="event-card">
-                    <div class="event-header">
-                        <div>
-                            <h2 class="event-name">{{ $evento->nombre }}</h2>
-                            <span class="event-badge">En Progreso</span>
-                        </div>
-                    </div>
-
-                    <div class="event-info">
-                        <div class="info-item">
-                            <span class="info-label">Fecha:</span><br>
-                            {{ $evento->fecha_inicio->format('d/m/Y') }} - {{ $evento->fecha_fin->format('d/m/Y') }}
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Equipos:</span><br>
-                            {{ $evento->inscripciones_count }} inscritos
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Tipo:</span><br>
-                            <span class="project-type-badge {{ $evento->tipo_proyecto === 'general' ? 'type-general' : 'type-individual' }}">
-                                {{ $evento->tipo_proyecto === 'general' ? '📋 Proyecto General' : '📁 Proyectos Individuales' }}
-                            </span>
-                        </div>
-                    </div>
-
-                    @if($evento->tipo_proyecto === 'general')
-                        {{-- Proyecto General --}}
-                        @if($evento->proyectoGeneral)
-                            <div class="project-list">
-                                <div class="project-item">
-                                    <div>
-                                        <div class="project-title">{{ $evento->proyectoGeneral->titulo }}</div>
-                                        <div class="project-team">Todos los equipos trabajan en este proyecto</div>
-                                    </div>
-                                    <a href="{{ route('jurado.proyectos.show', $evento->proyectoGeneral) }}" class="btn-view">
-                                        Ver Proyecto →
-                                    </a>
-                                </div>
-                            </div>
-                        @endif
-                    @else
-                        {{-- Proyectos Individuales --}}
-                        <div class="project-list">
-                            <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.75rem;">
-                                <strong>{{ $evento->proyectosEventoIndividuales->count() }}</strong> proyectos asignados
-                            </p>
-                            
-                            @foreach($evento->proyectosEventoIndividuales->take(3) as $proyecto)
-                                <div class="project-item">
-                                    <div>
-                                        <div class="project-title">{{ $proyecto->titulo }}</div>
-                                        <div class="project-team">Equipo: {{ $proyecto->inscripcion->equipo->nombre }}</div>
-                                    </div>
-                                    <a href="{{ route('jurado.proyectos.show', $proyecto) }}" class="btn-view">
-                                        Ver →
-                                    </a>
-                                </div>
-                            @endforeach
-
-                            @if($evento->proyectosEventoIndividuales->count() > 3)
-                                <div style="text-align: center; margin-top: 1rem;">
-                                    <a href="{{ route('jurado.proyectos.evento', $evento) }}" class="btn-view">
-                                        Ver todos los proyectos ({{ $evento->proyectosEventoIndividuales->count() }})
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-            @endforeach
-        @endif
-    </div>
-</div>
 @endsection

@@ -1,6 +1,173 @@
 @extends('jurado.layouts.app')
 
 @section('content')
+
+<div class="eventos-page">
+    <div class="max-w-7xl mx-auto space-y-8">
+        <!-- Botón volver al dashboard -->
+        <a href="{{ route('dashboard') }}" class="back-link">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Volver al Dashboard
+        </a>
+        
+        <h1 class="eventos-page-title">Eventos Disponibles</h1>
+
+        @if (session('info'))
+            <div class="info-alert" role="alert">
+                <p>{{ session('info') }}</p>
+            </div>
+        @endif
+
+        <!-- Sección Mis Eventos Asignados -->
+        <div>
+            <div class="section-header">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                </svg>
+                <h3>Mis Eventos Asignados</h3>
+            </div>
+            @if($misEventosInscritos->isNotEmpty())
+                <div class="eventos-grid">
+                    @foreach ($misEventosInscritos as $evento)
+                        <div class="evento-card">
+                            <div class="asignado-badge">
+                                ✓ Asignado
+                            </div>
+                            <a href="{{ route('jurado.eventos.show', $evento) }}">
+                                @if($evento->ruta_imagen)
+                                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
+                                @else
+                                    <div style="height: 200px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
+                                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </a>
+                            <div class="p-6">
+                                <div class="card-header-info">
+                                    <h4>{{ $evento->nombre }}</h4>
+                                    <span class="status-badge 
+                                        @if ($evento->estado == 'Activo') status-activo @else status-default @endif">
+                                        {{ $evento->estado }}
+                                    </span>
+                                </div>
+                                <p style="margin-top: 0.5rem;">
+                                    <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; color: #e89a3c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    Finaliza: {{ $evento->fecha_fin->format('d M, Y') }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="empty-state">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                    </svg>
+                    <p>Aún no tienes eventos asignados.</p>
+                </div>
+            @endif
+        </div>
+
+        <!-- Sección Eventos Activos Disponibles -->
+        <div>
+            <div class="section-header">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <h3>Eventos Activos Disponibles</h3>
+            </div>
+            @if($eventosActivos->isNotEmpty())
+                <div class="eventos-grid">
+                    @foreach ($eventosActivos as $evento)
+                        <div class="evento-card">
+                            <a href="{{ route('jurado.eventos.show', $evento) }}">
+                                @if($evento->ruta_imagen)
+                                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
+                                @else
+                                    <div style="height: 200px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
+                                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </a>
+                            <div class="p-6">
+                                <h4>{{ $evento->nombre }}</h4>
+                                <p style="margin-top: 0.5rem;">
+                                    <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; color: #e89a3c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    Finaliza: {{ $evento->fecha_fin->format('d M, Y') }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="empty-state">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <p>No hay otros eventos activos en este momento.</p>
+                </div>
+            @endif
+        </div>
+
+        <!-- Sección Próximos Eventos -->
+        <div>
+            <div class="section-header">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <h3>Próximos Eventos</h3>
+            </div>
+            @if($eventosProximos->isNotEmpty())
+                <div class="eventos-grid">
+                    @foreach ($eventosProximos as $evento)
+                        <div class="evento-card">
+                            <a href="{{ route('jurado.eventos.show', $evento) }}">
+                                @if($evento->ruta_imagen)
+                                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
+                                @else
+                                    <div style="height: 200px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
+                                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </a>
+                            <div class="p-6">
+                                <h4>{{ $evento->nombre }}</h4>
+                                <p style="margin-top: 0.5rem;">
+                                    <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; color: #e89a3c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    Inicia: {{ $evento->fecha_inicio->format('d M, Y') }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="empty-state">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <p>No hay eventos próximos anunciados.</p>
+                </div>
+            @endif
+        </div>
+
+    </div>
+</div>
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
@@ -239,169 +406,4 @@
         }
     }
 </style>
-
-<div class="eventos-page">
-    <div class="max-w-7xl mx-auto space-y-8">
-        <!-- Botón volver al dashboard -->
-        <a href="{{ route('dashboard') }}" class="back-link">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            Volver al Dashboard
-        </a>
-        
-        <h1 class="eventos-page-title">Eventos Disponibles</h1>
-
-        @if (session('info'))
-            <div class="info-alert" role="alert">
-                <p>{{ session('info') }}</p>
-            </div>
-        @endif
-
-        <!-- Sección Mis Eventos Asignados -->
-        <div>
-            <div class="section-header">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                </svg>
-                <h3>Mis Eventos Asignados</h3>
-            </div>
-            @if($misEventosInscritos->isNotEmpty())
-                <div class="eventos-grid">
-                    @foreach ($misEventosInscritos as $evento)
-                        <div class="evento-card">
-                            <div class="asignado-badge">
-                                ✓ Asignado
-                            </div>
-                            <a href="{{ route('jurado.eventos.show', $evento) }}">
-                                @if($evento->ruta_imagen)
-                                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
-                                @else
-                                    <div style="height: 200px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
-                                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                @endif
-                            </a>
-                            <div class="p-6">
-                                <div class="card-header-info">
-                                    <h4>{{ $evento->nombre }}</h4>
-                                    <span class="status-badge 
-                                        @if ($evento->estado == 'Activo') status-activo @else status-default @endif">
-                                        {{ $evento->estado }}
-                                    </span>
-                                </div>
-                                <p style="margin-top: 0.5rem;">
-                                    <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; color: #e89a3c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                    Finaliza: {{ $evento->fecha_fin->format('d M, Y') }}
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="empty-state">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                    </svg>
-                    <p>Aún no tienes eventos asignados.</p>
-                </div>
-            @endif
-        </div>
-
-        <!-- Sección Eventos Activos Disponibles -->
-        <div>
-            <div class="section-header">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-                <h3>Eventos Activos Disponibles</h3>
-            </div>
-            @if($eventosActivos->isNotEmpty())
-                <div class="eventos-grid">
-                    @foreach ($eventosActivos as $evento)
-                        <div class="evento-card">
-                            <a href="{{ route('jurado.eventos.show', $evento) }}">
-                                @if($evento->ruta_imagen)
-                                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
-                                @else
-                                    <div style="height: 200px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
-                                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                @endif
-                            </a>
-                            <div class="p-6">
-                                <h4>{{ $evento->nombre }}</h4>
-                                <p style="margin-top: 0.5rem;">
-                                    <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; color: #e89a3c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                    Finaliza: {{ $evento->fecha_fin->format('d M, Y') }}
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="empty-state">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
-                    <p>No hay otros eventos activos en este momento.</p>
-                </div>
-            @endif
-        </div>
-
-        <!-- Sección Próximos Eventos -->
-        <div>
-            <div class="section-header">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
-                <h3>Próximos Eventos</h3>
-            </div>
-            @if($eventosProximos->isNotEmpty())
-                <div class="eventos-grid">
-                    @foreach ($eventosProximos as $evento)
-                        <div class="evento-card">
-                            <a href="{{ route('jurado.eventos.show', $evento) }}">
-                                @if($evento->ruta_imagen)
-                                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="Imagen del evento">
-                                @else
-                                    <div style="height: 200px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
-                                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                @endif
-                            </a>
-                            <div class="p-6">
-                                <h4>{{ $evento->nombre }}</h4>
-                                <p style="margin-top: 0.5rem;">
-                                    <svg style="width: 1rem; height: 1rem; display: inline; vertical-align: middle; color: #e89a3c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                    Inicia: {{ $evento->fecha_inicio->format('d M, Y') }}
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="empty-state">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <p>No hay eventos próximos anunciados.</p>
-                </div>
-            @endif
-        </div>
-
-    </div>
-</div>
 @endsection
