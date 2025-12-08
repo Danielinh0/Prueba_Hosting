@@ -13,6 +13,12 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <!-- Custom Styles Stack -->
+        @stack('styles')
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen" style="background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);">
@@ -68,5 +74,8 @@
                 }
             });
         </script>
+        
+        <!-- Custom Scripts Stack -->
+        @stack('scripts')
     </body>
 </html>
