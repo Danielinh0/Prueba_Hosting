@@ -46,7 +46,7 @@
             'resources/css/estudiante/proyecto/index.css',
             'resources/css/estudiante/proyecto/form.css',
             'resources/css/estudiante/proyecto/edit-specific.css',
-            'resources/css/estudiante/proyecto/create-from-evento.css',
+            'resources/css/estudiante/proyecto/create-form-evento.css',
             'resources/css/estudiante/proyecto/avances/create.css',
             'resources/css/estudiante/proyecto/avances/index.css',
             'resources/css/estudiante/eventos/show.css',
