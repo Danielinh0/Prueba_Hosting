@@ -27,11 +27,6 @@
             <div class="constancia-card-ctsi">
                 <div class="constancia-card-header-ctsi">
                     <h3 class="constancia-card-title-ctsi">{{ $evento->nombre }}</h3>
-                    @if($evento->estado == 'Finalizado')
-                        <span class="constancia-badge-ctsi">Disponible</span>
-                    @else
-                        <span class="constancia-badge-ctsi" style="background: rgba(255,255,255,0.1);">En proceso</span>
-                    @endif
                 </div>
                 <div class="constancia-card-body-ctsi">
                     <p class="constancia-card-description-ctsi">
