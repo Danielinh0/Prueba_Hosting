@@ -10,13 +10,9 @@
     .tokens-page {
         background: linear-gradient(135deg, #ffffff 0%, #f9fafb 25%, #ffffff 100%);
         min-height: 100vh;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         position: relative;
         overflow-x: hidden;
-    }
-
-    .tokens-page * {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
     .tokens-page::before {

@@ -927,8 +927,8 @@
 <div class="token-page py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         
-        <a href="{{ route('admin.dashboard') }}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        <a href="{{ route('admin.jurado-tokens.index') }}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver a Tokens
         </a>
 
         <!-- Hero Header -->
