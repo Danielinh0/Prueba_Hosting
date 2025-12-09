@@ -39,6 +39,8 @@
                         PROYECTOS Y EVALUACIONES
                     @elseif(request()->routeIs('admin.jurado-tokens.*'))
                         RECLUTAMIENTO
+                    @elseif(request()->routeIs('admin.reportes.*'))
+                        REPORTES
                     @elseif(request()->routeIs('profile.*'))
                         PERFIL
                     @elseif(request()->routeIs('estudiante.constancias.*'))
@@ -69,15 +71,15 @@
                     <x-slot name="content">
                         <div class="dropdown-menu-neuro">
                             <x-dropdown-link :href="route('profile.edit')" class="dropdown-item-neuro">
-                                {{ __('Profile') }}
+                                Perfil
                             </x-dropdown-link>
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
-                                        onclick="event.preventDefault(); this.closest('form').submit();" 
+                                        onclick="event.preventDefault(); this.closest('form').submit();"
                                         class="dropdown-item-neuro">
-                                    {{ __('Log Out') }}
+                                    Cerrar Sesión
                                 </x-dropdown-link>
                             </form>
                         </div>
@@ -164,6 +166,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
                     </svg>
                     Reclutamiento
+                </a>
+
+                <a href="{{ route('admin.reportes.index') }}" class="menu-item {{ request()->routeIs('admin.reportes.*') ? 'active' : '' }}">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v1a1 1 0 001 1h4a1 1 0 001-1v-1m3-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6m12 0h.01M8 12h.01M12 12h.01M16 12h.01"/>
+                    </svg>
+                    Reportes
                 </a>
                 
             @elseif(Auth::user()->rolSistema->nombre === 'estudiante')
