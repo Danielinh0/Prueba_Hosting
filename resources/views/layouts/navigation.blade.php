@@ -69,15 +69,15 @@
                     <x-slot name="content">
                         <div class="dropdown-menu-neuro">
                             <x-dropdown-link :href="route('profile.edit')" class="dropdown-item-neuro">
-                                {{ __('Profile') }}
+                                Perfil
                             </x-dropdown-link>
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
-                                        onclick="event.preventDefault(); this.closest('form').submit();" 
+                                        onclick="event.preventDefault(); this.closest('form').submit();"
                                         class="dropdown-item-neuro">
-                                    {{ __('Log Out') }}
+                                    Cerrar Sesión
                                 </x-dropdown-link>
                             </form>
                         </div>
