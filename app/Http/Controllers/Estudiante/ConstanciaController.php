@@ -41,8 +41,10 @@ class ConstanciaController extends Controller
             ->whereHas('inscripcion', function ($query) use ($evento) {
                 $query->where('id_evento', $evento->id_evento);
             })
-            ->with('inscripcion:id_inscripcion,id_equipo')
+            ->with('inscripcion.equipo')
             ->first();
+
+        $equipo = $miInscripcion->inscripcion->equipo;
 
         $puesto = InscripcionEvento::where('id_evento', $evento->id_evento)
             ->where('id_equipo', $miInscripcion->inscripcion->id_equipo)
@@ -61,7 +63,7 @@ class ConstanciaController extends Controller
             abort(403, 'No tienes permiso para generar la constancia de este evento o el evento no ha finalizado.');
         }
 
-        $pdf = PDF::loadView('estudiante.constancias.constancia-alumno', compact('estudiante', 'user', 'evento', 'puesto'));
+        $pdf = PDF::loadView('estudiante.constancias.constancia-alumno', compact('estudiante', 'user', 'evento', 'puesto', 'equipo'));
         return $pdf->stream();
     }
 }

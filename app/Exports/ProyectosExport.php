@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Exports;
+
+use App\Models\Proyecto;
+use Maatwebsite\Excel\Concerns\FromView;
+use Illuminate\Contracts\View\View;
+
+class ProyectosExport implements FromView
+{
+    protected $fechaInicio;
+    protected $fechaFin;
+
+    public function __construct($fechaInicio, $fechaFin)
+    {
+        $this->fechaInicio = $fechaInicio;
+        $this->fechaFin = $fechaFin;
+    }
+
+    public function view(): View
+    {
+        return view('admin.reportes.proyectos', [
+            'proyectos' => Proyecto::whereBetween('created_at', [$this->fechaInicio, $this->fechaFin])
+                ->with(['inscripcion.equipo', 'inscripcion.evento'])
+                ->get(),
+            'fechaInicio' => $this->fechaInicio,
+            'fechaFin' => $this->fechaFin,
+        ]);
+    }
+}

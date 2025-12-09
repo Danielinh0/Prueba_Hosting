@@ -22,8 +22,7 @@ class ConstanciaController extends Controller
         })->pluck('id_evento');
 
         $eventosTotalesInscritos = Evento::whereIn('id_evento', $eventosInscritosIds)
-            ->where('estado', 'En Progreso')
-            ->orWhere('estado', 'Finalizado')
+            ->where('estado', 'Finalizado')
             ->orderBy('fecha_inicio', 'desc')
             ->get();
 

@@ -28,7 +28,7 @@ use App\Http\Controllers\Estudiante\MisProyectosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Jurado\AcusesController;
 use App\Http\Controllers\Jurado\EventosController;
-
+use App\Http\Controllers\Admin\ReporteExcelController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -111,6 +111,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('jurado-tokens/{token}/reenviar', [App\Http\Controllers\Admin\JuradoTokenController::class, 'reenviar'])->name('jurado-tokens.reenviar');
     Route::patch('miembros/{miembro}/toggle-leader', [AdminEquipoController::class, 'toggleLeader'])->name('miembros.toggle-leader');
     
+    //Rutas para exportar reportes en Excel y pdf
+    Route::get('reportes', [ReporteExcelController::class, 'index'])->name('reportes.index');
+    Route::get('reportes/eventos', [ReporteExcelController::class, 'exportarEventos'])->name('reportes.eventos');
+    Route::get('reportes/proyectos', [ReporteExcelController::class, 'exportarProyectos'])->name('reportes.proyectos');
+    Route::get('reportes/equipos', [ReporteExcelController::class, 'exportarEquipos'])->name('reportes.equipos');
+    Route::get('reportes/eventos/pdf', [ReporteExcelController::class, 'exportarEventosPdf'])->name('reportes.eventos.pdf');
+    Route::get('reportes/proyectos/pdf', [ReporteExcelController::class, 'exportarProyectosPdf'])->name('reportes.proyectos.pdf');
+    Route::get('reportes/equipos/pdf', [ReporteExcelController::class, 'exportarEquiposPdf'])->name('reportes.equipos.pdf');
 });
 
 //? Rutas para Jurados

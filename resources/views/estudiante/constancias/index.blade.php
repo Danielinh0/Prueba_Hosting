@@ -27,11 +27,6 @@
             <div class="constancia-card">
                 <div class="constancia-card-header">
                     <h3 class="constancia-card-title">{{ $evento->nombre }}</h3>
-                    @if($evento->estado == 'Finalizado')
-                        <span class="constancia-badge">Disponible</span>
-                    @else
-                        <span class="constancia-badge" style="background: rgba(255,255,255,0.1);">En proceso</span>
-                    @endif
                 </div>
                 <div class="constancia-card-body">
                     <p class="constancia-card-description">
@@ -213,23 +208,6 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         position: relative;
         z-index: 1;
-    }
-
-    /* Badge de estado */
-    .constancia-badge {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: white;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
 
     /* Cuerpo de tarjeta */
