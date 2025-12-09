@@ -3,6 +3,63 @@
 @section('title', 'Constancias')
 
 @section('content')
+
+<div class="constancias-container">
+    <a href="{{ route('jurado.dashboard') }}" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Volver al Dashboard
+    </a>
+    
+    <h1 class="constancias-title">Constancias Disponibles</h1>
+    <p class="constancias-subtitle">Eventos en los que has evaluado y puedes generar constancia</p>
+
+    <div class="constancias-grid">
+        @forelse($eventosTotalesInscritos as $evento)
+            <div class="constancia-card">
+                <div class="constancia-card-header">
+                    <h3 class="constancia-card-title">{{ $evento->nombre }}</h3>
+                </div>
+                <div class="constancia-card-body">
+                    <p class="constancia-card-description">
+                        {{ Str::limit($evento->descripcion, 150) }}
+                    </p>
+                    
+                    <div class="constancia-info">
+                        <div class="constancia-date">
+                            <i class="far fa-calendar-alt"></i>
+                            {{ \Carbon\Carbon::parse($evento->fecha_inicio)->format('d M, Y') }}
+                        </div>
+                    </div>
+                    
+                    <div class="constancia-action">
+                        @if($evento->estado == 'Finalizado')
+                            <a href="{{ route('jurado.constancias.ver', $evento)}}" 
+                               class="constancia-btn" target="_blank">
+                                <i class="fas fa-file-pdf"></i> Ver Constancia
+                            </a>
+                        @else
+                            <button class="constancia-btn" disabled>
+                                <i class="fas fa-clock"></i> Constancia en Proceso
+                            </button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="no-constancias">
+                <i class="far fa-file-alt"></i>
+                <h3>No hay constancias disponibles</h3>
+                <p>No tienes eventos completados con constancias generadas aún.</p>
+            </div>
+        @endforelse
+    </div>
+</div>
+
+<!-- Font Awesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
@@ -388,60 +445,4 @@
         }
     }
 </style>
-
-<div class="constancias-container">
-    <a href="{{ route('jurado.dashboard') }}" class="back-btn">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Volver al Dashboard
-    </a>
-    
-    <h1 class="constancias-title">Constancias Disponibles</h1>
-    <p class="constancias-subtitle">Eventos en los que has evaluado y puedes generar constancia</p>
-
-    <div class="constancias-grid">
-        @forelse($eventosTotalesInscritos as $evento)
-            <div class="constancia-card">
-                <div class="constancia-card-header">
-                    <h3 class="constancia-card-title">{{ $evento->nombre }}</h3>
-                </div>
-                <div class="constancia-card-body">
-                    <p class="constancia-card-description">
-                        {{ Str::limit($evento->descripcion, 150) }}
-                    </p>
-                    
-                    <div class="constancia-info">
-                        <div class="constancia-date">
-                            <i class="far fa-calendar-alt"></i>
-                            {{ \Carbon\Carbon::parse($evento->fecha_inicio)->format('d M, Y') }}
-                        </div>
-                    </div>
-                    
-                    <div class="constancia-action">
-                        @if($evento->estado == 'Finalizado')
-                            <a href="{{ route('jurado.constancias.ver', $evento)}}" 
-                               class="constancia-btn" target="_blank">
-                                <i class="fas fa-file-pdf"></i> Ver Constancia
-                            </a>
-                        @else
-                            <button class="constancia-btn" disabled>
-                                <i class="fas fa-clock"></i> Constancia en Proceso
-                            </button>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        @empty
-            <div class="no-constancias">
-                <i class="far fa-file-alt"></i>
-                <h3>No hay constancias disponibles</h3>
-                <p>No tienes eventos completados con constancias generadas aún.</p>
-            </div>
-        @endforelse
-    </div>
-</div>
-
-<!-- Font Awesome para iconos -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 @endsection

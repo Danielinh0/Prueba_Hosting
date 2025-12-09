@@ -1,6 +1,131 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="habilidades-page py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <a href="{{ route('estudiante.dashboard') }}" class="back-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Volver al Dashboard
+    </a>
+        
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1><span>Habilidades</span></h1>
+                    <p>Gestiona tu perfil de habilidades técnicas para que los equipos te encuentren.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Mis Habilidades -->
+            <div class="lg:col-span-2">
+                <div class="neuro-card rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-6">Mis Habilidades</h3>
+                    
+                    @if($misHabilidades->isEmpty())
+                        <div class="empty-state">
+                            <svg class="h-16 w-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="mt-4">Aún no has agregado habilidades a tu perfil</p>
+                            <p class="text-sm">Agrega tus habilidades para que los equipos te encuentren</p>
+                        </div>
+                    @else
+                        <div class="space-y-4">
+                            @foreach($misHabilidades as $habilidad)
+                                <div class="habilidad-item flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="habilidad-avatar" style="background-color: {{ $habilidad->color }};">
+                                            {{ strtoupper(substr($habilidad->nombre, 0, 2)) }}
+                                        </div>
+                                        <div>
+                                            <h4>{{ $habilidad->nombre }}</h4>
+                                            <p>{{ $habilidad->categoria }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-3">
+                                        <!-- Selector de Nivel -->
+                                        <form action="{{ route('estudiante.habilidades.update', $habilidad->id_habilidad) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select name="nivel" onchange="this.form.submit()" class="neuro-select rounded-md">
+                                                <option value="Básico" {{ $habilidad->pivot->nivel == 'Básico' ? 'selected' : '' }}>Básico</option>
+                                                <option value="Intermedio" {{ $habilidad->pivot->nivel == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
+                                                <option value="Avanzado" {{ $habilidad->pivot->nivel == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
+                                                <option value="Experto" {{ $habilidad->pivot->nivel == 'Experto' ? 'selected' : '' }}>Experto</option>
+                                            </select>
+                                        </form>
+                                        
+                                        <!-- Eliminar -->
+                                        <form action="{{ route('estudiante.habilidades.destroy', $habilidad->id_habilidad) }}" method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="delete-button" onclick="return confirm('¿Eliminar esta habilidad?')">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Agregar Habilidad -->
+            <div>
+                <div class="neuro-card rounded-lg p-6 sticky-sidebar">
+                    <h3 class="text-lg font-semibold mb-4">Agregar Habilidad</h3>
+                    
+                    <form action="{{ route('estudiante.habilidades.store') }}" method="POST">
+                        @csrf
+                        
+                        <div class="mb-4">
+                            <label class="form-label block mb-2">Selecciona una habilidad</label>
+                            <select name="id_habilidad" required class="neuro-select w-full rounded-md">
+                                <option value="">-- Selecciona --</option>
+                                @foreach($habilidadesDisponibles as $categoria => $habilidades)
+                                    <optgroup label="{{ $categoria }}">
+                                        @foreach($habilidades as $habilidad)
+                                            <option value="{{ $habilidad->id_habilidad }}">{{ $habilidad->nombre }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="form-label block mb-2">Nivel de dominio</label>
+                            <div class="radio-group space-y-2">
+                                @foreach(['Básico', 'Intermedio', 'Avanzado', 'Experto'] as $nivel)
+                                    <label class="radio-label flex items-center">
+                                        <input type="radio" name="nivel" value="{{ $nivel }}" {{ $loop->first ? 'checked' : '' }} class="text-indigo-600 focus:ring-indigo-500">
+                                        <span class="ml-2">{{ $nivel }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="neuro-button w-full px-4 py-2 rounded-md">
+                            Agregar Habilidad
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
@@ -240,126 +365,4 @@
         max-width: 500px;
     }
 </style>
-
-<div class="habilidades-page py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <a href="{{ route('estudiante.dashboard') }}" class="back-link">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        Volver al Dashboard
-    </a>
-        
-        <!-- Hero Section -->
-        <div class="hero-section">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1><span>Habilidades</span></h1>
-                    <p>Gestiona tu perfil de habilidades técnicas para que los equipos te encuentren.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Mis Habilidades -->
-            <div class="lg:col-span-2">
-                <div class="neuro-card rounded-lg p-6">
-                    <h3 class="text-lg font-semibold mb-6">Mis Habilidades</h3>
-                    
-                    @if($misHabilidades->isEmpty())
-                        <div class="empty-state">
-                            <svg class="h-16 w-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <p class="mt-4">Aún no has agregado habilidades a tu perfil</p>
-                            <p class="text-sm">Agrega tus habilidades para que los equipos te encuentren</p>
-                        </div>
-                    @else
-                        <div class="space-y-4">
-                            @foreach($misHabilidades as $habilidad)
-                                <div class="habilidad-item flex items-center justify-between">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="habilidad-avatar" style="background-color: {{ $habilidad->color }};">
-                                            {{ strtoupper(substr($habilidad->nombre, 0, 2)) }}
-                                        </div>
-                                        <div>
-                                            <h4>{{ $habilidad->nombre }}</h4>
-                                            <p>{{ $habilidad->categoria }}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex items-center space-x-3">
-                                        <!-- Selector de Nivel -->
-                                        <form action="{{ route('estudiante.habilidades.update', $habilidad->id_habilidad) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('PATCH')
-                                            <select name="nivel" onchange="this.form.submit()" class="neuro-select rounded-md">
-                                                <option value="Básico" {{ $habilidad->pivot->nivel == 'Básico' ? 'selected' : '' }}>Básico</option>
-                                                <option value="Intermedio" {{ $habilidad->pivot->nivel == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
-                                                <option value="Avanzado" {{ $habilidad->pivot->nivel == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
-                                                <option value="Experto" {{ $habilidad->pivot->nivel == 'Experto' ? 'selected' : '' }}>Experto</option>
-                                            </select>
-                                        </form>
-                                        
-                                        <!-- Eliminar -->
-                                        <form action="{{ route('estudiante.habilidades.destroy', $habilidad->id_habilidad) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="delete-button" onclick="return confirm('¿Eliminar esta habilidad?')">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                </svg>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Agregar Habilidad -->
-            <div>
-                <div class="neuro-card rounded-lg p-6 sticky-sidebar">
-                    <h3 class="text-lg font-semibold mb-4">Agregar Habilidad</h3>
-                    
-                    <form action="{{ route('estudiante.habilidades.store') }}" method="POST">
-                        @csrf
-                        
-                        <div class="mb-4">
-                            <label class="form-label block mb-2">Selecciona una habilidad</label>
-                            <select name="id_habilidad" required class="neuro-select w-full rounded-md">
-                                <option value="">-- Selecciona --</option>
-                                @foreach($habilidadesDisponibles as $categoria => $habilidades)
-                                    <optgroup label="{{ $categoria }}">
-                                        @foreach($habilidades as $habilidad)
-                                            <option value="{{ $habilidad->id_habilidad }}">{{ $habilidad->nombre }}</option>
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
-                            </select>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label class="form-label block mb-2">Nivel de dominio</label>
-                            <div class="radio-group space-y-2">
-                                @foreach(['Básico', 'Intermedio', 'Avanzado', 'Experto'] as $nivel)
-                                    <label class="radio-label flex items-center">
-                                        <input type="radio" name="nivel" value="{{ $nivel }}" {{ $loop->first ? 'checked' : '' }} class="text-indigo-600 focus:ring-indigo-500">
-                                        <span class="ml-2">{{ $nivel }}</span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="neuro-button w-full px-4 py-2 rounded-md">
-                            Agregar Habilidad
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

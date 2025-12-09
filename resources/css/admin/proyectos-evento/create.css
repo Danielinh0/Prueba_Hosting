@@ -1,0 +1,447 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+/* Fondo degradado */
+.proyecto-edit-page-acp {
+    background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Textos */
+.proyecto-edit-page-acp h2,
+.proyecto-edit-page-acp h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #2c2c2c;
+}
+
+.proyecto-edit-page-acp p,
+.proyecto-edit-page-acp label {
+    font-family: 'Poppins', sans-serif;
+    color: #6b6b6b;
+}
+
+/* Back link */
+.back-link-acp {
+    font-family: 'Poppins', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    color: black;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background: #FFEEE2;
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.back-link-acp:hover {
+    color: #4f46e5;
+    box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    transform: translateY(-2px);
+}
+
+.back-link-acp svg {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* Main card */
+.main-card-acp {
+    background: #FFEEE2;
+    border-radius: 20px;
+    box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+    padding: 2rem;
+}
+
+/* Labels */
+.form-label-acp {
+    font-family: 'Poppins', sans-serif;
+    color: #2c2c2c;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.required-asterisk-acp {
+    color: #ef4444;
+}
+
+/* Inputs y textareas */
+.neuro-input-acp,
+.neuro-textarea-acp {
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    color: #2c2c2c;
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+}
+
+.neuro-input-acp::placeholder,
+.neuro-textarea-acp::placeholder {
+    color: #9ca3af;
+}
+
+.neuro-input-acp:focus,
+.neuro-textarea-acp:focus {
+    outline: none;
+    box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
+}
+
+.neuro-textarea-acp {
+    resize: vertical;
+}
+
+/* Helper text */
+.helper-text-acp {
+    font-family: 'Poppins', sans-serif;
+    color: #9ca3af;
+    font-size: 0.75rem;
+    margin-top: 0.375rem;
+}
+
+/* Error messages */
+.error-message-acp {
+    font-family: 'Poppins', sans-serif;
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.375rem;
+}
+
+/* File info box - archivo actual */
+.file-info-box-acp {
+    background: rgba(209, 250, 229, 0.8);
+    border-left: 4px solid #10b981;
+    border-radius: 0 12px 12px 0;
+    padding: 0.875rem 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 2px 2px 4px rgba(16, 185, 129, 0.1);
+}
+
+.file-info-box-acp p {
+    font-family: 'Poppins', sans-serif;
+    color: #065f46;
+    font-size: 0.875rem;
+}
+
+.file-info-box-acp .file-name-acp {
+    font-weight: 600;
+}
+
+.file-info-box-acp .file-hint-acp {
+    font-size: 0.75rem;
+    color: #059669;
+    margin-top: 0.25rem;
+}
+
+/* File upload area - Drag and drop style */
+.file-upload-area-acp {
+    border: 2px dashed rgba(107, 107, 107, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.file-upload-area-acp:hover {
+    border-color: rgba(107, 107, 107, 0.5);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.file-upload-area-acp.dragover {
+    border-color: #6366f1;
+    background: rgba(224, 231, 255, 0.3);
+    transform: scale(1.01);
+}
+
+.file-upload-content-acp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    pointer-events: none;
+}
+
+.file-upload-icon-acp {
+    width: 3rem;
+    height: 3rem;
+    color: #9ca3af;
+}
+
+.file-upload-text-acp {
+    font-family: 'Poppins', sans-serif;
+    color: #6b6b6b;
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
+
+.file-upload-text-acp strong {
+    color: #2c2c2c;
+    font-weight: 600;
+}
+
+.file-upload-hint-acp {
+    font-family: 'Poppins', sans-serif;
+    color: #9ca3af;
+    font-size: 0.8125rem;
+    margin-top: 0.25rem;
+}
+
+.neuro-file-acp {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+/* File preview cuando se selecciona */
+.file-preview-acp {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    display: none;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file-preview-acp.show {
+    display: flex;
+}
+
+.file-preview-icon-acp {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.file-preview-icon-acp svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white;
+}
+
+.file-preview-info-acp {
+    flex: 1;
+    text-align: left;
+}
+
+.file-preview-name-acp {
+    font-family: 'Poppins', sans-serif;
+    color: #2c2c2c;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    word-break: break-all;
+}
+
+.file-preview-size-acp {
+    font-family: 'Poppins', sans-serif;
+    color: #9ca3af;
+    font-size: 0.75rem;
+}
+
+.file-preview-remove-acp {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-preview-remove-acp:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.file-preview-remove-acp svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #ef4444;
+}
+
+/* Divider */
+.section-divider-acp {
+    border-top: 1px solid rgba(232, 154, 60, 0.2);
+    margin: 2rem 0;
+}
+
+/* Buttons */
+.button-secondary-acp {
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.5);
+    color: #2c2c2c;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    transition: all 0.3s ease;
+    border: none;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button-secondary-acp:hover {
+    box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    transform: translateY(-2px);
+}
+
+.button-primary-acp {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.button-primary-acp:hover {
+    box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
+    transform: translateY(-2px);
+}
+
+/* ============================================ */
+/* ESTILOS DE VALIDACIÓN */
+/* ============================================ */
+
+.input-group-acp {
+    position: relative;
+}
+
+.input-help-acp {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.75rem;
+    color: rgba(107, 114, 128, 0.8);
+    margin-left: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.validation-message-acp {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Animación de entrada */
+.validation-message-acp.show {
+    display: flex !important;
+    animation: slideInAcp 0.3s ease-out;
+}
+
+/* Animación de salida */
+.validation-message-acp.hide {
+    animation: slideOutAcp 0.3s ease-out forwards;
+}
+
+@keyframes slideInAcp {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutAcp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+}
+
+/* Error es ROJO */
+.validation-message-acp.error {
+    background: rgba(239, 68, 68, 0.2);
+    border-left: 4px solid #ef4444;
+    color: #fc7373ff;
+}
+
+.validation-message-acp.error i {
+    color: #ef4444;
+    font-size: 0.9rem;
+}
+
+.validation-message-acp.success {
+    background: rgba(40, 167, 69, 0.2);
+    border-left: 4px solid #28a745;
+    color: #53a953ff;
+}
+
+.validation-message-acp.success i {
+    color: #28a745;
+    font-size: 0.9rem;
+}
+
+/* Borde de error es ROJO */
+.neuro-input-acp.error, .neuro-textarea-acp.error {
+    border-color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+    animation: shakeAcp 0.5s ease-in-out;
+}
+
+.neuro-input-acp.success, .neuro-textarea-acp.success {
+    border-color: #28a745 !important;
+    background: rgba(40, 167, 69, 0.1) !important;
+}
+
+@keyframes shakeAcp {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+    20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .file-upload-area-acp {
+        padding: 2rem 1rem;
+    }
+    
+    .file-upload-icon-acp {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

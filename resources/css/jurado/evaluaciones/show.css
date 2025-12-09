@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    .evaluacion-show-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        padding: 2rem;
+    }
+    
+    /* Back link neuromórfico */
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: #e89a3c;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 253, 244, 0.9);
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #d98a2c;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+
+    /* Header section */
+    .page-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c2c2c;
+        margin-bottom: 0.25rem;
+    }
+
+    .page-subtitle {
+        color: #6b7280;
+        font-size: 0.875rem;
+    }
+
+    /* Badge de estado */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        background: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(167, 243, 208, 0.8));
+        box-shadow: 4px 4px 8px rgba(16, 185, 129, 0.2);
+    }
+
+    .status-badge svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #059669;
+    }
+
+    .status-badge span {
+        font-weight: 600;
+        color: #059669;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Calificación Hero - MANTENER OSCURO */
+    .calificacion-hero {
+        background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+        border-radius: 24px;
+        position: relative;
+        overflow: hidden;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .calificacion-hero::before {
+        content: '';
+        position: absolute;
+        top: -30%;
+        right: -20%;
+        width: 50%;
+        height: 160%;
+        background: linear-gradient(135deg, rgba(232, 154, 60, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+    }
+    
+    .hero-score {
+        font-size: 4.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+
+    .hero-icon-box {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(232, 154, 60, 0.2);
+    }
+
+    .hero-icon-box svg {
+        width: 2.5rem;
+        height: 2.5rem;
+        color: #e89a3c;
+    }
+    
+    /* Cards neuromórficas */
+    .neu-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    .section-icon svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: white;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #2c2c2c;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .section-subtitle {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Criterio card */
+    .criterio-card {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+    }
+    
+    .criterio-header {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(232, 154, 60, 0.1);
+    }
+
+    .criterio-info {
+        flex: 1;
+    }
+
+    .criterio-name {
+        font-weight: 600;
+        color: #2c2c2c;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .criterio-desc {
+        font-size: 0.75rem;
+        color: #6b7280;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .ponderacion-tag {
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        margin-right: 0.5rem;
+    }
+    
+    .criterio-score-badge {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        min-width: 80px;
+        text-align: center;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+    
+    .criterio-body {
+        padding: 1rem;
+    }
+
+    .progress-bar-container {
+        height: 8px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    }
+    
+    .progress-bar-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.5s ease;
+    }
+
+    .progress-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5rem;
+    }
+
+    .progress-labels span {
+        font-size: 0.75rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .progress-label-start,
+    .progress-label-end {
+        color: #9ca3af;
+    }
+
+    .progress-label-center {
+        font-weight: 500;
+    }
+    
+    /* Feedback cards */
+    .feedback-card {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+    }
+    
+    .feedback-header {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .feedback-icon {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .feedback-icon svg {
+        width: 1rem;
+        height: 1rem;
+        color: white;
+    }
+
+    .feedback-icon-green {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .feedback-icon-orange {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .feedback-icon-gray {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+    }
+
+    .feedback-title {
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .feedback-title-green {
+        color: #059669;
+    }
+
+    .feedback-title-orange {
+        color: #d97706;
+    }
+
+    .feedback-title-gray {
+        color: #4b5563;
+    }
+    
+    .feedback-body {
+        padding: 1rem;
+    }
+
+    .feedback-body p {
+        color: #2c2c2c;
+        white-space: pre-line;
+        line-height: 1.6;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .feedback-body p.empty {
+        font-style: italic;
+        color: #9ca3af;
+    }
+
+    /* Botón volver inferior */
+    .btn-volver {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-volver:hover {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+        color: white;
+    }
+
+    .btn-volver svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .evaluacion-show-page {
+            padding: 1rem;
+        }
+
+        .hero-score {
+            font-size: 3rem;
+        }
+
+        .calificacion-hero {
+            padding: 1.5rem;
+        }
+    }

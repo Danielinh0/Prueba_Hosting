@@ -248,6 +248,35 @@
             text-align: left;
         }
 
+        .input-help {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-left: 5px;
+        }
+
+        .input-error {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: #ff6b6b;
+            margin-left: 5px;
+            background: rgba(255, 107, 107, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.2);
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: left;
+            color: #28a745;
+        }
+
         .alert-box p {
             font-size: 0.85rem;
             color: #fff3cd;
@@ -323,6 +352,110 @@
             font-size: 0.75rem;
             margin-top: 5px;
             margin-left: 5px;
+        }
+
+        /* ESTILOS PARA VALIDACIÓN EN TIEMPO REAL */
+        .validation-message {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .validation-message.error {
+            background: rgba(52, 152, 219, 0.2);
+            border-left: 4px solid #3498db;
+            color: #87CEEB;
+        }
+
+        .validation-message.error i {
+            color: #3498db;
+            font-size: 0.9rem;
+        }
+
+        .validation-message.success {
+            background: rgba(40, 167, 69, 0.2);
+            border-left: 4px solid #28a745;
+            color: #90EE90;
+        }
+
+        .validation-message.success i {
+            color: #28a745;
+            font-size: 0.9rem;
+        }
+
+        /* ESTADOS DE INPUT */
+        .input-group input.error {
+            border-color: #3498db !important;
+            background: rgba(52, 152, 219, 0.1) !important;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .input-group input.success {
+            border-color: #28a745 !important;
+            background: rgba(40, 167, 69, 0.1) !important;
+        }
+
+        .input-group input.error:focus {
+            border-color: #3498db !important;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3) !important;
+        }
+
+        .input-group input.success:focus {
+            border-color: #28a745 !important;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.3) !important;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
+        }
+
+        /* BARRA DE PROGRESO DE CONTRASEÑA */
+        .password-strength {
+            display: none;
+            margin-top: 8px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .password-strength-bar.weak {
+            background: #e74c3c;
+            width: 33%;
+        }
+
+        .password-strength-bar.medium {
+            background: #f39c12;
+            width: 66%;
+        }
+
+        .password-strength-bar.strong {
+            background: #27ae60;
+            width: 100%;
         }
 
         /* SCROLLBAR PERSONALIZADO */
@@ -421,6 +554,315 @@
 
     <!-- Alpine.js para interactividad -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        // Validación de formato de correo
+        function validateEmailFormat(email) {
+            const validDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'live.com', 'edu.mx', 'tec.mx'];
+            const domain = email.toLowerCase().split('@')[1];
+            return validDomains.includes(domain);
+        }
+
+        // Validación de número de control
+        function validateNumeroControl(numControl) {
+            // Quitar espacios y convertir a mayúsculas
+            numControl = numControl.trim().toUpperCase();
+
+            // Validar formato básico
+            if (!/^[CB]?\d{7,8}$/.test(numControl)) {
+                return { valid: false, message: 'Formato inválido. Ej: 24010001 ó C24010001' };
+            }
+
+            // Extraer solo los números
+            const numeros = numControl.replace(/[^\d]/, '');
+
+            if (numeros.length < 7 || numeros.length > 8) {
+                return { valid: false, message: 'Debe tener entre 7 y 8 dígitos numéricos' };
+            }
+
+            // Validar año
+            const añoInscripcion = parseInt(numeros.substring(0, 2));
+            const añoActual = parseInt(new Date().getFullYear().toString().substring(2));
+            const añoCompleto = añoInscripcion > añoActual ? 1900 + añoInscripcion : 2000 + añoInscripcion;
+            const añoCompletoActual = 2000 + añoActual;
+
+            if (añoCompleto > añoCompletoActual + 1) {
+                return { valid: false, message: 'El año de inscripción no puede ser futuro' };
+            }
+
+            if (añoCompleto < 2000) {
+                return { valid: false, message: 'El año mínimo es 2000' };
+            }
+
+            // Validar código de plantel
+            let codigoPlantel, esValido;
+            if (numeros.length === 8) {
+                codigoPlantel = numeros.substring(2, 5);
+                esValido = ['100', '101', '102', '103', '104', '105', '106', '107', '108', '109'].includes(codigoPlantel);
+            } else {
+                codigoPlantel = numeros.substring(2, 4);
+                esValido = ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19'].includes(codigoPlantel);
+            }
+
+            if (!esValido) {
+                return { valid: false, message: 'Código de plantel no válido' };
+            }
+
+            // Identificar tipo de estudiante
+            const tipo = numControl.startsWith('C') ? 'Convalidación' : (numControl.startsWith('B') ? 'Regular' : 'Regular');
+
+            return { valid: true, message: `Válido (${tipo})` };
+        }
+
+        // Validación de contraseña en tiempo real
+        function validatePassword(password) {
+            const minLength = 8;
+            const maxLength = 16;
+            const hasLetter = /[A-Za-z]/.test(password);
+            const hasNumber = /\d/.test(password);
+            const hasSpecial = /[@$!%*#?&]/.test(password);
+
+            if (password.length < minLength) {
+                return { valid: false, message: `Mínimo ${minLength} caracteres` };
+            }
+
+            if (password.length > maxLength) {
+                return { valid: false, message: `Máximo ${maxLength} caracteres` };
+            }
+
+            if (!hasLetter) {
+                return { valid: false, message: 'Debe contener al menos una letra' };
+            }
+
+            if (!hasNumber) {
+                return { valid: false, message: 'Debe contener al menos un número' };
+            }
+
+            return { valid: true, message: 'Contraseña válida' };
+        }
+
+        // Validación de nombres
+        function validateName(name) {
+            return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(name);
+        }
+
+        // Función para mostrar mensaje de validación
+        function showValidationMessage(input, message, isError = true) {
+            // Buscar o crear el contenedor del mensaje
+            let messageDiv = input.parentElement.querySelector('.validation-message');
+
+            if (!messageDiv) {
+                messageDiv = document.createElement('div');
+                messageDiv.className = 'validation-message';
+                input.parentElement.appendChild(messageDiv);
+            }
+
+            // Actualizar contenido y estilo
+            messageDiv.className = `validation-message ${isError ? 'error' : 'success'}`;
+            messageDiv.innerHTML = `
+                <i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i>
+                <span>${message}</span>
+            `;
+            messageDiv.style.display = 'flex';
+
+            // Actualizar estado del input
+            input.classList.remove('error', 'success');
+            input.classList.add(isError ? 'error' : 'success');
+
+            // Temporizador para ocultar mensaje de error
+            if (isError) {
+                clearTimeout(input.validationTimeout);
+                input.validationTimeout = setTimeout(() => {
+                    if (messageDiv && messageDiv.classList.contains('error')) {
+                        messageDiv.style.display = 'none';
+                        input.classList.remove('error');
+                    }
+                }, 4000);
+            }
+        }
+
+        // Función para ocultar mensaje de validación
+        function hideValidationMessage(input) {
+            const messageDiv = input.parentElement.querySelector('.validation-message');
+            if (messageDiv) {
+                messageDiv.style.display = 'none';
+            }
+            input.classList.remove('error', 'success');
+            clearTimeout(input.validationTimeout);
+        }
+
+        // Cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Validación de nombres y apellidos
+            const nameInputs = document.querySelectorAll('input[name="nombre"], input[name="app_paterno"], input[name="app_materno"]');
+            nameInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const value = this.value;
+                    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+
+                    if (value && !nameRegex.test(value)) {
+                        // Hay caracteres no válidos - ANIMACIÓN Y COLOR AZUL
+                        this.classList.add('error');
+
+                        // Limpiar caracteres no válidos
+                        const cleanValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+                        this.value = cleanValue;
+
+                        // Mostrar mensaje de error
+                        showValidationMessage(this, 'Solo se permiten letras, espacios y acentos', true);
+
+                        // Temporizador para ocultar el error después de 3 segundos
+                        clearTimeout(this.errorTimeout);
+                        this.errorTimeout = setTimeout(() => {
+                            this.classList.remove('error');
+                            hideValidationMessage(this);
+                        }, 3000);
+                    } else if (value && nameRegex.test(value)) {
+                        // Todo está bien
+                        this.classList.remove('error');
+                        showValidationMessage(this, 'Campo válido', false);
+                    } else {
+                        // Campo vacío
+                        this.classList.remove('error');
+                        hideValidationMessage(this);
+                    }
+                });
+
+                // También validar al perder el foco
+                input.addEventListener('blur', function() {
+                    const value = this.value;
+                    const errorMessage = this.parentElement.querySelector('.validation-message');
+
+                    if (value && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value)) {
+                        this.classList.add('error');
+                        showValidationMessage(this, 'Solo se permiten letras, espacios y acentos', true);
+                    } else {
+                        this.classList.remove('error');
+                        if (value) {
+                            showValidationMessage(this, 'Campo válido', false);
+                        } else {
+                            hideValidationMessage(this);
+                        }
+                    }
+                });
+
+                // Ocultar error al empezar a escribir de nuevo
+                input.addEventListener('focus', function() {
+                    if (this.classList.contains('error')) {
+                        setTimeout(() => {
+                            this.classList.remove('error');
+                            hideValidationMessage(this);
+                        }, 100);
+                    }
+                });
+            });
+
+            // Validación de email
+            const emailInput = document.querySelector('input[name="email"]');
+            if (emailInput) {
+                emailInput.addEventListener('input', function() {
+                    const email = this.value;
+                    if (email) {
+                        const validDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'live.com', 'edu.mx', 'tec.mx', 'itoaxaca.edu.mx'];
+                        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                        const domain = email.toLowerCase().split('@')[1];
+
+                        if (!emailRegex.test(email)) {
+                            showValidationMessage(this, 'Formato de correo inválido', true);
+                        } else if (!validDomains.includes(domain)) {
+                            showValidationMessage(this, 'Solo se permiten dominios: gmail.com, hotmail.com, outlook.com, live.com, edu.mx, tec.mx, itoaxaca.edu.mx', true);
+                        } else {
+                            showValidationMessage(this, 'Correo válido', false);
+                        }
+                    } else {
+                        hideValidationMessage(this);
+                    }
+                });
+            }
+
+            // Validación de número de control
+            const numControlInput = document.querySelector('input[name="numero_control"]');
+            if (numControlInput) {
+                numControlInput.addEventListener('input', function() {
+                    const value = this.value.toUpperCase();
+                    this.value = value;
+
+                    if (value) {
+                        const validation = validateNumeroControl(value);
+                        if (!validation.valid) {
+                            showValidationMessage(this, validation.message, true);
+                        } else {
+                            showValidationMessage(this, validation.message, false);
+                        }
+                    } else {
+                        hideValidationMessage(this);
+                    }
+                });
+            }
+
+            // Validación de contraseña con barra de progreso
+            const passwordInput = document.querySelector('input[name="password"]');
+            const passwordConfirmInput = document.querySelector('input[name="password_confirmation"]');
+
+            if (passwordInput) {
+                // Agregar barra de progreso
+                const strengthBar = document.createElement('div');
+                strengthBar.className = 'password-strength';
+                strengthBar.innerHTML = '<div class="password-strength-bar"></div>';
+                passwordInput.parentElement.appendChild(strengthBar);
+
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    const strengthBarDiv = this.parentElement.querySelector('.password-strength');
+                    const strengthBarInner = strengthBarDiv.querySelector('.password-strength-bar');
+
+                    if (password.length === 0) {
+                        strengthBarDiv.style.display = 'none';
+                        hideValidationMessage(this);
+                        return;
+                    }
+
+                    strengthBarDiv.style.display = 'block';
+
+                    // Calcular fortaleza
+                    let strength = 0;
+                    if (password.length >= 8) strength++;
+                    if (password.length >= 12) strength++;
+                    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+                    if (/\d/.test(password)) strength++;
+                    if (/[@$!%*#?&]/.test(password)) strength++;
+
+                    // Actualizar barra de progreso
+                    strengthBarInner.className = 'password-strength-bar';
+                    if (strength <= 2) {
+                        strengthBarInner.classList.add('weak');
+                        showValidationMessage(this, 'Contraseña débil. Agregue más caracteres y símbolos', true);
+                    } else if (strength <= 3) {
+                        strengthBarInner.classList.add('medium');
+                        showValidationMessage(this, 'Contraseña media. Puede mejorar', false);
+                    } else {
+                        strengthBarInner.classList.add('strong');
+                        showValidationMessage(this, 'Contraseña fuerte', false);
+                    }
+                });
+            }
+
+            if (passwordConfirmInput) {
+                passwordConfirmInput.addEventListener('input', function() {
+                    const password = passwordInput ? passwordInput.value : '';
+                    if (this.value) {
+                        if (this.value !== password) {
+                            showValidationMessage(this, 'Las contraseñas no coinciden', true);
+                        } else {
+                            showValidationMessage(this, 'Las contraseñas coinciden', false);
+                        }
+                    } else {
+                        hideValidationMessage(this);
+                    }
+                });
+            }
+        });
+    </script>
 </head>
 <body>
 
@@ -459,45 +901,57 @@
             <!-- Nombre -->
             <div class="input-group">
                 <label for="nombre">Nombre(s)</label>
-                <input 
-                    id="nombre" 
-                    type="text" 
-                    name="nombre" 
-                    value="{{ old('nombre') }}" 
-                    placeholder="Ingresa tu nombre" 
-                    required 
+                <input
+                    id="nombre"
+                    type="text"
+                    name="nombre"
+                    value="{{ old('nombre') }}"
+                    placeholder="Ej: Juan Carlos"
+                    required
                     autofocus
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                    title="Solo se permiten letras y espacios"
                 >
                 @error('nombre')
                     <div class="input-error">{{ $message }}</div>
                 @enderror
+                <small class="input-help">Solo letras y espacios</small>
             </div>
 
             <!-- Apellidos -->
             <div class="input-row">
                 <div class="input-group">
                     <label for="app_paterno">Apellido Paterno</label>
-                    <input 
-                        id="app_paterno" 
-                        type="text" 
-                        name="app_paterno" 
-                        value="{{ old('app_paterno') }}" 
-                        placeholder="Paterno" 
+                    <input
+                        id="app_paterno"
+                        type="text"
+                        name="app_paterno"
+                        value="{{ old('app_paterno') }}"
+                        placeholder="Ej: Pérez"
                         required
+                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                        title="Solo se permiten letras y espacios"
                     >
                     @error('app_paterno')
                         <div class="input-error">{{ $message }}</div>
                     @enderror
+                    <small class="input-help">Solo letras</small>
                 </div>
                 <div class="input-group">
                     <label for="app_materno">Apellido Materno</label>
-                    <input 
-                        id="app_materno" 
-                        type="text" 
-                        name="app_materno" 
-                        value="{{ old('app_materno') }}" 
-                        placeholder="Materno"
+                    <input
+                        id="app_materno"
+                        type="text"
+                        name="app_materno"
+                        value="{{ old('app_materno') }}"
+                        placeholder="Ej: López (opcional)"
+                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*"
+                        title="Solo se permiten letras y espacios"
                     >
+                    @error('app_materno')
+                        <div class="input-error">{{ $message }}</div>
+                    @enderror
+                    <small class="input-help">Opcional</small>
                 </div>
             </div>
 
@@ -523,16 +977,20 @@
                 
                 <div class="input-group">
                     <label for="numero_control">Número de Control</label>
-                    <input 
-                        id="numero_control" 
-                        type="text" 
-                        name="numero_control" 
-                        value="{{ old('numero_control') }}" 
-                        placeholder="Ej. 20200123"
+                    <input
+                        id="numero_control"
+                        type="text"
+                        name="numero_control"
+                        value="{{ old('numero_control') }}"
+                        placeholder="Ej: 24010001 ó C24010001"
+                        pattern="^[CB]?\d{7,8}$"
+                        title="Formato: Opcional C/B + 7-8 dígitos. Ej: 24010001"
+                        maxlength="9"
                     >
                     @error('numero_control')
                         <div class="input-error">{{ $message }}</div>
                     @enderror
+                    <small class="input-help">Ej: 24010001 (Orizaba 2024) • Opcional: C24100001 (Convalidación)</small>
                 </div>
 
                 <div class="input-row">

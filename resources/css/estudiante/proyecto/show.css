@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+    /* Fondo degradado */
+    .proyecto-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Textos */
+    .proyecto-page h2,
+    .proyecto-page h3,
+    .proyecto-page h4 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+    }
+    
+    .proyecto-page p {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+    }
+    
+    .proyecto-page a {
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.2s ease;
+    }
+    
+    /* Cards neuromórficas */
+    .neuro-card {
+        background: #FFEEE2;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        transition: all 0.3s ease;
+    }
+    
+    /* Botón principal */
+    .neuro-button {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .neuro-button:hover {
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    /* Alert success */
+    .alert-success {
+        background: rgba(209, 250, 229, 0.8);
+        border: 1px solid #10b981;
+        color: #065f46;
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        font-family: 'Poppins', sans-serif;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+    
+    /* Links normales */
+    .link-accent {
+        color: #e89a3c;
+    }
+    
+    .link-accent:hover {
+        color: #d98a2c;
+        opacity: 0.8;
+    }
+    
+    /* Quick access cards */
+    .quick-access-card {
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .quick-access-card:hover {
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-5px);
+    }
+    
+    .quick-access-card.border-indigo:hover {
+        border-color: #6366f1;
+    }
+    
+    .quick-access-card.border-green:hover {
+        border-color: #10b981;
+    }
+    
+    .quick-access-card.border-purple:hover {
+        border-color: #8b5cf6;
+    }
+    
+    .quick-access-card h4 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-weight: 600;
+    }
+    
+    .quick-access-card p {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+        font-size: 0.875rem;
+    }
+    
+    /* Warning alert */
+    .warning-alert {
+        background: rgba(254, 243, 199, 0.8);
+        border-left: 4px solid #f59e0b;
+        border-radius: 0 15px 15px 0;
+        padding: 1.5rem;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        backdrop-filter: blur(10px);
+    }
+    
+    .warning-alert h3 {
+        color: #92400e;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+    }
+    
+    .warning-alert p {
+        color: #b45309;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .warning-button {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 4px 4px 8px rgba(245, 158, 11, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .warning-button:hover {
+        box-shadow: 6px 6px 12px rgba(245, 158, 11, 0.4);
+        transform: translateY(-2px);
+    }
+
+    /* Badge de evaluación */
+    .eval-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .eval-badge.finalizada {
+        background: rgba(16, 185, 129, 0.15);
+        color: #059669;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    
+    .eval-badge.finalizada:hover {
+        background: rgba(16, 185, 129, 0.25);
+    }
+    
+    .eval-badge.en-proceso {
+        background: rgba(245, 158, 11, 0.15);
+        color: #d97706;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    
+    .eval-badge.en-proceso:hover {
+        background: rgba(245, 158, 11, 0.25);
+    }
+    
+    .eval-badge.sin-evaluar {
+        background: rgba(107, 114, 128, 0.15);
+        color: #6b7280;
+        border: 1px solid rgba(107, 114, 128, 0.3);
+    }
+
+    /* Modal de evaluaciones */
+    .eval-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .eval-modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .eval-modal {
+        background: #FFFDF4;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        max-width: 32rem;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+    }
+    
+    .eval-modal-overlay.active .eval-modal {
+        transform: scale(1);
+    }
+    
+    .eval-detail-card {
+        background: rgba(255, 238, 226, 0.8);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid rgba(232, 154, 60, 0.2);
+    }
+    
+    .eval-detail-card:last-child {
+        margin-bottom: 0;
+    }
+    
+    .eval-score-big {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #e89a3c;
+    }
+    
+    .eval-criteria {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px dashed rgba(107, 107, 107, 0.2);
+    }
+    
+    .eval-criteria-item {
+        font-size: 0.75rem;
+    }
+    
+    .eval-criteria-item span {
+        color: #6b6b6b;
+    }
+    
+    .eval-criteria-item strong {
+        color: #2c2c2c;
+    }

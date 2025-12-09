@@ -97,6 +97,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Gestión de miembros por admin
     Route::delete('miembros/{miembro}', [AdminMiembroController::class, 'destroy'])->name('miembros.destroy');
     Route::patch('miembros/{miembro}/role', [AdminEquipoController::class, 'updateMemberRole'])->name('miembros.update-role');
+
+    // Gestión de tokens de jurado
+    Route::resource('jurado-tokens', App\Http\Controllers\Admin\JuradoTokenController::class)->names([
+        'index' => 'jurado-tokens.index',
+        'create' => 'jurado-tokens.create',
+        'store' => 'jurado-tokens.store'
+    ])->only(['index', 'create', 'store']);
+
+    // Acciones adicionales para tokens de jurado
+    Route::patch('jurado-tokens/{token}/revocar', [App\Http\Controllers\Admin\JuradoTokenController::class, 'revocar'])->name('jurado-tokens.revocar');
+    Route::patch('jurado-tokens/{token}/extender', [App\Http\Controllers\Admin\JuradoTokenController::class, 'extender'])->name('jurado-tokens.extender');
+    Route::post('jurado-tokens/{token}/reenviar', [App\Http\Controllers\Admin\JuradoTokenController::class, 'reenviar'])->name('jurado-tokens.reenviar');
     Route::patch('miembros/{miembro}/toggle-leader', [AdminEquipoController::class, 'toggleLeader'])->name('miembros.toggle-leader');
     
 });

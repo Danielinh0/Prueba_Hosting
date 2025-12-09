@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    
+    /* Fondo degradado */
+    .recursos-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Textos */
+    .recursos-page h2,
+    .recursos-page h3,
+    .recursos-page h4 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+    }
+    
+    .recursos-page p {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+    }
+    
+    .recursos-page a {
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.2s ease;
+    }
+    
+    .recursos-page a:hover {
+        opacity: 0.8;
+    }
+    
+    /* Cards neuromórficas */
+    .neuro-card {
+        background: #FFEEE2;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        transition: all 0.3s ease;
+    }
+    
+    .neuro-card:hover {
+        box-shadow: 10px 10px 20px #e6d5c9, -10px -10px 20px #ffffff;
+    }
+    
+    /* Inputs y selects neuromórficos */
+    .neuro-input,
+    .neuro-select,
+    .neuro-textarea {
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .neuro-input:focus,
+    .neuro-select:focus,
+    .neuro-textarea:focus {
+        outline: none;
+        box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
+    }
+    
+    /* Labels */
+    .neuro-label {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    /* Botón principal */
+    .neuro-button {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .neuro-button:hover {
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    /* Recursos items */
+    .recurso-item {
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .recurso-item:hover {
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-3px);
+    }
+    
+    .recurso-item h4 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-weight: 600;
+    }
+    
+    .recurso-item p {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+    }
+    
+    .recurso-item a {
+        font-family: 'Poppins', sans-serif;
+        color: #e89a3c;
+        font-weight: 600;
+    }
+    
+    /* Botón delete */
+    .delete-button {
+        color: #ef4444;
+        transition: all 0.2s ease;
+    }
+    
+    .delete-button:hover {
+        color: #dc2626;
+    }
+    
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 3rem 0;
+    }
+    
+    .empty-state svg {
+        margin: 0 auto;
+        color: #6b6b6b;
+    }
+    
+    .empty-state p {
+        margin-top: 1rem;
+        color: #6b6b6b;
+    }
+
+    /* Hero Section Negro */
+    .hero-section {
+        background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .hero-text h1 {
+        color: #c1c1c1ff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-text h1 span {
+        color: #e89a3c;
+    }
+
+    .hero-text p {
+        color: #cfcfcfff;
+        font-size: 1rem;
+    }
+
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+    

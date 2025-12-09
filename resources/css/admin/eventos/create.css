@@ -1,0 +1,526 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    /* Fondo degradado */
+    .evento-create-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Textos */
+    .evento-create-page h2,
+    .evento-create-page h3 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+    }
+    
+    .evento-create-page p,
+    .evento-create-page label {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+    }
+    
+    /* Back button */
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Main card */
+    .main-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        overflow: hidden;
+        padding: 2rem;
+    }
+    
+    /* Section card */
+    .section-card {
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+    
+    .section-header-crear-evento {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+    }
+    
+    .section-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 3px 3px 6px rgba(99, 102, 241, 0.3);
+    }
+    
+    .section-icon svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: white;
+    }
+    
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #d2592a;
+    }
+    
+    /* Info box */
+    .info-box {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+        border-left: 4px solid #6366f1;
+        border-radius: 0 12px 12px 0;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-box p {
+        color: #4338ca;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    
+    .info-box strong {
+        color: #3730a3;
+    }
+    
+    /* Alert error */
+    .alert-error {
+        background: rgba(254, 226, 226, 0.8);
+        border-left: 4px solid #ef4444;
+        color: #991b1b;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border-radius: 0 12px 12px 0;
+    }
+    
+    .alert-error strong {
+        font-weight: 700;
+    }
+    
+    .alert-error ul {
+        list-style: disc;
+        margin-left: 1.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .alert-error li {
+        font-family: 'Poppins', sans-serif;
+        color: #991b1b;
+    }
+    
+    /* Labels */
+    .form-label {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    
+    /* Inputs y textareas */
+    .neuro-input,
+    .neuro-textarea {
+        font-family: 'Poppins', sans-serif;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+        transition: all 0.2s ease;
+        color: #5a5a5a;
+        width: 100%;
+        padding: 0.625rem 0.875rem;
+        border-radius: 10px;
+        font-size: 0.875rem;
+    }
+    
+    .neuro-input::placeholder,
+    .neuro-textarea::placeholder {
+        color: #9ca3af;
+    }
+    
+    .neuro-input:focus,
+    .neuro-textarea:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff, 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+
+    .neuro-textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    /* File upload area - Drag and drop style */
+    .file-upload-area {
+        border: 2px dashed rgba(107, 107, 107, 0.3);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.4);
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .file-upload-area:hover {
+        border-color: rgba(107, 107, 107, 0.5);
+        background: rgba(255, 255, 255, 0.5);
+    }
+    
+    .file-upload-area.dragover {
+        border-color: #6366f1;
+        background: rgba(224, 231, 255, 0.3);
+        transform: scale(1.01);
+    }
+    
+    .file-upload-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        pointer-events: none;
+    }
+    
+    .file-upload-icon {
+        width: 3rem;
+        height: 3rem;
+        color: #9ca3af;
+    }
+    
+    .file-upload-text {
+        font-family: 'Poppins', sans-serif;
+        color: #6b6b6b;
+        font-size: 0.9375rem;
+        font-weight: 400;
+    }
+    
+    .file-upload-text strong {
+        color: #2c2c2c;
+        font-weight: 600;
+    }
+    
+    .file-upload-hint {
+        font-family: 'Poppins', sans-serif;
+        color: #9ca3af;
+        font-size: 0.8125rem;
+        margin-top: 0.25rem;
+    }
+    
+    .neuro-file {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+    }
+    
+    /* File preview cuando se selecciona */
+    .file-preview {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+        display: none;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .file-preview.show {
+        display: flex;
+    }
+    
+    .file-preview-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    
+    .file-preview-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+    }
+    
+    .file-preview-info {
+        flex: 1;
+        text-align: left;
+    }
+    
+    .file-preview-name {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+        word-break: break-all;
+    }
+    
+    .file-preview-size {
+        font-family: 'Poppins', sans-serif;
+        color: #9ca3af;
+        font-size: 0.75rem;
+    }
+    
+    .file-preview-remove {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 8px;
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .file-preview-remove:hover {
+        background: rgba(239, 68, 68, 0.2);
+    }
+    
+    .file-preview-remove svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #ef4444;
+    }
+    
+    /* Criterio card */
+    .criterio-card {
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .criterio-card:hover {
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+    }
+    
+    .criterio-number {
+        position: absolute;
+        top: -0.5rem;
+        left: 1rem;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white !important;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        box-shadow: 2px 2px 4px rgba(99, 102, 241, 0.3);
+    }
+    
+    .criterio-grid {
+        display: grid;
+        grid-template-columns: 3fr 3fr 1fr;
+        gap: 0.5rem;
+        align-items: start;
+    }
+    
+    .ponderacion-input-wrapper {
+        position: relative;
+    }
+    
+    .ponderacion-input-wrapper .neuro-input {
+        padding-right: 2.5rem;
+        text-align: center;
+        font-weight: 600;
+    }
+    
+    .ponderacion-suffix {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b6b6b;
+        font-weight: 500;
+        pointer-events: none;
+    }
+    
+    /* Remove button */
+    .btn-remove-criterio {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 1.5rem;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .btn-remove-criterio p{
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-left: 0.25rem;
+        color: #dc2626;
+    }
+
+    .btn-remove-criterio:hover {
+        background: rgba(239, 68, 68, 0.2);
+        transform: scale(1.05);
+    }
+    
+    /* Add button */
+    .btn-add-criterio {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.875rem;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+        border: 2px dashed rgba(99, 102, 241, 0.4);
+        border-radius: 12px;
+        color: #4f46e5;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .btn-add-criterio:hover {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+        border-color: rgba(99, 102, 241, 0.6);
+        transform: translateY(-1px);
+    }
+    
+    /* Ponderación total */
+    .ponderacion-total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        margin-top: 1rem;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    }
+    
+    .ponderacion-total-label {
+        font-weight: 500;
+        color: #2c2c2c;
+    }
+    
+    .ponderacion-total-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    
+    .ponderacion-total-value.complete {
+        color: #059669;
+    }
+    
+    .ponderacion-total-value.incomplete {
+        color: #dc2626;
+    }
+    
+    .ponderacion-status {
+        font-size: 0.75rem;
+        margin-left: 0.5rem;
+        font-weight: 500;
+    }
+    
+    /* Submit button */
+    .submit-button {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        border-radius: 12px;
+        box-shadow: 4px 4px 12px rgba(99, 102, 241, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .submit-button:hover:not(:disabled) {
+        box-shadow: 6px 6px 16px rgba(99, 102, 241, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    .submit-button:disabled {
+        background: linear-gradient(135deg, #9ca3af, #6b7280);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: 4px 4px 8px rgba(156, 163, 175, 0.3);
+        opacity: 0.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .criterio-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .btn-remove-criterio {
+            margin-top: 0.5rem;
+        }
+
+        .file-upload-area {
+            padding: 2rem 1rem;
+        }
+        
+        .file-upload-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .ponderacion-total {
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+        }
+    }

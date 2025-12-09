@@ -1,302 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-    
-    /* Fondo degradado */
-    .editar-equipo-page {
-        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
-        min-height: 100vh;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    /* Hero Section */
-    .hero-section {
-        background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
-        border-radius: 25px;
-        padding: 2.5rem;
-        margin-bottom: 2rem;
-        box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.3), -6px -6px 12px rgba(60, 60, 60, 0.2);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -30%;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(232, 154, 60, 0.15) 0%, transparent 70%);
-        pointer-events: none;
-    }
-
-    .hero-title {
-        color: #ffffff;
-        font-size: 2rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-subtitle {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 1rem;
-    }
-    
-    /* Textos */
-    .editar-equipo-page h2 {
-        font-family: 'Poppins', sans-serif;
-        color: #2c2c2c;
-    }
-    
-    .editar-equipo-page p,
-    .editar-equipo-page label {
-        font-family: 'Poppins', sans-serif;
-        color: #6b6b6b;
-    }
-    
-    /* Back button */
-    .back-link {
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        color: black;
-        font-size: 0.875rem;
-        font-weight: 500;
-        margin-bottom: 1rem;
-        padding: 0.5rem 1rem;
-        background: #FFEEE2;
-        border-radius: 10px;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
-        transition: all 0.2s ease;
-        text-decoration: none;
-    }
-    
-    .back-link:hover {
-        color: #4f46e5;
-        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
-        transform: translateY(-2px);
-    }
-    
-    .back-link svg {
-        width: 1rem;
-        height: 1rem;
-        margin-right: 0.5rem;
-    }
-    
-    /* Main card */
-    .main-card {
-        background: #FFEEE2;
-        border-radius: 20px;
-        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
-        overflow: hidden;
-        padding: 2rem;
-    }
-    
-    /* Alert error */
-    .alert-error {
-        background: rgba(254, 226, 226, 0.8);
-        border-left: 4px solid #ef4444;
-        color: #991b1b;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
-        backdrop-filter: blur(10px);
-    }
-    
-    .alert-error p {
-        font-family: 'Poppins', sans-serif;
-        color: #991b1b;
-    }
-    
-    .alert-error .font-bold {
-        font-weight: 700;
-    }
-    
-    .alert-error ul {
-        list-style: disc;
-        margin-left: 1.5rem;
-        margin-top: 0.5rem;
-    }
-    
-    .alert-error li {
-        font-family: 'Poppins', sans-serif;
-        color: #991b1b;
-    }
-    
-    /* Labels */
-    .form-label {
-        font-family: 'Poppins', sans-serif;
-        color: #2c2c2c;
-        font-size: 0.875rem;
-        font-weight: 500;
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-    
-    /* Inputs y textareas */
-    .neuro-input,
-    .neuro-textarea {
-        font-family: 'Poppins', sans-serif;
-        background: rgba(255, 255, 255, 0.5);
-        border: none;
-        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
-        transition: all 0.2s ease;
-        backdrop-filter: blur(10px);
-        color: #2c2c2c;
-        width: 100%;
-        padding: 0.5rem 0.75rem;
-        border-radius: 0.375rem;
-        margin-top: 0.25rem;
-    }
-    
-    .neuro-input::placeholder,
-    .neuro-textarea::placeholder {
-        color: #9ca3af;
-    }
-    
-    .neuro-input:focus,
-    .neuro-textarea:focus {
-        outline: none;
-        box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
-    }
-    
-    /* Helper text */
-    .help-text {
-        font-size: 0.75rem;
-        color: #9ca3af;
-        margin-top: 0.25rem;
-    }
-    
-    /* Current image */
-    .current-image-container {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        margin: 1rem 0;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 15px;
-        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
-    }
-
-    .current-image-label {
-        font-weight: 500;
-        font-size: 0.875rem;
-        color: #6b6b6b;
-        margin-bottom: 0.5rem;
-    }
-    
-    .current-image {
-        height: 8rem;
-        width: 8rem;
-        object-fit: cover;
-        border-radius: 15px;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
-        border: 2px solid rgba(232, 154, 60, 0.3);
-    }
-    
-    /* No image placeholder */
-    .no-image-placeholder {
-        margin: 1rem 0;
-        padding: 1.5rem;
-        background: rgba(249, 250, 251, 0.5);
-        border-radius: 15px;
-        border: 2px dashed rgba(209, 213, 219, 0.8);
-        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
-    }
-    
-    .no-image-placeholder p {
-        font-size: 0.875rem;
-        color: #9ca3af;
-        text-align: center;
-    }
-    
-    .no-image-placeholder svg {
-        margin: 0 auto 0.5rem;
-        height: 3rem;
-        width: 3rem;
-        color: #9ca3af;
-    }
-    
-    /* File input */
-    .neuro-file {
-        font-family: 'Poppins', sans-serif;
-        margin-top: 0.25rem;
-        display: block;
-        width: 100%;
-        font-size: 0.875rem;
-        color: #6b6b6b;
-    }
-    
-    .neuro-file::file-selector-button {
-        margin-right: 1rem;
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        border: none;
-        font-size: 0.875rem;
-        font-weight: 600;
-        background: linear-gradient(135deg, rgba(224, 231, 255, 0.8), rgba(199, 210, 254, 0.8));
-        color: #3730a3;
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    .neuro-file::file-selector-button:hover {
-        background: linear-gradient(135deg, rgba(224, 231, 255, 1), rgba(199, 210, 254, 1));
-        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* Action buttons */
-    .action-buttons {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid rgba(232, 154, 60, 0.2);
-    }
-    
-    .btn-cancel {
-        font-family: 'Poppins', sans-serif;
-        background: rgba(255, 255, 255, 0.5);
-        color: #2c2c2c;
-        font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
-        transition: all 0.3s ease;
-        border: none;
-        backdrop-filter: blur(10px);
-        text-decoration: none;
-        display: inline-block;
-    }
-    
-    .btn-cancel:hover {
-        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
-        transform: translateY(-2px);
-    }
-    
-    .btn-submit {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
-        color: #ffffff;
-        font-weight: 600;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.375rem;
-        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
-        border: none;
-    }
-    
-    .btn-submit:hover {
-        box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
-        transform: translateY(-2px);
-    }
-</style>
 
 <div class="editar-equipo-page py-12">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
@@ -337,36 +41,62 @@
                 @method('PUT')
 
                 <!-- Nombre del Equipo -->
-                <div>
+                <div class="input-group-equipo">
                     <label for="nombre" class="form-label">Nombre del Equipo</label>
-                    <input type="text" name="nombre" id="nombre" class="neuro-input" value="{{ old('nombre', $equipo->nombre) }}" required autofocus>
+                    <input type="text" 
+                           name="nombre" 
+                           id="nombre" 
+                           class="neuro-input" 
+                           value="{{ old('nombre', $equipo->nombre) }}" 
+                           maxlength="85"
+                           required 
+                           autofocus>
+                    <small class="input-help-equipo">Máximo 85 caracteres</small>
                     <p class="help-text">Este es el nombre con el que el equipo será identificado.</p>
                 </div>
 
-                <!-- Imagen del Equipo -->
                 <div class="mt-6">
-                    <label for="ruta_imagen" class="form-label">
-                        Imagen del Equipo
-                    </label>
+                    <label for="ruta_imagen" class="form-label">Imagen del Equipo (Opcional)</label>
                     
-                    @if ($equipo->ruta_imagen)
-                        <div class="current-image-container">
-                            <img src="{{ asset('storage/' . $equipo->ruta_imagen) }}" alt="Imagen actual del equipo" class="current-image">
-                            <div>
-                                <p class="current-image-label">Imagen Actual</p>
-                                <p class="help-text">Selecciona una nueva imagen para reemplazar la actual.</p>
-                            </div>
-                        </div>
-                    @else
-                        <div class="no-image-placeholder">
-                            <svg stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    {{-- Área de drag and drop --}}
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <div class="file-upload-content">
+                            <svg class="file-upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                             </svg>
-                            <p>No hay imagen cargada. Puedes subir una para personalizar el equipo.</p>
+                            <p class="file-upload-text">
+                                <strong>Arrastra un archivo aquí o haz clic para seleccionar</strong>
+                            </p>
+                            <p class="file-upload-hint">
+                                JPG, PNG, GIF - Máximo 2MB
+                            </p>
                         </div>
-                    @endif
-
-                    <input type="file" name="ruta_imagen" id="ruta_imagen" accept="image/jpeg,image/png,image/jpg,image/gif" class="neuro-file">
+                        <input type="file" 
+                               name="ruta_imagen" 
+                               id="ruta_imagen" 
+                               accept="image/jpeg,image/png,image/jpg,image/gif"
+                               class="neuro-file"
+                               onchange="handleFileSelect(this)">
+                    </div>
+                    
+                    {{-- Preview del archivo seleccionado --}}
+                    <div id="filePreview" class="file-preview">
+                        <div class="file-preview-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="file-preview-info">
+                            <div class="file-preview-name" id="fileName"></div>
+                            <div class="file-preview-size" id="fileSize"></div>
+                        </div>
+                        <button type="button" class="file-preview-remove" onclick="removeFile()">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
                     <p class="help-text">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB.</p>
                 </div>
 
@@ -383,4 +113,292 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Estilos para validación */
+    .input-group-equipo {
+        position: relative;
+    }
+
+    .input-help-equipo {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.75rem;
+        color: rgba(107, 114, 128, 0.8);
+        margin-left: 5px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .validation-message-equipo {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Animación de entrada */
+    .validation-message-equipo.show {
+        display: flex !important;
+        animation: slideInEquipo 0.3s ease-out;
+    }
+
+    /* Animación de salida */
+    .validation-message-equipo.hide {
+        animation: slideOutEquipo 0.3s ease-out forwards;
+    }
+
+    @keyframes slideInEquipo {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideOutEquipo {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+    }
+
+    /* Error es ROJO */
+    .validation-message-equipo.error {
+        background: rgba(239, 68, 68, 0.2);
+        border-left: 4px solid #ef4444;
+        color: #fc7373ff;
+    }
+
+    .validation-message-equipo.error i {
+        color: #ef4444;
+        font-size: 0.9rem;
+    }
+
+    .validation-message-equipo.success {
+        background: rgba(40, 167, 69, 0.2);
+        border-left: 4px solid #28a745;
+        color: #53a953ff;
+    }
+
+    .validation-message-equipo.success i {
+        color: #28a745;
+        font-size: 0.9rem;
+    }
+
+    /* Borde de error es ROJO */
+    .neuro-input.error {
+        border-color: #ef4444 !important;
+        background: rgba(239, 68, 68, 0.1) !important;
+        animation: shakeEquipo 0.5s ease-in-out;
+    }
+
+    .neuro-input.success {
+        border-color: #28a745 !important;
+        background: rgba(40, 167, 69, 0.1) !important;
+    }
+
+    @keyframes shakeEquipo {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+        20%, 40%, 60%, 80% { transform: translateX(3px); }
+    }
+</style>
+
+<!-- FontAwesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+    // ============================================
+    // FUNCIONES DE VALIDACIÓN EN TIEMPO REAL
+    // ============================================
+    
+    function showValidationMessageEquipo(input, message, isError = true) {
+        let messageDiv = input.parentElement.querySelector('.validation-message-equipo');
+        
+        if (!messageDiv) {
+            messageDiv = document.createElement('div');
+            messageDiv.className = 'validation-message-equipo';
+            input.parentElement.appendChild(messageDiv);
+        }
+        
+        // Remover clases anteriores
+        messageDiv.classList.remove('error', 'success', 'show', 'hide');
+        
+        // Agregar nuevas clases
+        messageDiv.className = `validation-message-equipo ${isError ? 'error' : 'success'} show`;
+        messageDiv.innerHTML = `
+            <i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        input.classList.remove('error', 'success');
+        input.classList.add(isError ? 'error' : 'success');
+        
+        // Limpiar timeout anterior
+        clearTimeout(input.validationTimeout);
+        
+        input.validationTimeout = setTimeout(() => {
+            if (messageDiv) {
+                messageDiv.classList.remove('show');
+                messageDiv.classList.add('hide');
+                
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                    messageDiv.classList.remove('hide');
+                }, 300);
+            }
+            input.classList.remove('error', 'success');
+        }, 1800);
+    }
+
+    function hideValidationMessageEquipo(input) {
+        const messageDiv = input.parentElement.querySelector('.validation-message-equipo');
+        if (messageDiv) {
+            messageDiv.classList.remove('show');
+            messageDiv.classList.add('hide');
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+                messageDiv.classList.remove('hide');
+            }, 300);
+        }
+        input.classList.remove('error', 'success');
+        clearTimeout(input.validationTimeout);
+        clearTimeout(input.successDebounce);
+    }
+
+    // ============================================
+    // CONFIGURACIÓN AL CARGAR EL DOM
+    // ============================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // ============================================
+        // VALIDACIÓN: NOMBRE DEL EQUIPO
+        // ============================================
+        const nombreEquipo = document.getElementById('nombre');
+        if (nombreEquipo) {
+            nombreEquipo.addEventListener('input', function() {
+                const value = this.value;
+                
+                clearTimeout(this.successDebounce);
+                
+                if (value.length > 85) {
+                    this.value = value.substring(0, 85);
+                    showValidationMessageEquipo(this, 'Máximo 85 caracteres permitidos', true);
+                } else if (value) {
+                    hideValidationMessageEquipo(this);
+                    
+                    // Mensaje de éxito con debounce (500ms después de dejar de teclear)
+                    this.successDebounce = setTimeout(() => {
+                        const remaining = 85 - value.length;
+                        showValidationMessageEquipo(this, `${remaining} caracteres restantes`, false);
+                    }, 500);
+                } else {
+                    hideValidationMessageEquipo(this);
+                }
+            });
+
+            nombreEquipo.addEventListener('blur', function() {
+                clearTimeout(this.successDebounce);
+                if (this.value) {
+                    const remaining = 85 - this.value.length;
+                    showValidationMessageEquipo(this, `${remaining} caracteres restantes`, false);
+                }
+            });
+        }
+    });
+
+    // ============================================
+    // FUNCIONES PARA MANEJO DE ARCHIVOS
+    // ============================================
+    
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileInput = document.getElementById('ruta_imagen');
+    const filePreview = document.getElementById('filePreview');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        fileUploadArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        fileUploadArea.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        fileUploadArea.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        fileUploadArea.classList.add('dragover');
+    }
+    
+    function unhighlight() {
+        fileUploadArea.classList.remove('dragover');
+    }
+    
+    fileUploadArea.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelect(fileInput);
+        }
+    }
+    
+    function handleFileSelect(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const size = (file.size / 1024 / 1024).toFixed(2);
+            
+            // Validar tamaño máximo (2MB)
+            if (parseFloat(size) > 2) {
+                alert('El archivo excede el tamaño máximo permitido de 2MB');
+                removeFile();
+                return;
+            }
+            
+            // Validar tipo de archivo
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+            if (!validTypes.includes(file.type)) {
+                alert('Solo se permiten archivos JPG, PNG o GIF');
+                removeFile();
+                return;
+            }
+            
+            fileName.textContent = file.name;
+            fileSize.textContent = `${size} MB`;
+            filePreview.classList.add('show');
+            fileUploadArea.style.display = 'none';
+        }
+    }
+    
+    function removeFile() {
+        fileInput.value = '';
+        filePreview.classList.remove('show');
+        fileUploadArea.style.display = 'block';
+    }
+</script>
 @endsection

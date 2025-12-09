@@ -1,0 +1,456 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Fondo degradado */
+.proyecto-individual-page-acpi {
+    background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Textos */
+.proyecto-individual-page-acpi h2,
+.proyecto-individual-page-acpi h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #2c2c2c;
+}
+
+.proyecto-individual-page-acpi p,
+.proyecto-individual-page-acpi label {
+    font-family: 'Poppins', sans-serif;
+    color: #6b6b6b;
+}
+
+/* Back link */
+.back-link-acpi {
+    font-family: 'Poppins', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    color: black;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background: #FFEEE2;
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.back-link-acpi:hover {
+    color: #4f46e5;
+    box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    transform: translateY(-2px);
+}
+
+.back-link-acpi svg {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* Info box equipo */
+.equipo-info-box-acpi {
+    background: linear-gradient(135deg, rgba(224, 231, 255, 0.5), rgba(237, 233, 254, 0.5));
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    backdrop-filter: blur(10px);
+}
+
+.equipo-info-box-acpi h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #312e81;
+    font-weight: 600;
+}
+
+.equipo-info-box-acpi p {
+    font-family: 'Poppins', sans-serif;
+    color: #4338ca;
+    font-size: 0.875rem;
+}
+
+.equipo-info-box-acpi .codigo-label-acpi {
+    font-size: 0.875rem;
+    color: #4f46e5;
+}
+
+.equipo-info-box-acpi .codigo-value-acpi {
+    font-family: 'Courier New', monospace;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #312e81;
+}
+
+/* Main card */
+.main-card-acpi {
+    background: #FFEEE2;
+    border-radius: 20px;
+    box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+    padding: 2rem;
+}
+
+/* Labels */
+.form-label-acpi {
+    font-family: 'Poppins', sans-serif;
+    color: #2c2c2c;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.required-asterisk-acpi {
+    color: #ef4444;
+}
+
+/* Inputs y textareas */
+.neuro-input-acpi,
+.neuro-textarea-acpi {
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    color: #2c2c2c;
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+}
+
+.neuro-input-acpi::placeholder,
+.neuro-textarea-acpi::placeholder {
+    color: #9ca3af;
+}
+
+.neuro-input-acpi:focus,
+.neuro-textarea-acpi:focus {
+    outline: none;
+    box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
+}
+
+.neuro-textarea-acpi {
+    resize: vertical;
+}
+
+/* Helper text */
+.helper-text-acpi {
+    font-family: 'Poppins', sans-serif;
+    color: #9ca3af;
+    font-size: 0.75rem;
+    margin-top: 0.375rem;
+}
+
+/* Error messages */
+.error-message-acpi {
+    font-family: 'Poppins', sans-serif;
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.375rem;
+}
+
+/* File upload area - Drag and drop style */
+.file-upload-area-acpi {
+    border: 2px dashed rgba(107, 107, 107, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.file-upload-area-acpi:hover {
+    border-color: rgba(107, 107, 107, 0.5);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.file-upload-area-acpi.dragover {
+    border-color: #6366f1;
+    background: rgba(224, 231, 255, 0.3);
+    transform: scale(1.01);
+}
+
+.file-upload-content-acpi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    pointer-events: none;
+}
+
+.file-upload-icon-acpi {
+    width: 3rem;
+    height: 3rem;
+    color: #9ca3af;
+}
+
+.file-upload-text-acpi {
+    font-family: 'Poppins', sans-serif;
+    color: #6b6b6b;
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
+
+.file-upload-text-acpi strong {
+    color: #2c2c2c;
+    font-weight: 600;
+}
+
+.file-upload-hint-acpi {
+    font-family: 'Poppins', sans-serif;
+    color: #9ca3af;
+    font-size: 0.8125rem;
+    margin-top: 0.25rem;
+}
+
+.neuro-file-acpi {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+/* File preview cuando se selecciona */
+.file-preview-acpi {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    display: none;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file-preview-acpi.show {
+    display: flex;
+}
+
+.file-preview-icon-acpi {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.file-preview-icon-acpi svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white;
+}
+
+.file-preview-info-acpi {
+    flex: 1;
+    text-align: left;
+}
+
+.file-preview-name-acpi {
+    font-family: 'Poppins', sans-serif;
+    color: #2c2c2c;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    word-break: break-all;
+}
+
+.file-preview-size-acpi {
+    font-family: 'Poppins', sans-serif;
+    color: #9ca3af;
+    font-size: 0.75rem;
+}
+
+.file-preview-remove-acpi {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-preview-remove-acpi:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.file-preview-remove-acpi svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #ef4444;
+}
+
+/* Divider */
+.section-divider-acpi {
+    border-top: 1px solid rgba(232, 154, 60, 0.2);
+    margin: 2rem 0;
+}
+
+/* Buttons */
+.button-secondary-acpi {
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.5);
+    color: #2c2c2c;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    transition: all 0.3s ease;
+    border: none;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button-secondary-acpi:hover {
+    box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    transform: translateY(-2px);
+}
+
+.button-primary-acpi {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.button-primary-acpi:hover {
+    box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
+    transform: translateY(-2px);
+}
+
+/* ============================================ */
+/* ESTILOS DE VALIDACIÓN */
+/* ============================================ */
+
+.input-group-acpi {
+    position: relative;
+}
+
+.input-help-acpi {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.75rem;
+    color: rgba(107, 114, 128, 0.8);
+    margin-left: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.validation-message-acpi {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Animación de entrada */
+.validation-message-acpi.show {
+    display: flex !important;
+    animation: slideInAcpi 0.3s ease-out;
+}
+
+/* Animación de salida */
+.validation-message-acpi.hide {
+    animation: slideOutAcpi 0.3s ease-out forwards;
+}
+
+@keyframes slideInAcpi {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutAcpi {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+}
+
+/* Error es ROJO */
+.validation-message-acpi.error {
+    background: rgba(239, 68, 68, 0.2);
+    border-left: 4px solid #ef4444;
+    color: #fc7373ff;
+}
+
+.validation-message-acpi.error i {
+    color: #ef4444;
+    font-size: 0.9rem;
+}
+
+.validation-message-acpi.success {
+    background: rgba(40, 167, 69, 0.2);
+    border-left: 4px solid #28a745;
+    color: #53a953ff;
+}
+
+.validation-message-acpi.success i {
+    color: #28a745;
+    font-size: 0.9rem;
+}
+
+/* Borde de error es ROJO */
+.neuro-input-acpi.error, .neuro-textarea-acpi.error {
+    border-color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+    animation: shakeAcpi 0.5s ease-in-out;
+}
+
+.neuro-input-acpi.success, .neuro-textarea-acpi.success {
+    border-color: #28a745 !important;
+    background: rgba(40, 167, 69, 0.1) !important;
+}
+
+@keyframes shakeAcpi {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+    20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .file-upload-area-acpi {
+        padding: 2rem 1rem;
+    }
+    
+    .file-upload-icon-acpi {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

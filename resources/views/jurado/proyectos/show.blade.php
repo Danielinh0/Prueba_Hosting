@@ -1,6 +1,149 @@
 @extends('jurado.layouts.app')
 
 @section('content')
+
+<div class="proyecto-detalle-page">
+    <div class="max-w-6xl mx-auto px-4">
+        <a href="{{ route('jurado.proyectos.index') }}" class="back-link">
+            ← Volver a Proyectos
+        </a>
+
+        {{-- Header del Proyecto --}}
+        <div class="project-header">
+            <h1 class="project-title">{{ $proyectoEvento->titulo }}</h1>
+            
+            <div class="project-badges">
+                <span class="badge badge-event">{{ $evento->nombre }}</span>
+                <span class="badge badge-type">
+                    {{ $proyectoEvento->esGeneral() ? 'Proyecto General' : 'Proyecto Individual' }}
+                </span>
+            </div>
+        </div>
+
+        {{-- Descripción --}}
+        @if($proyectoEvento->descripcion_completa)
+        <div class="content-section">
+            <h2 class="section-title"> Descripción</h2>
+            <div class="section-content">{{ $proyectoEvento->descripcion_completa }}</div>
+        </div>
+        @endif
+
+        {{-- Objetivo --}}
+        @if($proyectoEvento->objetivo)
+        <div class="content-section">
+            <h2 class="section-title"> Objetivo</h2>
+            <div class="section-content">{{ $proyectoEvento->objetivo }}</div>
+        </div>
+        @endif
+
+        {{-- Requisitos --}}
+        @if($proyectoEvento->requisitos)
+        <div class="content-section">
+            <h2 class="section-title"> Requisitos Técnicos</h2>
+            <div class="section-content">{{ $proyectoEvento->requisitos }}</div>
+        </div>
+        @endif
+
+        {{-- Premios --}}
+        @if($proyectoEvento->premios)
+        <div class="content-section">
+            <h2 class="section-title"> Premios</h2>
+            <div class="section-content">{{ $proyectoEvento->premios }}</div>
+        </div>
+        @endif
+
+        {{-- Recursos --}}
+        @if($proyectoEvento->archivo_bases || $proyectoEvento->archivo_recursos || $proyectoEvento->url_externa)
+        <div class="content-section">
+            <h2 class="section-title">📦 Recursos</h2>
+            <div class="download-grid">
+                @if($proyectoEvento->archivo_bases)
+                <div class="download-item">
+                    <div class="download-icon">📄</div>
+                    <div class="download-title">Bases del Proyecto</div>
+                    <a href="{{ Storage::url($proyectoEvento->archivo_bases) }}" target="_blank" class="download-link">
+                        Descargar →
+                    </a>
+                </div>
+                @endif
+
+                @if($proyectoEvento->archivo_recursos)
+                <div class="download-item">
+                    <div class="download-icon">📦</div>
+                    <div class="download-title">Recursos Adicionales</div>
+                    <a href="{{ Storage::url($proyectoEvento->archivo_recursos) }}" target="_blank" class="download-link">
+                        Descargar →
+                    </a>
+                </div>
+                @endif
+
+                @if($proyectoEvento->url_externa)
+                <div class="download-item">
+                    <div class="download-icon">🔗</div>
+                    <div class="download-title">Enlace Externo</div>
+                    <a href="{{ $proyectoEvento->url_externa }}" target="_blank" class="download-link">
+                        Abrir →
+                    </a>
+                </div>
+                @endif
+            </div>
+        </div>
+        @endif
+
+        {{-- Equipos Trabajando en Este Proyecto --}}
+        <div class="teams-section">
+            <h2 class="section-title">👥 Equipos ({{ $equipos->count() }})</h2>
+            
+            @foreach($equipos as $inscripcion)
+                <div class="team-card">
+                    <div class="team-header">
+                        <div>
+                            <h3 class="team-name">{{ $inscripcion->equipo->nombre }}</h3>
+                            <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem;">
+                                {{ $inscripcion->equipo->miembros->count() }} integrantes
+                            </p>
+                        </div>
+                        {{-- Aquí podrías agregar link para evaluar --}}
+                        @if($inscripcion->proyecto)
+                            <a href="#" class="btn-evaluate">
+                                Evaluar Avances
+                            </a>
+                        @endif
+                    </div>
+
+                    @if($inscripcion->proyecto)
+                    <div class="team-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">{{ $inscripcion->proyecto->avances->count() }}</div>
+                            <div class="stat-label">Avances</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">
+                                @if($inscripcion->proyecto->tareas->count() > 0)
+                                    {{ round(($inscripcion->proyecto->tareas->where('completada', true)->count() / $inscripcion->proyecto->tareas->count()) * 100) }}%
+                                @else
+                                    0%
+                                @endif
+                            </div>
+                            <div class="stat-label">Progreso</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">{{ $inscripcion->proyecto->tareas->count() }}</div>
+                            <div class="stat-label">Tareas</div>
+                        </div>
+                    </div>
+                    @else
+                        <p style="color: #9ca3af; font-size: 0.875rem; text-align: center; padding: 1rem 0;">
+                            Este equipo aún no ha iniciado su proyecto
+                        </p>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
@@ -193,145 +336,4 @@
         color: white;
     }
 </style>
-
-<div class="proyecto-detalle-page">
-    <div class="max-w-6xl mx-auto px-4">
-        <a href="{{ route('jurado.proyectos.index') }}" class="back-link">
-            ← Volver a Proyectos
-        </a>
-
-        {{-- Header del Proyecto --}}
-        <div class="project-header">
-            <h1 class="project-title">{{ $proyectoEvento->titulo }}</h1>
-            
-            <div class="project-badges">
-                <span class="badge badge-event">{{ $evento->nombre }}</span>
-                <span class="badge badge-type">
-                    {{ $proyectoEvento->esGeneral() ? 'Proyecto General' : 'Proyecto Individual' }}
-                </span>
-            </div>
-        </div>
-
-        {{-- Descripción --}}
-        @if($proyectoEvento->descripcion_completa)
-        <div class="content-section">
-            <h2 class="section-title"> Descripción</h2>
-            <div class="section-content">{{ $proyectoEvento->descripcion_completa }}</div>
-        </div>
-        @endif
-
-        {{-- Objetivo --}}
-        @if($proyectoEvento->objetivo)
-        <div class="content-section">
-            <h2 class="section-title"> Objetivo</h2>
-            <div class="section-content">{{ $proyectoEvento->objetivo }}</div>
-        </div>
-        @endif
-
-        {{-- Requisitos --}}
-        @if($proyectoEvento->requisitos)
-        <div class="content-section">
-            <h2 class="section-title"> Requisitos Técnicos</h2>
-            <div class="section-content">{{ $proyectoEvento->requisitos }}</div>
-        </div>
-        @endif
-
-        {{-- Premios --}}
-        @if($proyectoEvento->premios)
-        <div class="content-section">
-            <h2 class="section-title"> Premios</h2>
-            <div class="section-content">{{ $proyectoEvento->premios }}</div>
-        </div>
-        @endif
-
-        {{-- Recursos --}}
-        @if($proyectoEvento->archivo_bases || $proyectoEvento->archivo_recursos || $proyectoEvento->url_externa)
-        <div class="content-section">
-            <h2 class="section-title">📦 Recursos</h2>
-            <div class="download-grid">
-                @if($proyectoEvento->archivo_bases)
-                <div class="download-item">
-                    <div class="download-icon">📄</div>
-                    <div class="download-title">Bases del Proyecto</div>
-                    <a href="{{ Storage::url($proyectoEvento->archivo_bases) }}" target="_blank" class="download-link">
-                        Descargar →
-                    </a>
-                </div>
-                @endif
-
-                @if($proyectoEvento->archivo_recursos)
-                <div class="download-item">
-                    <div class="download-icon">📦</div>
-                    <div class="download-title">Recursos Adicionales</div>
-                    <a href="{{ Storage::url($proyectoEvento->archivo_recursos) }}" target="_blank" class="download-link">
-                        Descargar →
-                    </a>
-                </div>
-                @endif
-
-                @if($proyectoEvento->url_externa)
-                <div class="download-item">
-                    <div class="download-icon">🔗</div>
-                    <div class="download-title">Enlace Externo</div>
-                    <a href="{{ $proyectoEvento->url_externa }}" target="_blank" class="download-link">
-                        Abrir →
-                    </a>
-                </div>
-                @endif
-            </div>
-        </div>
-        @endif
-
-        {{-- Equipos Trabajando en Este Proyecto --}}
-        <div class="teams-section">
-            <h2 class="section-title">👥 Equipos ({{ $equipos->count() }})</h2>
-            
-            @foreach($equipos as $inscripcion)
-                <div class="team-card">
-                    <div class="team-header">
-                        <div>
-                            <h3 class="team-name">{{ $inscripcion->equipo->nombre }}</h3>
-                            <p style="font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem;">
-                                {{ $inscripcion->equipo->miembros->count() }} integrantes
-                            </p>
-                        </div>
-                        {{-- Aquí podrías agregar link para evaluar --}}
-                        @if($inscripcion->proyecto)
-                            <a href="#" class="btn-evaluate">
-                                Evaluar Avances
-                            </a>
-                        @endif
-                    </div>
-
-                    @if($inscripcion->proyecto)
-                    <div class="team-stats">
-                        <div class="stat-item">
-                            <div class="stat-value">{{ $inscripcion->proyecto->avances->count() }}</div>
-                            <div class="stat-label">Avances</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">
-                                @if($inscripcion->proyecto->tareas->count() > 0)
-                                    {{ round(($inscripcion->proyecto->tareas->where('completada', true)->count() / $inscripcion->proyecto->tareas->count()) * 100) }}%
-                                @else
-                                    0%
-                                @endif
-                            </div>
-                            <div class="stat-label">Progreso</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">{{ $inscripcion->proyecto->tareas->count() }}</div>
-                            <div class="stat-label">Tareas</div>
-                        </div>
-                    </div>
-                    @else
-                        <p style="color: #9ca3af; font-size: 0.875rem; text-align: center; padding: 1rem 0;">
-                            Este equipo aún no ha iniciado su proyecto
-                        </p>
-                    @endif
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
 @endsection

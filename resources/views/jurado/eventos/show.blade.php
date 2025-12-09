@@ -1,5 +1,125 @@
 @extends('jurado.layouts.app')
 @section('content')
+
+<div class="evento-detail-page">
+    <div class="evento-detail-container">
+        
+        <!-- Botón volver a eventos -->
+        <a href="{{ route('jurado.eventos.index') }}" class="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Volver a Eventos
+        </a>
+
+        <!-- Header con imagen y descripción -->
+        <div class="evento-header">
+            <!-- Imagen del evento -->
+            <div class="evento-imagen">
+                @if($evento->ruta_imagen)
+                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="{{ $evento->nombre }}">
+                @else
+                    <div style="height: 220px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
+                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                @endif
+                @if($eventoActivo)
+                    <div class="status-badge-large">Ya esta aqui!</div>
+                @else
+                    <div class="status-badge-large proximo">Proximamente</div>
+                @endif
+            </div>
+
+            <!-- Descripción -->
+            <div class="descripcion-section">
+                <h3 class="descripcion-title">Descripción</h3>
+                <div class="descripcion-card">
+                    <div class="descripcion-header">
+                        {{ $evento->nombre }} - {{ date('Y') }}
+                    </div>
+                    <div class="descripcion-body">
+                        {{ $evento->descripcion ?? 'Aquí debe de existir una descripción del evento' }}
+                    </div>
+                </div>
+                
+                {{-- Estado del jurado --}}
+                @if($esJuradoDelEvento)
+                    <div class="jurado-status asignado">
+                        ✓ Estás asignado como jurado en este evento
+                    </div>
+                @else
+                    <div class="jurado-status no-asignado">
+                        ⚠ No estás asignado como jurado en este evento
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <!-- Sección de Equipos -->
+        <div class="equipos-section">
+            <div class="section-header">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <h2>Equipos Inscritos</h2>
+                <span class="section-badge">
+                    {{ $evento->inscripciones->count() }} equipo(s)
+                </span>
+            </div>
+            
+            <div class="equipos-grid">
+                @if($evento->inscripciones->isNotEmpty())
+                    @foreach($evento->inscripciones as $inscripcion)
+                        @if($inscripcion->equipo)
+                            <div class="equipo-item">
+                                <div class="equipo-field">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <span class="equipo-nombre">{{ $inscripcion->equipo->nombre ?? 'Nombre del equipo' }}</span>
+                                </div>
+                                
+                                <div class="equipo-field">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    <span>Líder: {{ $inscripcion->equipo->lider_nombre }}</span>
+                                </div>
+
+                                <div class="equipo-field">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                    <span>{{ $inscripcion->equipo->nombre_proyecto }}</span>
+                                </div>
+
+                                <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $evento->id_evento, 'equipo' => $inscripcion->equipo->id_equipo]) }}" class="btn-explorar">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    Explorar
+                                </a>
+                            </div>
+                        @endif
+                    @endforeach
+                @else
+                    <div class="empty-state">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <h3>Sin equipos inscritos</h3>
+                        <p>Aún no hay equipos registrados en este evento.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
@@ -341,123 +461,4 @@
         }
     }
 </style>
-
-<div class="evento-detail-page">
-    <div class="evento-detail-container">
-        
-        <!-- Botón volver a eventos -->
-        <a href="{{ route('jurado.eventos.index') }}" class="back-btn">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Volver a Eventos
-        </a>
-
-        <!-- Header con imagen y descripción -->
-        <div class="evento-header">
-            <!-- Imagen del evento -->
-            <div class="evento-imagen">
-                @if($evento->ruta_imagen)
-                    <img src="{{ asset('storage/' . $evento->ruta_imagen) }}" alt="{{ $evento->nombre }}">
-                @else
-                    <div style="height: 220px; background: linear-gradient(135deg, #2c2c2c, #1a1a1a); display: flex; align-items: center; justify-content: center;">
-                        <svg style="width: 4rem; height: 4rem; color: rgba(232, 154, 60, 0.3);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                @endif
-                @if($eventoActivo)
-                    <div class="status-badge-large">Ya esta aqui!</div>
-                @else
-                    <div class="status-badge-large proximo">Proximamente</div>
-                @endif
-            </div>
-
-            <!-- Descripción -->
-            <div class="descripcion-section">
-                <h3 class="descripcion-title">Descripción</h3>
-                <div class="descripcion-card">
-                    <div class="descripcion-header">
-                        {{ $evento->nombre }} - {{ date('Y') }}
-                    </div>
-                    <div class="descripcion-body">
-                        {{ $evento->descripcion ?? 'Aquí debe de existir una descripción del evento' }}
-                    </div>
-                </div>
-                
-                {{-- Estado del jurado --}}
-                @if($esJuradoDelEvento)
-                    <div class="jurado-status asignado">
-                        ✓ Estás asignado como jurado en este evento
-                    </div>
-                @else
-                    <div class="jurado-status no-asignado">
-                        ⚠ No estás asignado como jurado en este evento
-                    </div>
-                @endif
-            </div>
-        </div>
-
-        <!-- Sección de Equipos -->
-        <div class="equipos-section">
-            <div class="section-header">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                <h2>Equipos Inscritos</h2>
-                <span class="section-badge">
-                    {{ $evento->inscripciones->count() }} equipo(s)
-                </span>
-            </div>
-            
-            <div class="equipos-grid">
-                @if($evento->inscripciones->isNotEmpty())
-                    @foreach($evento->inscripciones as $inscripcion)
-                        @if($inscripcion->equipo)
-                            <div class="equipo-item">
-                                <div class="equipo-field">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    </svg>
-                                    <span class="equipo-nombre">{{ $inscripcion->equipo->nombre ?? 'Nombre del equipo' }}</span>
-                                </div>
-                                
-                                <div class="equipo-field">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                    </svg>
-                                    <span>Líder: {{ $inscripcion->equipo->lider_nombre }}</span>
-                                </div>
-
-                                <div class="equipo-field">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                    </svg>
-                                    <span>{{ $inscripcion->equipo->nombre_proyecto }}</span>
-                                </div>
-
-                                <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $evento->id_evento, 'equipo' => $inscripcion->equipo->id_equipo]) }}" class="btn-explorar">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    </svg>
-                                    Explorar
-                                </a>
-                            </div>
-                        @endif
-                    @endforeach
-                @else
-                    <div class="empty-state">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <h3>Sin equipos inscritos</h3>
-                        <p>Aún no hay equipos registrados en este evento.</p>
-                    </div>
-                @endif
-            </div>
-        </div>
-
-    </div>
-</div>
 @endsection

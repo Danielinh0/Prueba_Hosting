@@ -41,10 +41,11 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nombre' => ['required', 'string', 'max:100'],
-            'app_paterno' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:150', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'nombre' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'],
+            'app_paterno' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'],
+            'app_materno' => ['nullable', 'string', 'max:100', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'],
+            'email' => ['required', 'string', 'email', 'max:150', 'unique:' . User::class, 'regex:/^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|outlook\.com|live\.com|yahoo\.com|edu\.mx|tec\.mx|itoaxaca\.edu\.mx)$/i'],
+            'password' => ['required', 'confirmed', 'min:8', 'max:16', 'regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,16}$/'],
             'tipo_registro' => ['required', 'in:estudiante,jurado'],
         ]);
         //? inicio de la trancción para nuestra validación que es especifica
@@ -56,7 +57,60 @@ class RegisteredUserController extends Controller
             if ($request->tipo_registro === 'estudiante') {
                 // Validar datos extra del estudiante
                 $request->validate([
-                    'numero_control' => ['required', 'string', 'max:20', 'unique:estudiantes'],
+                    'numero_control' => [
+                        'required',
+                        'string',
+                        'max:20',
+                        'unique:estudiantes',
+                        'regex:/^[BC]?\d{8}$/', // Letra C o B opcional + exactamente 8 dígitos
+                        function ($attribute, $value, $fail) use ($request) {
+                            // Quitar letras para análisis
+                            $numeros = preg_replace('/[^\d]/', '', $value);
+
+                            if (strlen($numeros) !== 8) {
+                                $fail($attribute . ' debe tener exactamente 8 dígitos (ej: 22161210 o B22161210).');
+                                return;
+                            }
+
+                            // Validar año de inscripción (2 primeros dígitos)
+                            $añoInscripcion = substr($numeros, 0, 2);
+                            $añoActual = date('y');
+
+                            // Convertir a año completo
+                            $añoCompleto = ($añoInscripcion > $añoActual) ? '19' . $añoInscripcion : '20' . $añoInscripcion;
+                            $añoCompletoActual = '20' . $añoActual;
+
+                            // Validar que no sea un año futuro
+                            if ($añoCompleto > $añoCompletoActual) {
+                                $fail($attribute . ' contiene un año de inscripción inválido.');
+                                return;
+                            }
+
+                            // Validar que no sea muy antiguo (ej: anterior a 2000)
+                            if ($añoCompleto < 2000) {
+                                $fail($attribute . ' contiene un año de inscripción muy antiguo (mínimo 2000).');
+                                return;
+                            }
+
+                            // Validar código de plantel (dígitos 3-4 o 3-4)
+                            $codigoPlantel = substr($numeros, 2, 2);
+                            $codigoPlantelValido = in_array($codigoPlantel, ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19']);
+
+                            if (!$codigoPlantelValido) {
+                                $fail($attribute . ' contiene un código de plantel inválido. Los códigos válidos son 10-19.');
+                                return;
+                            }
+
+                            // Validar letra inicial (si tiene)
+                            if (preg_match('/^[CB]/', $value)) {
+                                $letra = strtoupper(substr($value, 0, 1));
+                                if ($letra === 'C') {
+                                    // Estudiante con convalidación
+                                    // Aquí podrías agregar validaciones adicionales para convalidación
+                                }
+                            }
+                        }
+                    ],
                     'id_carrera' => ['required', 'exists:cat_carreras,id_carrera'],
                     'semestre' => ['required', 'integer', 'min:1', 'max:14'],
                 ]);

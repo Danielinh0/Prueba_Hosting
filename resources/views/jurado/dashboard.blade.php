@@ -1,7 +1,541 @@
 @extends('jurado.layouts.app')
 
 @section('content')
-    <style>
+
+    <div class="jurado-dashboard">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner animate-in">
+            <svg class="welcome-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="white" stroke-width="2"/>
+                <path d="M50 20 L50 50 L70 60" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="50" cy="50" r="5" fill="white"/>
+            </svg>
+            <h2>¡Hola, <span class="welcome-highlight">{{ Auth::user()->nombre }}</span>!</h2>
+            <p>Panel de evaluación de jurado - {{ now()->format('d \d\e F, Y') }}</p>
+        </div>
+
+        <div class="dashboard-container">
+            <section class="left-col">
+                <!-- Stats Grid -->
+                <h3 class="section-title animate-in">
+                    <i class="fas fa-chart-bar"></i>
+                    Resumen General
+                </h3>
+                
+                <div class="stats-grid animate-in delay-1">
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                                <rect x="15" y="15" width="70" height="70" rx="8" stroke="white" stroke-width="4"/>
+                                <path d="M30 35 L70 35" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M30 50 L55 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M30 65 L45 65" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value">{{ $estadisticas['eventosActivos'] }}</div>
+                        <div class="stat-label">Eventos Activos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                                <circle cx="50" cy="35" r="18" stroke="white" stroke-width="4"/>
+                                <path d="M20 85 C20 60 80 60 80 85" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value">{{ $estadisticas['totalEquipos'] }}</div>
+                        <div class="stat-label">Equipos Asignados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                                <circle cx="50" cy="50" r="38" stroke="white" stroke-width="4"/>
+                                <path d="M30 50 L45 65 L70 35" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value">{{ $estadisticas['evaluacionesCompletadas'] }}</div>
+                        <div class="stat-label">Evaluaciones Finalizadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                                <rect x="15" y="40" width="25" height="45" rx="4" stroke="white" stroke-width="4"/>
+                                <rect x="55" y="20" width="25" height="65" rx="4" stroke="white" stroke-width="4"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value">{{ $estadisticas['avancesPorCalificar'] }}</div>
+                        <div class="stat-label">Avances por Calificar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon yellow">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                                <rect x="20" y="10" width="60" height="80" rx="6" stroke="white" stroke-width="4"/>
+                                <path d="M35 30 L65 30" stroke="white" stroke-width="3"/>
+                                <path d="M35 45 L65 45" stroke="white" stroke-width="3"/>
+                                <path d="M35 60 L55 60" stroke="white" stroke-width="3"/>
+                                <path d="M35 75 L50 75" stroke="white" stroke-width="3"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value">{{ $estadisticas['borradores'] }}</div>
+                        <div class="stat-label">Borradores Guardados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                                <rect x="20" y="10" width="60" height="80" rx="6" stroke="white" stroke-width="4"/>
+                                <path d="M35 30 L65 30" stroke="white" stroke-width="3"/>
+                                <circle cx="35" cy="48" r="5" fill="white"/>
+                                <path d="M48 48 L65 48" stroke="white" stroke-width="3"/>
+                                <circle cx="35" cy="66" r="5" fill="white"/>
+                                <path d="M48 66 L65 66" stroke="white" stroke-width="3"/>
+                            </svg>
+                        </div>
+                        <div class="stat-value">{{ $estadisticas['evalFinalPendiente'] }}</div>
+                        <div class="stat-label">Eval. Final Pendiente</div>
+                    </div>
+                </div>
+
+                <!-- Carrusel de Eventos Asignados -->
+                <h3 class="section-title animate-in delay-2">
+                    <i class="fas fa-calendar-alt"></i>
+                    Eventos Asignados
+                </h3>
+
+                @if($eventosAsignados->count() > 0)
+                    <div class="carousel-container animate-in delay-2" id="eventosCarousel">
+                        <div class="carousel-track-container">
+                            <div class="carousel-track" id="eventosTrack">
+                                @foreach($eventosAsignados as $evento)
+                                    <div class="carousel-slide">
+                                        <div class="neu-card" style="margin-bottom: 0;">
+                                            <div class="event-card-header">
+                                                <span class="event-badge {{ strtolower(str_replace(' ', '', $evento->estado)) }}">
+                                                    <i class="fas fa-{{ $evento->estado === 'Activo' ? 'bolt' : ($evento->estado === 'En Progreso' ? 'spinner' : 'flag-checkered') }}"></i>
+                                                    {{ $evento->estado }}
+                                                </span>
+                                                {{ $evento->nombre }}
+                                            </div>
+                                            <div class="event-card-body">
+                                                <p class="event-desc">{{ Str::limit($evento->descripcion ?? 'Sin descripción disponible', 100) }}</p>
+                                                <div class="event-meta">
+                                                    <p class="event-date">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                        {{ $evento->fecha_inicio ? $evento->fecha_inicio->format('d M, Y') : 'Sin fecha' }}
+                                                    </p>
+                                                    <p class="event-participants">
+                                                        <i class="fas fa-users"></i>
+                                                        {{ $evento->inscripciones_count }} equipos
+                                                    </p>
+                                                </div>
+                                                <a href="{{ route('jurado.eventos.show', $evento->id_evento) }}" class="event-link">
+                                                    Ver equipos <i class="fas fa-arrow-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        
+                        <div class="carousel-nav">
+                            <button class="carousel-arrow prev" onclick="eventosCarousel.prev()">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="carousel-dots" id="eventosDots"></div>
+                            <button class="carousel-arrow next" onclick="eventosCarousel.next()">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 6L15 12L9 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="carousel-progress">
+                            <div class="carousel-progress-bar" id="eventosProgress"></div>
+                        </div>
+                    </div>
+                @else
+                    <div class="neu-card animate-in delay-2" style="padding: 1.5rem;">
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-times"></i>
+                            <p>No tienes eventos asignados actualmente.</p>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Borradores Section -->
+                @if($borradores->count() > 0)
+                    <h3 class="section-title animate-in delay-3">
+                        <i class="fas fa-file-alt"></i>
+                        Borradores Guardados
+                    </h3>
+                    <div class="animate-in delay-3">
+                        @foreach($borradores->take(3) as $borrador)
+                            <div class="borrador-card">
+                                <div class="borrador-header">
+                                    <h4 class="borrador-title">{{ $borrador->equipo->nombre }}</h4>
+                                    <span class="borrador-time">{{ $borrador->updated_at->diffForHumans() }}</span>
+                                </div>
+                                <p class="borrador-meta">
+                                    <i class="fas fa-flag"></i> {{ $borrador->evento->nombre ?? 'Evento' }}
+                                    @if($borrador->proyecto)
+                                        · <i class="fas fa-project-diagram"></i> {{ Str::limit($borrador->proyecto->nombre, 25) }}
+                                    @endif
+                                </p>
+                                <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $borrador->evento->id_evento ?? 0, 'equipo' => $borrador->equipo->id_equipo]) }}" class="borrador-btn">
+                                    <i class="fas fa-edit"></i> Retomar evaluación
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </section>
+
+            <section class="right-col">
+                <!-- Carrusel de Evaluaciones Pendientes -->
+                <h3 class="section-title animate-in">
+                    <i class="fas fa-clipboard-check"></i>
+                    Evaluaciones Pendientes
+                </h3>
+
+                @if($evaluacionesPendientes->count() > 0)
+                    <div class="carousel-container animate-in delay-1" id="evalCarousel">
+                        <div class="carousel-track-container">
+                            <div class="carousel-track" id="evalTrack">
+                                @foreach($evaluacionesPendientes as $pendiente)
+                                    <div class="carousel-slide">
+                                        <div class="eval-card" style="margin-bottom: 0;">
+                                            <div class="eval-header">
+                                                <div class="eval-avatar">
+                                                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                                                        <circle cx="50" cy="32" r="16" stroke="white" stroke-width="4"/>
+                                                        <path d="M22 82 C22 58 78 58 78 82" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="eval-info">
+                                                    <h4>{{ $pendiente->equipo->nombre ?? 'Equipo' }}</h4>
+                                                    <p>{{ $pendiente->evento->nombre ?? 'Evento' }}</p>
+                                                </div>
+                                            </div>
+                                            
+                                            @if($pendiente->totalAvances > 0)
+                                                <div class="eval-progress">
+                                                    <div class="progress-bar-container">
+                                                        @php
+                                                            $porcentaje = ($pendiente->avancesCalificados / $pendiente->totalAvances) * 100;
+                                                        @endphp
+                                                        <div class="progress-bar {{ $porcentaje == 100 ? 'complete' : '' }}" style="width: {{ $porcentaje }}%"></div>
+                                                    </div>
+                                                    <span class="progress-text">{{ $pendiente->avancesCalificados }}/{{ $pendiente->totalAvances }}</span>
+                                                </div>
+                                            @endif
+                                            
+                                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                                                @if($pendiente->tieneBorrador)
+                                                    <span class="eval-status borrador">
+                                                        <i class="fas fa-file-alt"></i> Borrador guardado
+                                                    </span>
+                                                @elseif($pendiente->totalAvances === 0)
+                                                    <span class="eval-status sin-avances">
+                                                        <i class="fas fa-inbox"></i> No hay avances
+                                                    </span>
+                                                @elseif($pendiente->todosAvancesCalificados)
+                                                    <span class="eval-status listo">
+                                                        <i class="fas fa-check-circle"></i> Listo para evaluar
+                                                    </span>
+                                                @else
+                                                    <span class="eval-status pendiente">
+                                                        <i class="fas fa-clock"></i> Avances pendientes
+                                                    </span>
+                                                @endif
+                                                
+                                                <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $pendiente->evento->id_evento, 'equipo' => $pendiente->equipo->id_equipo]) }}" class="event-link">
+                                                    Evaluar <i class="fas fa-arrow-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        
+                        <div class="carousel-nav">
+                            <button class="carousel-arrow prev" onclick="evalCarousel.prev()">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <div class="carousel-dots" id="evalDots"></div>
+                            <button class="carousel-arrow next" onclick="evalCarousel.next()">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 6L15 12L9 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="carousel-progress">
+                            <div class="carousel-progress-bar" id="evalProgress"></div>
+                        </div>
+                    </div>
+                @else
+                    <div class="neu-card animate-in delay-1" style="padding: 1.5rem;">
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-check"></i>
+                            <p>¡Excelente! No tienes evaluaciones pendientes.</p>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Quick Actions -->
+                <h3 class="section-title animate-in delay-2" style="margin-top: 2rem;">
+                    <i class="fas fa-bolt"></i>
+                    Acciones Rápidas
+                </h3>
+                
+                <div class="quick-actions animate-in delay-2">
+                    <a href="{{ route('jurado.eventos.index') }}" class="action-card">
+                        <div class="action-icon" style="background: linear-gradient(135deg, #e89a3c, #d98a2c);">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                                <rect x="15" y="15" width="70" height="70" rx="8" stroke="white" stroke-width="4"/>
+                                <path d="M30 35 L70 35" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M30 50 L55 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M30 65 L45 65" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="action-content">
+                            <h4>MIS EVENTOS</h4>
+                            <p>Ver todos los eventos</p>
+                        </div>
+                    </a>
+                    
+                    @if($eventosAsignados->whereIn('estado', ['Activo', 'En Progreso'])->first())
+                        <a href="{{ route('jurado.eventos.show', $eventosAsignados->whereIn('estado', ['Activo', 'En Progreso'])->first()->id_evento) }}" class="action-card">
+                            <div class="action-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                                    <circle cx="35" cy="35" r="14" stroke="white" stroke-width="4"/>
+                                    <circle cx="65" cy="35" r="14" stroke="white" stroke-width="4"/>
+                                    <path d="M15 80 C15 62 55 62 55 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                    <path d="M45 80 C45 62 85 62 85 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="action-content">
+                                <h4>EVALUAR EQUIPOS</h4>
+                                <p>Evento activo</p>
+                            </div>
+                        </a>
+                    @else
+                        <div class="action-card" style="opacity: 0.6; cursor: not-allowed;">
+                            <div class="action-icon" style="background: linear-gradient(135deg, #E8C99B, #D4A96A);">
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+                                    <circle cx="35" cy="35" r="14" stroke="white" stroke-width="4"/>
+                                    <circle cx="65" cy="35" r="14" stroke="white" stroke-width="4"/>
+                                    <path d="M15 80 C15 62 55 62 55 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                    <path d="M45 80 C45 62 85 62 85 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="action-content">
+                                <h4>EVALUAR EQUIPOS</h4>
+                                <p>Sin eventos activos</p>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Evaluaciones Recientes -->
+                <h3 class="section-title animate-in delay-3" style="margin-top: 1rem;">
+                    <i class="fas fa-history"></i>
+                    Evaluaciones Recientes
+                </h3>
+                
+                <div class="neu-card animate-in delay-3" style="padding: 1.25rem;">
+                    @if($evaluacionesRecientes->count() > 0)
+                        @foreach($evaluacionesRecientes as $reciente)
+                            <div class="recent-item">
+                                <div class="recent-icon success">
+                                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                                        <path d="M20 50 L40 70 L80 25" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="recent-info">
+                                    <h5>{{ $reciente->inscripcion->equipo->nombre ?? 'Equipo' }}</h5>
+                                    <p>{{ $reciente->inscripcion->evento->nombre ?? 'Evento' }} · {{ $reciente->updated_at->diffForHumans() }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="empty-state" style="padding: 1.5rem;">
+                            <i class="fas fa-history"></i>
+                            <p>Aún no has completado evaluaciones.</p>
+                        </div>
+                    @endif
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        class Carousel {
+            constructor(trackId, dotsId, progressId, autoPlayDelay = 5000) {
+                this.track = document.getElementById(trackId);
+                this.dotsContainer = document.getElementById(dotsId);
+                this.progressBar = document.getElementById(progressId);
+                
+                if (!this.track) return;
+                
+                this.slides = this.track.querySelectorAll('.carousel-slide');
+                this.currentIndex = 0;
+                this.autoPlayDelay = autoPlayDelay;
+                this.autoPlayTimer = null;
+                this.progressInterval = null;
+                
+                this.init();
+            }
+            
+            init() {
+                if (this.slides.length === 0) return;
+                
+                this.createDots();
+                this.updateCarousel();
+                
+                if (this.autoPlayDelay > 0 && this.slides.length > 1) {
+                    this.startAutoPlay();
+                }
+                
+                const container = this.track.closest('.carousel-container');
+                if (container) {
+                    container.addEventListener('mouseenter', () => this.pauseAutoPlay());
+                    container.addEventListener('mouseleave', () => this.startAutoPlay());
+                }
+                
+                this.initTouchSupport();
+            }
+            
+            createDots() {
+                if (!this.dotsContainer || this.slides.length <= 1) return;
+                
+                this.dotsContainer.innerHTML = '';
+                this.slides.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('carousel-dot');
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => this.goTo(index));
+                    this.dotsContainer.appendChild(dot);
+                });
+            }
+            
+            updateCarousel() {
+                this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+                
+                if (this.dotsContainer) {
+                    const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === this.currentIndex);
+                    });
+                }
+            }
+            
+            next() {
+                this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+                this.updateCarousel();
+                this.resetProgress();
+            }
+            
+            prev() {
+                this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+                this.updateCarousel();
+                this.resetProgress();
+            }
+            
+            goTo(index) {
+                this.currentIndex = index;
+                this.updateCarousel();
+                this.resetProgress();
+            }
+            
+            startAutoPlay() {
+                if (this.autoPlayDelay <= 0 || this.slides.length <= 1) return;
+                
+                this.pauseAutoPlay();
+                this.startProgress();
+                
+                this.autoPlayTimer = setInterval(() => {
+                    this.next();
+                }, this.autoPlayDelay);
+            }
+            
+            pauseAutoPlay() {
+                if (this.autoPlayTimer) {
+                    clearInterval(this.autoPlayTimer);
+                    this.autoPlayTimer = null;
+                }
+                this.pauseProgress();
+            }
+            
+            startProgress() {
+                if (!this.progressBar) return;
+                
+                let progress = 0;
+                const increment = 100 / (this.autoPlayDelay / 50);
+                
+                this.progressBar.style.width = '0%';
+                
+                this.progressInterval = setInterval(() => {
+                    progress += increment;
+                    if (progress >= 100) progress = 0;
+                    this.progressBar.style.width = `${progress}%`;
+                }, 50);
+            }
+            
+            pauseProgress() {
+                if (this.progressInterval) {
+                    clearInterval(this.progressInterval);
+                    this.progressInterval = null;
+                }
+            }
+            
+            resetProgress() {
+                if (!this.progressBar) return;
+                this.progressBar.style.width = '0%';
+                this.pauseProgress();
+                if (this.autoPlayTimer) this.startProgress();
+            }
+            
+            initTouchSupport() {
+                let startX = 0;
+                let endX = 0;
+                
+                this.track.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    this.pauseAutoPlay();
+                }, { passive: true });
+                
+                this.track.addEventListener('touchmove', (e) => {
+                    endX = e.touches[0].clientX;
+                }, { passive: true });
+                
+                this.track.addEventListener('touchend', () => {
+                    const diff = startX - endX;
+                    const threshold = 50;
+                    
+                    if (Math.abs(diff) > threshold) {
+                        if (diff > 0) this.next();
+                        else this.prev();
+                    }
+                    
+                    this.startAutoPlay();
+                });
+            }
+        }
+        
+        let eventosCarousel, evalCarousel;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            eventosCarousel = new Carousel('eventosTrack', 'eventosDots', 'eventosProgress', 6000);
+            evalCarousel = new Carousel('evalTrack', 'evalDots', 'evalProgress', 5000);
+        });
+    </script>
+
+
+
+<style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
         :root {
@@ -759,535 +1293,4 @@
             color: #292929ff;
         }
     </style>
-
-    <div class="jurado-dashboard">
-        <!-- Welcome Banner -->
-        <div class="welcome-banner animate-in">
-            <svg class="welcome-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" stroke="white" stroke-width="2"/>
-                <path d="M50 20 L50 50 L70 60" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="50" cy="50" r="5" fill="white"/>
-            </svg>
-            <h2>¡Hola, <span class="welcome-highlight">{{ Auth::user()->nombre }}</span>!</h2>
-            <p>Panel de evaluación de jurado - {{ now()->format('d \d\e F, Y') }}</p>
-        </div>
-
-        <div class="dashboard-container">
-            <section class="left-col">
-                <!-- Stats Grid -->
-                <h3 class="section-title animate-in">
-                    <i class="fas fa-chart-bar"></i>
-                    Resumen General
-                </h3>
-                
-                <div class="stats-grid animate-in delay-1">
-                    <div class="stat-card">
-                        <div class="stat-icon orange">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-                                <rect x="15" y="15" width="70" height="70" rx="8" stroke="white" stroke-width="4"/>
-                                <path d="M30 35 L70 35" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                <path d="M30 50 L55 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                <path d="M30 65 L45 65" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="stat-value">{{ $estadisticas['eventosActivos'] }}</div>
-                        <div class="stat-label">Eventos Activos</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon blue">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-                                <circle cx="50" cy="35" r="18" stroke="white" stroke-width="4"/>
-                                <path d="M20 85 C20 60 80 60 80 85" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="stat-value">{{ $estadisticas['totalEquipos'] }}</div>
-                        <div class="stat-label">Equipos Asignados</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon green">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-                                <circle cx="50" cy="50" r="38" stroke="white" stroke-width="4"/>
-                                <path d="M30 50 L45 65 L70 35" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="stat-value">{{ $estadisticas['evaluacionesCompletadas'] }}</div>
-                        <div class="stat-label">Evaluaciones Finalizadas</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon purple">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-                                <rect x="15" y="40" width="25" height="45" rx="4" stroke="white" stroke-width="4"/>
-                                <rect x="55" y="20" width="25" height="65" rx="4" stroke="white" stroke-width="4"/>
-                            </svg>
-                        </div>
-                        <div class="stat-value">{{ $estadisticas['avancesPorCalificar'] }}</div>
-                        <div class="stat-label">Avances por Calificar</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon yellow">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-                                <rect x="20" y="10" width="60" height="80" rx="6" stroke="white" stroke-width="4"/>
-                                <path d="M35 30 L65 30" stroke="white" stroke-width="3"/>
-                                <path d="M35 45 L65 45" stroke="white" stroke-width="3"/>
-                                <path d="M35 60 L55 60" stroke="white" stroke-width="3"/>
-                                <path d="M35 75 L50 75" stroke="white" stroke-width="3"/>
-                            </svg>
-                        </div>
-                        <div class="stat-value">{{ $estadisticas['borradores'] }}</div>
-                        <div class="stat-label">Borradores Guardados</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon red">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-                                <rect x="20" y="10" width="60" height="80" rx="6" stroke="white" stroke-width="4"/>
-                                <path d="M35 30 L65 30" stroke="white" stroke-width="3"/>
-                                <circle cx="35" cy="48" r="5" fill="white"/>
-                                <path d="M48 48 L65 48" stroke="white" stroke-width="3"/>
-                                <circle cx="35" cy="66" r="5" fill="white"/>
-                                <path d="M48 66 L65 66" stroke="white" stroke-width="3"/>
-                            </svg>
-                        </div>
-                        <div class="stat-value">{{ $estadisticas['evalFinalPendiente'] }}</div>
-                        <div class="stat-label">Eval. Final Pendiente</div>
-                    </div>
-                </div>
-
-                <!-- Carrusel de Eventos Asignados -->
-                <h3 class="section-title animate-in delay-2">
-                    <i class="fas fa-calendar-alt"></i>
-                    Eventos Asignados
-                </h3>
-
-                @if($eventosAsignados->count() > 0)
-                    <div class="carousel-container animate-in delay-2" id="eventosCarousel">
-                        <div class="carousel-track-container">
-                            <div class="carousel-track" id="eventosTrack">
-                                @foreach($eventosAsignados as $evento)
-                                    <div class="carousel-slide">
-                                        <div class="neu-card" style="margin-bottom: 0;">
-                                            <div class="event-card-header">
-                                                <span class="event-badge {{ strtolower(str_replace(' ', '', $evento->estado)) }}">
-                                                    <i class="fas fa-{{ $evento->estado === 'Activo' ? 'bolt' : ($evento->estado === 'En Progreso' ? 'spinner' : 'flag-checkered') }}"></i>
-                                                    {{ $evento->estado }}
-                                                </span>
-                                                {{ $evento->nombre }}
-                                            </div>
-                                            <div class="event-card-body">
-                                                <p class="event-desc">{{ Str::limit($evento->descripcion ?? 'Sin descripción disponible', 100) }}</p>
-                                                <div class="event-meta">
-                                                    <p class="event-date">
-                                                        <i class="fas fa-calendar-alt"></i>
-                                                        {{ $evento->fecha_inicio ? $evento->fecha_inicio->format('d M, Y') : 'Sin fecha' }}
-                                                    </p>
-                                                    <p class="event-participants">
-                                                        <i class="fas fa-users"></i>
-                                                        {{ $evento->inscripciones_count }} equipos
-                                                    </p>
-                                                </div>
-                                                <a href="{{ route('jurado.eventos.show', $evento->id_evento) }}" class="event-link">
-                                                    Ver equipos <i class="fas fa-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        
-                        <div class="carousel-nav">
-                            <button class="carousel-arrow prev" onclick="eventosCarousel.prev()">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                            <div class="carousel-dots" id="eventosDots"></div>
-                            <button class="carousel-arrow next" onclick="eventosCarousel.next()">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 6L15 12L9 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="carousel-progress">
-                            <div class="carousel-progress-bar" id="eventosProgress"></div>
-                        </div>
-                    </div>
-                @else
-                    <div class="neu-card animate-in delay-2" style="padding: 1.5rem;">
-                        <div class="empty-state">
-                            <i class="fas fa-calendar-times"></i>
-                            <p>No tienes eventos asignados actualmente.</p>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Borradores Section -->
-                @if($borradores->count() > 0)
-                    <h3 class="section-title animate-in delay-3">
-                        <i class="fas fa-file-alt"></i>
-                        Borradores Guardados
-                    </h3>
-                    <div class="animate-in delay-3">
-                        @foreach($borradores->take(3) as $borrador)
-                            <div class="borrador-card">
-                                <div class="borrador-header">
-                                    <h4 class="borrador-title">{{ $borrador->equipo->nombre }}</h4>
-                                    <span class="borrador-time">{{ $borrador->updated_at->diffForHumans() }}</span>
-                                </div>
-                                <p class="borrador-meta">
-                                    <i class="fas fa-flag"></i> {{ $borrador->evento->nombre ?? 'Evento' }}
-                                    @if($borrador->proyecto)
-                                        · <i class="fas fa-project-diagram"></i> {{ Str::limit($borrador->proyecto->nombre, 25) }}
-                                    @endif
-                                </p>
-                                <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $borrador->evento->id_evento ?? 0, 'equipo' => $borrador->equipo->id_equipo]) }}" class="borrador-btn">
-                                    <i class="fas fa-edit"></i> Retomar evaluación
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-            </section>
-
-            <section class="right-col">
-                <!-- Carrusel de Evaluaciones Pendientes -->
-                <h3 class="section-title animate-in">
-                    <i class="fas fa-clipboard-check"></i>
-                    Evaluaciones Pendientes
-                </h3>
-
-                @if($evaluacionesPendientes->count() > 0)
-                    <div class="carousel-container animate-in delay-1" id="evalCarousel">
-                        <div class="carousel-track-container">
-                            <div class="carousel-track" id="evalTrack">
-                                @foreach($evaluacionesPendientes as $pendiente)
-                                    <div class="carousel-slide">
-                                        <div class="eval-card" style="margin-bottom: 0;">
-                                            <div class="eval-header">
-                                                <div class="eval-avatar">
-                                                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
-                                                        <circle cx="50" cy="32" r="16" stroke="white" stroke-width="4"/>
-                                                        <path d="M22 82 C22 58 78 58 78 82" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                                    </svg>
-                                                </div>
-                                                <div class="eval-info">
-                                                    <h4>{{ $pendiente->equipo->nombre ?? 'Equipo' }}</h4>
-                                                    <p>{{ $pendiente->evento->nombre ?? 'Evento' }}</p>
-                                                </div>
-                                            </div>
-                                            
-                                            @if($pendiente->totalAvances > 0)
-                                                <div class="eval-progress">
-                                                    <div class="progress-bar-container">
-                                                        @php
-                                                            $porcentaje = ($pendiente->avancesCalificados / $pendiente->totalAvances) * 100;
-                                                        @endphp
-                                                        <div class="progress-bar {{ $porcentaje == 100 ? 'complete' : '' }}" style="width: {{ $porcentaje }}%"></div>
-                                                    </div>
-                                                    <span class="progress-text">{{ $pendiente->avancesCalificados }}/{{ $pendiente->totalAvances }}</span>
-                                                </div>
-                                            @endif
-                                            
-                                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                                                @if($pendiente->tieneBorrador)
-                                                    <span class="eval-status borrador">
-                                                        <i class="fas fa-file-alt"></i> Borrador guardado
-                                                    </span>
-                                                @elseif($pendiente->totalAvances === 0)
-                                                    <span class="eval-status sin-avances">
-                                                        <i class="fas fa-inbox"></i> No hay avances
-                                                    </span>
-                                                @elseif($pendiente->todosAvancesCalificados)
-                                                    <span class="eval-status listo">
-                                                        <i class="fas fa-check-circle"></i> Listo para evaluar
-                                                    </span>
-                                                @else
-                                                    <span class="eval-status pendiente">
-                                                        <i class="fas fa-clock"></i> Avances pendientes
-                                                    </span>
-                                                @endif
-                                                
-                                                <a href="{{ route('jurado.eventos.equipo_evento', ['evento' => $pendiente->evento->id_evento, 'equipo' => $pendiente->equipo->id_equipo]) }}" class="event-link">
-                                                    Evaluar <i class="fas fa-arrow-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        
-                        <div class="carousel-nav">
-                            <button class="carousel-arrow prev" onclick="evalCarousel.prev()">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                            <div class="carousel-dots" id="evalDots"></div>
-                            <button class="carousel-arrow next" onclick="evalCarousel.next()">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 6L15 12L9 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="carousel-progress">
-                            <div class="carousel-progress-bar" id="evalProgress"></div>
-                        </div>
-                    </div>
-                @else
-                    <div class="neu-card animate-in delay-1" style="padding: 1.5rem;">
-                        <div class="empty-state">
-                            <i class="fas fa-clipboard-check"></i>
-                            <p>¡Excelente! No tienes evaluaciones pendientes.</p>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Quick Actions -->
-                <h3 class="section-title animate-in delay-2" style="margin-top: 2rem;">
-                    <i class="fas fa-bolt"></i>
-                    Acciones Rápidas
-                </h3>
-                
-                <div class="quick-actions animate-in delay-2">
-                    <a href="{{ route('jurado.eventos.index') }}" class="action-card">
-                        <div class="action-icon" style="background: linear-gradient(135deg, #e89a3c, #d98a2c);">
-                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
-                                <rect x="15" y="15" width="70" height="70" rx="8" stroke="white" stroke-width="4"/>
-                                <path d="M30 35 L70 35" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                <path d="M30 50 L55 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                <path d="M30 65 L45 65" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="action-content">
-                            <h4>MIS EVENTOS</h4>
-                            <p>Ver todos los eventos</p>
-                        </div>
-                    </a>
-                    
-                    @if($eventosAsignados->whereIn('estado', ['Activo', 'En Progreso'])->first())
-                        <a href="{{ route('jurado.eventos.show', $eventosAsignados->whereIn('estado', ['Activo', 'En Progreso'])->first()->id_evento) }}" class="action-card">
-                            <div class="action-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
-                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
-                                    <circle cx="35" cy="35" r="14" stroke="white" stroke-width="4"/>
-                                    <circle cx="65" cy="35" r="14" stroke="white" stroke-width="4"/>
-                                    <path d="M15 80 C15 62 55 62 55 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                    <path d="M45 80 C45 62 85 62 85 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="action-content">
-                                <h4>EVALUAR EQUIPOS</h4>
-                                <p>Evento activo</p>
-                            </div>
-                        </a>
-                    @else
-                        <div class="action-card" style="opacity: 0.6; cursor: not-allowed;">
-                            <div class="action-icon" style="background: linear-gradient(135deg, #E8C99B, #D4A96A);">
-                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="26" height="26">
-                                    <circle cx="35" cy="35" r="14" stroke="white" stroke-width="4"/>
-                                    <circle cx="65" cy="35" r="14" stroke="white" stroke-width="4"/>
-                                    <path d="M15 80 C15 62 55 62 55 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                    <path d="M45 80 C45 62 85 62 85 80" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="action-content">
-                                <h4>EVALUAR EQUIPOS</h4>
-                                <p>Sin eventos activos</p>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-
-                <!-- Evaluaciones Recientes -->
-                <h3 class="section-title animate-in delay-3" style="margin-top: 1rem;">
-                    <i class="fas fa-history"></i>
-                    Evaluaciones Recientes
-                </h3>
-                
-                <div class="neu-card animate-in delay-3" style="padding: 1.25rem;">
-                    @if($evaluacionesRecientes->count() > 0)
-                        @foreach($evaluacionesRecientes as $reciente)
-                            <div class="recent-item">
-                                <div class="recent-icon success">
-                                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
-                                        <path d="M20 50 L40 70 L80 25" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </div>
-                                <div class="recent-info">
-                                    <h5>{{ $reciente->inscripcion->equipo->nombre ?? 'Equipo' }}</h5>
-                                    <p>{{ $reciente->inscripcion->evento->nombre ?? 'Evento' }} · {{ $reciente->updated_at->diffForHumans() }}</p>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="empty-state" style="padding: 1.5rem;">
-                            <i class="fas fa-history"></i>
-                            <p>Aún no has completado evaluaciones.</p>
-                        </div>
-                    @endif
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <script>
-        class Carousel {
-            constructor(trackId, dotsId, progressId, autoPlayDelay = 5000) {
-                this.track = document.getElementById(trackId);
-                this.dotsContainer = document.getElementById(dotsId);
-                this.progressBar = document.getElementById(progressId);
-                
-                if (!this.track) return;
-                
-                this.slides = this.track.querySelectorAll('.carousel-slide');
-                this.currentIndex = 0;
-                this.autoPlayDelay = autoPlayDelay;
-                this.autoPlayTimer = null;
-                this.progressInterval = null;
-                
-                this.init();
-            }
-            
-            init() {
-                if (this.slides.length === 0) return;
-                
-                this.createDots();
-                this.updateCarousel();
-                
-                if (this.autoPlayDelay > 0 && this.slides.length > 1) {
-                    this.startAutoPlay();
-                }
-                
-                const container = this.track.closest('.carousel-container');
-                if (container) {
-                    container.addEventListener('mouseenter', () => this.pauseAutoPlay());
-                    container.addEventListener('mouseleave', () => this.startAutoPlay());
-                }
-                
-                this.initTouchSupport();
-            }
-            
-            createDots() {
-                if (!this.dotsContainer || this.slides.length <= 1) return;
-                
-                this.dotsContainer.innerHTML = '';
-                this.slides.forEach((_, index) => {
-                    const dot = document.createElement('div');
-                    dot.classList.add('carousel-dot');
-                    if (index === 0) dot.classList.add('active');
-                    dot.addEventListener('click', () => this.goTo(index));
-                    this.dotsContainer.appendChild(dot);
-                });
-            }
-            
-            updateCarousel() {
-                this.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
-                
-                if (this.dotsContainer) {
-                    const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
-                    dots.forEach((dot, index) => {
-                        dot.classList.toggle('active', index === this.currentIndex);
-                    });
-                }
-            }
-            
-            next() {
-                this.currentIndex = (this.currentIndex + 1) % this.slides.length;
-                this.updateCarousel();
-                this.resetProgress();
-            }
-            
-            prev() {
-                this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
-                this.updateCarousel();
-                this.resetProgress();
-            }
-            
-            goTo(index) {
-                this.currentIndex = index;
-                this.updateCarousel();
-                this.resetProgress();
-            }
-            
-            startAutoPlay() {
-                if (this.autoPlayDelay <= 0 || this.slides.length <= 1) return;
-                
-                this.pauseAutoPlay();
-                this.startProgress();
-                
-                this.autoPlayTimer = setInterval(() => {
-                    this.next();
-                }, this.autoPlayDelay);
-            }
-            
-            pauseAutoPlay() {
-                if (this.autoPlayTimer) {
-                    clearInterval(this.autoPlayTimer);
-                    this.autoPlayTimer = null;
-                }
-                this.pauseProgress();
-            }
-            
-            startProgress() {
-                if (!this.progressBar) return;
-                
-                let progress = 0;
-                const increment = 100 / (this.autoPlayDelay / 50);
-                
-                this.progressBar.style.width = '0%';
-                
-                this.progressInterval = setInterval(() => {
-                    progress += increment;
-                    if (progress >= 100) progress = 0;
-                    this.progressBar.style.width = `${progress}%`;
-                }, 50);
-            }
-            
-            pauseProgress() {
-                if (this.progressInterval) {
-                    clearInterval(this.progressInterval);
-                    this.progressInterval = null;
-                }
-            }
-            
-            resetProgress() {
-                if (!this.progressBar) return;
-                this.progressBar.style.width = '0%';
-                this.pauseProgress();
-                if (this.autoPlayTimer) this.startProgress();
-            }
-            
-            initTouchSupport() {
-                let startX = 0;
-                let endX = 0;
-                
-                this.track.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                    this.pauseAutoPlay();
-                }, { passive: true });
-                
-                this.track.addEventListener('touchmove', (e) => {
-                    endX = e.touches[0].clientX;
-                }, { passive: true });
-                
-                this.track.addEventListener('touchend', () => {
-                    const diff = startX - endX;
-                    const threshold = 50;
-                    
-                    if (Math.abs(diff) > threshold) {
-                        if (diff > 0) this.next();
-                        else this.prev();
-                    }
-                    
-                    this.startAutoPlay();
-                });
-            }
-        }
-        
-        let eventosCarousel, evalCarousel;
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            eventosCarousel = new Carousel('eventosTrack', 'eventosDots', 'eventosProgress', 6000);
-            evalCarousel = new Carousel('evalTrack', 'evalDots', 'evalProgress', 5000);
-        });
-    </script>
 @endsection

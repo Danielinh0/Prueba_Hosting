@@ -1,6 +1,160 @@
 @extends('layouts.prueba')
 
 @section('content')
+
+<div class="equipo-detalle-page">
+    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+        {{-- Header --}}
+        <div class="page-header">
+            <div class="header-info">
+                <a href="{{ route('dashboard') }}" class="back-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Volver al Dashboard
+                </a>
+                <h2>{{ $equipo->nombre }}</h2>
+                <p>Evento: {{ $evento->nombre }}</p>
+            </div>
+            @if($inscripcion->proyecto)
+                <a href="{{ route('jurado.evaluaciones.create', $inscripcion) }}" class="btn-evaluar">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Evaluar Proyecto
+                </a>
+            @endif
+        </div>
+
+        @if($proyecto)
+            {{-- Información del Proyecto --}}
+            <div class="neu-card">
+                <h3 class="card-title">
+                    <span class="card-title-icon">📁</span>
+                    {{ $proyecto->nombre }}
+                </h3>
+                
+                @if($proyecto->descripcion_tecnica)
+                    <div class="proyecto-section">
+                        <h4 class="section-label">Descripción Técnica</h4>
+                        <p class="section-content">{{ $proyecto->descripcion_tecnica }}</p>
+                    </div>
+                @endif
+
+                @if($proyecto->repositorio_url)
+                    <div class="proyecto-section">
+                        <h4 class="section-label">Repositorio</h4>
+                        <a href="{{ $proyecto->repositorio_url }}" target="_blank" class="repo-link">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                            </svg>
+                            {{ $proyecto->repositorio_url }}
+                        </a>
+                    </div>
+                @endif
+
+                <div class="card-footer">
+                    Proyecto registrado: {{ $proyecto->created_at->format('d/m/Y H:i') }}
+                </div>
+            </div>
+
+            {{-- Miembros del Equipo --}}
+            <div class="neu-card">
+                <h3 class="card-title">
+                    <span class="card-title-icon">👥</span>
+                    Miembros del Equipo
+                </h3>
+                <div class="miembros-grid">
+                    @foreach($inscripcion->miembros as $miembro)
+                        <div class="miembro-card">
+                            <div class="miembro-avatar">
+                                {{ substr($miembro->user->nombre, 0, 1) }}{{ substr($miembro->user->app_paterno, 0, 1) }}
+                            </div>
+                            <div class="miembro-info">
+                                <div class="miembro-nombre">
+                                    <span>{{ $miembro->user->nombre }} {{ $miembro->user->app_paterno }}</span>
+                                    @if($miembro->es_lider)
+                                        <span class="badge-lider">Líder</span>
+                                    @endif
+                                </div>
+                                <p class="miembro-rol">{{ $miembro->rolEquipo->nombre }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- Avances del Proyecto --}}
+            <div class="neu-card">
+                <div class="avances-header">
+                    <h3 class="card-title" style="margin-bottom: 0;">
+                        <span class="card-title-icon">📈</span>
+                        Avances Registrados
+                    </h3>
+                    <span class="avances-count">{{ $proyecto->avances->count() }}</span>
+                </div>
+
+                @forelse($proyecto->avances->sortByDesc('created_at') as $avance)
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            
+                            <div class="avance-card">
+                                <div class="avance-header">
+                                    @if($avance->titulo)
+                                        <h4 class="avance-titulo">{{ $avance->titulo }}</h4>
+                                    @endif
+                                    <div class="avance-meta">
+                                        <span>Por <span class="meta-autor">{{ $avance->registradoPor->nombre }} {{ $avance->registradoPor->app_paterno }}</span></span>
+                                        <span>·</span>
+                                        <span>{{ $avance->created_at->format('d/m/Y H:i') }}</span>
+                                        <span class="meta-time">({{ $avance->created_at->diffForHumans() }})</span>
+                                    </div>
+                                </div>
+
+                                <div class="avance-descripcion">{{ $avance->descripcion }}</div>
+
+                                @if($avance->archivo_evidencia)
+                                    <div class="avance-archivo">
+                                        <a href="{{ Storage::url($avance->archivo_evidencia) }}" target="_blank" class="archivo-link">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                                            </svg>
+                                            Ver archivo adjunto
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="empty-state">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <h4>No hay avances registrados aún</h4>
+                        <p>El equipo aún no ha reportado avances en su proyecto</p>
+                    </div>
+                @endforelse
+            </div>
+
+        @else
+            {{-- Sin Proyecto --}}
+            <div class="alert-sin-proyecto">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+                <div class="alert-content">
+                    <h3>Este equipo aún no ha creado su proyecto</h3>
+                    <p>El líder del equipo debe crear el proyecto para comenzar a registrar avances.</p>
+                </div>
+            </div>
+        @endif
+    </div>
+</div>
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
@@ -455,155 +609,4 @@
     }
 </style>
 
-<div class="equipo-detalle-page">
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-        {{-- Header --}}
-        <div class="page-header">
-            <div class="header-info">
-                <a href="{{ route('dashboard') }}" class="back-link">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    Volver al Dashboard
-                </a>
-                <h2>{{ $equipo->nombre }}</h2>
-                <p>Evento: {{ $evento->nombre }}</p>
-            </div>
-            @if($inscripcion->proyecto)
-                <a href="{{ route('jurado.evaluaciones.create', $inscripcion) }}" class="btn-evaluar">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                    </svg>
-                    Evaluar Proyecto
-                </a>
-            @endif
-        </div>
-
-        @if($proyecto)
-            {{-- Información del Proyecto --}}
-            <div class="neu-card">
-                <h3 class="card-title">
-                    <span class="card-title-icon">📁</span>
-                    {{ $proyecto->nombre }}
-                </h3>
-                
-                @if($proyecto->descripcion_tecnica)
-                    <div class="proyecto-section">
-                        <h4 class="section-label">Descripción Técnica</h4>
-                        <p class="section-content">{{ $proyecto->descripcion_tecnica }}</p>
-                    </div>
-                @endif
-
-                @if($proyecto->repositorio_url)
-                    <div class="proyecto-section">
-                        <h4 class="section-label">Repositorio</h4>
-                        <a href="{{ $proyecto->repositorio_url }}" target="_blank" class="repo-link">
-                            <svg fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-                            </svg>
-                            {{ $proyecto->repositorio_url }}
-                        </a>
-                    </div>
-                @endif
-
-                <div class="card-footer">
-                    Proyecto registrado: {{ $proyecto->created_at->format('d/m/Y H:i') }}
-                </div>
-            </div>
-
-            {{-- Miembros del Equipo --}}
-            <div class="neu-card">
-                <h3 class="card-title">
-                    <span class="card-title-icon">👥</span>
-                    Miembros del Equipo
-                </h3>
-                <div class="miembros-grid">
-                    @foreach($inscripcion->miembros as $miembro)
-                        <div class="miembro-card">
-                            <div class="miembro-avatar">
-                                {{ substr($miembro->user->nombre, 0, 1) }}{{ substr($miembro->user->app_paterno, 0, 1) }}
-                            </div>
-                            <div class="miembro-info">
-                                <div class="miembro-nombre">
-                                    <span>{{ $miembro->user->nombre }} {{ $miembro->user->app_paterno }}</span>
-                                    @if($miembro->es_lider)
-                                        <span class="badge-lider">Líder</span>
-                                    @endif
-                                </div>
-                                <p class="miembro-rol">{{ $miembro->rolEquipo->nombre }}</p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            {{-- Avances del Proyecto --}}
-            <div class="neu-card">
-                <div class="avances-header">
-                    <h3 class="card-title" style="margin-bottom: 0;">
-                        <span class="card-title-icon">📈</span>
-                        Avances Registrados
-                    </h3>
-                    <span class="avances-count">{{ $proyecto->avances->count() }}</span>
-                </div>
-
-                @forelse($proyecto->avances->sortByDesc('created_at') as $avance)
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            
-                            <div class="avance-card">
-                                <div class="avance-header">
-                                    @if($avance->titulo)
-                                        <h4 class="avance-titulo">{{ $avance->titulo }}</h4>
-                                    @endif
-                                    <div class="avance-meta">
-                                        <span>Por <span class="meta-autor">{{ $avance->registradoPor->nombre }} {{ $avance->registradoPor->app_paterno }}</span></span>
-                                        <span>·</span>
-                                        <span>{{ $avance->created_at->format('d/m/Y H:i') }}</span>
-                                        <span class="meta-time">({{ $avance->created_at->diffForHumans() }})</span>
-                                    </div>
-                                </div>
-
-                                <div class="avance-descripcion">{{ $avance->descripcion }}</div>
-
-                                @if($avance->archivo_evidencia)
-                                    <div class="avance-archivo">
-                                        <a href="{{ Storage::url($avance->archivo_evidencia) }}" target="_blank" class="archivo-link">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
-                                            </svg>
-                                            Ver archivo adjunto
-                                        </a>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="empty-state">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        <h4>No hay avances registrados aún</h4>
-                        <p>El equipo aún no ha reportado avances en su proyecto</p>
-                    </div>
-                @endforelse
-            </div>
-
-        @else
-            {{-- Sin Proyecto --}}
-            <div class="alert-sin-proyecto">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                </svg>
-                <div class="alert-content">
-                    <h3>Este equipo aún no ha creado su proyecto</h3>
-                    <p>El líder del equipo debe crear el proyecto para comenzar a registrar avances.</p>
-                </div>
-            </div>
-        @endif
-    </div>
-</div>
 @endsection

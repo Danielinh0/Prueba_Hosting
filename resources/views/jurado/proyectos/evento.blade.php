@@ -1,6 +1,52 @@
 @extends('jurado.layouts.app')
 
 @section('content')
+
+<div class="evento-proyectos-page">
+    <div class="max-w-7xl mx-auto px-4">
+        <a href="{{ route('jurado.proyectos.index') }}" class="back-link">
+            ← Volver a Proyectos
+        </a>
+
+        <div class="page-header">
+            <h1 class="event-title">{{ $evento->nombre }}</h1>
+            <p style="color: #6b7280; margin-top: 0.5rem;">
+                {{ $proyectos->count() }} proyectos individuales
+            </p>
+        </div>
+
+        <div class="project-grid">
+            @foreach($proyectos as $proyecto)
+                <div class="project-card">
+                    <h3 class="project-title">{{ $proyecto->titulo }}</h3>
+                    <p class="team-name">🏆 Equipo: {{ $proyecto->inscripcion->equipo->nombre }}</p>
+
+                    @if($proyecto->inscripcion->proyecto)
+                    <div class="project-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">{{ $proyecto->inscripcion->proyecto->avances->count() }}</div>
+                            <div class="stat-label">Avances</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">{{ $proyecto->inscripcion->proyecto->tareas->count() }}</div>
+                            <div class="stat-label">Tareas</div>
+                        </div>
+                    </div>
+                    @else
+                    <div style="padding: 1rem; text-align: center; color: #9ca3af; font-size: 0.875rem;">
+                        Sin avances aún
+                    </div>
+                    @endif
+
+                    <a href="{{ route('jurado.proyectos.show', $proyecto) }}" class="btn-view-project">
+                        Ver Detalles →
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
@@ -105,49 +151,4 @@
         color: white;
     }
 </style>
-
-<div class="evento-proyectos-page">
-    <div class="max-w-7xl mx-auto px-4">
-        <a href="{{ route('jurado.proyectos.index') }}" class="back-link">
-            ← Volver a Proyectos
-        </a>
-
-        <div class="page-header">
-            <h1 class="event-title">{{ $evento->nombre }}</h1>
-            <p style="color: #6b7280; margin-top: 0.5rem;">
-                {{ $proyectos->count() }} proyectos individuales
-            </p>
-        </div>
-
-        <div class="project-grid">
-            @foreach($proyectos as $proyecto)
-                <div class="project-card">
-                    <h3 class="project-title">{{ $proyecto->titulo }}</h3>
-                    <p class="team-name">🏆 Equipo: {{ $proyecto->inscripcion->equipo->nombre }}</p>
-
-                    @if($proyecto->inscripcion->proyecto)
-                    <div class="project-stats">
-                        <div class="stat-item">
-                            <div class="stat-value">{{ $proyecto->inscripcion->proyecto->avances->count() }}</div>
-                            <div class="stat-label">Avances</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">{{ $proyecto->inscripcion->proyecto->tareas->count() }}</div>
-                            <div class="stat-label">Tareas</div>
-                        </div>
-                    </div>
-                    @else
-                    <div style="padding: 1rem; text-align: center; color: #9ca3af; font-size: 0.875rem;">
-                        Sin avances aún
-                    </div>
-                    @endif
-
-                    <a href="{{ route('jurado.proyectos.show', $proyecto) }}" class="btn-view-project">
-                        Ver Detalles →
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
 @endsection

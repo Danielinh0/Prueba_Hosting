@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    /* Página principal */
+    .calificar-avance-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        padding: 2rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Botón volver neuromórfico */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 253, 244, 0.9);
+        color: #e89a3c;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+
+    .back-btn:hover {
+        color: #d98a2c;
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    }
+
+    .back-btn svg path {
+        stroke: #e89a3c;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover svg path {
+        stroke: #d98a2c;
+    }
+
+    /* Título de página */
+    .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c2c2c;
+        margin-bottom: 1.5rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Alert de reevaluación */
+    .alert-reevaluacion {
+        background: linear-gradient(135deg, rgba(254, 243, 199, 0.8), rgba(253, 230, 138, 0.8));
+        border-radius: 16px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        border-left: 4px solid #f59e0b;
+    }
+
+    .alert-reevaluacion svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: #d97706;
+        flex-shrink: 0;
+    }
+
+    .alert-reevaluacion p {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .alert-reevaluacion .alert-title {
+        font-weight: 600;
+        color: #92400e;
+    }
+
+    .alert-reevaluacion .alert-details {
+        font-size: 0.875rem;
+        color: #b45309;
+    }
+
+    /* Card neuromórfica */
+    .neu-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Sección de información */
+    .info-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .info-section h2,
+    .info-section h3 {
+        font-family: 'Poppins', sans-serif;
+        color: #2c2c2c;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-section h2 {
+        font-size: 1.125rem;
+    }
+
+    .info-section h3 {
+        font-size: 1rem;
+    }
+
+    .info-section p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.875rem;
+        color: #6b6b6b;
+        margin-bottom: 0.25rem;
+    }
+
+    /* Text box neuromórfico */
+    .text-box {
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+    }
+
+    .text-box p {
+        color: #2c2c2c;
+        margin: 0;
+        line-height: 1.6;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Botón de archivo */
+    .file-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.4);
+        color: #e89a3c;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+
+    .file-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    }
+
+    .file-btn svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    /* Form elements */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #2c2c2c;
+        margin-bottom: 0.5rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .form-input,
+    .form-textarea {
+        width: 100%;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        border: none;
+        background: rgba(255, 255, 255, 0.5);
+        color: #2c2c2c;
+        font-family: 'Poppins', sans-serif;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+        transition: all 0.2s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+        outline: none;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+        color: #9ca3af;
+    }
+
+    .form-textarea {
+        resize: none;
+    }
+
+    /* Estilos para la barra personalizada de calificación */
+    .criterio-input-container {
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+    }
+
+    .criterio-input {
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        padding: 0.875rem 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        color: #2c2c2c;
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .criterio-input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .criterio-input::placeholder {
+        color: #9ca3af;
+    }
+
+    .score-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .score-bar {
+        flex: 1;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    }
+
+    .score-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.3s ease, background 0.3s ease;
+        width: 0%;
+    }
+
+    .score-indicator span {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #9ca3af;
+        font-family: 'Poppins', sans-serif;
+        min-width: 30px;
+        text-align: center;
+    }
+
+    /* Error message */
+    .error-message {
+        font-size: 0.875rem;
+        color: #dc2626;
+        margin-top: 0.25rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .error-message.hidden {
+        display: none;
+    }
+
+    /* Botones de acción */
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-action {
+        flex: 1;
+        border-radius: 20px;
+        padding: 0.75rem;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: white;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    .btn-submit:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+    }
+
+    .btn-submit:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-cancel {
+        background: rgba(255, 255, 255, 0.5);
+        color: #2c2c2c;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+
+    .btn-cancel:hover {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .calificar-avance-page {
+            padding: 1rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+    }

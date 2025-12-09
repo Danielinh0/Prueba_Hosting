@@ -1,197 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-    
-    /* Fondo degradado */
-    .proyecto-edit-page {
-        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
-        min-height: 100vh;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    /* Textos */
-    .proyecto-edit-page h2,
-    .proyecto-edit-page h3 {
-        font-family: 'Poppins', sans-serif;
-        color: #2c2c2c;
-    }
-    
-    .proyecto-edit-page p,
-    .proyecto-edit-page label {
-        font-family: 'Poppins', sans-serif;
-        color: #6b6b6b;
-    }
-    
-    /* Back link */
-    .back-link {
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        color: black;
-        font-size: 0.875rem;
-        font-weight: 500;
-        margin-bottom: 1rem;
-        padding: 0.5rem 1rem;
-        background: #FFEEE2;
-        border-radius: 10px;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
-        transition: all 0.2s ease;
-        text-decoration: none;
-    }
-    
-    .back-link:hover {
-        color: #4f46e5;
-        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
-        transform: translateY(-2px);
-    }
-    
-    .back-link svg {
-        width: 1rem;
-        height: 1rem;
-        margin-right: 0.5rem;
-    }
-    
-    /* Main card */
-    .main-card {
-        background: #FFEEE2;
-        border-radius: 20px;
-        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
-        padding: 2rem;
-    }
-    
-    /* Labels */
-    .form-label {
-        font-family: 'Poppins', sans-serif;
-        color: #2c2c2c;
-        font-size: 0.875rem;
-        font-weight: 600;
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-    
-    .required-asterisk {
-        color: #ef4444;
-    }
-    
-    /* Inputs y textareas */
-    .neuro-input,
-    .neuro-textarea,
-    .neuro-file {
-        font-family: 'Poppins', sans-serif;
-        background: rgba(255, 255, 255, 0.5);
-        border: none;
-        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
-        transition: all 0.2s ease;
-        backdrop-filter: blur(10px);
-        color: #2c2c2c;
-        width: 100%;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-    }
-    
-    .neuro-input::placeholder,
-    .neuro-textarea::placeholder {
-        color: #9ca3af;
-    }
-    
-    .neuro-input:focus,
-    .neuro-textarea:focus,
-    .neuro-file:focus {
-        outline: none;
-        box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
-    }
-    
-    /* Helper text */
-    .helper-text {
-        font-family: 'Poppins', sans-serif;
-        color: #6b6b6b;
-        font-size: 0.75rem;
-        margin-top: 0.25rem;
-    }
-    
-    /* Error messages */
-    .error-message {
-        font-family: 'Poppins', sans-serif;
-        color: #dc2626;
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
-    }
-    
-    /* File info box */
-    .file-info-box {
-        background: rgba(209, 250, 229, 0.8);
-        border: 1px solid #10b981;
-        border-radius: 15px;
-        padding: 0.75rem;
-        margin-bottom: 0.75rem;
-        box-shadow: 2px 2px 4px rgba(16, 185, 129, 0.1);
-    }
-    
-    .file-info-box p {
-        font-family: 'Poppins', sans-serif;
-        color: #065f46;
-        font-size: 0.875rem;
-    }
-    
-    .file-info-box .file-name {
-        font-weight: 600;
-    }
-    
-    .file-info-box .file-hint {
-        font-size: 0.75rem;
-        color: #059669;
-        margin-top: 0.25rem;
-    }
-    
-    /* Divider */
-    .section-divider {
-        border-top: 1px solid rgba(232, 154, 60, 0.2);
-        margin: 2rem 0;
-    }
-    
-    /* Buttons */
-    .button-secondary {
-        font-family: 'Poppins', sans-serif;
-        background: rgba(255, 255, 255, 0.5);
-        color: #2c2c2c;
-        font-weight: 500;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.5rem;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
-        transition: all 0.3s ease;
-        border: none;
-        backdrop-filter: blur(10px);
-    }
-    
-    .button-secondary:hover {
-        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
-        transform: translateY(-2px);
-    }
-    
-    .button-primary {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #6366f1, #4f46e5);
-        color: #ffffff;
-        font-weight: 600;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.5rem;
-        box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.3);
-        transition: all 0.3s ease;
-        border: none;
-    }
-    
-    .button-primary:hover {
-        box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
-        transform: translateY(-2px);
-    }
-</style>
 
-<div class="proyecto-edit-page py-12">
+<div class="proyecto-edit-page-aep py-12">
     <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
         <div class="mb-6">
-            <a href="{{ route('admin.proyectos-evento.asignar', $evento) }}" class="back-link">
+            <a href="{{ route('admin.proyectos-evento.asignar', $evento) }}" class="back-link-aep">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -203,146 +17,229 @@
             <p class="mt-1">{{ $evento->nombre }}</p>
         </div>
 
-        <div class="main-card">
+        <div class="main-card-aep">
             <form action="{{ route('admin.proyectos-evento.update', $proyectoEvento) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
 
                 {{-- Título --}}
-                <div class="mb-6">
-                    <label for="titulo" class="form-label">
-                        Título del Proyecto <span class="required-asterisk">*</span>
+                <div class="mb-6 input-group-aep">
+                    <label for="titulo" class="form-label-aep">
+                        Título del Proyecto <span class="required-asterisk-aep">*</span>
                     </label>
                     <input type="text" name="titulo" id="titulo" 
                            value="{{ old('titulo', $proyectoEvento->titulo) }}"
-                           class="neuro-input"
+                           class="neuro-input-aep"
                            required maxlength="200"
                            placeholder="Ej: Desarrollar solución educativa innovadora">
+                    <small class="input-help-aep">Máximo 200 caracteres</small>
                     @error('titulo')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Descripción Completa --}}
-                <div class="mb-6">
-                    <label for="descripcion_completa" class="form-label">
+                <div class="mb-6 input-group-aep">
+                    <label for="descripcion_completa" class="form-label-aep">
                         Descripción Completa
                     </label>
                     <textarea name="descripcion_completa" id="descripcion_completa" rows="6"
-                              class="neuro-textarea"
+                              class="neuro-textarea-aep"
+                              maxlength="2000"
                               placeholder="Describe detalladamente el proyecto, contexto, tecnologías recomendadas...">{{ old('descripcion_completa', $proyectoEvento->descripcion_completa) }}</textarea>
-                    <p class="helper-text">Puedes usar Markdown para formatear el texto</p>
+                    <small class="input-help-aep">Máximo 2000 caracteres. Puedes usar Markdown para formatear el texto</small>
                     @error('descripcion_completa')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Objetivo --}}
-                <div class="mb-6">
-                    <label for="objetivo" class="form-label">
+                <div class="mb-6 input-group-aep">
+                    <label for="objetivo" class="form-label-aep">
                         Objetivo del Proyecto
                     </label>
                     <textarea name="objetivo" id="objetivo" rows="3"
-                              class="neuro-textarea"
+                              class="neuro-textarea-aep"
+                              maxlength="500"
                               placeholder="¿Qué se espera lograr con este proyecto?">{{ old('objetivo', $proyectoEvento->objetivo) }}</textarea>
+                    <small class="input-help-aep">Máximo 500 caracteres</small>
                     @error('objetivo')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Requisitos --}}
-                <div class="mb-6">
-                    <label for="requisitos" class="form-label">
+                <div class="mb-6 input-group-aep">
+                    <label for="requisitos" class="form-label-aep">
                         Requisitos Técnicos
                     </label>
                     <textarea name="requisitos" id="requisitos" rows="4"
-                              class="neuro-textarea"
+                              class="neuro-textarea-aep"
+                              maxlength="1000"
                               placeholder="Tecnologías, herramientas, conocimientos previos necesarios...">{{ old('requisitos', $proyectoEvento->requisitos) }}</textarea>
+                    <small class="input-help-aep">Máximo 1000 caracteres</small>
                     @error('requisitos')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Premios --}}
-                <div class="mb-6">
-                    <label for="premios" class="form-label">
+                <div class="mb-6 input-group-aep">
+                    <label for="premios" class="form-label-aep">
                         Premios y Reconocimientos
                     </label>
                     <textarea name="premios" id="premios" rows="3"
-                              class="neuro-textarea"
+                              class="neuro-textarea-aep"
+                              maxlength="500"
                               placeholder="Premios para los ganadores...">{{ old('premios', $proyectoEvento->premios) }}</textarea>
+                    <small class="input-help-aep">Máximo 500 caracteres</small>
                     @error('premios')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <hr class="section-divider">
+                <hr class="section-divider-aep">
 
                 {{-- Archivo de Bases --}}
                 <div class="mb-6">
-                    <label for="archivo_bases" class="form-label">
+                    <label for="archivo_bases" class="form-label-aep">
                         📄 Archivo de Bases (PDF)
                     </label>
                     @if($proyectoEvento->archivo_bases)
-                        <div class="file-info-box">
+                        <div class="file-info-box-aep">
                             <p>
-                                ✓ Archivo actual: <span class="file-name">{{ basename($proyectoEvento->archivo_bases) }}</span>
+                                ✓ Archivo actual: <span class="file-name-aep">{{ basename($proyectoEvento->archivo_bases) }}</span>
                             </p>
-                            <p class="file-hint">Sube un nuevo archivo si deseas reemplazarlo</p>
+                            <p class="file-hint-aep">Sube un nuevo archivo si deseas reemplazarlo</p>
                         </div>
                     @endif
-                    <input type="file" name="archivo_bases" id="archivo_bases" 
-                           accept=".pdf,.doc,.docx"
-                           class="neuro-file">
-                    <p class="helper-text">PDF, DOC o DOCX - Máximo 20MB</p>
+
+                    {{-- Área de drag and drop --}}
+                    <div class="file-upload-area-aep" id="fileUploadAreaBases">
+                        <div class="file-upload-content-aep">
+                            <svg class="file-upload-icon-aep" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="file-upload-text-aep">
+                                <strong>Arrastra un archivo aquí o haz clic para seleccionar</strong>
+                            </p>
+                            <p class="file-upload-hint-aep">
+                                PDF, DOC, DOCX - Máximo 20MB
+                            </p>
+                        </div>
+                        <input type="file" 
+                               name="archivo_bases" 
+                               id="archivo_bases" 
+                               accept=".pdf,.doc,.docx"
+                               class="neuro-file-aep"
+                               onchange="handleFileSelectAep(this, 'Bases')">
+                    </div>
+                    
+                    {{-- Preview del archivo seleccionado --}}
+                    <div id="filePreviewBases" class="file-preview-aep">
+                        <div class="file-preview-icon-aep">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="file-preview-info-aep">
+                            <div class="file-preview-name-aep" id="fileNameBases"></div>
+                            <div class="file-preview-size-aep" id="fileSizeBases"></div>
+                        </div>
+                        <button type="button" class="file-preview-remove-aep" onclick="removeFileAep('Bases')">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <p class="helper-text-aep">PDF, DOC o DOCX - Máximo 20MB</p>
                     @error('archivo_bases')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Archivo de Recursos --}}
                 <div class="mb-6">
-                    <label for="archivo_recursos" class="form-label">
+                    <label for="archivo_recursos" class="form-label-aep">
                         📦 Recursos Adicionales (ZIP)
                     </label>
                     @if($proyectoEvento->archivo_recursos)
-                        <div class="file-info-box">
+                        <div class="file-info-box-aep">
                             <p>
-                                ✓ Archivo actual: <span class="file-name">{{ basename($proyectoEvento->archivo_recursos) }}</span>
+                                ✓ Archivo actual: <span class="file-name-aep">{{ basename($proyectoEvento->archivo_recursos) }}</span>
                             </p>
-                            <p class="file-hint">Sube un nuevo archivo si deseas reemplazarlo</p>
+                            <p class="file-hint-aep">Sube un nuevo archivo si deseas reemplazarlo</p>
                         </div>
                     @endif
-                    <input type="file" name="archivo_recursos" id="archivo_recursos" 
-                           accept=".zip,.rar,.pdf"
-                           class="neuro-file">
-                    <p class="helper-text">ZIP, RAR o PDF - Máximo 50MB</p>
+
+                    {{-- Área de drag and drop --}}
+                    <div class="file-upload-area-aep" id="fileUploadAreaRecursos">
+                        <div class="file-upload-content-aep">
+                            <svg class="file-upload-icon-aep" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="file-upload-text-aep">
+                                <strong>Arrastra un archivo aquí o haz clic para seleccionar</strong>
+                            </p>
+                            <p class="file-upload-hint-aep">
+                                ZIP, RAR, PDF - Máximo 50MB
+                            </p>
+                        </div>
+                        <input type="file" 
+                               name="archivo_recursos" 
+                               id="archivo_recursos" 
+                               accept=".zip,.rar,.pdf"
+                               class="neuro-file-aep"
+                               onchange="handleFileSelectAep(this, 'Recursos')">
+                    </div>
+                    
+                    {{-- Preview del archivo seleccionado --}}
+                    <div id="filePreviewRecursos" class="file-preview-aep">
+                        <div class="file-preview-icon-aep">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="file-preview-info-aep">
+                            <div class="file-preview-name-aep" id="fileNameRecursos"></div>
+                            <div class="file-preview-size-aep" id="fileSizeRecursos"></div>
+                        </div>
+                        <button type="button" class="file-preview-remove-aep" onclick="removeFileAep('Recursos')">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <p class="helper-text-aep">ZIP, RAR o PDF - Máximo 50MB</p>
                     @error('archivo_recursos')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- URL Externa --}}
-                <div class="mb-6">
-                    <label for="url_externa" class="form-label">
+                <div class="mb-6 input-group-aep">
+                    <label for="url_externa" class="form-label-aep">
                         🔗 URL a Recursos Externos
                     </label>
                     <input type="url" name="url_externa" id="url_externa" 
                            value="{{ old('url_externa', $proyectoEvento->url_externa) }}"
-                           class="neuro-input"
+                           class="neuro-input-aep"
+                           maxlength="500"
                            placeholder="https://drive.google.com/...">
-                    <p class="helper-text">Google Drive, Dropbox, etc.</p>
+                    <small class="input-help-aep">Google Drive, Dropbox, etc. Máximo 500 caracteres</small>
                     @error('url_externa')
-                        <p class="error-message">{{ $message }}</p>
+                        <p class="error-message-aep">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Botones --}}
                 <div class="flex justify-end space-x-3 pt-6" style="border-top: 1px solid rgba(232, 154, 60, 0.2);">
-                    <a href="{{ route('admin.eventos.show', $evento) }}" class="button-secondary">
+                    <a href="{{ route('admin.eventos.show', $evento) }}" class="button-secondary-aep">
                         Cancelar
                     </a>
-                    <button type="submit" class="button-primary">
+                    <button type="submit" class="button-primary-aep">
                         Actualizar Proyecto
                     </button>
                 </div>
@@ -350,4 +247,345 @@
         </div>
     </div>
 </div>
+
+<!-- FontAwesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+    // ============================================
+    // DRAG AND DROP FILE UPLOAD
+    // ============================================
+    
+    // Setup para ambos archivos
+    function setupDragAndDropAep(uploadAreaId, fileInputId) {
+        const fileUploadArea = document.getElementById(uploadAreaId);
+        const fileInput = document.getElementById(fileInputId);
+        
+        if (!fileUploadArea || !fileInput) return;
+        
+        // Prevenir comportamiento por defecto
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            fileUploadArea.addEventListener(eventName, preventDefaultsAep, false);
+        });
+        
+        // Highlight en drag over
+        ['dragenter', 'dragover'].forEach(eventName => {
+            fileUploadArea.addEventListener(eventName, () => highlightAep(fileUploadArea), false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            fileUploadArea.addEventListener(eventName, () => unhighlightAep(fileUploadArea), false);
+        });
+        
+        // Manejar el drop
+        fileUploadArea.addEventListener('drop', (e) => handleDropAep(e, fileInput), false);
+    }
+    
+    function preventDefaultsAep(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    function highlightAep(element) {
+        element.classList.add('dragover');
+    }
+    
+    function unhighlightAep(element) {
+        element.classList.remove('dragover');
+    }
+    
+    function handleDropAep(e, fileInput) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files.length > 0) {
+            fileInput.files = files;
+            const tipo = fileInput.id.includes('bases') ? 'Bases' : 'Recursos';
+            handleFileSelectAep(fileInput, tipo);
+        }
+    }
+    
+    // Manejar selección de archivo
+    function handleFileSelectAep(input, tipo) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const size = (file.size / 1024 / 1024).toFixed(2); // Size in MB
+            
+            // Actualizar preview
+            const fileNameElement = document.getElementById('fileName' + tipo);
+            const fileSizeElement = document.getElementById('fileSize' + tipo);
+            const filePreview = document.getElementById('filePreview' + tipo);
+            const uploadArea = document.getElementById('fileUploadArea' + tipo);
+            
+            fileNameElement.textContent = file.name;
+            fileSizeElement.textContent = `${size} MB`;
+            filePreview.classList.add('show');
+            
+            // Ocultar área de upload
+            uploadArea.style.display = 'none';
+        }
+    }
+    
+    // Remover archivo
+    function removeFileAep(tipo) {
+        const fileInput = document.getElementById('archivo_' + tipo.toLowerCase());
+        const filePreview = document.getElementById('filePreview' + tipo);
+        const uploadArea = document.getElementById('fileUploadArea' + tipo);
+        
+        fileInput.value = '';
+        filePreview.classList.remove('show');
+        uploadArea.style.display = 'block';
+    }
+
+    // ============================================
+    // FUNCIONES DE VALIDACIÓN EN TIEMPO REAL
+    // ============================================
+    
+    function showValidationMessageAep(input, message, isError = true) {
+        let messageDiv = input.parentElement.querySelector('.validation-message-aep');
+        
+        if (!messageDiv) {
+            messageDiv = document.createElement('div');
+            messageDiv.className = 'validation-message-aep';
+            input.parentElement.appendChild(messageDiv);
+        }
+        
+        messageDiv.classList.remove('error', 'success', 'show', 'hide');
+        messageDiv.className = `validation-message-aep ${isError ? 'error' : 'success'} show`;
+        messageDiv.innerHTML = `
+            <i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        input.classList.remove('error', 'success');
+        input.classList.add(isError ? 'error' : 'success');
+        
+        clearTimeout(input.validationTimeout);
+        
+        input.validationTimeout = setTimeout(() => {
+            if (messageDiv) {
+                messageDiv.classList.remove('show');
+                messageDiv.classList.add('hide');
+                
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                    messageDiv.classList.remove('hide');
+                }, 300);
+            }
+            input.classList.remove('error', 'success');
+        }, 1800);
+    }
+
+    function hideValidationMessageAep(input) {
+        const messageDiv = input.parentElement.querySelector('.validation-message-aep');
+        if (messageDiv) {
+            messageDiv.classList.remove('show');
+            messageDiv.classList.add('hide');
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+                messageDiv.classList.remove('hide');
+            }, 300);
+        }
+        input.classList.remove('error', 'success');
+        clearTimeout(input.validationTimeout);
+        clearTimeout(input.successDebounce);
+    }
+
+    // ============================================
+    // CONFIGURACIÓN AL CARGAR EL DOM
+    // ============================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // Setup drag and drop para ambos archivos
+        setupDragAndDropAep('fileUploadAreaBases', 'archivo_bases');
+        setupDragAndDropAep('fileUploadAreaRecursos', 'archivo_recursos');
+        
+        // Validaciones de campos de texto
+        const titulo = document.getElementById('titulo');
+        if (titulo) {
+            titulo.addEventListener('input', function() {
+                const value = this.value;
+                clearTimeout(this.successDebounce);
+                
+                if (value.length > 200) {
+                    this.value = value.substring(0, 200);
+                    showValidationMessageAep(this, 'Máximo 200 caracteres permitidos', true);
+                } else if (value) {
+                    hideValidationMessageAep(this);
+                    this.successDebounce = setTimeout(() => {
+                        const remaining = 200 - value.length;
+                        showValidationMessageAep(this, `${remaining} caracteres restantes`, false);
+                    }, 500);
+                } else {
+                    hideValidationMessageAep(this);
+                }
+            });
+        }
+
+        const descripcion = document.getElementById('descripcion_completa');
+        if (descripcion) {
+            descripcion.addEventListener('input', function() {
+                const value = this.value;
+                clearTimeout(this.successDebounce);
+                
+                if (value.length > 2000) {
+                    this.value = value.substring(0, 2000);
+                    showValidationMessageAep(this, 'Máximo 2000 caracteres permitidos', true);
+                } else if (value) {
+                    hideValidationMessageAep(this);
+                    this.successDebounce = setTimeout(() => {
+                        const remaining = 2000 - value.length;
+                        showValidationMessageAep(this, `${remaining} caracteres restantes`, false);
+                    }, 500);
+                } else {
+                    hideValidationMessageAep(this);
+                }
+            });
+        }
+
+        const objetivo = document.getElementById('objetivo');
+        if (objetivo) {
+            objetivo.addEventListener('input', function() {
+                const value = this.value;
+                clearTimeout(this.successDebounce);
+                
+                if (value.length > 500) {
+                    this.value = value.substring(0, 500);
+                    showValidationMessageAep(this, 'Máximo 500 caracteres permitidos', true);
+                } else if (value) {
+                    hideValidationMessageAep(this);
+                    this.successDebounce = setTimeout(() => {
+                        const remaining = 500 - value.length;
+                        showValidationMessageAep(this, `${remaining} caracteres restantes`, false);
+                    }, 500);
+                } else {
+                    hideValidationMessageAep(this);
+                }
+            });
+        }
+
+        const requisitos = document.getElementById('requisitos');
+        if (requisitos) {
+            requisitos.addEventListener('input', function() {
+                const value = this.value;
+                clearTimeout(this.successDebounce);
+                
+                if (value.length > 1000) {
+                    this.value = value.substring(0, 1000);
+                    showValidationMessageAep(this, 'Máximo 1000 caracteres permitidos', true);
+                } else if (value) {
+                    hideValidationMessageAep(this);
+                    this.successDebounce = setTimeout(() => {
+                        const remaining = 1000 - value.length;
+                        showValidationMessageAep(this, `${remaining} caracteres restantes`, false);
+                    }, 500);
+                } else {
+                    hideValidationMessageAep(this);
+                }
+            });
+        }
+
+        const premios = document.getElementById('premios');
+        if (premios) {
+            premios.addEventListener('input', function() {
+                const value = this.value;
+                clearTimeout(this.successDebounce);
+                
+                if (value.length > 500) {
+                    this.value = value.substring(0, 500);
+                    showValidationMessageAep(this, 'Máximo 500 caracteres permitidos', true);
+                } else if (value) {
+                    hideValidationMessageAep(this);
+                    this.successDebounce = setTimeout(() => {
+                        const remaining = 500 - value.length;
+                        showValidationMessageAep(this, `${remaining} caracteres restantes`, false);
+                    }, 500);
+                } else {
+                    hideValidationMessageAep(this);
+                }
+            });
+        }
+
+        const urlExterna = document.getElementById('url_externa');
+        if (urlExterna) {
+            urlExterna.addEventListener('input', function() {
+                const value = this.value;
+                clearTimeout(this.successDebounce);
+                
+                if (value.length > 500) {
+                    this.value = value.substring(0, 500);
+                    showValidationMessageAep(this, 'Máximo 500 caracteres permitidos', true);
+                } else if (value) {
+                    hideValidationMessageAep(this);
+                    this.successDebounce = setTimeout(() => {
+                        const urlRegex = /^https?:\/\/.+/;
+                        if (!urlRegex.test(value)) {
+                            showValidationMessageAep(this, 'URL debe comenzar con http:// o https://', true);
+                        } else {
+                            showValidationMessageAep(this, 'URL válida', false);
+                        }
+                    }, 500);
+                } else {
+                    hideValidationMessageAep(this);
+                }
+            });
+        }
+
+        // Validación de archivos
+        const archivoBasesInput = document.getElementById('archivo_bases');
+        if (archivoBasesInput) {
+            archivoBasesInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    const size = file.size / 1024 / 1024;
+                    
+                    if (size > 20) {
+                        alert('El archivo excede el tamaño máximo permitido de 20MB');
+                        this.value = '';
+                        removeFileAep('Bases');
+                        return;
+                    }
+                    
+                    const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                    if (!validTypes.includes(file.type)) {
+                        alert('Solo se permiten archivos PDF, DOC o DOCX');
+                        this.value = '';
+                        removeFileAep('Bases');
+                    }
+                }
+            });
+        }
+
+        const archivoRecursosInput = document.getElementById('archivo_recursos');
+        if (archivoRecursosInput) {
+            archivoRecursosInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    const size = file.size / 1024 / 1024;
+                    
+                    if (size > 50) {
+                        alert('El archivo excede el tamaño máximo permitido de 50MB');
+                        this.value = '';
+                        removeFileAep('Recursos');
+                        return;
+                    }
+                    
+                    const validTypes = ['application/zip', 'application/x-rar-compressed', 'application/pdf'];
+                    const validExtensions = ['.zip', '.rar', '.pdf'];
+                    const fileName = file.name.toLowerCase();
+                    const hasValidExtension = validExtensions.some(ext => fileName.endsWith(ext));
+                    
+                    if (!validTypes.includes(file.type) && !hasValidExtension) {
+                        alert('Solo se permiten archivos ZIP, RAR o PDF');
+                        this.value = '';
+                        removeFileAep('Recursos');
+                    }
+                }
+            });
+        }
+    });
+</script>
+
 @endsection

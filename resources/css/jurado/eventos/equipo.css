@@ -1,0 +1,457 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    /* Página principal */
+    .equipo-evento-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        padding: 2rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Botón volver neuromórfico */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 253, 244, 0.9);
+        color: #e89a3c;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        text-decoration: none;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+
+    .back-btn:hover {
+        color: #d98a2c;
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    }
+
+    .back-btn svg path {
+        stroke: #e89a3c;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover svg path {
+        stroke: #d98a2c;
+    }
+
+    /* Títulos de sección */
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #2c2c2c;
+        margin-bottom: 1rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Card neuromórfica base */
+    .neu-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        overflow: hidden;
+    }
+
+    /* Card de detalles del equipo */
+    .equipo-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        overflow: hidden;
+    }
+
+    .equipo-card img {
+        width: 100%;
+        height: 12rem;
+        object-fit: cover;
+    }
+
+    .equipo-header {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        padding: 0.75rem 1rem;
+        text-align: center;
+    }
+
+    .equipo-header h3 {
+        color: white;
+        font-weight: 600;
+        font-size: 1.125rem;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .equipo-info {
+        padding: 1rem;
+    }
+
+    .equipo-info p {
+        font-size: 0.875rem;
+        margin-bottom: 0.75rem;
+        color: #2c2c2c;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .equipo-info span {
+        color: #6b6b6b;
+    }
+
+    .equipo-description {
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 12px;
+        padding: 0.75rem;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    }
+
+    .equipo-description p {
+        font-size: 0.875rem;
+        color: #6b6b6b;
+        margin: 0;
+        line-height: 1.6;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Card de integrante */
+    .miembro-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .miembro-avatar {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 12px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.4);
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+
+    .miembro-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .miembro-info h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2c2c2c;
+        margin-bottom: 0.25rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .miembro-info p {
+        font-size: 0.875rem;
+        color: #2c2c2c;
+        margin-bottom: 0.25rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .miembro-info span {
+        color: #6b6b6b;
+    }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 2rem;
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+    }
+
+    .empty-state p {
+        color: #6b6b6b;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Card de estadísticas */
+    .stats-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        padding: 1.5rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #e89a3c;
+        margin-bottom: 0.5rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .stat-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #2c2c2c;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .stat-label svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #e89a3c;
+    }
+
+    /* Botón evaluar proyecto */
+    .btn-evaluar-proyecto {
+        width: 100%;
+        border-radius: 20px;
+        padding: 0.75rem;
+        color: white;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-evaluar-proyecto:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+    }
+
+    .btn-evaluar-proyecto:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-evaluar-proyecto svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    /* Mensaje de ayuda */
+    .help-message {
+        text-align: center;
+        font-size: 0.875rem;
+        color: #6b6b6b;
+        margin-top: 0.5rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .help-message.success {
+        color: #10b981;
+    }
+
+    .help-message.warning {
+        color: #f59e0b;
+    }
+
+    /* Card de avances */
+    .avances-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        padding: 1.5rem;
+    }
+
+    .avances-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2c2c2c;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Selector neuromórfico */
+    .neu-select-wrapper {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    .neu-select {
+        width: 100%;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        padding-right: 2.5rem;
+        appearance: none;
+        border: none;
+        background: rgba(255, 255, 255, 0.5);
+        color: #2c2c2c;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.875rem;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+        cursor: pointer;
+    }
+
+    .neu-select:focus {
+        outline: none;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+    }
+
+    .neu-select:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    .neu-select-icon {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #e89a3c;
+    }
+
+    .neu-select-icon svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    /* Botones de acción */
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn-action {
+        flex: 1;
+        border-radius: 20px;
+        padding: 0.75rem;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.875rem;
+    }
+
+    .btn-calificar {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: white;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    .btn-calificar:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+    }
+
+    .btn-reevaluar {
+        background: linear-gradient(135deg, #6366f1, #818cf8);
+        color: white;
+        box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-reevaluar:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-action:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Hint messages */
+    .hint-message {
+        text-align: center;
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .hint-calificar {
+        color: #6b6b6b;
+    }
+
+    .hint-reevaluar {
+        color: #6366f1;
+    }
+
+    /* Alert box neuromórfico */
+    .alert-box {
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(167, 243, 208, 0.8));
+    }
+
+    .alert-success svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: #059669;
+        flex-shrink: 0;
+    }
+
+    .alert-success p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: #065f46;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .alert-success strong {
+        display: block;
+        font-weight: 600;
+    }
+
+    .alert-success small {
+        font-size: 0.75rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .equipo-evento-page {
+            padding: 1rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }

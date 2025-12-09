@@ -1,0 +1,630 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    
+    .equipos-page {
+        background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .equipos-page * {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .back-link {
+        font-family: 'Poppins', sans-serif;
+        display: inline-flex;
+        align-items: center;
+        color: black;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background: #FFEEE2;
+        border-radius: 10px;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .back-link:hover {
+        color: #4f46e5;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+    
+    .back-link svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Hero Section Neuromórfica - Tonos Grises Pastel */
+    .hero-section {
+        background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        bottom: -80px;
+        left: -80px;
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(circle, rgba(232, 154, 60, 0.05) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .hero-text h1 {
+        color: #c1c1c1ff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-shadow: 1px 1px 2px rgba(235, 132, 72, 0.8);
+    }
+
+    .hero-text h1 span {
+        color: #e89a3c;
+        text-shadow: 1px 1px 2px rgba(232, 154, 60, 0.2);
+    }
+
+    .hero-text p {
+        color: #cfcfcfff;
+        font-size: 1rem;
+        max-width: 500px;
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .hero-stat {
+        text-align: center;
+        padding: 1rem 1.5rem;
+        background: rgba(248, 244, 244, 0.85);
+        border-radius: 16px;
+        box-shadow: inset 4px 4px 8px rgba(200, 200, 200, 0.3);
+        backdrop-filter: blur(10px);
+    }
+
+    .hero-stat-number {
+        color: #e89a3c;
+        font-size: 2rem;
+        font-weight: 800;
+        line-height: 1;
+        text-shadow: 1px 1px 2px rgba(232, 154, 60, 0.2);
+    }
+
+    .hero-stat-label {
+        color: #47494cff;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 0.25rem;
+    }
+
+    /* Botón Crear Equipo */
+    .btn-crear-equipo {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: white;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    .btn-crear-equipo:hover {
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .btn-crear-equipo svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Teams Grid */
+    .teams-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+        .teams-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Team Card Neuromórfica */
+    .team-card {
+        background: #FFEEE2;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        border: none;
+    }
+
+    .team-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 12px 12px 24px #e6d5c9, -12px -12px 24px #ffffff;
+    }
+
+    .team-card-leader {
+        border: 2px solid #e89a3c;
+    }
+
+    .team-card-leader::before {
+        content: '👑 Eres el Líder';
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        z-index: 10;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    /* Team Image */
+    .team-image-container {
+        position: relative;
+        height: 140px;
+        overflow: hidden;
+    }
+
+    .team-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .team-card:hover .team-image {
+        transform: scale(1.08);
+    }
+
+    .team-image-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #e89a3c 0%, #f5a847 50%, #e89a3c 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .team-image-placeholder svg {
+        width: 50px;
+        height: 50px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .team-image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        pointer-events: none;
+    }
+
+    .team-card-header {
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+        padding: 1.25rem 1.5rem;
+        position: relative;
+    }
+
+    .team-card-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #e89a3c, #f5a847, #e89a3c);
+    }
+
+    .team-name {
+        color: #ffffff;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+        padding-right: 100px;
+    }
+
+    .team-event {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+    }
+
+    .team-event svg {
+        width: 14px;
+        height: 14px;
+        color: #e89a3c;
+    }
+
+    .team-card-body {
+        padding: 1.25rem 1.5rem;
+        background: #FFEEE2;
+    }
+
+    /* Team Stats Row */
+    .team-stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .team-stat-item {
+        text-align: center;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 12px;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+    }
+
+    .team-stat-value {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #2c2c2c;
+    }
+
+    .team-stat-label {
+        font-size: 0.7rem;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 0.25rem;
+    }
+
+    /* Members Preview */
+    .members-preview {
+        margin-bottom: 1.5rem;
+    }
+
+    .members-preview-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+    }
+
+    .members-avatars {
+        display: flex;
+        align-items: center;
+    }
+
+    .member-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 0.875rem;
+        border: 3px solid #FFEEE2;
+        margin-left: -10px;
+        box-shadow: 4px 4px 8px #e6d5c9;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .member-avatar:first-child {
+        margin-left: 0;
+    }
+
+    .member-avatar:hover {
+        transform: scale(1.1) translateY(-4px);
+        z-index: 10;
+    }
+
+    .member-avatar-leader {
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+        border-color: #e89a3c;
+    }
+
+    .member-avatar-more {
+        background: rgba(255, 255, 255, 0.6);
+        color: #6b7280;
+        font-size: 0.75rem;
+        box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+    }
+
+    /* My Role Badge */
+    .my-role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.4);
+        color: #b37a2e;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 1.25rem;
+        box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
+    }
+
+    .my-role-badge svg {
+        width: 16px;
+        height: 16px;
+        color: #e89a3c;
+    }
+
+    /* Team Actions */
+    .team-actions {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .team-action-btn {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .team-action-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .team-action-primary {
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+        color: #ffffff;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .team-action-primary:hover {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.3);
+        color: #ffffff;
+    }
+
+    .team-action-secondary {
+        background: rgba(255, 255, 255, 0.6);
+        color: #4b5563;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+
+    .team-action-secondary:hover {
+        background: rgba(255, 255, 255, 0.8);
+        color: #2c2c2c;
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+        transform: translateY(-2px);
+    }
+
+    /* Pending Requests Indicator */
+    .pending-requests {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: linear-gradient(135deg, #fca5a5, #ef4444);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        animation: pulse 2s infinite;
+        z-index: 10;
+        box-shadow: 4px 4px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
+
+    .pending-requests svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Event Status Badge - Paleta Pastel */
+    .event-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    .status-en-progreso {
+        background: linear-gradient(135deg, rgba(167, 243, 208, 0.8), rgba(134, 239, 172, 0.8));
+        color: #065f46;
+        box-shadow: inset 2px 2px 4px rgba(16, 185, 129, 0.2);
+    }
+
+    .status-activo {
+        background: linear-gradient(135deg, rgba(191, 219, 254, 0.8), rgba(147, 197, 253, 0.8));
+        color: #1e40af;
+        box-shadow: inset 2px 2px 4px rgba(59, 130, 246, 0.2);
+    }
+
+    .status-pendiente,
+    .status-próximo {
+        background: linear-gradient(135deg, rgba(254, 240, 138, 0.8), rgba(252, 211, 77, 0.8));
+        color: #92400e;
+        box-shadow: inset 2px 2px 4px rgba(245, 158, 11, 0.2);
+    }
+
+    .status-finalizado {
+        background: linear-gradient(135deg, rgba(229, 231, 235, 0.8), rgba(209, 213, 219, 0.8));
+        color: #4b5563;
+        box-shadow: inset 2px 2px 4px rgba(107, 114, 128, 0.2);
+    }
+
+    /* Empty State Neuromórfico */
+    .empty-state {
+        background: #FFEEE2;
+        border-radius: 24px;
+        padding: 4rem 2rem;
+        text-align: center;
+        box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
+        border: none;
+    }
+
+    .empty-state-icon {
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
+    }
+
+    .empty-state-icon svg {
+        width: 50px;
+        height: 50px;
+        color: #e89a3c;
+    }
+
+    .empty-state h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c2c2c;
+        margin-bottom: 0.75rem;
+    }
+
+    .empty-state p {
+        color: #6b7280;
+        font-size: 1rem;
+        max-width: 400px;
+        margin: 0 auto 2rem;
+        line-height: 1.6;
+    }
+
+    .empty-state-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .empty-state-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .empty-state-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .empty-state-btn-primary {
+        background: linear-gradient(135deg, #e89a3c, #f5a847);
+        color: #ffffff;
+        box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
+    }
+
+    .empty-state-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
+        color: #ffffff;
+    }
+
+    .empty-state-btn-secondary {
+        background: rgba(255, 255, 255, 0.6);
+        color: #4b5563;
+        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
+    }
+
+    .empty-state-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.8);
+        color: #2c2c2c;
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .hero-text h1 {
+            font-size: 1.5rem;
+        }
+
+        .hero-stats {
+            justify-content: center;
+        }
+
+        .team-stats-row {
+            grid-template-columns: 1fr;
+        }
+    }
