@@ -39,7 +39,7 @@
             'resources/css/estudiante/stats/dashboard.css',
             'resources/css/estudiante/recursos/index.css',
             'resources/css/navigation.css',
-            'resource/css/estudiante/proyecto-evento/show.css',
+            'resources/css/estudiante/proyecto-evento/show.css',
             'resources/css/estudiante/proyecto/tareas.css',
             'resources/css/estudiante/proyecto/show.css',
             'resources/css/estudiante/proyecto/show-especific.css',
