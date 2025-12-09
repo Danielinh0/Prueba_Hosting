@@ -11,6 +11,19 @@
             Volver a Equipos del Evento
         </a>
 
+        {{-- Alerta de conflicto de fechas --}}
+        @if($conflictoFechas['conflicto'])
+        <div style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 1rem 1.5rem; border-radius: 12px; margin: 1rem 0 1.5rem 0; box-shadow: 0 4px 15px rgba(238, 90, 36, 0.3); display: flex; align-items: center; gap: 1rem;">
+            <svg style="width: 24px; height: 24px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <div>
+                <p style="font-weight: 600; margin-bottom: 0.25rem;">⚠️ Conflicto de Fechas</p>
+                <p style="font-size: 0.9rem; opacity: 0.95;">{{ $conflictoFechas['mensaje'] }}</p>
+            </div>
+        </div>
+        @endif
+
         <!-- Hero Card -->
         <div class="hero-card">
             <div class="hero-image-container">
@@ -133,7 +146,13 @@
                         </h3>
                     </div>
                     
-                    @if (in_array($evento->estado, ['Activo', 'En Progreso']) && $inscripcion->status_registro !== 'Completo')
+                    @if($conflictoFechas['conflicto'])
+                        {{-- Si hay conflicto de fechas, no puede unirse --}}
+                        <div class="alert-box alert-error">
+                            <p class="font-semibold">⚠️ Conflicto de Fechas</p>
+                            <p style="font-size: 0.85rem; margin-top: 0.25rem;">No puedes unirte a este equipo porque tienes un evento con fechas cruzadas.</p>
+                        </div>
+                    @elseif (in_array($evento->estado, ['Activo', 'En Progreso']) && $inscripcion->status_registro !== 'Completo')
                         @if ($miInscripcionDeEquipoId)
                             @if ($miInscripcionDeEquipoId === $inscripcion->equipo->id_equipo)
                                 <div class="alert-box alert-success">

@@ -32,6 +32,10 @@ class EquipoController extends Controller
             })
             ->get()
             ->keyBy('equipo_id');
+        
+        // Verificar conflicto de fechas para el usuario actual
+        $conflictoFechas = \App\Helpers\EventoHelper::verificarConflictoFechas($user->id_usuario, $evento->id_evento);
+        
         $query = $evento->inscripciones()->with('equipo.miembros');
         if ($request->filled('search')) {
             $searchTerm = $request->input('search');
@@ -49,7 +53,7 @@ class EquipoController extends Controller
             }
         }
         $inscripciones = $query->paginate(12);
-        return view('estudiante.equipos.index', compact('evento', 'inscripciones', 'user', 'miInscripcionDeEquipoId', 'solicitudesDelEstudiante'));
+        return view('estudiante.equipos.index', compact('evento', 'inscripciones', 'user', 'miInscripcionDeEquipoId', 'solicitudesDelEstudiante', 'conflictoFechas'));
     }
 
     /**
@@ -234,12 +238,15 @@ class EquipoController extends Controller
             ->first();
         $miInscripcionDeEquipoId = $miInscripcion ? $miInscripcion->inscripcion->id_equipo : null;
         
+        // Verificar conflicto de fechas para el usuario actual
+        $conflictoFechas = \App\Helpers\EventoHelper::verificarConflictoFechas($user->id_usuario, $evento->id_evento);
+        
         // Verificar si hay solicitud pendiente
         $solicitudActual = SolicitudUnion::where('estudiante_id', $user->id_usuario)
             ->where('equipo_id', $equipo->id_equipo)
             ->first();
         
-        return view('estudiante.equipos.show', compact('inscripcion', 'evento', 'miInscripcionDeEquipoId', 'solicitudActual'));
+        return view('estudiante.equipos.show', compact('inscripcion', 'evento', 'miInscripcionDeEquipoId', 'solicitudActual', 'conflictoFechas'));
     }
 
     /**

@@ -11,6 +11,19 @@
             Volver al Evento
         </a>
         
+        {{-- Alerta de conflicto de fechas --}}
+        @if($conflictoFechas['conflicto'])
+        <div class="conflict-alert-mieq" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(238, 90, 36, 0.3); display: flex; align-items: center; gap: 1rem;">
+            <svg style="width: 24px; height: 24px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <div>
+                <p style="font-weight: 600; margin-bottom: 0.25rem;">⚠️ Conflicto de Fechas Detectado</p>
+                <p style="font-size: 0.9rem; opacity: 0.95;">{{ $conflictoFechas['mensaje'] }}</p>
+            </div>
+        </div>
+        @endif
+
         <!-- Hero Section -->
         <div class="hero-section-mieq">
             <div class="hero-content-mieq">
@@ -18,7 +31,7 @@
                     <h1>Equipos para: <span>{{ $evento->nombre }}</span></h1>
                     <p>Explora los equipos disponibles o crea uno nuevo para participar.</p>
                 </div>
-                @if(!$miInscripcionDeEquipoId)
+                @if(!$miInscripcionDeEquipoId && !$conflictoFechas['conflicto'])
                 <a href="{{ route('estudiante.eventos.equipos.create', $evento) }}" class="btn-create-mieq">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                     Crear Equipo
@@ -76,7 +89,12 @@
                             $equipoLleno = $cantidadMiembros >= 5;
                         @endphp
                         
-                        @if ($evento->estado === 'Activo' && !$equipoLleno)
+                        @if($conflictoFechas['conflicto'])
+                            {{-- Si hay conflicto de fechas, no puede unirse --}}
+                            <span class="status-conflict-mieq" style="color: #ee5a24; font-size: 0.85rem; font-weight: 500;">
+                                ⚠️ Conflicto de fechas
+                            </span>
+                        @elseif ($evento->estado === 'Activo' && !$equipoLleno)
                         
                             @if ($miInscripcionDeEquipoId)
                                 {{-- El usuario YA es miembro de un equipo en este evento --}}
