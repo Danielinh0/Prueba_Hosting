@@ -205,6 +205,52 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
+            // Manejar cambio de subclase si el rol cambió
+            if ($oldRoleId != $newRoleId) {
+                $currentRoleType = $this->validationService->getCurrentRoleType($user);
+                $newRole = CatRolSistema::find($newRoleId);
+                $newRoleName = strtolower($newRole->nombre);
+
+                // Eliminar registro de subclase anterior
+                if ($currentRoleType === 'estudiante' && $user->estudiante) {
+                    // Eliminar de miembros_equipo primero (si hay alguno en eventos finalizados)
+                    MiembroEquipo::where('id_estudiante', $user->id_usuario)->delete();
+                    $user->estudiante->delete();
+                } elseif ($currentRoleType === 'jurado' && $user->jurado) {
+                    $user->jurado->delete();
+                }
+
+                // Crear registro de nueva subclase
+                if ($newRoleName === 'estudiante') {
+                    Estudiante::create([
+                        'id_usuario' => $user->id_usuario,
+                        'numero_control' => $validated['numero_control'] ?? 'PENDIENTE',
+                        'semestre' => $validated['semestre'] ?? 1,
+                        'id_carrera' => 1, // Carrera por defecto, debe editarse después
+                    ]);
+                } elseif ($newRoleName === 'jurado') {
+                    Jurado::create([
+                        'id_usuario' => $user->id_usuario,
+                        'especialidad' => $validated['especialidad'] ?? null,
+                        'empresa_institucion' => null,
+                        'cedula_profesional' => null,
+                    ]);
+                }
+                // Si es Admin, no necesita registro de subclase
+            } else {
+                // Si el rol no cambió, actualizar datos de subclase existente
+                if ($user->estudiante && $request->filled('numero_control')) {
+                    $user->estudiante->update([
+                        'numero_control' => $validated['numero_control'],
+                        'semestre' => $validated['semestre'],
+                    ]);
+                } elseif ($user->jurado && $request->filled('especialidad')) {
+                    $user->jurado->update([
+                        'especialidad' => $validated['especialidad'],
+                    ]);
+                }
+            }
+
             // Actualizar el modelo User
             $user->update([
                 'nombre' => $validated['nombre'],
@@ -214,20 +260,8 @@ class UserController extends Controller
                 'id_rol_sistema' => $validated['id_rol_sistema'],
             ]);
 
-            // Actualizar el modelo de sub-rol si existe
-            if ($user->estudiante && $request->filled('numero_control')) {
-                $user->estudiante->update([
-                    'numero_control' => $validated['numero_control'],
-                    'semestre' => $validated['semestre'],
-                ]);
-            } elseif ($user->jurado && $request->filled('especialidad')) {
-                $user->jurado->update([
-                    'especialidad' => $validated['especialidad'],
-                ]);
-            }
-
             DB::commit();
-            return redirect()->route('admin.users.edit', $user)->with('success', 'Usuario actualizado exitosamente.');
+            return redirect()->route('admin.users.edit', $user)->with('success', 'Usuario actualizado exitosamente. ' . ($oldRoleId != $newRoleId ? 'Rol cambiado correctamente.' : ''));
             
         } catch (\Exception $e) {
             DB::rollBack();
