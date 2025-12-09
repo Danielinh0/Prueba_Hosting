@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
     /* Fondo degradado */
-    .equipo-form-page {
+    .equipo-form-page-eqc {
         background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
         min-height: 100vh;
         font-family: 'Poppins', sans-serif;
@@ -9,14 +9,14 @@
     }
     
     /* Header container */
-    .header-container {
+    .header-container-eqc {
         display: flex;
         align-items: center;
         margin-bottom: 1.5rem;
     }
     
     /* Textos */
-    .equipo-form-page h2 {
+    .equipo-form-page-eqc h2 {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-size: 1.25rem;
@@ -25,13 +25,13 @@
         margin-left: 0.5rem;
     }
     
-    .equipo-form-page p,
-    .equipo-form-page label {
+    .equipo-form-page-eqc p,
+    .equipo-form-page-eqc label {
         font-family: 'Poppins', sans-serif;
     }
     
     /* Back button */
-    .back-link {
+    .back-link-eqc {
         font-family: 'Poppins', sans-serif;
         display: inline-flex;
         align-items: center;
@@ -47,20 +47,20 @@
         text-decoration: none;
     }
     
-    .back-link:hover {
+    .back-link-eqc:hover {
         color: #4f46e5;
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
     }
     
-    .back-link svg {
+    .back-link-eqc svg {
         width: 1rem;
         height: 1rem;
         margin-right: 0.5rem;
     }
     
     /* Main card */
-    .main-card {
+    .main-card-eqc {
         background: #FFEEE2;
         border-radius: 20px;
         box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
@@ -68,7 +68,7 @@
     }
     
     /* Alert error */
-    .alert-error {
+    .alert-error-eqc {
         background: linear-gradient(135deg, rgba(254, 226, 226, 0.9), rgba(252, 211, 211, 0.9));
         border-left: 4px solid #ef4444;
         border-radius: 12px;
@@ -79,38 +79,38 @@
         backdrop-filter: blur(10px);
     }
     
-    .alert-error p {
+    .alert-error-eqc p {
         font-family: 'Poppins', sans-serif;
         color: #991b1b;
         margin: 0;
     }
     
-    .alert-error .font-bold {
+    .alert-error-eqc .font-bold {
         font-weight: 700;
         margin-bottom: 0.5rem;
         display: block;
     }
     
-    .alert-error ul {
+    .alert-error-eqc ul {
         list-style: disc;
         margin-left: 1.5rem;
         margin-top: 0.5rem;
         margin-bottom: 0;
     }
     
-    .alert-error li {
+    .alert-error-eqc li {
         font-family: 'Poppins', sans-serif;
         color: #991b1b;
         margin: 0.25rem 0;
     }
     
     /* Form sections */
-    .form-section {
+    .form-section-eqc {
         margin-bottom: 1.5rem;
     }
     
     /* Labels */
-    .form-label {
+    .form-label-eqc {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-size: 0.875rem;
@@ -120,8 +120,8 @@
     }
     
     /* Inputs y textareas */
-    .neuro-input,
-    .neuro-textarea {
+    .neuro-input-eqc,
+    .neuro-textarea-eqc {
         font-family: 'Poppins', sans-serif;
         background: rgba(255, 255, 255, 0.5);
         border: none;
@@ -135,25 +135,25 @@
         font-size: 0.875rem;
     }
     
-    .neuro-input::placeholder,
-    .neuro-textarea::placeholder {
+    .neuro-input-eqc::placeholder,
+    .neuro-textarea-eqc::placeholder {
         color: #9ca3af;
         font-family: 'Poppins', sans-serif;
     }
     
-    .neuro-input:focus,
-    .neuro-textarea:focus {
+    .neuro-input-eqc:focus,
+    .neuro-textarea-eqc:focus {
         outline: none;
         box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
     }
     
-    .neuro-textarea {
+    .neuro-textarea-eqc {
         resize: vertical;
         min-height: 100px;
     }
     
     /* Helper text */
-    .help-text {
+    .help-text-eqc {
         font-family: 'Poppins', sans-serif;
         font-size: 0.75rem;
         color: #9ca3af;
@@ -162,11 +162,11 @@
     }
     
     /* Current image section */
-    .current-image-section {
+    .current-image-section-eqc {
         margin: 1rem 0 1.5rem 0;
     }
     
-    .current-image-label {
+    .current-image-label-eqc {
         font-family: 'Poppins', sans-serif;
         font-weight: 500;
         font-size: 0.875rem;
@@ -175,7 +175,7 @@
         display: block;
     }
     
-    .current-image-wrapper {
+    .current-image-wrapper-eqc {
         display: inline-block;
         border: 3px solid #e89a3c;
         border-radius: 12px;
@@ -184,7 +184,7 @@
         box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
     }
     
-    .current-image {
+    .current-image-eqc {
         height: 8rem;
         width: 8rem;
         object-fit: cover;
@@ -193,12 +193,12 @@
     }
     
     /* File input wrapper */
-    .file-input-wrapper {
+    .file-input-wrapper-eqc {
         position: relative;
         margin-top: 0.5rem;
     }
     
-    .file-input-label {
+    .file-input-label-eqc {
         font-family: 'Poppins', sans-serif;
         display: inline-block;
         padding: 0.625rem 1.25rem;
@@ -212,12 +212,12 @@
         transition: all 0.3s ease;
     }
     
-    .file-input-label:hover {
+    .file-input-label-eqc:hover {
         box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
         transform: translateY(-2px);
     }
     
-    .file-input-label svg {
+    .file-input-label-eqc svg {
         display: inline-block;
         width: 1rem;
         height: 1rem;
@@ -225,7 +225,7 @@
         vertical-align: middle;
     }
     
-    .neuro-file {
+    .neuro-file-eqc {
         position: absolute;
         opacity: 0;
         width: 0.1px;
@@ -233,7 +233,7 @@
         pointer-events: none;
     }
     
-    .file-name-display {
+    .file-name-display-eqc {
         font-family: 'Poppins', sans-serif;
         font-size: 0.75rem;
         color: #6b6b6b;
@@ -245,12 +245,12 @@
         display: none;
     }
     
-    .file-name-display.show {
+    .file-name-display-eqc.show-eqc {
         display: block;
     }
     
     /* Submit button */
-    .btn-submit {
+    .btn-submit-eqc {
         font-family: 'Poppins', sans-serif;
         background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         color: #ffffff;
@@ -264,18 +264,18 @@
         font-size: 0.9375rem;
     }
     
-    .btn-submit:hover {
+    .btn-submit-eqc:hover {
         box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3);
         transform: translateY(-2px);
     }
     
-    .btn-submit:active {
+    .btn-submit-eqc:active {
         transform: translateY(0);
         box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
     }
     
     /* Button container */
-    .button-container {
+    .button-container-eqc {
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -286,23 +286,23 @@
     
     /* Responsive */
     @media (max-width: 640px) {
-        .equipo-form-page {
+        .equipo-form-page-eqc {
             padding: 1.5rem 0;
         }
         
-        .main-card {
+        .main-card-eqc {
             padding: 1.5rem;
         }
         
-        .equipo-form-page h2 {
+        .equipo-form-page-eqc h2 {
             font-size: 1.125rem;
         }
         
-        .btn-submit {
+        .btn-submit-eqc {
             width: 100%;
         }
         
-        .button-container {
+        .button-container-eqc {
             justify-content: stretch;
         }
     }

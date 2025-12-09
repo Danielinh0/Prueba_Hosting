@@ -1,6 +1,6 @@
-    /* Contenedor principal */
+/* Contenedor principal */
     
-    .constancias-container {
+    .constancias-container-ctsi {
         max-width: 1200px;
         margin: 0 auto;
         margin-top: 50px;
@@ -12,7 +12,7 @@
         transition: all 0.4s ease;
         box-shadow: 8px 8px 16px rgba(230, 213, 201, 0.6);
     }
-    .back-link {
+    .back-link-ctsi {
         font-family: 'Poppins', sans-serif;
         display: inline-flex;
         align-items: center;
@@ -28,19 +28,19 @@
         text-decoration: none;
     }
     
-    .back-link:hover {
+    .back-link-ctsi:hover {
         color: #4f46e5;
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
     }
     
-    .back-link svg {
+    .back-link-ctsi svg {
         width: 1rem;
         height: 1rem;
         margin-right: 0.5rem;
     }
     /* Título principal */
-    .constancias-title {
+    .constancias-title-ctsi {
         font-family: 'Poppins', sans-serif;
         font-size: 2.5rem;
         font-weight: 700;
@@ -52,7 +52,7 @@
         padding-bottom: 15px;
     }
 
-    .constancias-title::after {
+    .constancias-title-ctsi::after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -65,7 +65,7 @@
     }
 
     /* Subtítulo */
-    .constancias-subtitle {
+    .constancias-subtitle-ctsi {
         font-family: 'Poppins', sans-serif;
         font-size: 1.1rem;
         color: #6b6b6b;
@@ -76,7 +76,7 @@
     }
 
     /* Grid de constancias */
-    .constancias-grid {
+    .constancias-grid-ctsi {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         gap: 30px;
@@ -84,7 +84,7 @@
     }
 
     /* Tarjeta individual */
-    .constancia-card {
+    .constancia-card-ctsi {
         background: #FFEEE2;
         border-radius: 20px;
         overflow: hidden;
@@ -96,7 +96,7 @@
         cursor: pointer;
     }
 
-    .constancia-card:hover {
+    .constancia-card-ctsi:hover {
         transform: translateY(-5px);
         box-shadow: 12px 12px 24px rgba(230, 213, 201, 0.7),
                    -12px -12px 24px rgba(255, 255, 255, 0.9);
@@ -104,14 +104,14 @@
     }
 
     /* Encabezado de tarjeta */
-    .constancia-card-header {
+    .constancia-card-header-ctsi {
         background: linear-gradient(135deg, #e89a3c, #f5a847);
         padding: 25px;
         position: relative;
         overflow: hidden;
     }
 
-    .constancia-card-header::before {
+    .constancia-card-header-ctsi::before {
         content: '';
         position: absolute;
         top: 0;
@@ -127,7 +127,7 @@
         100% { transform: translateX(100%); }
     }
 
-    .constancia-card-title {
+    .constancia-card-title-ctsi {
         font-family: 'Poppins', sans-serif;
         font-size: 1.4rem;
         font-weight: 600;
@@ -139,7 +139,7 @@
     }
 
     /* Badge de estado */
-    .constancia-badge {
+    .constancia-badge-ctsi {
         position: absolute;
         top: 20px;
         right: 20px;
@@ -156,12 +156,12 @@
     }
 
     /* Cuerpo de tarjeta */
-    .constancia-card-body {
+    .constancia-card-body-ctsi {
         padding: 30px;
         background: #FFEEE2;
     }
 
-    .constancia-card-description {
+    .constancia-card-description-ctsi {
         font-family: 'Poppins', sans-serif;
         font-size: 1rem;
         color: #2c2c2c;
@@ -171,7 +171,7 @@
     }
 
     /* Información adicional */
-    .constancia-info {
+    .constancia-info-ctsi {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -180,7 +180,7 @@
         border-bottom: 1px solid rgba(232, 154, 60, 0.2);
     }
 
-    .constancia-date {
+    .constancia-date-ctsi {
         font-family: 'Poppins', sans-serif;
         font-size: 0.95rem;
         color: #6b6b6b;
@@ -189,12 +189,12 @@
         gap: 8px;
     }
 
-    .constancia-date i {
+    .constancia-date-ctsi i {
         color: #e89a3c;
         font-size: 1.1rem;
     }
 
-    .constancia-participants {
+    .constancia-participants-ctsi {
         font-family: 'Poppins', sans-serif;
         font-size: 0.95rem;
         color: #6b6b6b;
@@ -203,17 +203,17 @@
         gap: 8px;
     }
 
-    .constancia-participants i {
+    .constancia-participants-ctsi i {
         color: #e89a3c;
         font-size: 1.1rem;
     }
 
     /* Botón de acción */
-    .constancia-action {
+    .constancia-action-ctsi {
         text-align: center;
     }
 
-    .constancia-btn {
+    .constancia-btn-ctsi {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -234,7 +234,7 @@
         overflow: hidden;
     }
 
-    .constancia-btn::before {
+    .constancia-btn-ctsi::before {
         content: '';
         position: absolute;
         top: 0;
@@ -245,28 +245,28 @@
         transition: left 0.5s;
     }
 
-    .constancia-btn:hover {
+    .constancia-btn-ctsi:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(232, 154, 60, 0.4);
         color: white;
         text-decoration: none;
     }
 
-    .constancia-btn:hover::before {
+    .constancia-btn-ctsi:hover::before {
         left: 100%;
     }
 
-    .constancia-btn i {
+    .constancia-btn-ctsi i {
         font-size: 1.1rem;
         transition: transform 0.3s ease;
     }
 
-    .constancia-btn:hover i {
+    .constancia-btn-ctsi:hover i {
         transform: translateX(5px);
     }
 
     /* Estado cuando no hay eventos */
-    .no-constancias {
+    .no-constancias-ctsi {
         grid-column: 1 / -1;
         text-align: center;
         padding: 60px 20px;
@@ -275,21 +275,21 @@
         box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
     }
 
-    .no-constancias i {
+    .no-constancias-ctsi i {
         font-size: 4rem;
         color: #e89a3c;
         margin-bottom: 20px;
         opacity: 0.5;
     }
 
-    .no-constancias h3 {
+    .no-constancias-ctsi h3 {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-size: 1.5rem;
         margin-bottom: 10px;
     }
 
-    .no-constancias p {
+    .no-constancias-ctsi p {
         font-family: 'Poppins', sans-serif;
         color: #6b6b6b;
         font-size: 1rem;
@@ -297,20 +297,20 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .constancias-grid {
+        .constancias-grid-ctsi {
             grid-template-columns: 1fr;
             gap: 20px;
         }
 
-        .constancias-title {
+        .constancias-title-ctsi {
             font-size: 2rem;
         }
 
-        .constancia-card {
+        .constancia-card-ctsi {
             margin: 0 10px;
         }
 
-        .constancia-info {
+        .constancia-info-ctsi {
             flex-direction: column;
             gap: 15px;
             align-items: flex-start;
@@ -329,19 +329,19 @@
         }
     }
 
-    .constancia-card {
+    .constancia-card-ctsi {
         animation: fadeInUp 0.5s ease forwards;
         opacity: 0;
     }
 
-    .constancia-card:nth-child(1) { animation-delay: 0.1s; }
-    .constancia-card:nth-child(2) { animation-delay: 0.2s; }
-    .constancia-card:nth-child(3) { animation-delay: 0.3s; }
-    .constancia-card:nth-child(4) { animation-delay: 0.4s; }
-    .constancia-card:nth-child(5) { animation-delay: 0.5s; }
+    .constancia-card-ctsi:nth-child(1) { animation-delay: 0.1s; }
+    .constancia-card-ctsi:nth-child(2) { animation-delay: 0.2s; }
+    .constancia-card-ctsi:nth-child(3) { animation-delay: 0.3s; }
+    .constancia-card-ctsi:nth-child(4) { animation-delay: 0.4s; }
+    .constancia-card-ctsi:nth-child(5) { animation-delay: 0.5s; }
 
     /* Hero Section Negro */
-    .hero-section {
+    .hero-section-ctsi {
         background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
         border-radius: 24px;
         padding: 2.5rem;
@@ -351,23 +351,23 @@
         box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
     }
 
-    .hero-content {
+    .hero-content-ctsi {
         position: relative;
         z-index: 1;
     }
 
-    .hero-text h1 {
+    .hero-text-ctsi h1 {
         color: #c1c1c1ff;
         font-size: 2rem;
         font-weight: 800;
         margin-bottom: 0.5rem;
     }
 
-    .hero-text h1 span {
+    .hero-text-ctsi h1 span {
         color: #e89a3c;
     }
 
-    .hero-text p {
+    .hero-text-ctsi p {
         color: #cfcfcfff;
         font-size: 1rem;
     }

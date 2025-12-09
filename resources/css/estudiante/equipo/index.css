@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
-    .equipos-page {
+    .equipos-page-eqi {
         background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
         min-height: 100vh;
         font-family: 'Poppins', sans-serif;
     }
     
-    .equipos-page * {
+    .equipos-page-eqi * {
         font-family: 'Poppins', sans-serif;
     }
 
-    .back-link {
+    .back-link-eqi {
         font-family: 'Poppins', sans-serif;
         display: inline-flex;
         align-items: center;
@@ -26,20 +26,20 @@
         text-decoration: none;
     }
     
-    .back-link:hover {
+    .back-link-eqi:hover {
         color: #4f46e5;
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
     }
     
-    .back-link svg {
+    .back-link-eqi svg {
         width: 1rem;
         height: 1rem;
         margin-right: 0.5rem;
     }
     
     /* Hero Section Neuromórfica - Tonos Grises Pastel */
-    .hero-section {
+    .hero-section-eqi {
         background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
         border-radius: 24px;
         padding: 2.5rem;
@@ -49,7 +49,7 @@
         box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
     }
 
-    .hero-section::before {
+    .hero-section-eqi::before {
         content: '';
         position: absolute;
         top: -100px;
@@ -60,7 +60,7 @@
         pointer-events: none;
     }
 
-    .hero-section::after {
+    .hero-section-eqi::after {
         content: '';
         position: absolute;
         bottom: -80px;
@@ -71,7 +71,7 @@
         pointer-events: none;
     }
 
-    .hero-content {
+    .hero-content-eqi {
         position: relative;
         z-index: 1;
         display: flex;
@@ -79,7 +79,7 @@
         align-items: center;
     }
 
-    .hero-text h1 {
+    .hero-text-eqi h1 {
         color: #c1c1c1ff;
         font-size: 2rem;
         font-weight: 800;
@@ -87,23 +87,23 @@
         text-shadow: 1px 1px 2px rgba(235, 132, 72, 0.8);
     }
 
-    .hero-text h1 span {
+    .hero-text-eqi h1 span {
         color: #e89a3c;
         text-shadow: 1px 1px 2px rgba(232, 154, 60, 0.2);
     }
 
-    .hero-text p {
+    .hero-text-eqi p {
         color: #cfcfcfff;
         font-size: 1rem;
         max-width: 500px;
     }
 
-    .hero-stats {
+    .hero-stats-eqi {
         display: flex;
         gap: 1.5rem;
     }
 
-    .hero-stat {
+    .hero-stat-eqi {
         text-align: center;
         padding: 1rem 1.5rem;
         background: rgba(248, 244, 244, 0.85);
@@ -112,7 +112,7 @@
         backdrop-filter: blur(10px);
     }
 
-    .hero-stat-number {
+    .hero-stat-number-eqi {
         color: #e89a3c;
         font-size: 2rem;
         font-weight: 800;
@@ -120,7 +120,7 @@
         text-shadow: 1px 1px 2px rgba(232, 154, 60, 0.2);
     }
 
-    .hero-stat-label {
+    .hero-stat-label-eqi {
         color: #47494cff;
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -129,7 +129,7 @@
     }
 
     /* Botón Crear Equipo */
-    .btn-crear-equipo {
+    .btn-crear-equipo-eqi {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -143,32 +143,32 @@
         box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
     }
 
-    .btn-crear-equipo:hover {
+    .btn-crear-equipo-eqi:hover {
         box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
         transform: translateY(-2px);
         color: white;
     }
 
-    .btn-crear-equipo svg {
+    .btn-crear-equipo-eqi svg {
         width: 20px;
         height: 20px;
     }
 
     /* Teams Grid */
-    .teams-grid {
+    .teams-grid-eqi {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
         gap: 1.5rem;
     }
 
     @media (max-width: 480px) {
-        .teams-grid {
+        .teams-grid-eqi {
             grid-template-columns: 1fr;
         }
     }
 
     /* Team Card Neuromórfica */
-    .team-card {
+    .team-card-eqi {
         background: #FFEEE2;
         border-radius: 20px;
         overflow: hidden;
@@ -178,16 +178,16 @@
         border: none;
     }
 
-    .team-card:hover {
+    .team-card-eqi:hover {
         transform: translateY(-8px);
         box-shadow: 12px 12px 24px #e6d5c9, -12px -12px 24px #ffffff;
     }
 
-    .team-card-leader {
+    .team-card-leader-eqi {
         border: 2px solid #e89a3c;
     }
 
-    .team-card-leader::before {
+    .team-card-leader-eqi::before {
         content: '👑 Eres el Líder';
         position: absolute;
         top: 1rem;
@@ -203,24 +203,24 @@
     }
 
     /* Team Image */
-    .team-image-container {
+    .team-image-container-eqi {
         position: relative;
         height: 140px;
         overflow: hidden;
     }
 
-    .team-image {
+    .team-image-eqi {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.5s ease;
     }
 
-    .team-card:hover .team-image {
+    .team-card-eqi:hover .team-image-eqi {
         transform: scale(1.08);
     }
 
-    .team-image-placeholder {
+    .team-image-placeholder-eqi {
         width: 100%;
         height: 100%;
         background: linear-gradient(135deg, #e89a3c 0%, #f5a847 50%, #e89a3c 100%);
@@ -229,13 +229,13 @@
         justify-content: center;
     }
 
-    .team-image-placeholder svg {
+    .team-image-placeholder-eqi svg {
         width: 50px;
         height: 50px;
         color: rgba(255, 255, 255, 0.6);
     }
 
-    .team-image-overlay {
+    .team-image-overlay-eqi {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -245,13 +245,13 @@
         pointer-events: none;
     }
 
-    .team-card-header {
+    .team-card-header-eqi {
         background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         padding: 1.25rem 1.5rem;
         position: relative;
     }
 
-    .team-card-header::after {
+    .team-card-header-eqi::after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -261,7 +261,7 @@
         background: linear-gradient(90deg, #e89a3c, #f5a847, #e89a3c);
     }
 
-    .team-name {
+    .team-name-eqi {
         color: #ffffff;
         font-size: 1.15rem;
         font-weight: 700;
@@ -269,7 +269,7 @@
         padding-right: 100px;
     }
 
-    .team-event {
+    .team-event-eqi {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -277,26 +277,26 @@
         font-size: 0.8rem;
     }
 
-    .team-event svg {
+    .team-event-eqi svg {
         width: 14px;
         height: 14px;
         color: #e89a3c;
     }
 
-    .team-card-body {
+    .team-card-body-eqi {
         padding: 1.25rem 1.5rem;
         background: #FFEEE2;
     }
 
     /* Team Stats Row */
-    .team-stats-row {
+    .team-stats-row-eqi {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
         margin-bottom: 1.25rem;
     }
 
-    .team-stat-item {
+    .team-stat-item-eqi {
         text-align: center;
         padding: 0.75rem;
         background: rgba(255, 255, 255, 0.4);
@@ -304,13 +304,13 @@
         box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
     }
 
-    .team-stat-value {
+    .team-stat-value-eqi {
         font-size: 1.25rem;
         font-weight: 800;
         color: #2c2c2c;
     }
 
-    .team-stat-label {
+    .team-stat-label-eqi {
         font-size: 0.7rem;
         color: #9ca3af;
         text-transform: uppercase;
@@ -319,11 +319,11 @@
     }
 
     /* Members Preview */
-    .members-preview {
+    .members-preview-eqi {
         margin-bottom: 1.5rem;
     }
 
-    .members-preview-title {
+    .members-preview-title-eqi {
         font-size: 0.75rem;
         font-weight: 600;
         color: #6b7280;
@@ -332,12 +332,12 @@
         margin-bottom: 0.75rem;
     }
 
-    .members-avatars {
+    .members-avatars-eqi {
         display: flex;
         align-items: center;
     }
 
-    .member-avatar {
+    .member-avatar-eqi {
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -355,21 +355,21 @@
         position: relative;
     }
 
-    .member-avatar:first-child {
+    .member-avatar-eqi:first-child {
         margin-left: 0;
     }
 
-    .member-avatar:hover {
+    .member-avatar-eqi:hover {
         transform: scale(1.1) translateY(-4px);
         z-index: 10;
     }
 
-    .member-avatar-leader {
+    .member-avatar-leader-eqi {
         background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         border-color: #e89a3c;
     }
 
-    .member-avatar-more {
+    .member-avatar-more-eqi {
         background: rgba(255, 255, 255, 0.6);
         color: #6b7280;
         font-size: 0.75rem;
@@ -377,7 +377,7 @@
     }
 
     /* My Role Badge */
-    .my-role-badge {
+    .my-role-badge-eqi {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -391,19 +391,19 @@
         box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px #ffffff;
     }
 
-    .my-role-badge svg {
+    .my-role-badge-eqi svg {
         width: 16px;
         height: 16px;
         color: #e89a3c;
     }
 
     /* Team Actions */
-    .team-actions {
+    .team-actions-eqi {
         display: flex;
         gap: 0.75rem;
     }
 
-    .team-action-btn {
+    .team-action-btn-eqi {
         flex: 1;
         display: inline-flex;
         align-items: center;
@@ -419,31 +419,31 @@
         cursor: pointer;
     }
 
-    .team-action-btn svg {
+    .team-action-btn-eqi svg {
         width: 18px;
         height: 18px;
     }
 
-    .team-action-primary {
+    .team-action-primary-eqi {
         background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
         color: #ffffff;
         box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .team-action-primary:hover {
+    .team-action-primary-eqi:hover {
         background: linear-gradient(135deg, #e89a3c, #f5a847);
         transform: translateY(-2px);
         box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.3);
         color: #ffffff;
     }
 
-    .team-action-secondary {
+    .team-action-secondary-eqi {
         background: rgba(255, 255, 255, 0.6);
         color: #4b5563;
         box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
     }
 
-    .team-action-secondary:hover {
+    .team-action-secondary-eqi:hover {
         background: rgba(255, 255, 255, 0.8);
         color: #2c2c2c;
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
@@ -451,7 +451,7 @@
     }
 
     /* Pending Requests Indicator */
-    .pending-requests {
+    .pending-requests-eqi {
         position: absolute;
         top: 1rem;
         left: 1rem;
@@ -474,13 +474,13 @@
         50% { opacity: 0.8; }
     }
 
-    .pending-requests svg {
+    .pending-requests-eqi svg {
         width: 14px;
         height: 14px;
     }
 
     /* Event Status Badge - Paleta Pastel */
-    .event-status-badge {
+    .event-status-badge-eqi {
         display: inline-flex;
         align-items: center;
         gap: 0.375rem;
@@ -491,33 +491,33 @@
         margin-left: 0.5rem;
     }
 
-    .status-en-progreso {
+    .status-en-progreso-eqi {
         background: linear-gradient(135deg, rgba(167, 243, 208, 0.8), rgba(134, 239, 172, 0.8));
         color: #065f46;
         box-shadow: inset 2px 2px 4px rgba(16, 185, 129, 0.2);
     }
 
-    .status-activo {
+    .status-activo-eqi {
         background: linear-gradient(135deg, rgba(191, 219, 254, 0.8), rgba(147, 197, 253, 0.8));
         color: #1e40af;
         box-shadow: inset 2px 2px 4px rgba(59, 130, 246, 0.2);
     }
 
-    .status-pendiente,
-    .status-próximo {
+    .status-pendiente-eqi,
+    .status-próximo-eqi {
         background: linear-gradient(135deg, rgba(254, 240, 138, 0.8), rgba(252, 211, 77, 0.8));
         color: #92400e;
         box-shadow: inset 2px 2px 4px rgba(245, 158, 11, 0.2);
     }
 
-    .status-finalizado {
+    .status-finalizado-eqi {
         background: linear-gradient(135deg, rgba(229, 231, 235, 0.8), rgba(209, 213, 219, 0.8));
         color: #4b5563;
         box-shadow: inset 2px 2px 4px rgba(107, 114, 128, 0.2);
     }
 
     /* Empty State Neuromórfico */
-    .empty-state {
+    .empty-state-eqi {
         background: #FFEEE2;
         border-radius: 24px;
         padding: 4rem 2rem;
@@ -526,7 +526,7 @@
         border: none;
     }
 
-    .empty-state-icon {
+    .empty-state-icon-eqi {
         width: 100px;
         height: 100px;
         background: rgba(255, 255, 255, 0.5);
@@ -538,20 +538,20 @@
         box-shadow: inset 4px 4px 8px #e6d5c9, inset -4px -4px 8px #ffffff;
     }
 
-    .empty-state-icon svg {
+    .empty-state-icon-eqi svg {
         width: 50px;
         height: 50px;
         color: #e89a3c;
     }
 
-    .empty-state h3 {
+    .empty-state-eqi h3 {
         font-size: 1.5rem;
         font-weight: 700;
         color: #2c2c2c;
         margin-bottom: 0.75rem;
     }
 
-    .empty-state p {
+    .empty-state-eqi p {
         color: #6b7280;
         font-size: 1rem;
         max-width: 400px;
@@ -559,14 +559,14 @@
         line-height: 1.6;
     }
 
-    .empty-state-actions {
+    .empty-state-actions-eqi {
         display: flex;
         justify-content: center;
         gap: 1rem;
         flex-wrap: wrap;
     }
 
-    .empty-state-btn {
+    .empty-state-btn-eqi {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
@@ -578,30 +578,30 @@
         transition: all 0.3s ease;
     }
 
-    .empty-state-btn svg {
+    .empty-state-btn-eqi svg {
         width: 20px;
         height: 20px;
     }
 
-    .empty-state-btn-primary {
+    .empty-state-btn-primary-eqi {
         background: linear-gradient(135deg, #e89a3c, #f5a847);
         color: #ffffff;
         box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);
     }
 
-    .empty-state-btn-primary:hover {
+    .empty-state-btn-primary-eqi:hover {
         transform: translateY(-2px);
         box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
         color: #ffffff;
     }
 
-    .empty-state-btn-secondary {
+    .empty-state-btn-secondary-eqi {
         background: rgba(255, 255, 255, 0.6);
         color: #4b5563;
         box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
     }
 
-    .empty-state-btn-secondary:hover {
+    .empty-state-btn-secondary-eqi:hover {
         background: rgba(255, 255, 255, 0.8);
         color: #2c2c2c;
         transform: translateY(-2px);
@@ -610,21 +610,21 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .hero-content {
+        .hero-content-eqi {
             flex-direction: column;
             text-align: center;
             gap: 1.5rem;
         }
 
-        .hero-text h1 {
+        .hero-text-eqi h1 {
             font-size: 1.5rem;
         }
 
-        .hero-stats {
+        .hero-stats-eqi {
             justify-content: center;
         }
 
-        .team-stats-row {
+        .team-stats-row-eqi {
             grid-template-columns: 1fr;
         }
     }

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
-    .back-link {
+    .back-link-pi {
         font-family: 'Poppins', sans-serif;
         display: inline-flex;
         align-items: center;
@@ -16,39 +16,39 @@
         text-decoration: none;
     }
     
-    .back-link:hover {
+    .back-link-pi:hover {
         color: #4f46e5;
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
     }
     
-    .back-link svg {
+    .back-link-pi svg {
         width: 1rem;
         height: 1rem;
         margin-right: 0.5rem;
     }
     
     /* Fondo degradado */
-    .mis-proyectos-page {
+    .mis-proyectos-page-pi {
         background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
         min-height: 100vh;
         font-family: 'Poppins', sans-serif;
     }
     
     /* Textos */
-    .mis-proyectos-page h2,
-    .mis-proyectos-page h3 {
+    .mis-proyectos-page-pi h2,
+    .mis-proyectos-page-pi h3 {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
     }
     
-    .mis-proyectos-page p {
+    .mis-proyectos-page-pi p {
         font-family: 'Poppins', sans-serif;
         color: #6b6b6b;
     }
     
     /* Project card */
-    .project-card {
+    .project-card-pi {
         background: #FFEEE2;
         border-radius: 20px;
         overflow: hidden;
@@ -56,13 +56,13 @@
         transition: all 0.3s ease;
     }
     
-    .project-card:hover {
+    .project-card-pi:hover {
         box-shadow: 12px 12px 24px #e6d5c9, -12px -12px 24px #ffffff;
         transform: translateY(-5px);
     }
     
     /* Project header */
-    .project-header {
+    .project-header-pi {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
@@ -71,14 +71,14 @@
         border-bottom: 1px solid rgba(232, 154, 60, 0.2);
     }
     
-    .project-name {
+    .project-name-pi {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-weight: 700;
         font-size: 1.25rem;
     }
     
-    .project-icon {
+    .project-icon-pi {
         width: 3rem;
         height: 3rem;
         background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -89,14 +89,14 @@
         box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.3);
     }
     
-    .project-icon svg {
+    .project-icon-pi svg {
         width: 1.5rem;
         height: 1.5rem;
         color: white;
     }
     
     /* Badges */
-    .badge-lider {
+    .badge-lider-pi {
         font-family: 'Poppins', sans-serif;
         display: inline-flex;
         align-items: center;
@@ -111,7 +111,7 @@
     }
     
     /* Team box */
-    .team-box {
+    .team-box-pi {
         margin-bottom: 1rem;
         padding: 0.75rem;
         border-radius: 15px;
@@ -119,59 +119,59 @@
         box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
     }
     
-    .team-box p {
+    .team-box-pi p {
         font-size: 0.875rem;
         color: #1e3a8a;
         margin-bottom: 0.25rem;
     }
     
-    .team-box strong {
+    .team-box-pi strong {
         color: #2c2c2c;
     }
     
     /* Event box */
-    .event-box {
+    .event-box-pi {
         margin-bottom: 1rem;
         padding: 0.75rem;
         border-radius: 15px;
         box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
     }
     
-    .event-box-active {
+    .event-box-active-pi {
         background: linear-gradient(135deg, rgba(209, 250, 229, 0.5), rgba(167, 243, 208, 0.5));
     }
     
-    .event-box-active p {
+    .event-box-active-pi p {
         color: #065f46;
     }
     
-    .event-box-inactive {
+    .event-box-inactive-pi {
         background: rgba(249, 250, 251, 0.5);
     }
     
-    .event-box-inactive p {
+    .event-box-inactive-pi p {
         color: #6b6b6b;
     }
     
-    .event-box-deleted {
+    .event-box-deleted-pi {
         background: linear-gradient(135deg, rgba(254, 226, 226, 0.5), rgba(252, 165, 165, 0.5));
     }
     
-    .event-box-deleted p {
+    .event-box-deleted-pi p {
         color: #991b1b;
     }
     
-    .event-box p {
+    .event-box-pi p {
         font-size: 0.875rem;
         margin-bottom: 0.25rem;
     }
     
-    .event-box strong {
+    .event-box-pi strong {
         color: #2c2c2c;
     }
     
     /* Description */
-    .project-description {
+    .project-description-pi {
         font-size: 0.875rem;
         color: #6b6b6b;
         margin-bottom: 1rem;
@@ -182,14 +182,14 @@
     }
     
     /* Stats grid */
-    .stats-grid {
+    .stats-grid-pi {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
         margin-bottom: 1rem;
     }
     
-    .stat-item {
+    .stat-item-pi {
         padding: 0.75rem;
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.5);
@@ -197,48 +197,48 @@
         text-align: center;
     }
     
-    .stat-item p:first-child {
+    .stat-item-pi p:first-child {
         font-size: 0.75rem;
         color: #6b6b6b;
         margin-bottom: 0.25rem;
     }
     
-    .stat-item p:last-child {
+    .stat-item-pi p:last-child {
         font-size: 1.125rem;
         font-weight: 700;
         color: #2c2c2c;
     }
     
-    .stat-tareas {
+    .stat-tareas-pi {
         border-left: 3px solid #6366f1;
     }
     
-    .stat-avances {
+    .stat-avances-pi {
         border-left: 3px solid #10b981;
     }
     
     /* Progress bar */
-    .progress-container {
+    .progress-container-pi {
         margin-bottom: 1rem;
     }
     
-    .progress-label {
+    .progress-label-pi {
         display: flex;
         justify-content: space-between;
         margin-bottom: 0.5rem;
     }
     
-    .progress-label span {
+    .progress-label-pi span {
         font-size: 0.75rem;
         color: #6b6b6b;
     }
     
-    .progress-label strong {
+    .progress-label-pi strong {
         font-size: 0.875rem;
         color: #2c2c2c;
     }
     
-    .progress-bar-bg {
+    .progress-bar-bg-pi {
         height: 8px;
         background: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
@@ -246,7 +246,7 @@
         overflow: hidden;
     }
     
-    .progress-bar-fill {
+    .progress-bar-fill-pi {
         height: 100%;
         background: linear-gradient(135deg, #6366f1, #4f46e5);
         border-radius: 10px;
@@ -254,7 +254,7 @@
     }
     
     /* View details button */
-    .btn-view-details {
+    .btn-view-details-pi {
         font-family: 'Poppins', sans-serif;
         display: block;
         width: 100%;
@@ -269,14 +269,14 @@
         text-decoration: none;
     }
     
-    .btn-view-details:hover {
+    .btn-view-details-pi:hover {
         box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
         transform: translateY(-2px);
         color: #ffffff;
     }
     
     /* Empty state */
-    .empty-state {
+    .empty-state-pi {
         text-align: center;
         padding: 4rem 2rem;
         background: #FFEEE2;
@@ -284,24 +284,25 @@
         box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
     }
     
-    .empty-state svg {
-        width: 5rem;
-        height: 5rem;
-        color: #e89a3c;
-        margin-bottom: 1.5rem;
-    }
+    .empty-state-pi svg {
+    width: 5rem;
+    height: 5rem;
+    color: #e89a3c;
+    margin: 0 auto 1.5rem auto; /* Centra horizontalmente */
+    display: block; /* Necesario para que margin auto funcione */
+}
     
-    .empty-state h3 {
+    .empty-state-pi h3 {
         font-size: 1.5rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
     }
     
-    .empty-state p {
+    .empty-state-pi p {
         margin-bottom: 1.5rem;
     }
     
-    .btn-go-teams {
+    .btn-go-teams-pi {
         font-family: 'Poppins', sans-serif;
         display: inline-flex;
         align-items: center;
@@ -315,20 +316,20 @@
         text-decoration: none;
     }
     
-    .btn-go-teams:hover {
+    .btn-go-teams-pi:hover {
         box-shadow: 6px 6px 12px rgba(232, 154, 60, 0.4);
         transform: translateY(-2px);
         color: #ffffff;
     }
     
-    .btn-go-teams svg {
+    .btn-go-teams-pi svg {
         width: 1.25rem;
         height: 1.25rem;
         margin-right: 0.5rem;
     }
 
     /* Hero Section Negro */
-    .hero-section {
+    .hero-section-pi {
         background: linear-gradient(135deg, #0e0e0eff 0%, #434343ff 50%, #1d1d1dff 100%);
         border-radius: 24px;
         padding: 2.5rem;
@@ -338,51 +339,23 @@
         box-shadow: 8px 8px 16px rgba(200, 200, 200, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.9);
     }
 
-    .hero-content {
+    .hero-content-pi {
         position: relative;
         z-index: 1;
     }
 
-    .hero-text h1 {
+    .hero-text-pi h1 {
         color: #c1c1c1ff;
         font-size: 2rem;
         font-weight: 800;
         margin-bottom: 0.5rem;
     }
 
-    .hero-text h1 span {
+    .hero-text-pi h1 span {
         color: #e89a3c;
     }
 
-    .hero-text p {
+    .hero-text-pi p {
         color: #cfcfcfff;
         font-size: 1rem;
-    }
-
-    .back-link {
-        font-family: 'Poppins', sans-serif;
-        display: inline-flex;
-        align-items: center;
-        color: black;
-        font-size: 0.875rem;
-        font-weight: 500;
-        margin-bottom: 1rem;
-        padding: 0.5rem 1rem;
-        background: #FFEEE2;
-        border-radius: 10px;
-        box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px #ffffff;
-        transition: all 0.2s ease;
-        text-decoration: none;
-    }
-    
-    .back-link:hover {
-        color: #4f46e5;
-        box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
-        transform: translateY(-2px);
-    }
-    
-    .back-link svg {
-        width: 1rem;
-        height: 1rem;
-        margin-right: 0.5rem;
     }

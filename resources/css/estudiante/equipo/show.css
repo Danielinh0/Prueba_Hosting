@@ -231,7 +231,7 @@
         }
     }
 
-    .stat-card {
+    .stat-card-eqv {
         background: #FFEEE2;
         border-radius: 16px;
         padding: 1.5rem;
@@ -241,7 +241,7 @@
         transition: all 0.3s ease;
     }
 
-    .stat-card:hover {
+    .stat-card-eqv:hover {
         transform: translateY(-4px);
         box-shadow: 12px 12px 24px #e6d5c9, -12px -12px 24px #ffffff;
     }
@@ -712,13 +712,13 @@
     }
 
     .quick-link-blue {
-        background: linear-gradient(135deg, rgba(191, 219, 254, 0.8), rgba(147, 197, 253, 0.8));
-        color: #1e40af;
+        background: linear-gradient(135deg, rgba(191, 219, 254, 0.8), rgba(147, 197, 253, 0.8)) !important;
+        color: #1e40af !important;
     }
 
     .quick-link-green {
-        background: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(167, 243, 208, 0.8));
-        color: #065f46;
+        background: linear-gradient(135deg, rgba(209, 250, 229, 0.8), rgba(167, 243, 208, 0.8)) !important;
+        color: #065f46 !important;
     }
 
     /* Empty State */

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
     /* Fondo degradado */
-    .crear-equipo-page {
+    .crear-equipo-page-eqcse {
         background: linear-gradient(to bottom, #FFFDF4, #FFEEE2);
         min-height: 100vh;
         font-family: 'Poppins', sans-serif;
@@ -9,7 +9,7 @@
     }
     
     /* Back link */
-    .back-link {
+    .back-link-eqcse {
         font-family: 'Poppins', sans-serif;
         display: inline-flex;
         align-items: center;
@@ -25,24 +25,24 @@
         text-decoration: none;
     }
     
-    .back-link:hover {
+    .back-link-eqcse:hover {
         color: #4f46e5;
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
     }
     
-    .back-link svg {
+    .back-link-eqcse svg {
         width: 1rem;
         height: 1rem;
         margin-right: 0.5rem;
     }
     
     /* Header section */
-    .header-section {
+    .header-section-eqcse {
         margin-bottom: 1.5rem;
     }
     
-    .header-section h2 {
+    .header-section-eqcse h2 {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-size: 1.5rem;
@@ -50,7 +50,7 @@
         margin: 0.5rem 0;
     }
     
-    .header-section p {
+    .header-section-eqcse p {
         font-family: 'Poppins', sans-serif;
         color: #6b6b6b;
         font-size: 0.9375rem;
@@ -58,7 +58,7 @@
     }
     
     /* Main card */
-    .main-card {
+    .main-card-eqcse {
         background: #FFEEE2;
         border-radius: 20px;
         box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px #ffffff;
@@ -66,12 +66,12 @@
     }
     
     /* Form sections */
-    .form-section {
+    .form-section-eqcse {
         margin-bottom: 1.5rem;
     }
     
     /* Labels */
-    .form-label {
+    .form-label-eqcse {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-size: 0.875rem;
@@ -80,13 +80,13 @@
         margin-bottom: 0.5rem;
     }
     
-    .form-label .required {
+    .form-label-eqcse .required-eqcse {
         color: #ef4444;
     }
     
     /* Inputs y textareas */
-    .neuro-input,
-    .neuro-textarea {
+    .neuro-input-eqcse,
+    .neuro-textarea-eqcse {
         font-family: 'Poppins', sans-serif;
         background: rgba(255, 255, 255, 0.5);
         border: none;
@@ -100,31 +100,31 @@
         font-size: 0.875rem;
     }
     
-    .neuro-input::placeholder,
-    .neuro-textarea::placeholder {
+    .neuro-input-eqcse::placeholder,
+    .neuro-textarea-eqcse::placeholder {
         color: #9ca3af;
         font-family: 'Poppins', sans-serif;
     }
     
-    .neuro-input:focus,
-    .neuro-textarea:focus {
+    .neuro-input-eqcse:focus,
+    .neuro-textarea-eqcse:focus {
         outline: none;
         box-shadow: inset 6px 6px 12px #e6d5c9, inset -6px -6px 12px #ffffff;
     }
     
-    .neuro-textarea {
+    .neuro-textarea-eqcse {
         resize: vertical;
         min-height: 100px;
     }
     
     /* Input error state */
-    .neuro-input.error,
-    .neuro-textarea.error {
+    .neuro-input-eqcse.error-eqcse,
+    .neuro-textarea-eqcse.error-eqcse {
         box-shadow: inset 4px 4px 8px rgba(239, 68, 68, 0.2), inset -4px -4px 8px #ffffff;
     }
     
     /* Helper text */
-    .help-text {
+    .help-text-eqcse {
         font-family: 'Poppins', sans-serif;
         font-size: 0.75rem;
         color: #9ca3af;
@@ -133,7 +133,7 @@
     }
     
     /* Error text */
-    .error-text {
+    .error-text-eqcse {
         font-family: 'Poppins', sans-serif;
         font-size: 0.875rem;
         color: #ef4444;
@@ -142,7 +142,7 @@
     }
     
     /* File upload area - Drag and drop style */
-    .file-upload-area {
+    .file-upload-area-eqcse {
         border: 2px dashed rgba(107, 107, 107, 0.3);
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.4);
@@ -154,18 +154,18 @@
         overflow: hidden;
     }
     
-    .file-upload-area:hover {
+    .file-upload-area-eqcse:hover {
         border-color: rgba(104, 39, 2, 0.5);
         background: rgba(255, 255, 255, 0.5);
     }
     
-    .file-upload-area.dragover {
+    .file-upload-area-eqcse.dragover-eqcse {
         border-color: #6366f1;
         background: rgba(224, 231, 255, 0.3);
         transform: scale(1.01);
     }
     
-    .file-upload-content {
+    .file-upload-content-eqcse {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -173,32 +173,32 @@
         pointer-events: none;
     }
     
-    .file-upload-icon {
+    .file-upload-icon-eqcse {
         width: 3rem;
         height: 3rem;
         color: #9ca3af;
     }
     
-    .file-upload-text {
+    .file-upload-text-eqcse {
         font-family: 'Poppins', sans-serif;
         color: #6b6b6b;
         font-size: 0.9375rem;
         font-weight: 400;
     }
     
-    .file-upload-text strong {
+    .file-upload-text-eqcse strong {
         color: #2c2c2c;
         font-weight: 600;
     }
     
-    .file-upload-hint {
+    .file-upload-hint-eqcse {
         font-family: 'Poppins', sans-serif;
         color: #9ca3af;
         font-size: 0.8125rem;
         margin-top: 0.25rem;
     }
     
-    .neuro-file {
+    .neuro-file-eqcse {
         position: absolute;
         opacity: 0;
         width: 100%;
@@ -209,7 +209,7 @@
     }
     
     /* File preview cuando se selecciona */
-    .file-preview {
+    .file-preview-eqcse {
         margin-top: 1rem;
         padding: 1rem;
         background: rgba(255, 255, 255, 0.5);
@@ -220,11 +220,11 @@
         gap: 1rem;
     }
     
-    .file-preview.show {
+    .file-preview-eqcse.show-eqcse {
         display: flex;
     }
     
-    .file-preview-icon {
+    .file-preview-icon-eqcse {
         width: 2.5rem;
         height: 2.5rem;
         background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -235,18 +235,18 @@
         flex-shrink: 0;
     }
     
-    .file-preview-icon svg {
+    .file-preview-icon-eqcse svg {
         width: 1.5rem;
         height: 1.5rem;
         color: white;
     }
     
-    .file-preview-info {
+    .file-preview-info-eqcse {
         flex: 1;
         text-align: left;
     }
     
-    .file-preview-name {
+    .file-preview-name-eqcse {
         font-family: 'Poppins', sans-serif;
         color: #2c2c2c;
         font-size: 0.875rem;
@@ -255,13 +255,13 @@
         word-break: break-all;
     }
     
-    .file-preview-size {
+    .file-preview-size-eqcse {
         font-family: 'Poppins', sans-serif;
         color: #9ca3af;
         font-size: 0.75rem;
     }
     
-    .file-preview-remove {
+    .file-preview-remove-eqcse {
         background: rgba(239, 68, 68, 0.1);
         border: 1px solid rgba(239, 68, 68, 0.3);
         border-radius: 8px;
@@ -273,18 +273,18 @@
         justify-content: center;
     }
     
-    .file-preview-remove:hover {
+    .file-preview-remove-eqcse:hover {
         background: rgba(239, 68, 68, 0.2);
     }
     
-    .file-preview-remove svg {
+    .file-preview-remove-eqcse svg {
         width: 1.25rem;
         height: 1.25rem;
         color: #ef4444;
     }
     
     /* Info box */
-    .info-box {
+    .info-box-eqcse {
         background: linear-gradient(135deg, rgba(224, 231, 255, 0.9), rgba(199, 210, 254, 0.9));
         border-left: 4px solid #6366f1;
         border-radius: 12px;
@@ -294,7 +294,7 @@
         backdrop-filter: blur(10px);
     }
     
-    .info-box h3 {
+    .info-box-eqcse h3 {
         font-family: 'Poppins', sans-serif;
         color: #312e81;
         font-size: 0.9375rem;
@@ -304,18 +304,18 @@
         align-items: center;
     }
     
-    .info-box h3 .icon {
+    .info-box-eqcse h3 .icon-eqcse {
         margin-right: 0.5rem;
         font-size: 1.125rem;
     }
     
-    .info-box ul {
+    .info-box-eqcse ul {
         list-style: none;
         margin: 0;
         padding: 0;
     }
     
-    .info-box li {
+    .info-box-eqcse li {
         font-family: 'Poppins', sans-serif;
         color: #4338ca;
         font-size: 0.875rem;
@@ -324,7 +324,7 @@
         position: relative;
     }
     
-    .info-box li::before {
+    .info-box-eqcse li::before {
         content: '•';
         position: absolute;
         left: 0;
@@ -332,13 +332,13 @@
         font-weight: bold;
     }
     
-    .info-box strong {
+    .info-box-eqcse strong {
         font-weight: 600;
         color: #312e81;
     }
     
     /* Button container */
-    .button-container {
+    .button-container-eqcse {
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -349,7 +349,7 @@
     }
     
     /* Cancel button */
-    .btn-cancel {
+    .btn-cancel-eqcse {
         font-family: 'Poppins', sans-serif;
         background: rgba(255, 253, 244, 0.9);
         color: #2c2c2c;
@@ -365,14 +365,14 @@
         font-size: 0.9375rem;
     }
     
-    .btn-cancel:hover {
+    .btn-cancel-eqcse:hover {
         box-shadow: 6px 6px 12px #e6d5c9, -6px -6px 12px #ffffff;
         transform: translateY(-2px);
         background: rgba(255, 253, 244, 1);
     }
     
     /* Submit button */
-    .btn-submit {
+    .btn-submit-eqcse {
         font-family: 'Poppins', sans-serif;
         background: linear-gradient(135deg, #6366f1, #4f46e5);
         color: #ffffff;
@@ -386,50 +386,50 @@
         font-size: 0.9375rem;
     }
     
-    .btn-submit:hover {
+    .btn-submit-eqcse:hover {
         box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.4);
         transform: translateY(-2px);
     }
     
-    .btn-submit:active {
+    .btn-submit-eqcse:active {
         transform: translateY(0);
         box-shadow: 3px 3px 6px rgba(99, 102, 241, 0.3);
     }
     
     /* Responsive */
     @media (max-width: 640px) {
-        .crear-equipo-page {
+        .crear-equipo-page-eqcse {
             padding: 1.5rem 0;
         }
         
-        .main-card {
+        .main-card-eqcse {
             padding: 1.5rem;
         }
         
-        .header-section h2 {
+        .header-section-eqcse h2 {
             font-size: 1.25rem;
         }
         
-        .file-upload-area {
+        .file-upload-area-eqcse {
             padding: 2rem 1rem;
         }
         
-        .file-upload-icon {
+        .file-upload-icon-eqcse {
             width: 2.5rem;
             height: 2.5rem;
         }
         
-        .file-upload-text {
+        .file-upload-text-eqcse {
             font-size: 0.875rem;
         }
         
-        .button-container {
+        .button-container-eqcse {
             flex-direction: column-reverse;
             gap: 0.5rem;
         }
         
-        .btn-cancel,
-        .btn-submit {
+        .btn-cancel-eqcse,
+        .btn-submit-eqcse {
             width: 100%;
             text-align: center;
         }
