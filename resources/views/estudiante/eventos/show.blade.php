@@ -249,6 +249,22 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         ✓ Inscrito - Esperando a que se llene el evento ({{ $equiposFaltantes }} {{ $equiposFaltantes == 1 ? 'equipo faltante' : 'equipos faltantes' }})
                     </div>
+                    
+                    @if($esLider)
+                        <form action="{{ route('estudiante.eventos.abandonar', $evento) }}" method="POST" 
+                              onsubmit="return confirm('¿Estás seguro de que deseas abandonar este evento? Tu equipo será desvinculado del evento pero no se eliminará.')"
+                              style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="action-button-danger inline-flex items-center justify-center px-6 py-3 rounded-md"
+                                    style="background: linear-gradient(135deg, #fee2e2, #fecaca); color: #dc2626; border: 2px solid #ef4444; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                Abandonar Evento
+                            </button>
+                        </form>
+                    @endif
                 
                 @elseif($evento->estado === 'Cerrado')
                     {{-- Evento cerrado: esperando asignación de proyectos --}}

@@ -196,11 +196,16 @@ class EventoController extends Controller
         $user = Auth::user();
         
         // Verificar si el usuario ya tiene un equipo en este evento
-        $yaTieneEquipo = MiembroEquipo::where('id_estudiante', $user->id_usuario)
+        $miembro = MiembroEquipo::where('id_estudiante', $user->id_usuario)
             ->whereHas('inscripcion', function ($query) use ($evento) {
                 $query->where('id_evento', $evento->id_evento);
             })
-            ->exists();
+            ->with('inscripcion')
+            ->first();
+        
+        $yaTieneEquipo = $miembro !== null;
+        $esLider = $miembro ? $miembro->es_lider : false;
+        $miInscripcion = $miembro ? $miembro->inscripcion : null;
 
         // ===== VALIDACIÓN DE CRUCE DE FECHAS =====
         $hayConflictoFechas = false;
@@ -232,6 +237,8 @@ class EventoController extends Controller
         return view('estudiante.eventos.show', compact(
             'evento', 
             'yaTieneEquipo', 
+            'esLider',
+            'miInscripcion',
             'hayConflictoFechas', 
             'eventoConflicto',
             'equiposFaltantes',
@@ -279,6 +286,53 @@ class EventoController extends Controller
             ->first();
 
         return view('estudiante.eventos.posiciones', compact('evento', 'inscripciones', 'miInscripcion'));
+    }
+
+    /**
+     * Permite al líder del equipo abandonar el evento (solo si está Activo)
+     */
+    public function leaveEvent(Evento $evento)
+    {
+        $user = Auth::user();
+
+        // Verificar que el evento está Activo
+        if ($evento->estado !== 'Activo') {
+            return back()->with('error', 'Solo puedes abandonar eventos que estén en estado Activo.');
+        }
+
+        // Obtener la inscripción del usuario en este evento
+        $miembro = MiembroEquipo::where('id_estudiante', $user->id_usuario)
+            ->whereHas('inscripcion', function ($query) use ($evento) {
+                $query->where('id_evento', $evento->id_evento);
+            })
+            ->with('inscripcion')
+            ->first();
+
+        if (!$miembro) {
+            return back()->with('error', 'No estás inscrito en este evento.');
+        }
+
+        // Verificar que es líder
+        if (!$miembro->es_lider) {
+            return back()->with('error', 'Solo el líder del equipo puede abandonar el evento.');
+        }
+
+        $inscripcion = $miembro->inscripcion;
+        $nombreEquipo = $inscripcion->equipo->nombre;
+
+        try {
+            // Desasociar el equipo del evento (no eliminar la inscripción)
+            $inscripcion->update([
+                'id_evento' => null,
+                'status_registro' => 'Incompleto',
+            ]);
+
+            return redirect()->route('estudiante.eventos.index')
+                ->with('success', "Tu equipo \"{$nombreEquipo}\" ha abandonado el evento exitosamente.");
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al abandonar el evento: ' . $e->getMessage());
+        }
     }
 }
 

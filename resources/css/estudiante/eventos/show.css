@@ -5,6 +5,10 @@
    Diseño Premium con colores cálidos
    ======================================== */
 
+<<<<<<< Updated upstream
+=======
+/* Hidden utility - scoped to this page only */
+>>>>>>> Stashed changes
 .evento-detail-page .hidden {
     display: none !important;
 }

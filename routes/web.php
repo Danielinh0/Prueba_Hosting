@@ -159,6 +159,7 @@ Route::middleware(['auth', 'role:estudiante'])->prefix('estudiante')->name('estu
     Route::get('eventos/{evento}', [EstudianteEventoController::class, 'show'])->name('eventos.show');
 
     Route::get('eventos/{evento}/posiciones', [EstudianteEventoController::class, 'posiciones'])->name('eventos.posiciones');
+    Route::delete('eventos/{evento}/abandonar', [EstudianteEventoController::class, 'leaveEvent'])->name('eventos.abandonar');
 
     // Rutas para Constancias
     Route::get('constancias', [App\Http\Controllers\Estudiante\ConstanciaController::class, 'index'])->name('constancias.index');

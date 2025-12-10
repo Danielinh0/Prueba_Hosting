@@ -190,7 +190,6 @@ class ProyectoEventoController extends Controller
 
         $inscripciones = $evento->inscripciones()
             ->with(['equipo.miembros', 'proyectoEvento'])
-            ->where('status_registro', 'Completo')
             ->get();
 
         return view('admin.proyectos-evento.asignar', compact('evento', 'inscripciones'));
