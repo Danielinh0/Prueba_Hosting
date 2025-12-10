@@ -18,13 +18,13 @@
                 <h1 class="page-title-nav">
                     @if(request()->routeIs('dashboard'))
                         INICIO
-                    @elseif(request()->routeIs('estudiante.dashboard'))
+                    @elseif(request()->routeIs('estudiante.dashboard')||request()->routeIs('jurado.dashboard')||request()->routeIs('admin.dashboard'))
                         INICIO
                     @elseif(request()->routeIs('estudiante.stats.*'))
                         MI PROGRESO
                     @elseif(request()->routeIs('estudiante.habilidades.*'))
                         MIS HABILIDADES
-                    @elseif(request()->routeIs('estudiante.eventos.*'))
+                    @elseif(request()->routeIs('estudiante.eventos.*')||request()->routeIs('jurado.eventos.*')||request()->routeIs('admin.eventos.*'))
                         EVENTOS
                     @elseif(request()->routeIs('estudiante.equipo.*'))
                         MI EQUIPO
@@ -32,7 +32,7 @@
                         GESTIÓN DE EVENTOS
                     @elseif(request()->routeIs('admin.users.*'))
                         USUARIOS
-                    @elseif(request()->routeIs('admin.equipos.*'))
+                    @elseif(request()->routeIs('admin.equipos.*')||request()->routeIs('estudiante.equipos.*')||request()->routeIs('jurado.equipos.*'))
                         EQUIPOS
                     @elseif(request()->routeIs('admin.proyectos-evaluaciones.*'))
                         PROYECTOS Y EVALUACIONES
@@ -42,8 +42,24 @@
                         REPORTES
                     @elseif(request()->routeIs('profile.*'))
                         PERFIL
-                    @elseif(request()->routeIs('estudiante.constancias.*'))
+                    @elseif(request()->routeIs('estudiante.constancias.*')||request()->routeIs('jurado.constancias.*'))
                         CONSTANCIAS
+                    @elseif(request()->routeIs('inscripciones.*')||request()->routeIs('inscripciones'))
+                        INSCRIPCIONES
+                    @elseif(request()->routeIs('admin.jurado-tokens.*'))
+                        GESTIÓN DE RECLUTAMIENTO
+                    @elseif(request()->routeIs('estudiante.actividades.*'))
+                        ACTIVIDADES
+                    @elseif(request()->routeIs('estudiante.avances.*'))
+                        AVANCES
+                    @elseif(request()->routeIs('estudiante.proyecto-evento.*')||request()->routeIs('jurado.proyectos.*'))
+                        PROYECTOS
+                    @elseif(request()->routeIs('estudiante.proyecto.avances.*'))
+                        AVANCES DE PROYECTO
+                    @elseif(request()->routeIs('estudiante.recursos.*'))
+                        RECURSOS
+                    @elseif(request()->routeIs('estudiante.tarea.*'))
+                        TAREAS
                     @else
                         @yield('page-title', 'INICIO')
                     @endif
