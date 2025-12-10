@@ -375,7 +375,7 @@ class ProyectoController extends Controller
 
         // Cargar evaluaciones finales de los jurados
         $evaluacionesFinales = $inscripcion->evaluaciones()
-            ->with('jurado.user')
+            ->with(['jurado.user', 'criteriosCalificados.criterio'])
             ->orderBy('created_at', 'desc')
             ->get();
 

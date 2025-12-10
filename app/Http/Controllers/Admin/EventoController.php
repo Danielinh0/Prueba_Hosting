@@ -22,9 +22,9 @@ class EventoController extends Controller
         // Búsqueda por nombre
         if ($request->filled('search')) {
             $searchTerm = $request->input('search');
-            $query->where(function($q) use ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
                 $q->where('nombre', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('descripcion', 'like', '%' . $searchTerm . '%');
+                    ->orWhere('descripcion', 'like', '%' . $searchTerm . '%');
             });
         }
 
@@ -90,7 +90,7 @@ class EventoController extends Controller
 
             // Eliminar criterios del array antes de crear el evento
             unset($datosValidados['criterios']);
-            
+
             $evento = Evento::create($datosValidados);
 
             // Crear los criterios de evaluación
@@ -171,7 +171,7 @@ class EventoController extends Controller
                 if ($evento->ruta_imagen) {
                     Storage::disk('public')->delete($evento->ruta_imagen);
                 }
-                
+
                 // Guardar la nueva imagen
                 $rutaImagen = $request->file('ruta_imagen')->store('imagenes_eventos', 'public');
                 $datosValidados['ruta_imagen'] = $rutaImagen;
@@ -179,7 +179,7 @@ class EventoController extends Controller
 
             // Eliminar criterios del array antes de actualizar el evento
             unset($datosValidados['criterios']);
-            
+
             $evento->update($datosValidados);
 
             // Actualizar criterios solo si el evento lo permite
@@ -232,6 +232,12 @@ class EventoController extends Controller
 
     public function finalizar(Evento $evento)
     {
+        // Verificar si todas las evaluaciones están completas
+        if (!$evento->todasEvaluacionesCompletas()) {
+            return redirect()->route('admin.eventos.show', $evento)
+                ->with('error', 'No se puede finalizar el evento. Todos los jurados deben completar sus evaluaciones de todos los equipos.');
+        }
+
         $evento->estado = 'Finalizado';
         $evento->save();
 
@@ -246,6 +252,27 @@ class EventoController extends Controller
         }
 
         return redirect()->route('admin.eventos.show', $evento)->with('success', 'El evento ha sido finalizado y se han enviado las notificaciones.');
+    }
+
+    /**
+     * Forzar finalización del evento (sin verificar evaluaciones completas)
+     */
+    public function forzarFinalizar(Evento $evento)
+    {
+        $evento->estado = 'Finalizado';
+        $evento->save();
+
+        // Enviar correos sincrónicamente para entrega inmediata
+        // Solo si hay posiciones asignadas
+        if ($evento->inscripciones()->whereNotNull('puesto_ganador')->exists()) {
+            // Opción 1: Usar Job pero procesarlo inmediatamente
+            EventoFinalizadoNotificationJob::dispatch($evento)->onConnection('sync');
+
+            // Opción 2: Enviar directamente (comentado por ahora)
+            // $this->sendEventFinalizationNotifications($evento);
+        }
+
+        return redirect()->route('admin.eventos.show', $evento)->with('success', 'El evento ha sido finalizado forzosamente y se han enviado las notificaciones.');
     }
 
     /**
@@ -284,13 +311,13 @@ class EventoController extends Controller
     {
         // Verificar si hay jurados asignados
         $juradosCount = $evento->jurados()->count();
-        
+
         if ($juradosCount === 0) {
             return redirect()->route('admin.eventos.show', $evento)
                 ->with('warning', '⚠️ ADVERTENCIA: Este evento no tiene jurados asignados. Se recomienda asignar entre 3 y 5 jurados antes de cerrar las inscripciones.')
                 ->with('confirm_close', true); // Flag para mostrar confirmación
         }
-        
+
         if ($juradosCount < 3) {
             return redirect()->route('admin.eventos.show', $evento)
                 ->with('warning', "⚠️ ADVERTENCIA: Este evento solo tiene {$juradosCount} jurado(s). Se recomienda tener entre 3 y 5 jurados.")

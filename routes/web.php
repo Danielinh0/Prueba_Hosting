@@ -65,6 +65,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('eventos/{evento}/cerrar', [EventoController::class, 'cerrar'])->name('eventos.cerrar');
     Route::patch('eventos/{evento}/cerrar-forzado', [EventoController::class, 'cerrarForzado'])->name('eventos.cerrar-forzado');
     Route::patch('eventos/{evento}/finalizar', [EventoController::class, 'finalizar'])->name('eventos.finalizar');
+    Route::patch('eventos/{evento}/finalizar-forzado', [EventoController::class, 'forzarFinalizar'])->name('eventos.finalizar-forzado');
     Route::patch('eventos/{evento}/reactivar', [EventoController::class, 'reactivar'])->name('eventos.reactivar');
 
     //? Rutas para resultados y ganadores

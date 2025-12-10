@@ -170,7 +170,7 @@
                             </div>
                             
                             @if($avance->descripcion)
-                                <p class="avance-desc">{{ Str::limit($avance->descripcion, 100) }}</p>
+                                <p class="avance-desc">{{ $avance->descripcion }}</p>
                             @endif
 
                             @if($tieneEvaluaciones)
@@ -227,7 +227,7 @@
         @if($evaluacionesFinales->isNotEmpty())
             <div class="section-card">
                 <div class="section-head">
-                    <h3><i class="fas fa-star"></i> Evaluaciones de Jurados</h3>
+                    <h3><i class="fas fa-star"></i> Evaluaciones Finales de Jurados</h3>
                 </div>
                 <div class="eval-grid">
                     @foreach($evaluacionesFinales as $eval)
@@ -235,8 +235,11 @@
                             <div class="eval-card">
                                 <div class="eval-grade">{{ $eval->calificacion_final }}<small>/100</small></div>
                                 <div class="eval-name">{{ $eval->jurado->user->nombre }}</div>
-                                @if($eval->comentarios_finales)
-                                    <div class="eval-feedback">"{{ Str::limit($eval->comentarios_finales, 100) }}"</div>
+                                <button class="btn-inspect" onclick="openModal({{ $eval->id_evaluacion }})">
+                                    <i class="fas fa-search"></i> Inspeccionar
+                                </button>
+                                @if($eval->comentarios_generales)
+                                    <div class="eval-feedback">"{{ Str::limit($eval->comentarios_generales, 100) }}"</div>
                                 @endif
                             </div>
                         @endif
@@ -250,6 +253,19 @@
             </div>
         @endif
 
+    </div>
+</div>
+
+<!-- Modal para inspeccionar evaluación -->
+<div id="inspectModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Detalles de Evaluación</h3>
+            <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Contenido dinámico -->
+        </div>
     </div>
 </div>
 
@@ -648,7 +664,13 @@
     color: #3730a3;
 }
 
-.avance-desc { font-size: 0.8rem; color: #6b7280; margin-bottom: 0.75rem; }
+.avance-desc {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+    white-space: normal; /* permitir que el contenedor crezca en altura */
+    word-break: break-word; /* evitar desbordes largos */
+}
 .avance-date { font-size: 0.75rem; color: #9ca3af; display: flex; align-items: center; gap: 0.3rem; }
 
 /* Eval List */
@@ -735,6 +757,162 @@
 .section-footer a { color: #6366f1; text-decoration: none; font-weight: 500; }
 .section-footer a:hover { color: #4f46e5; }
 
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: linear-gradient(180deg, #ffffff, #fbf8f4);
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 600px;
+    /* Neuomorphic soft shadows */
+    box-shadow: 12px 12px 24px rgba(16,24,40,0.06), -8px -8px 20px rgba(255,255,255,0.9);
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff;
+    border-radius: 14px 14px 0 0;
+    box-shadow: inset 0 -6px 16px rgba(0,0,0,0.06);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #ffffff;
+}
+
+.close {
+    color: rgba(255,255,255,0.95);
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: rgba(255,255,255,0.08);
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+}
+
+.close:hover { color: #ffffff; background: rgba(255,255,255,0.12); }
+
+.modal-body {
+    padding: 1.5rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,248,244,0.98));
+    border-radius: 0 0 14px 14px;
+    box-shadow: inset 0 6px 18px rgba(0,0,0,0.02);
+}
+
+/* Button Inspect */
+.btn-inspect {
+    background: #f59e0b;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 0.95rem;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: block;
+    margin: 0.6rem auto;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+    box-shadow: 8px 12px 24px rgba(245,158,11,0.12), -6px -6px 14px rgba(255,255,255,0.9);
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-inspect:hover {
+    background: #d97706;
+    transform: translateY(-2px);
+    box-shadow: 10px 16px 30px rgba(217,119,6,0.14), -6px -6px 14px rgba(255,255,255,0.9);
+}
+
+.btn-inspect i { color: rgba(255,255,255,0.95); }
+
+/* Modal content formatting */
+.modal-eval-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+.modal-eval-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+.modal-eval-score {
+    text-align: right;
+}
+.modal-eval-score .score-big {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #d97706;
+    background: linear-gradient(90deg, rgba(245,158,11,0.12), rgba(217,119,6,0.06));
+    padding: 0.25rem 0.6rem;
+    border-radius: 8px;
+    display: inline-block;
+}
+.criteria-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+    display: grid;
+    gap: 0.5rem;
+}
+.criteria-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.75rem;
+    background: linear-gradient(180deg, #ffffff, #faf7f2);
+    border-radius: 10px;
+    border-left: 4px solid #f59e0b;
+    box-shadow: 8px 12px 22px rgba(245,158,11,0.06), -6px -6px 14px rgba(255,255,255,0.9);
+}
+.crit-name { font-weight: 600; color: #0f172a; }
+.crit-score { font-weight: 800; color: #b45309; }
+.modal-section { margin-top: 1rem; }
+.modal-section h5 { margin: 0 0 0.5rem 0; color: #b45309; font-size: 0.85rem; font-weight: 700; }
+.note-box {
+.note-box {
+    background: #fffaf0;
+    border: 1px solid rgba(217,119,6,0.06);
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    color: #374151;
+    box-sizing: border-box;
+    max-height: 160px; /* limita altura para evitar que crezca fuera del modal */
+    overflow-y: auto;   /* scroll interno cuando hay exceso de contenido */
+    white-space: pre-wrap; /* conservar saltos de linea */
+    word-break: break-word;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollbar ligero para compatibilidad visual */
+.note-box::-webkit-scrollbar { width: 8px; }
+.note-box::-webkit-scrollbar-track { background: transparent; }
+.note-box::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+
 /* Responsive */
 @media (max-width: 640px) {
     .hero-title { font-size: 1.25rem; }
@@ -750,5 +928,78 @@
     }
 }
 </style>
+
+<script>
+const evaluacionesData = @json($evaluacionesFinales);
+
+function escapeHtml(unsafe) {
+    if (unsafe === null || unsafe === undefined) return '';
+    return String(unsafe)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function openModal(evalId) {
+    const evalData = evaluacionesData.find(e => e.id_evaluacion == evalId);
+    if (!evalData) return;
+
+    const modal = document.getElementById('inspectModal');
+    const modalBody = document.getElementById('modalBody');
+
+    // Header: judge name + big final score
+    let content = `<div class="modal-eval-header">`;
+    content += `<h4 class="modal-eval-title">Evaluación de ${escapeHtml(evalData.jurado?.user?.nombre ?? 'Jurado')}</h4>`;
+    content += `<div class="modal-eval-score"><span class="score-big">${Number(evalData.calificacion_final || 0).toFixed(2)}</span><div style="font-size:0.85rem;color:#6b7280;">/100</div></div>`;
+    content += `</div>`;
+
+    // Criterios
+    if (evalData.criterios_calificados && evalData.criterios_calificados.length > 0) {
+        content += `<div class="modal-section"><h5>Criterios Evaluados</h5><ul class="criteria-list">`;
+        evalData.criterios_calificados.forEach(criterio => {
+            const nombre = criterio.criterio?.nombre ?? 'Criterio';
+            const cal = Number(criterio.calificacion || 0).toFixed(2);
+            content += `<li class="criteria-item"><div class="crit-name">${escapeHtml(nombre)}</div><div class="crit-score">${cal}/100</div></li>`;
+        });
+        content += `</ul></div>`;
+    } else {
+        content += `<div class="modal-section"><h5>Criterios Evaluados</h5><div class="note-box">No hay criterios calificados.</div></div>`;
+    }
+
+    // Comentarios generales
+    content += `<div class="modal-section"><h5>Comentarios Generales</h5>`;
+    content += `<div class="note-box">${escapeHtml(evalData.comentarios_generales ?? '—')}</div>`;
+    content += `</div>`;
+
+    // Fortalezas
+    content += `<div class="modal-section"><h5>Fortalezas</h5>`;
+    content += `<div class="note-box">${escapeHtml(evalData.comentarios_fortalezas ?? '—')}</div>`;
+    content += `</div>`;
+
+    // Áreas de mejora
+    content += `<div class="modal-section"><h5>Áreas de Mejora</h5>`;
+    content += `<div class="note-box">${escapeHtml(evalData.comentarios_areas_mejora ?? '—')}</div>`;
+    content += `</div>`;
+
+    modalBody.innerHTML = content;
+
+    // Show modal
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('inspectModal').style.display = 'none';
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+    const modal = document.getElementById('inspectModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
 
 @endsection

@@ -175,13 +175,24 @@
                             </button>
                         </form>
                     @elseif($evento->estado === 'En Progreso')
-                        <form action="{{ route('admin.eventos.finalizar', $evento) }}" method="POST" onsubmit="return confirm('¿Finalizar evento?');">
-                            @csrf @method('PATCH')
-                            <button type="submit" class="action-btn info">
-                                <i class="fas fa-flag-checkered"></i>
-                                <span>Finalizar Evento</span>
+                        @if($evento->todasEvaluacionesCompletas())
+                            <form action="{{ route('admin.eventos.finalizar', $evento) }}" method="POST" onsubmit="return confirm('¿Finalizar evento? Todas las evaluaciones están completas.');">
+                                @csrf @method('PATCH')
+                                <button type="submit" class="action-btn success">
+                                    <i class="fas fa-flag-checkered"></i>
+                                    <span>Finalizar Evento</span>
+                                </button>
+                            </form>
+                        @else
+                            <button onclick="document.getElementById('modalForzarFinalizar').classList.remove('hidden')" class="action-btn warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Forzar Finalización</span>
                             </button>
-                        </form>
+                            <div class="text-sm text-gray-600 mt-2">
+                                <i class="fas fa-info-circle"></i>
+                                No se puede finalizar: faltan evaluaciones por completar
+                            </div>
+                        @endif
                     @elseif($evento->estado === 'Cerrado')
                         @if(!$evento->tipo_proyecto)
                             <button onclick="document.getElementById('modalTipoProyecto').classList.remove('hidden')" class="action-btn secondary">
@@ -445,6 +456,44 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para forzar finalización del evento -->
+<div id="modalForzarFinalizar" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <div class="p-6">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 mb-4">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">
+                        ¿Está seguro de forzar la finalización?
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        El evento aún tiene evaluaciones pendientes. Al forzar la finalización, se cerrará el evento sin esperar a que todos los jurados completen sus evaluaciones.
+                    </p>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-md p-3 mb-4">
+                        <p class="text-sm text-yellow-800">
+                            <strong>Advertencia:</strong> Esta acción no se puede deshacer. Los equipos sin evaluaciones completas no tendrán calificaciones finales.
+                        </p>
+                    </div>
+                </div>
+                <form action="{{ route('admin.eventos.finalizar-forzado', $evento) }}" method="POST">
+                    @csrf @method('PATCH')
+                    <div class="modal-actions">
+                        <button type="button" onclick="document.getElementById('modalForzarFinalizar').classList.add('hidden')" class="modal-btn cancel">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="modal-btn confirm" style="background-color: #f59e0b;">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            Forzar Finalización
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -59,7 +59,7 @@ class Evento extends Model
     public function proyectoGeneral()
     {
         return $this->hasOne(ProyectoEvento::class, 'id_evento', 'id_evento')
-                    ->whereNull('id_inscripcion');
+            ->whereNull('id_inscripcion');
     }
 
     /**
@@ -68,7 +68,7 @@ class Evento extends Model
     public function proyectosEventoIndividuales()
     {
         return $this->hasMany(ProyectoEvento::class, 'id_evento', 'id_evento')
-                    ->whereNotNull('id_inscripcion');
+            ->whereNotNull('id_inscripcion');
     }
 
     /**
@@ -158,5 +158,37 @@ class Evento extends Model
         })->exists();
 
         return !$tieneEvaluaciones;
+    }
+
+    /**
+     * Verificar si todas las evaluaciones del evento están completas
+     * Todos los jurados deben haber evaluado todos los equipos inscritos
+     */
+    public function todasEvaluacionesCompletas(): bool
+    {
+        // Obtener todos los jurados asignados al evento
+        $totalJurados = $this->jurados()->count();
+
+        // Obtener todas las inscripciones activas del evento
+        $totalEquipos = $this->inscripciones()
+            ->where('status_registro', 'Completo')
+            ->count();
+
+        if ($totalJurados === 0 || $totalEquipos === 0) {
+            return false;
+        }
+
+        // Calcular el total de evaluaciones esperadas
+        $evaluacionesEsperadas = $totalJurados * $totalEquipos;
+
+        // Contar evaluaciones finalizadas
+        $evaluacionesCompletas = Evaluacion::whereHas('inscripcion', function ($query) {
+            $query->where('id_evento', $this->id_evento)
+                  ->where('status_registro', 'Completo');
+        })
+        ->where('estado', 'Finalizada')
+        ->count();
+
+        return $evaluacionesCompletas === $evaluacionesEsperadas;
     }
 }

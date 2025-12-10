@@ -145,6 +145,20 @@ class EvaluacionController extends Controller
                         Log::error("❌ No se encontró líder o el líder no tiene usuario");
                     }
 
+                    // Verificar si el evento debe finalizarse automáticamente
+                    $evento = $inscripcion->evento;
+                    if ($evento->estado === 'En Progreso' && $evento->todasEvaluacionesCompletas()) {
+                        $evento->estado = 'Finalizado';
+                        $evento->save();
+                        
+                        Log::info("🎉 Evento {$evento->id_evento} finalizado automáticamente - todas las evaluaciones completas");
+                        
+                        // Enviar notificaciones de finalización del evento
+                        if ($evento->inscripciones()->whereNotNull('puesto_ganador')->exists()) {
+                            \App\Jobs\EventoFinalizadoNotificationJob::dispatch($evento)->onConnection('sync');
+                        }
+                    }
+
                     DB::commit();
                     return redirect()->route('jurado.evaluaciones.show', $evaluacion)
                         ->with('success', '¡Evaluación finalizada exitosamente! Calificación final: ' . $evaluacion->calificacion_final . ' (Email enviado al estudiante)');
