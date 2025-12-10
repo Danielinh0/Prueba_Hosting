@@ -1,5 +1,216 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
+/* Hidden utility - scoped to this page only */
+.equipo-detail-page .hidden {
+    display: none !important;
+}
+
+/* Transfer Modal - hidden state (modal is outside .equipo-detail-page) */
+.transfer-modal.hidden {
+    display: none !important;
+}
+
+/* Transfer Modal Styles */
+.transfer-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.transfer-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.transfer-modal-content {
+    position: relative;
+    background: #ffeee2;
+    border-radius: 20px;
+    max-width: 480px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.transfer-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(232, 154, 60, 0.2);
+}
+
+.transfer-modal-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin: 0;
+}
+
+.transfer-modal-header h3 svg {
+    color: #e89a3c;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #2c2c2c;
+}
+
+.transfer-modal-body {
+    padding: 1.5rem;
+}
+
+.transfer-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: linear-gradient(
+        135deg,
+        rgba(254, 243, 199, 0.8),
+        rgba(253, 230, 138, 0.8)
+    );
+    border-radius: 12px;
+    border-left: 4px solid #f59e0b;
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    color: #92400e;
+}
+
+.transfer-warning svg {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.transfer-modal-body h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin: 0 0 1rem 0;
+}
+
+.transfer-members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.transfer-member-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px #ffffff;
+}
+
+.transfer-member-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.transfer-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e89a3c, #f5a847);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.transfer-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.transfer-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2c2c2c;
+}
+
+.transfer-role {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.transfer-select-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.transfer-select-btn:hover {
+    background: linear-gradient(135deg, #e89a3c, #f5a847);
+    transform: translateY(-2px);
+}
+
+.transfer-modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(232, 154, 60, 0.2);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-cancel-transfer {
+    padding: 0.6rem 1.25rem;
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel-transfer:hover {
+    background: rgba(107, 114, 128, 0.2);
+    color: #374151;
+}
+
+/* Hero Button Transfer */
+.hero-btn-transfer {
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    color: #ffffff;
+}
+
+.hero-btn-transfer:hover {
+    background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+    transform: translateY(-2px);
+}
+
 .equipo-detail-page {
     background: linear-gradient(to bottom, #fffdf4, #ffeee2);
     min-height: 100vh;

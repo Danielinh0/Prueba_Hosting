@@ -39,12 +39,16 @@
                             {{ $inscripcion->miembros->count() }} Miembros
                     </div>
                     <h1 class="hero-title">{{ $inscripcion->equipo->nombre }}</h1>
-@if($inscripcion->evento)
+@if($inscripcion->evento && !$inscripcion->evento->trashed())
     <p class="hero-event">
         Participando en 
         <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}">
             {{ $inscripcion->evento->nombre }}
         </a>
+    </p>
+@elseif($inscripcion->evento && $inscripcion->evento->trashed())
+    <p class="hero-event">
+        Equipo sin evento asignado
     </p>
 @else
     <p class="hero-event">
@@ -288,7 +292,7 @@
         </h3>
     </div>
     <div class="card-body">
-        @if($inscripcion->evento)
+        @if($inscripcion->evento && !$inscripcion->evento->trashed())
             <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}" class="event-link-card">
                 <div class="event-link-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -300,6 +304,13 @@
                     <p>{{ $inscripcion->evento->fecha_inicio->format('d M, Y') }} - {{ $inscripcion->evento->fecha_fin->format('d M, Y') }}</p>
                 </div>
             </a>
+        @elseif($inscripcion->evento && $inscripcion->evento->trashed())
+            <div class="empty-state">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <p>Este equipo aún no está registrado en ningún evento</p>
+            </div>
         @else
             <div class="empty-state">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -330,7 +341,7 @@
         <span>Recursos</span>
         <small>{{ $inscripcion->equipo->recursos->count() ?? 0 }} archivos</small>
     </a>
-    @if($inscripcion->evento)
+    @if($inscripcion->evento && !$inscripcion->evento->trashed())
         <a href="{{ route('estudiante.eventos.show', $inscripcion->evento) }}" class="quick-link quick-link-green">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>

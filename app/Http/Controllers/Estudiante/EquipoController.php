@@ -256,13 +256,20 @@ class EquipoController extends Controller
     {
         $user = Auth::user();
 
-        // Obtener equipos del usuario SIN evento (id_evento = null)
+        // Obtener equipos del usuario SIN evento o con evento eliminado (soft-deleted)
         $equiposDisponibles = InscripcionEvento::whereHas('miembros', function ($query) use ($user) {
             $query->where('id_estudiante', $user->id_usuario)
                   ->where('es_lider', true); // Solo equipos donde es líder
         })
-        ->whereNull('id_evento') // Solo equipos sin evento
-        ->with(['equipo', 'miembros'])
+        ->where(function ($query) {
+            // Equipos sin evento asignado
+            $query->whereNull('id_evento')
+                  // O equipos cuyo evento fue eliminado (soft-deleted)
+                  ->orWhereHas('evento', function ($q) {
+                      $q->onlyTrashed();
+                  });
+        })
+        ->with(['equipo', 'miembros', 'evento' => function ($q) { $q->withTrashed(); }])
         ->get();
 
         // Filtrar equipos sin conflicto de fechas (verificar TODOS los miembros)
@@ -305,9 +312,10 @@ class EquipoController extends Controller
             return back()->with('error', 'Solo el líder puede registrar el equipo a un evento.');
         }
 
-        // Verificar que la inscripción no tiene evento
-        if ($inscripcion->id_evento !== null) {
-            return back()->with('error', 'Este equipo ya está registrado en un evento.');
+        // Verificar que la inscripción no tiene evento activo (permite eventos eliminados)
+        $eventoActual = $inscripcion->evento;
+        if ($inscripcion->id_evento !== null && $eventoActual && !$eventoActual->trashed()) {
+            return back()->with('error', 'Este equipo ya está registrado en un evento activo.');
         }
 
         // Validar conflicto de fechas para TODOS los miembros
