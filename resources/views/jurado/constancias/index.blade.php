@@ -9,7 +9,7 @@
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 6L9 12L15 18" stroke="#e89a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Volver al Dashboard
+        Volver al Inicio
     </a>
     
     <h1 class="constancias-title">Constancias Disponibles</h1>

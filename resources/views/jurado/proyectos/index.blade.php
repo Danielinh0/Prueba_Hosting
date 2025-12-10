@@ -7,7 +7,7 @@
         <!-- Botón Volver al Dashboard -->
         <a href="{{ route('jurado.dashboard') }}" class="inline-flex items-center mb-4 px-4 py-2 rounded-lg font-semibold text-sm" style="background: linear-gradient(135deg, #e89a3c, #f5a847); color: white; box-shadow: 4px 4px 8px rgba(232, 154, 60, 0.3);">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            Volver al Dashboard
+            Volver al Inicio
         </a>
         
         <div class="page-header">

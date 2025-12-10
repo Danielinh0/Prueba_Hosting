@@ -8,7 +8,7 @@
             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Volver al Dashboard
+            Volver al Inicio
         </a>
         <h1 style="font-size: 2rem; font-weight: 700; color: #2c2c2c;">Previsualización del Equipo</h1>
     </div>
