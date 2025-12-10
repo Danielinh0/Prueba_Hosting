@@ -1,10 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
-/* ========================================
-   ESTUDIANTE DASHBOARD - DISEÑO MODERNO
-   Paleta: Blanco / Gris suave / Índigo / Negro
-   ======================================== */
-
 /* =============================================== */
 /* BASE STYLES */
 /* =============================================== */
@@ -312,11 +307,27 @@
 }
 
 .event-image {
-    background-color: #ffffff95;
+    border-radius: 12px 12px 0 0!important;
+    background-color: #313131cf;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ical {
+    color: rgb(233, 187, 147);
+    font-size: 4rem;
 }
 
 .event-image img{
     border-radius: 12px 12px 0 0!important;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;        /* o contain si prefieres que no se recorte */
+    object-position: center;
+    display: block;
 }
 
 .event-card:hover {
@@ -1436,10 +1447,12 @@
     margin: 2rem auto;
 }
 
-.progress-ring {
+.progress-ring-de {
     position: relative;
     width: 100%;
     height: 100%;
+    background-color: #e89a3c;
+    border-radius: 50%;
 }
 
 .progress-ring-bg {

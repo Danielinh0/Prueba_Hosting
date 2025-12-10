@@ -269,7 +269,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .avance-create-page {
-    background: linear-gradient(180deg, #fefefe, #faf8f5);
+    background: linear-gradient(135deg, #FFFDF4 0%, #FFEEE2 50%, #FFF5E8 100%);
     min-height: 100vh;
     padding: 1.5rem 1rem;
     font-family: 'Inter', -apple-system, sans-serif;
@@ -280,7 +280,7 @@
     margin: 0 auto;
 }
 
-/* Back Link */
+/* Back Link - Neumórfico */
 .back-link {
     display: inline-flex;
     align-items: center;
@@ -290,9 +290,16 @@
     font-weight: 500;
     text-decoration: none;
     margin-bottom: 1.5rem;
-    transition: color 0.2s;
+    padding: 0.5rem 1rem;
+    background: #ffeee2;
+    border-radius: 12px;
+    box-shadow: 3px 3px 6px #e6d5c9, -3px -3px 6px rgba(255, 255, 255, 0.7);
+    transition: all 0.3s;
 }
-.back-link:hover { color: #6366f1; }
+.back-link:hover { 
+    color: #6366f1;
+    box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px rgba(255, 255, 255, 0.8);
+}
 
 /* Page Header */
 .page-header {
@@ -312,7 +319,7 @@
     justify-content: center;
     color: white;
     font-size: 1.5rem;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.35), -2px -2px 6px rgba(255, 255, 255, 0.5);
 }
 
 .header-text h1 {
@@ -327,13 +334,14 @@
     margin: 0.25rem 0 0 0;
 }
 
-/* Info Card */
+/* Info Card - Morado suave */
 .info-card {
     background: linear-gradient(135deg, #ede9fe, #e0e7ff);
     border-radius: 14px;
     padding: 1rem 1.25rem;
     margin-bottom: 1.5rem;
     border: 1px solid #c7d2fe;
+    box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.15), -3px -3px 6px rgba(255, 255, 255, 0.6);
 }
 
 .info-grid {
@@ -347,21 +355,18 @@
     align-items: center;
     gap: 0.75rem;
 }
-.info-item i {
-    color: #6366f1;
-    font-size: 1rem;
-}
-.info-item div { display: flex; flex-direction: column; }
+.info-item i { color: #6366f1; font-size: 1rem; }
 .info-label { font-size: 0.65rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
 .info-value { font-size: 0.85rem; font-weight: 600; color: #111827; }
 
-/* Form Card */
+/* Form Card - Neumórfico cálido */
 .form-card {
-    background: white;
+    background: #ffeee2;
     border-radius: 16px;
     padding: 1.75rem;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 10px 15px -3px rgba(0,0,0,0.08);
-    border: 1px solid #f3f4f6;
+    margin-bottom: 1.5rem;
+    box-shadow: 8px 8px 16px #e6d5c9, -8px -8px 16px rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(232, 154, 60, 0.1);
 }
 
 /* Form Groups */
@@ -382,23 +387,29 @@
 .required { color: #ef4444; }
 .optional { color: #9ca3af; font-weight: 400; font-size: 0.75rem; }
 
-.form-input, .form-textarea {
+.form-input,
+.form-textarea,
+.form-select {
     width: 100%;
     padding: 0.875rem 1rem;
-    border: 2px solid #e5e7eb;
+    border: none;
     border-radius: 12px;
     font-size: 0.9rem;
     font-family: inherit;
+    background: #ffffff;
+    box-shadow: inset 2px 2px 4px #e6d5c9, inset -2px -2px 4px rgba(255, 255, 255, 0.5);
     transition: all 0.2s;
-    background: #fafafa;
 }
-.form-input:focus, .form-textarea:focus {
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
     outline: none;
-    border-color: #6366f1;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    box-shadow: inset 3px 3px 6px #e6d5c9,
+                inset -3px -3px 6px rgba(255, 255, 255, 0.5),
+                0 0 0 3px rgba(99, 102, 241, 0.1);
 }
-.form-input::placeholder, .form-textarea::placeholder {
+.form-input::placeholder,
+.form-textarea::placeholder {
     color: #9ca3af;
 }
 .form-textarea {
@@ -426,64 +437,66 @@
 }
 
 .help-text {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #6b7280;
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.3rem;
 }
-.help-text i { color: #f59e0b; }
+.help-text i { color: #6366f1; }
 
-/* File Upload Area (mantenido igual) */
+/* ZONA DE SUBIR ARCHIVOS → PLANA CON BORDE PUNTEADO (sin neumorfismo) */
 .file-upload-area {
     border: 2px dashed #d1d5db;
     border-radius: 12px;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s;
-    background: #fafafa;
+    transition: all 0.3s ease;
+    background: #ffffff;
+    margin-bottom: 1.5rem;
 }
 .file-upload-area:hover {
     border-color: #6366f1;
-    background: #f5f3ff;
+    background: #f8f5ff;
 }
 .file-upload-area.dragover {
     border-color: #6366f1;
-    background: #ede9fe;
-    transform: scale(1.01);
+    background: #f3e8ff;
+    transform: scale(1.02);
 }
 .file-upload-area.has-file {
     border-color: #10b981;
-    background: #ecfdf5;
+    background: #f0fdf4;
 }
 .upload-icon {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #9ca3af;
     margin-bottom: 0.75rem;
+    transition: color 0.3s;
 }
 .file-upload-area:hover .upload-icon { color: #6366f1; }
 .file-upload-area.has-file .upload-icon { color: #10b981; }
+
 .upload-text {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #374151;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
 }
 .upload-hint {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     color: #9ca3af;
 }
-.hidden { display: none !important; }
 
-/* Buttons */
+/* Button Group */
 .button-group {
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #f3f4f6;
+    border-top: 1px solid rgba(230, 213, 201, 0.5);
 }
 
 .btn {
@@ -503,22 +516,30 @@
 }
 
 .btn-secondary {
-    background: #f3f4f6;
+    background: #ffffff;
     color: #374151;
+    box-shadow: 4px 4px 8px #e6d5c9, -4px -4px 8px rgba(255, 255, 255, 0.7);
 }
 .btn-secondary:hover {
-    background: #e5e7eb;
     color: #111827;
+    box-shadow: 5px 5px 10px #e6d5c9, -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+.btn-secondary:active {
+    box-shadow: inset 3px 3px 6px #e6d5c9, inset -3px -3px 6px rgba(255, 255, 255, 0.5);
 }
 
 .btn-primary {
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     color: white;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    box-shadow: 4px 4px 8px rgba(99, 102, 241, 0.35), -2px -2px 6px rgba(255, 255, 255, 0.5);
 }
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+    box-shadow: 6px 6px 12px rgba(99, 102, 241, 0.45), -3px -3px 8px rgba(255, 255, 255, 0.6);
+}
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: inset 3px 3px 6px rgba(0,0,0,0.2);
 }
 .btn-primary:disabled {
     opacity: 0.7;
@@ -529,7 +550,7 @@
 /* Responsive */
 @media (max-width: 640px) {
     .page-header { flex-direction: column; text-align: center; }
-    .header-icon { margin: 0 auto; }
+    .header-icon { margin-bottom: 0.5rem; }
     .info-grid { grid-template-columns: 1fr 1fr; }
     .button-group { flex-direction: column-reverse; }
 }

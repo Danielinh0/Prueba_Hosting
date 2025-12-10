@@ -119,7 +119,7 @@
                                         </div>
                                     @else
                                         <div class="event-image event-image-placeholder">
-                                            <i class="fas fa-calendar-alt"></i>
+                                            <i class="fas fa-calendar-alt" id="ical"></i>
                                             <span class="event-badge-dbshdE">
                                                 <i class="fas fa-clock"></i> Próximo
                                             </span>
@@ -467,19 +467,19 @@
                     </div>
                 </div>
                 <div class="progress-circle-container">
-                    <svg class="progress-ring" viewBox="0 0 100 100" width="120" height="120">
+                    <svg class="progress-ring-de" viewBox="0 0 100 100" width="120" height="120">
                         <defs>
                             <linearGradient id="progressGradientMain" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" stop-color="#10b981"/>
                                 <stop offset="100%" stop-color="#14b8a6"/>
                             </linearGradient>
                         </defs>
-                        <circle class="progress-ring-bg" cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" stroke-width="6"/>
+                        <circle class="progress-ring-bg" cx="50" cy="50" r="40" fill="none" stroke="#fbfbfbff" stroke-width="6"/>
                         <circle class="progress-ring-fill" cx="50" cy="50" r="40" fill="none" stroke="url(#progressGradientMain)" stroke-width="6"/>
                     </svg>
-                    <div class="progress-text">
-                        <span>Avance</span>
-                        <strong>0%</strong>
+                    <div class="progress-text" >
+                        <span style="color: #ffffffff;">Avance</span>
+                        <strong style="color: #151515ff;">0%</strong>
                     </div>
                 </div>
                 <div class="mt-4 text-center">
